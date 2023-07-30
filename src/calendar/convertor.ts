@@ -2,6 +2,21 @@ import { getTotalDaysOfLunarMonth, getTotalDaysOfLunarYear } from './days';
 import { getLeapDays, getLeapMonth } from './leap';
 import { lunarDateToStr } from './misc';
 
+export type LunarDate = {
+  lunarYear: number;
+  lunarMonth: number;
+  lunarDay: number;
+  isLeap: boolean;
+  toString: (toCnStr?: boolean) => string;
+};
+
+export type SolarDate = {
+  solarYear: number;
+  solarMonth: number;
+  solarDay: number;
+  toString: () => string;
+};
+
 export const normalizeLunarDateStr = (dateStr: string) => dateStr.split('-').map((item) => +item.trim());
 export const normalizeSolarDateStr = (dateStr: string | Date) => {
   const date = new Date(dateStr);
@@ -15,18 +30,11 @@ export const normalizeSolarDateStr = (dateStr: string | Date) => {
 
 /**
  * 公历转农历
- * 
+ *
  * @param dateStr 公历日期 YYYY-MM-DD
- * @returns 农历
- * {
-    lunarYear: number,
-    lunarMonth: number,
-    lunarDay: number,
-    isLeap: boolean
-    toString: () => string,
-  }
+ * @returns LunarDate
  */
-export const solar2lunar = (dateStr: string) => {
+export const solar2lunar = (dateStr: string): LunarDate => {
   const [year, month, day] = normalizeSolarDateStr(dateStr);
 
   //参数区间1900.1.31~2100.12.31
@@ -102,8 +110,12 @@ export const solar2lunar = (dateStr: string) => {
     lunarMonth,
     lunarDay,
     isLeap: leapFixed,
-    toString() {
-      return lunarDateToStr(`${lunarYear}-${lunarMonth}-${lunarDay}`, leapFixed);
+    toString(toCnStr) {
+      if (toCnStr) {
+        return lunarDateToStr(`${lunarYear}-${lunarMonth}-${lunarDay}`, leapFixed);
+      }
+
+      return `${lunarYear}-${lunarMonth}-${lunarDay}`;
     },
   };
 };
@@ -112,13 +124,7 @@ export const solar2lunar = (dateStr: string) => {
  *
  * @param dateStr 农历日期 YYYY-MM-DD
  * @param isLeapMonth 是否闰月，若该月不是闰月，会忽略该参数
- * @returns 阳历
- * {
- *   solarYear: number,
- *   solarMonth: number,
- *   solarDay: number,
- *   toString: () => string
- * }
+ * @returns SolarDate
  */
 export const lunar2solar = (dateStr: string, isLeapMonth?: boolean) => {
   const [year, month, day] = normalizeLunarDateStr(dateStr);
