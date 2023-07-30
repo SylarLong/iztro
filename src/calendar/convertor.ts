@@ -22,6 +22,7 @@ export const normalizeSolarDateStr = (dateStr: string | Date) => {
     lunarYear: number,
     lunarMonth: number,
     lunarDay: number,
+    isLeap: boolean
     toString: () => string,
   }
  */
@@ -100,6 +101,7 @@ export const solar2lunar = (dateStr: string) => {
     lunarYear,
     lunarMonth,
     lunarDay,
+    isLeap: leapFixed,
     toString() {
       return lunarDateToStr(`${lunarYear}-${lunarMonth}-${lunarDay}`, leapFixed);
     },
