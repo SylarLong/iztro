@@ -3,21 +3,70 @@ import { getLeapDays, getLeapMonth } from './leap';
 import { lunarDateToStr } from './misc';
 
 export type LunarDate = {
+  /** 农历年 */
   lunarYear: number;
+  /** 农历月 */
   lunarMonth: number;
+  /** 农历日 */
   lunarDay: number;
+  /** 是否闰月 */
   isLeap: boolean;
+  /**
+   * 转化为字符串
+   *
+   * @param toCnStr 是否使用中文字符串, 若该参数为false则字符串中不会携带闰月信息
+   * @returns string
+   * @example
+   * lunarYear = 2023;
+   * lunarMonth = 6;
+   * lunarDay = 12;
+   * isLeap = true;
+   *
+   * toString(); // 2023-6-12
+   * toString(true); // 二〇二三年(闰)二月十一
+   */
   toString: (toCnStr?: boolean) => string;
 };
 
 export type SolarDate = {
+  /** 公历年 */
   solarYear: number;
+  /** 公历月 */
   solarMonth: number;
+  /** 公历日 */
   solarDay: number;
+  /**
+   * 转化为字符串
+   *
+   * @returns string
+   * @example
+   * solarYear = 2023;
+   * solarMonth = 6;
+   * solarDay = 12;
+   *
+   * toString(); // 2023-6-12
+   */
   toString: () => string;
 };
 
+/**
+ * 将农历日期字符串拆分成年，月，日
+ *
+ * @param dateStr 农历日期字符串 YYYY-MM-DD
+ * @returns [年, 月, 日]
+ * @example
+ * normalizeLunarDateStr('2023-07-31'); // [2023, 7, 31]
+ */
 export const normalizeLunarDateStr = (dateStr: string) => dateStr.split('-').map((item) => +item.trim());
+
+/**
+ * 将公历日期字符串拆分成年，月，日
+ *
+ * @param dateStr 公历日期
+ * @returns [年, 月, 日]
+ * @example
+ * normalizeSolarDateStr('2023-07-31'); // [2023, 7, 31]
+ */
 export const normalizeSolarDateStr = (dateStr: string | Date) => {
   const date = new Date(dateStr);
 
@@ -29,7 +78,7 @@ export const normalizeSolarDateStr = (dateStr: string | Date) => {
 };
 
 /**
- * 公历转农历
+ * 公历转农历，年份需要在【1900~2100】之间，并且日期必须在1900-1-31之后
  *
  * @param dateStr 公历日期 YYYY-MM-DD
  * @returns LunarDate
@@ -40,26 +89,29 @@ export const solar2lunar = (dateStr: string): LunarDate => {
   //参数区间1900.1.31~2100.12.31
   //年份限定、上限
   if (year < 1900 || year > 2100) {
-    throw new Error('超过可排盘时间');
+    throw new Error('不支持的年份');
   }
 
   //公历传参最下限 1900-01-31
   if (year === 1900 && month === 1 && day < 31) {
-    throw new Error('超过可排盘时间');
+    throw new Error('日期必须在1900-1-31之后');
   }
 
-  const utcDate = Date.UTC(year, month - 1, day);
-  const utcFloor = Date.UTC(1900, 0, 31);
+  const utcDate = Date.UTC(year, month - 1, day); // 获取当前日期UTC值
+  const utcFloor = Date.UTC(1900, 0, 31); // 获取1900-1-31日的UTC值
   let lunarYear: number; // 农历年份
   let totalDayOfYear = 0;
   let offset = (utcDate - utcFloor) / 86400000; // 将差值转化为天
 
   for (lunarYear = 1900; lunarYear < 2101 && offset > 0; lunarYear++) {
+    // 从1900年往2100年循环，将offset减去每一年的天数，当offset小于等于0的时候
+    // 结束循环，当前的索引即是农历年份
     totalDayOfYear = getTotalDaysOfLunarYear(lunarYear);
     offset -= totalDayOfYear;
   }
 
   if (offset < 0) {
+    // 当offset小于0了，需要将农历年份减去1
     offset += totalDayOfYear;
     lunarYear--;
   }

@@ -8,7 +8,6 @@ import { LUNAR_INFO } from './rules';
  * leapMonth = getLeapMonth(1987) ; // leapMonth=6
  */
 export const getLeapMonth = (year: number) => {
-  //闰字编码 \u95f0
   return LUNAR_INFO[year - 1900] & 0xf;
 };
 
@@ -26,5 +25,3 @@ export const getLeapDays = (year: number) => {
 
   return 0;
 };
-
-

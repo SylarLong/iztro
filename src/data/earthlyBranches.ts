@@ -1,18 +1,7 @@
-/**
- * 十二地支信息
- * 其中包含：
- * 1. 阴阳（yinYang）
- * 2. 五行（fiveElements）
- * 3. 六冲（crash）
- * 4. 紫微斗数命主（soul）
- * 5. 紫微斗数身主（body）
- * 6. 身体部位【内】（inside）
- * 7. 身体部位【外】（outside）
- * 8. 健康提示（healthTip）
- */
-export const earthlyBranches = {
+import { EarthlyBranch } from './types';
+
+export const earthlyBranches: EarthlyBranch = {
   子: {
-    //命主(soul)以命宫所在宫位定之，身主(body)以生年年支定之
     yinYang: '阳',
     fiveElements: '水',
     crash: '午',

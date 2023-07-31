@@ -6,10 +6,25 @@ import { getTerm } from './misc';
 type HeavenlyStemAndEarthlyBranch = [(typeof HEAVENLY_STEMS)[number], (typeof EARTHLY_BRANCHES)[number]];
 
 type HeavenlyStemAndEarthlyBranchResult = {
+  /** 年柱[天干，地支] */
   yearly: HeavenlyStemAndEarthlyBranch;
+  /** 月柱[天干，地支] */
   monthly: HeavenlyStemAndEarthlyBranch;
+  /** 日柱[天干，地支] */
   daily: HeavenlyStemAndEarthlyBranch;
+  /** 时柱[天干，地支] */
   timely: HeavenlyStemAndEarthlyBranch;
+  /**
+   * 获取四柱的字符串
+   *
+   * @returns 四柱字符串，用空格隔开
+   * @example
+   * yearly = ['癸', '卯'];
+   * monthly = ['戊', '午'];
+   * daily = ['癸', '亥'];
+   * timely = ['甲', '寅'];
+   * toString(); // 癸卯 戊午 癸亥 甲寅
+   */
   toString: () => string;
 };
 
@@ -17,7 +32,7 @@ type HeavenlyStemAndEarthlyBranchResult = {
  * 传入offset偏移量返回干支
  *
  * @param offset 相对甲子的偏移量
- * @return 干支
+ * @return [干, 支]
  */
 const heavenlyStemAndEarthlyBranchFromOffset = (offset: number): HeavenlyStemAndEarthlyBranch => {
   return [HEAVENLY_STEMS[offset % 10], EARTHLY_BRANCHES[offset % 12]];
@@ -27,14 +42,14 @@ const heavenlyStemAndEarthlyBranchFromOffset = (offset: number): HeavenlyStemAnd
  * 农历年份计算年干支
  *
  * @param  year 农历年的年份数
- * @return 年干支
+ * @return [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfYear = (year: number): HeavenlyStemAndEarthlyBranch => {
   let heavenStemKey = (year - 3) % 10;
   let earthlyBranchKey = (year - 3) % 12;
 
-  if (heavenStemKey === 0) heavenStemKey = 10; //如果余数为0则为最后一个天干
-  if (earthlyBranchKey === 0) earthlyBranchKey = 12; //如果余数为0则为最后一个地支
+  if (heavenStemKey === 0) heavenStemKey = 10; // 如果余数为0则为最后一个天干
+  if (earthlyBranchKey === 0) earthlyBranchKey = 12; // 如果余数为0则为最后一个地支
 
   return [HEAVENLY_STEMS[heavenStemKey - 1], EARTHLY_BRANCHES[earthlyBranchKey - 1]];
 };
@@ -43,13 +58,14 @@ export const heavenlyStemAndEarthlyBranchOfYear = (year: number): HeavenlyStemAn
  * 通过公历日期计算月干支
  *
  * @param date 公历日期
- * @returns 月干支
+ * @returns [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfMonth = (date: Date): HeavenlyStemAndEarthlyBranch => {
   const [year, month, day] = normalizeSolarDateStr(date);
 
   // 当月的第一个节气
-  const firstNode = getTerm(year, month * 2 - 1); //返回当月「节」为几日开始
+  // 返回当月「节」为几日开始
+  const firstNode = getTerm(year, month * 2 - 1);
   const offset = (year - 1900) * 12 + month + 11;
 
   if (day >= firstNode) {
@@ -64,7 +80,7 @@ export const heavenlyStemAndEarthlyBranchOfMonth = (date: Date): HeavenlyStemAnd
  *
  * @param date 公历日期
  * @param timeIndex 时辰索引，主要是为了修复晚子时需要加一天的问题
- * @returns 日干支
+ * @returns [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfDay = (date: Date, timeIndex: number): HeavenlyStemAndEarthlyBranch => {
   const [year, month, day] = normalizeSolarDateStr(date);
@@ -79,6 +95,7 @@ export const heavenlyStemAndEarthlyBranchOfDay = (date: Date, timeIndex: number)
  *
  * @param timeIndex 时辰序号（0~11），子时为0，亥时为11
  * @param heavenlyStemOfDay 当日天干
+ * @returns [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfTime = (
   timeIndex: number,

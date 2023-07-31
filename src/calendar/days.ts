@@ -4,7 +4,7 @@ import { LUNAR_INFO, SOLAR_MONTH } from './rules';
 /**
  * 返回农历年一整年的总天数
  * @param year 农历年份
- * @return Number
+ * @return number
  * @example
  * count = getTotalDaysOfLunarYear(1987) ;//count=387
  */
@@ -23,7 +23,7 @@ export const getTotalDaysOfLunarYear = (year: number) => {
  *
  * @param year 农历年份
  * @param month 农历月份，取值【1～12】
- * @return Number (29、30)
+ * @return 29 | 30
  * @example
  * MonthDay = getTotalDaysOfLunarMonth(1987,9) ;//MonthDay=29
  */
@@ -37,9 +37,10 @@ export const getTotalDaysOfLunarMonth = (year: number, month: number) => {
 
 /**
  * 返回公历月的天数
+ *
  * @param year 公历年
  * @param month 公历月，取值【1～12】，若参数错误 返回-1
- * @return Number (28、29、30、31)
+ * @return 28 | 29 | 30 | 31
  * @example
  * solarMonthDay = getTotalDaysOfSolarMonth(1987, 1) ; // solarMonthDay=30
  */
