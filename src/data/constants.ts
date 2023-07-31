@@ -8,7 +8,20 @@ export const EARTHLY_BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午'
 export const ZODIAC = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
 
 // 紫微斗数十二宫名称
-export const PALACES = ['命宫', '父母', '福德', '田宅', '官禄', '仆役', '迁移', '疾厄', '财帛', '子女', '夫妻', '兄弟'] as const;
+export const PALACES = [
+  '命宫',
+  '父母',
+  '福德',
+  '田宅',
+  '官禄',
+  '仆役',
+  '迁移',
+  '疾厄',
+  '财帛',
+  '子女',
+  '夫妻',
+  '兄弟',
+] as const;
 
 // 紫微斗数四化
 export const MUTAGEN = ['禄', '权', '科', '忌'] as const;

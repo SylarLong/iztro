@@ -124,7 +124,10 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
  * @param timeIndex 时辰索引【0～12】
  * @returns HeavenlyStemAndEarthlyBranchResult
  */
-export const getHeavenlyStemAndEarthlyBranchBySolarDate = (dateStr: string, timeIndex: number): HeavenlyStemAndEarthlyBranchResult => {
+export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
+  dateStr: string,
+  timeIndex: number,
+): HeavenlyStemAndEarthlyBranchResult => {
   const solarDate = new Date(dateStr);
   const { lunarYear } = solar2lunar(dateStr);
 

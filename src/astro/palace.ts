@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, TIGER_RULE } from '../data';
-import { SoulAndBody } from '../data/types';
+import { FiveElementsClass, SoulAndBody } from '../data/types';
 import { fixIndex } from '../utils';
 
 /**
@@ -61,4 +61,64 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
     heavenlyStemOfSoul,
     earthlyBranchOfSoul,
   };
+};
+
+/**
+ * 定五行局法（以命宫天干地支而定）
+ *
+ * 纳音五行计算取数巧记口诀：
+ *
+ * - 甲乙丙丁一到五，子丑午未一来数，
+ * - 寅卯申酉二上走，辰巳戌亥三为足。
+ * - 干支相加多减五，五行木金水火土。
+ *
+ * 注解：
+ *
+ * 1、五行取数：木1 金2 水3 火4 土5
+ *
+ *  天干取数：
+ *  - 甲乙 ——> 1
+ *  - 丙丁 ——> 2
+ *  - 戊己 ——> 3
+ *  - 庚辛 ——> 4
+ *  - 壬癸 ——> 5
+ *
+ *  地支取数：
+ *  - 子午丑未 ——> 1
+ *  - 寅申卯酉 ——> 2
+ *  - 辰戌巳亥 ——> 3
+ *
+ * 2、计算方法：
+ *
+ *  干支数相加，超过5者减去5，以差论之。
+ *  - 若差为1则五行属木
+ *  - 若差为2则五行属金
+ *  - 若差为3则五行属水
+ *  - 若差为4则五行属火
+ *  - 若差为5则五行属土
+ *
+ * 3、举例：
+ *  - 丙子：丙2 子1=3 ——> 水 ——> 水二局
+ *  - 辛未：辛4 未1=5 ——> 土 ——> 土五局
+ *  - 庚申：庚4 申2=6 ——> 6-5=1 ——> 木 ——> 木三局
+ *
+ * @param heavenlyStem 天干
+ * @param earthlyBranch 地支
+ * @returns 水二局 ｜ 木三局 ｜ 金四局 ｜ 土五局 ｜ 火六局
+ */
+export const getFiveElementsClass = (
+  heavenlyStem: (typeof HEAVENLY_STEMS)[number],
+  earthlyBranch: (typeof EARTHLY_BRANCHES)[number],
+): keyof typeof FiveElementsClass => {
+  const fiveElementsTable: Array<keyof typeof FiveElementsClass> = ['木三局', '金四局', '水二局', '火六局', '土五局'];
+
+  const heavenlyStemNumber = Math.floor(HEAVENLY_STEMS.indexOf(heavenlyStem) / 2) + 1;
+  const earthlyBranchNumber = Math.floor(fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch), 6) / 2) + 1;
+  let index = heavenlyStemNumber + earthlyBranchNumber;
+
+  while (index > 5) {
+    index -= 5;
+  }
+
+  return fiveElementsTable[index - 1];
 };

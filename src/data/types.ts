@@ -1,6 +1,19 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from './constants';
 
 /**
+ * 五行局，用于定紫微星和算起运年龄
+ * 几局就从几岁（虚岁）开始起运
+ * 比如 木三局 就从3岁开始起运
+ */
+export enum FiveElementsClass {
+  水二局 = 2,
+  木三局,
+  金四局,
+  土五局,
+  火六局,
+}
+
+/**
  * 十二地支信息
  * 其中包含：
  * 1. 阴阳（yinYang）

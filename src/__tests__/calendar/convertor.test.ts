@@ -18,7 +18,7 @@ describe('calendar/convertor', () => {
     Object.entries(dates).map(([key, value]) => {
       const result = solar2lunar(key);
 
-      expect(result.toString()).toBe(value.date);
+      expect(result.toString(true)).toBe(value.date);
       expect(result.isLeap).toBe(value.isLeap);
     });
 
