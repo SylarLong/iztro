@@ -1,17 +1,7 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, TIGER_RULE } from '../data';
+import { SoulAndBody } from '../data/types';
 import { fixIndex } from '../utils';
-
-type SoulAndBody = {
-  /** 命宫索引 */
-  soulIndex: number;
-  /** 身宫索引 */
-  bodyIndex: number;
-  /** 命宫天干 */
-  heavenlyStemOfSoul: (typeof HEAVENLY_STEMS)[number];
-  /** 命宫地支 */
-  earthlyBranchOfSoul: (typeof EARTHLY_BRANCHES)[number];
-};
 
 /**
  * 获取命宫以及身宫数据

@@ -1,53 +1,7 @@
+import { LunarDate, SolarDate } from '../data/types';
 import { getTotalDaysOfLunarMonth, getTotalDaysOfLunarYear } from './days';
 import { getLeapDays, getLeapMonth } from './leap';
 import { lunarDateToStr } from './misc';
-
-export type LunarDate = {
-  /** 农历年 */
-  lunarYear: number;
-  /** 农历月 */
-  lunarMonth: number;
-  /** 农历日 */
-  lunarDay: number;
-  /** 是否闰月 */
-  isLeap: boolean;
-  /**
-   * 转化为字符串
-   *
-   * @param toCnStr 是否使用中文字符串, 若该参数为false则字符串中不会携带闰月信息
-   * @returns string
-   * @example
-   * lunarYear = 2023;
-   * lunarMonth = 6;
-   * lunarDay = 12;
-   * isLeap = true;
-   *
-   * toString(); // 2023-6-12
-   * toString(true); // 二〇二三年(闰)二月十一
-   */
-  toString: (toCnStr?: boolean) => string;
-};
-
-export type SolarDate = {
-  /** 公历年 */
-  solarYear: number;
-  /** 公历月 */
-  solarMonth: number;
-  /** 公历日 */
-  solarDay: number;
-  /**
-   * 转化为字符串
-   *
-   * @returns string
-   * @example
-   * solarYear = 2023;
-   * solarMonth = 6;
-   * solarDay = 12;
-   *
-   * toString(); // 2023-6-12
-   */
-  toString: () => string;
-};
 
 /**
  * 将农历日期字符串拆分成年，月，日
@@ -178,7 +132,7 @@ export const solar2lunar = (dateStr: string): LunarDate => {
  * @param isLeapMonth 是否闰月，若该月不是闰月，会忽略该参数
  * @returns SolarDate
  */
-export const lunar2solar = (dateStr: string, isLeapMonth?: boolean) => {
+export const lunar2solar = (dateStr: string, isLeapMonth?: boolean): SolarDate => {
   const [year, month, day] = normalizeLunarDateStr(dateStr);
   const leapMonth = getLeapMonth(year);
 

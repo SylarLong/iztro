@@ -1,32 +1,8 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, RAT_RULE } from '../data';
+import { HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchResult } from '../data/types';
 import { fixIndex } from '../utils';
 import { lunar2solar, normalizeLunarDateStr, normalizeSolarDateStr, solar2lunar } from './convertor';
 import { getTerm } from './misc';
-
-type HeavenlyStemAndEarthlyBranch = [(typeof HEAVENLY_STEMS)[number], (typeof EARTHLY_BRANCHES)[number]];
-
-type HeavenlyStemAndEarthlyBranchResult = {
-  /** 年柱[天干，地支] */
-  yearly: HeavenlyStemAndEarthlyBranch;
-  /** 月柱[天干，地支] */
-  monthly: HeavenlyStemAndEarthlyBranch;
-  /** 日柱[天干，地支] */
-  daily: HeavenlyStemAndEarthlyBranch;
-  /** 时柱[天干，地支] */
-  timely: HeavenlyStemAndEarthlyBranch;
-  /**
-   * 获取四柱的字符串
-   *
-   * @returns 四柱字符串，用空格隔开
-   * @example
-   * yearly = ['癸', '卯'];
-   * monthly = ['戊', '午'];
-   * daily = ['癸', '亥'];
-   * timely = ['甲', '寅'];
-   * toString(); // 癸卯 戊午 癸亥 甲寅
-   */
-  toString: () => string;
-};
 
 /**
  * 传入offset偏移量返回干支
