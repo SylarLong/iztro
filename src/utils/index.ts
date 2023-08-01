@@ -41,21 +41,3 @@ export const getBrightness = (starName: keyof typeof star, index: number): strin
 
   return star[starName].brightness[fixIndex(index)];
 };
-
-/**
- * 获取从寅宫开始的各个宫名
- *
- * @param fromIndex 命宫索引
- * @returns 从寅宫开始的各个宫名
- */
-export const getPalaceNames = (fromIndex: number): Array<(typeof PALACES)[number]> => {
-  const names: Array<(typeof PALACES)[number]> = [];
-
-  for (let i = 0; i < PALACES.length; i++) {
-    let idx = fixIndex(i - fromIndex);
-
-    names[i] = PALACES[idx];
-  }
-
-  return names;
-};

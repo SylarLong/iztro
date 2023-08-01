@@ -1,4 +1,4 @@
-import { getFiveElementsClass, getSoulAndBody } from '../../astro';
+import { getFiveElementsClass, getSoulAndBody, getPalaceNames } from '../../astro';
 import { FiveElementsClass } from '../../data/types';
 
 describe('astro/palace', () => {
@@ -44,5 +44,12 @@ describe('astro/palace', () => {
     expect(getFiveElementsClass('癸', '亥')).toBe(FiveElementsClass[2]);
     expect(getFiveElementsClass('壬', '戌')).toBe(FiveElementsClass[2]);
     expect(getFiveElementsClass('辛', '酉')).toBe(FiveElementsClass[3]);
+  });
+
+  test('getPalaceNames() should return correct list', () => {
+    const targetList = ['兄弟', '命宫', '父母', '福德', '田宅', '官禄', '仆役', '迁移', '疾厄', '财帛', '子女', '夫妻'];
+    expect(getPalaceNames(1)).toStrictEqual(targetList);
+    expect(getPalaceNames(13)).toStrictEqual(targetList);
+    expect(getPalaceNames(-11)).toStrictEqual(targetList);
   });
 });

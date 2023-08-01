@@ -1,5 +1,5 @@
 import { EARTHLY_BRANCHES } from '../../data';
-import { fixIndex, getBrightness, getPalaceNames } from '../../utils';
+import { fixIndex, getBrightness } from '../../utils';
 
 describe('Utils', () => {
   test('fixIndex() should return correct index.', () => {
@@ -29,12 +29,5 @@ describe('Utils', () => {
     expect(getBrightness('陀罗', EARTHLY_BRANCHES.indexOf('亥'))).toBe('陷');
     expect(getBrightness('擎羊', EARTHLY_BRANCHES.indexOf('亥'))).toBe('');
     expect(getBrightness('擎羊', EARTHLY_BRANCHES.indexOf('酉'))).toBe('陷');
-  });
-
-  test('getPalaceNames() should return correct list', () => {
-    const targetList = ['兄弟', '命宫', '父母', '福德', '田宅', '官禄', '仆役', '迁移', '疾厄', '财帛', '子女', '夫妻'];
-    expect(getPalaceNames(1)).toStrictEqual(targetList);
-    expect(getPalaceNames(13)).toStrictEqual(targetList);
-    expect(getPalaceNames(-11)).toStrictEqual(targetList);
   });
 });

@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, solar2lunar } from '../calendar';
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS, TIGER_RULE } from '../data';
+import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIGER_RULE } from '../data';
 import { FiveElementsClass, SoulAndBody } from '../data/types';
 import { fixIndex } from '../utils';
 
@@ -121,4 +121,22 @@ export const getFiveElementsClass = (
   }
 
   return fiveElementsTable[index - 1];
+};
+
+/**
+ * 获取从寅宫开始的各个宫名
+ *
+ * @param fromIndex 命宫索引
+ * @returns 从寅宫开始的各个宫名
+ */
+export const getPalaceNames = (fromIndex: number): Array<(typeof PALACES)[number]> => {
+  const names: Array<(typeof PALACES)[number]> = [];
+
+  for (let i = 0; i < PALACES.length; i++) {
+    let idx = fixIndex(i - fromIndex);
+
+    names[i] = PALACES[idx];
+  }
+
+  return names;
 };
