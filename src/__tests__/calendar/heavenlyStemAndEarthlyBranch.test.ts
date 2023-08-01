@@ -39,6 +39,12 @@ describe('calendar/heavenlyStemAndEarthlyBranch', () => {
         isLeap: false,
         result: '壬寅 癸丑 己卯 乙丑',
       },
+      {
+        date: '2023-1-29',
+        timeIndex: 12,
+        isLeap: false,
+        result: '癸卯 甲寅 己酉 甲子',
+      },
     ];
 
     data.forEach(({ date, timeIndex, isLeap, result }) => {
@@ -72,6 +78,12 @@ describe('calendar/heavenlyStemAndEarthlyBranch', () => {
         date: '2023-1-22',
         timeIndex: 5,
         result: '癸卯 癸丑 庚辰 辛巳',
+      },
+      {
+        date: '2023-2-19',
+        timeIndex: 12,
+        isLeap: false,
+        result: '癸卯 甲寅 己酉 甲子',
       },
     ];
 

@@ -24,6 +24,16 @@ describe('astro/palace', () => {
           earthlyBranchOfSoul: '申',
         },
       },
+      {
+        date: '2023-2-19',
+        timeIndex: 12,
+        result: {
+          soulIndex: 1,
+          bodyIndex: 1,
+          heavenlyStemOfSoul: '乙',
+          earthlyBranchOfSoul: '卯',
+        },
+      },
     ];
 
     data.forEach((item) => {

@@ -1,4 +1,4 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, solar2lunar } from '../calendar';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate, getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIGER_RULE } from '../data';
 import { FiveElementsClass, SoulAndBody } from '../data/types';
 import { fixIndex } from '../utils';
@@ -21,8 +21,20 @@ import { fixIndex } from '../utils';
  * @returns SoulAndBody
  */
 export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
-  const lunarDate = solar2lunar(solarDate);
-  const { lunarYear, lunarMonth, lunarDay, isLeap } = lunarDate;
+  let lunarDate = solar2lunar(solarDate);
+
+  // 获取当月的天数
+  const totalDaysOfLunarMonth = getTotalDaysOfLunarMonth(lunarDate.lunarYear, lunarDate.lunarMonth);
+
+  if (timeIndex >= 12 && lunarDate.lunarDay >= totalDaysOfLunarMonth) {
+    // 假如是晚子时并且日期是农历月的最后一天时，月份需要加1
+    const dt = new Date(solarDate);
+
+    dt.setDate(dt.getDate() + 1);
+    lunarDate = solar2lunar(dt);
+  }
+
+  const { lunarMonth, lunarDay, isLeap } = lunarDate;
   const { yearly, timely } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
 
   // 紫微斗数以`寅`宫为第一个宫位

@@ -34,10 +34,10 @@ export const normalizeSolarDateStr = (dateStr: string | Date) => {
 /**
  * 公历转农历，年份需要在【1900~2100】之间，并且日期必须在1900-1-31之后
  *
- * @param dateStr 公历日期 YYYY-MM-DD
+ * @param dateStr 公历日期 YYYY-MM-DD格式的字符串或者Date对象
  * @returns LunarDate
  */
-export const solar2lunar = (dateStr: string): LunarDate => {
+export const solar2lunar = (dateStr: string | Date): LunarDate => {
   const [year, month, day] = normalizeSolarDateStr(dateStr);
 
   //参数区间1900.1.31~2100.12.31
