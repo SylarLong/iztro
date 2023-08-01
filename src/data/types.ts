@@ -1,7 +1,9 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from './constants';
 
+export type Gender = '男' | '女';
 export type YinYang = '阴' | '阳';
 export type FiveElements = '木' | '金' | '水' | '火' | '土';
+export type StarBrightness = '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
 
 /**
  * 五行局，用于定紫微星和算起运年龄
