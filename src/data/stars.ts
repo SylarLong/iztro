@@ -1,3 +1,35 @@
+export const PRIMARY_STARS = [
+  '紫微',
+  '天机',
+  '太阳',
+  '武曲',
+  '天同',
+  '廉贞',
+  '天府',
+  '太阴',
+  '贪狼',
+  '巨门',
+  '天相',
+  '天梁',
+  '七杀',
+  '破军',
+] as const;
+
+export const SECONDARY_STARTS = [
+  '文昌',
+  '文曲',
+  '天魁',
+  '天钺',
+  '左辅',
+  '右弼',
+  '地空',
+  '地劫',
+  '火星',
+  '铃星',
+  '擎羊',
+  '陀罗',
+] as const;
+
 /**
  * 星耀信息
  * 其中包含：
@@ -6,7 +38,7 @@
  * 3. 阴阳（yinYang）
  * 4. 健康提示（healthTip）
  */
-export const star = {
+export const STARS_INFO = {
   紫微: {
     brightness: ['平', '庙', '旺', '旺', '得', '旺', '庙', '庙', '旺', '旺', '得', '旺'],
     fiveElements: '土',

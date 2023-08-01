@@ -1,4 +1,4 @@
-import { EARTHLY_BRANCHES, PALACES, star } from '../data';
+import { EARTHLY_BRANCHES, STARS_INFO } from '../data';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -34,10 +34,10 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranch: (typeof EARTHLY_B
  * @param starName 星耀名字
  * @param index 所在宫位索引
  */
-export const getBrightness = (starName: keyof typeof star, index: number): string => {
+export const getBrightness = (starName: keyof typeof STARS_INFO, index: number): string => {
   if (!starName) {
     return '';
   }
 
-  return star[starName].brightness[fixIndex(index)];
+  return STARS_INFO[starName].brightness[fixIndex(index)];
 };

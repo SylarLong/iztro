@@ -1,4 +1,4 @@
 export * from './constants';
-export * from './star';
+export * from './stars';
 export * from './heavenlyStems';
 export * from './earthlyBranches';

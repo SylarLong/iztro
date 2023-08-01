@@ -1,6 +1,24 @@
-import { EarthlyBranch } from './types';
-
-export const earthlyBranches: EarthlyBranch = {
+/**
+ * 十二地支信息
+ * 其中包含：
+ * 1. 阴阳（yinYang）
+ * 2. 五行（fiveElements）
+ * 3. 六冲（crash）
+ *    - 子午相冲
+ *    - 丑未相冲
+ *    - 寅申相冲
+ *    - 卯酉相冲
+ *    - 辰戌相冲
+ *    - 巳亥相冲
+ * 4. 紫微斗数命主（soul）
+ *    - 命主以命宫所在宫位地支定之
+ * 5. 紫微斗数身主（body）
+ *    - 身主以生年年支定之
+ * 6. 身体部位【内】（inside）
+ * 7. 身体部位【外】（outside）
+ * 8. 健康提示（healthTip）
+ */
+export const earthlyBranches = {
   子: {
     yinYang: '阳',
     fiveElements: '水',
