@@ -6,6 +6,18 @@ export type FiveElements = '木' | '金' | '水' | '火' | '土';
 export type StarBrightness = '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
 
 /**
+ * 紫微斗数星耀
+ */
+export type Star = {
+  /** 星耀名字 */
+  name: string;
+  /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀） */
+  type: 'primary' | 'soft' | 'tough' | 'other';
+  /** 作用范围（本命盘 | 大限盘 | 流年盘） */
+  scope: 'origin' | 'stage' | 'yearly';
+};
+
+/**
  * 五行局，用于定紫微星和算起运年龄
  * 几局就从几岁（虚岁）开始起运
  * 比如 木三局 就从3岁开始起运
@@ -17,6 +29,8 @@ export enum FiveElementsClass {
   土五局,
   火六局,
 }
+
+export type FiveElementsClassItem = keyof typeof FiveElementsClass;
 
 export type LunarDate = {
   /** 农历年 */
