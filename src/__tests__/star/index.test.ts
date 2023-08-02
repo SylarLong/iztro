@@ -1,5 +1,5 @@
 import { FiveElementsClassItem } from '../../data/types';
-import { getStartIndex } from '../../star';
+import { getStartIndex, getPrimaryStar } from '../../star';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -163,5 +163,28 @@ describe('star/index', () => {
     data.forEach(({ fiveElementsClass, timeIndex, lunarYear, lunarMonth, lunarDay, result }) => {
       expect(getStartIndex(fiveElementsClass, lunarYear, lunarMonth, lunarDay, timeIndex)).toStrictEqual(result);
     });
+  });
+
+  test('getPrimaryStar()', () => {
+    expect(getPrimaryStar(6, 6)).toStrictEqual([
+      [{ name: '七杀', type: 'primary', scope: 'origin' }],
+      [{ name: '天同', type: 'primary', scope: 'origin' }],
+      [{ name: '武曲', type: 'primary', scope: 'origin' }],
+      [{ name: '太阳', type: 'primary', scope: 'origin' }],
+      [{ name: '破军', type: 'primary', scope: 'origin' }],
+      [{ name: '天机', type: 'primary', scope: 'origin' }],
+      [
+        { name: '紫微', type: 'primary', scope: 'origin' },
+        { name: '天府', type: 'primary', scope: 'origin' },
+      ],
+      [{ name: '太阴', type: 'primary', scope: 'origin' }],
+      [{ name: '贪狼', type: 'primary', scope: 'origin' }],
+      [{ name: '巨门', type: 'primary', scope: 'origin' }],
+      [
+        { name: '廉贞', type: 'primary', scope: 'origin' },
+        { name: '天相', type: 'primary', scope: 'origin' },
+      ],
+      [{ name: '天梁', type: 'primary', scope: 'origin' }],
+    ]);
   });
 });

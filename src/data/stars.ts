@@ -28,6 +28,8 @@ export const SECONDARY_STARTS = [
   '铃星',
   '擎羊',
   '陀罗',
+  '禄存',
+  '天马'
 ] as const;
 
 /**

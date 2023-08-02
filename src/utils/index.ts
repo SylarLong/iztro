@@ -41,3 +41,12 @@ export const getBrightness = (starName: keyof typeof STARS_INFO, index: number):
 
   return STARS_INFO[starName].brightness[fixIndex(index)];
 };
+
+/**
+ * 处理地支相对于十二宫的索引，因为十二宫是以寅宫开始，所以下标需要减去地支寅的索引
+ *
+ * @param earthlyBranch 地支
+ * @returns Number(0~11)
+ */
+export const fixEarthlyBranchIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number]): number =>
+  fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅'));
