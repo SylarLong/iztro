@@ -284,7 +284,7 @@ export const getKongJieIndex = (timeIndex: number) => {
  * @param timeIndex 时辰序号
  * @returns 火星、铃星索引
  */
-export const getHuoLing = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number], timeIndex: number) => {
+export const getHuoLingIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number], timeIndex: number) => {
   let huoIndex = -1;
   let lingIndex = -1;
 
