@@ -106,16 +106,24 @@ export const getLuYangTuoMaIndex = (
   let maIndex = -1; // 天马索引
 
   switch (earthlyBranch) {
-    case '寅' || '午' || '戌':
+    case '寅':
+    case '午':
+    case '戌':
       maIndex = fixEarthlyBranchIndex('申');
       break;
-    case '申' || '子' || '辰':
+    case '申':
+    case '子':
+    case '辰':
       maIndex = fixEarthlyBranchIndex('寅');
       break;
-    case '巳' || '酉' || '丑':
+    case '巳':
+    case '酉':
+    case '丑':
       maIndex = fixEarthlyBranchIndex('亥');
       break;
-    case '亥' || '卯' || '未':
+    case '亥':
+    case '卯':
+    case '未':
       maIndex = fixEarthlyBranchIndex('巳');
       break;
   }

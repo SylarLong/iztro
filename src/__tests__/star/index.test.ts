@@ -1,5 +1,6 @@
+import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from '../../data';
 import { FiveElementsClassItem } from '../../data/types';
-import { getStartIndex, getPrimaryStar } from '../../star';
+import { getStartIndex, getPrimaryStar, getLuYangTuoMaIndex, getKuiYueIndex } from '../../star';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -186,5 +187,45 @@ describe('star/index', () => {
       ],
       [{ name: '天梁', type: 'primary', scope: 'origin' }],
     ]);
+  });
+
+  test('getLuYangTuoMaIndex()', () => {
+    const data = [
+      {
+        heavenlyStem: '癸',
+        earthlyBranch: '卯',
+        result: {
+          luIndex: 10,
+          yangIndex: 11,
+          tuoIndex: 9,
+          maIndex: 3,
+        },
+      },
+    ];
+
+    data.forEach((item) => {
+      expect(
+        getLuYangTuoMaIndex(
+          item.heavenlyStem as (typeof HEAVENLY_STEMS)[number],
+          item.earthlyBranch as (typeof EARTHLY_BRANCHES)[number],
+        ),
+      ).toStrictEqual(item.result);
+    });
+  });
+
+  test('getKuiYueIndex()', () => {
+    const data = [
+      {
+        heavenlyStem: '癸',
+        result: {
+          kuiIndex: 1,
+          yueIndex: 3,
+        },
+      },
+    ];
+
+    data.forEach((item) => {
+      expect(getKuiYueIndex(item.heavenlyStem as (typeof HEAVENLY_STEMS)[number])).toStrictEqual(item.result);
+    });
   });
 });
