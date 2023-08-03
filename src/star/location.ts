@@ -185,25 +185,36 @@ export const getLuYangTuoMaIndex = (
  * @param heavenlyStem 天干
  * @returns
  */
-export const getKuiYueIndex = (heavenlyStem: string) => {
+export const getKuiYueIndex = (heavenlyStem: (typeof HEAVENLY_STEMS)[number]) => {
   let kuiIndex = -1;
   let yueIndex = -1;
 
-  if (heavenlyStem === '甲' || heavenlyStem === '戊' || heavenlyStem === '庚') {
-    kuiIndex = fixEarthlyBranchIndex('丑');
-    yueIndex = fixEarthlyBranchIndex('未');
-  } else if (heavenlyStem === '乙' || heavenlyStem === '己') {
-    kuiIndex = fixEarthlyBranchIndex('子');
-    yueIndex = fixEarthlyBranchIndex('申');
-  } else if (heavenlyStem === '辛') {
-    kuiIndex = fixEarthlyBranchIndex('午');
-    yueIndex = fixEarthlyBranchIndex('寅');
-  } else if (heavenlyStem === '丙' || heavenlyStem === '丁') {
-    kuiIndex = fixEarthlyBranchIndex('亥');
-    yueIndex = fixEarthlyBranchIndex('酉');
-  } else if (heavenlyStem === '壬' || heavenlyStem === '癸') {
-    kuiIndex = fixEarthlyBranchIndex('卯');
-    yueIndex = fixEarthlyBranchIndex('巳');
+  switch (heavenlyStem) {
+    case '甲':
+    case '戊':
+    case '庚':
+      kuiIndex = fixEarthlyBranchIndex('丑');
+      yueIndex = fixEarthlyBranchIndex('未');
+      break;
+    case '乙':
+    case '己':
+      kuiIndex = fixEarthlyBranchIndex('子');
+      yueIndex = fixEarthlyBranchIndex('申');
+      break;
+    case '辛':
+      kuiIndex = fixEarthlyBranchIndex('午');
+      yueIndex = fixEarthlyBranchIndex('寅');
+      break;
+    case '丙':
+    case '丁':
+      kuiIndex = fixEarthlyBranchIndex('亥');
+      yueIndex = fixEarthlyBranchIndex('酉');
+      break;
+    case '壬':
+    case '癸':
+      kuiIndex = fixEarthlyBranchIndex('卯');
+      yueIndex = fixEarthlyBranchIndex('巳');
+      break;
   }
 
   return { kuiIndex, yueIndex };
@@ -224,10 +235,10 @@ export const getKuiYueIndex = (heavenlyStem: string) => {
  * @returns 左辅、右弼索引
  */
 export const getZuoYouIndex = (lunarMonth: number) => {
-  const zuoIndex = fixIndex(fixEarthlyBranchIndex('辰') + lunarMonth);
-  const youIdx = fixIndex(fixEarthlyBranchIndex('戌') - lunarMonth);
+  const zuoIndex = fixIndex(fixEarthlyBranchIndex('辰') + (lunarMonth - 1));
+  const youIndex = fixIndex(fixEarthlyBranchIndex('戌') - (lunarMonth - 1));
 
-  return { zuoIndex, youIdx };
+  return { zuoIndex, youIndex };
 };
 
 /**

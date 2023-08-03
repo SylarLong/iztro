@@ -1,6 +1,6 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from '../../data';
 import { FiveElementsClassItem } from '../../data/types';
-import { getStartIndex, getPrimaryStar, getLuYangTuoMaIndex, getKuiYueIndex } from '../../star';
+import { getStartIndex, getPrimaryStar, getLuYangTuoMaIndex, getKuiYueIndex, getZuoYouIndex } from '../../star';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -226,6 +226,29 @@ describe('star/index', () => {
 
     data.forEach((item) => {
       expect(getKuiYueIndex(item.heavenlyStem as (typeof HEAVENLY_STEMS)[number])).toStrictEqual(item.result);
+    });
+  });
+
+  test('getZuoYouIndex()', () => {
+    const data = [
+      {
+        lunarMonth: 5,
+        result: {
+          zuoIndex: 6,
+          youIndex: 4,
+        },
+      },
+      {
+        lunarMonth: 6,
+        result: {
+          zuoIndex: 7,
+          youIndex: 3,
+        },
+      },
+    ];
+
+    data.forEach((item) => {
+      expect(getZuoYouIndex(item.lunarMonth)).toStrictEqual(item.result);
     });
   });
 });
