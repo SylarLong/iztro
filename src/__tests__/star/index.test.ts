@@ -1,5 +1,6 @@
 import { FiveElementsClassItem } from '../../data/types';
-import { getStartIndex, getPrimaryStar } from '../../star';
+import { getStartIndex, getPrimaryStar, setSecondaryStar as getSecondaryStar } from '../../star';
+import { mergeStars } from '../../utils';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -186,5 +187,12 @@ describe('star/index', () => {
       ],
       [{ name: '天梁', type: 'primary', scope: 'origin' }],
     ]);
+  });
+
+  test('setSecondaryStar()', () => {
+    const primaryStars = getPrimaryStar(2, 10);
+    const secondaryStars = getSecondaryStar('2023-03-06', 2, true);
+
+    expect(mergeStars(primaryStars, secondaryStars)).toHaveLength(12);
   });
 });

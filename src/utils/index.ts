@@ -1,6 +1,7 @@
 import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, STARS_INFO } from '../data';
-import { LunarDate } from '../data/types';
+import { LunarDate, Star } from '../data/types';
+import { initStars } from '../star';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -74,4 +75,44 @@ export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
   }
 
   return lunarDate;
+};
+
+/**
+ * 调整农历月份的索引
+ *
+ * 正月建寅（正月地支为寅），fixLeap为是否调整闰月情况
+ * 若调整闰月，则闰月的前15天按上月算，后面天数按下月算
+ * 比如 闰二月 时，fixLeap 为 true 时 闰二月十五(含)前
+ * 的月份按二月算，之后的按三月算
+ *
+ * @param solarDateStr 阳历日期
+ * @param timeIndex 时辰序号
+ * @param fixLeap 是否调整闰月
+ * @returns {number} 月份索引
+ */
+export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+  const lunarDate = fixLunarDate(solarDateStr, timeIndex);
+  const { lunarMonth, lunarDay, isLeap } = lunarDate;
+  // 紫微斗数以`寅`宫为第一个宫位
+  const firstIndex = EARTHLY_BRANCHES.indexOf('寅');
+
+  return fixIndex(lunarMonth + 1 - firstIndex + (isLeap && fixLeap && lunarDay > 15 ? 1 : 0));
+};
+
+/**
+ * 将多个星耀数组合并到一起
+ *
+ * @param stars 星耀数组
+ * @returns 合并后的星耀
+ */
+export const mergeStars = (...stars: Array<Star[][]>) => {
+  const finalStars = initStars();
+
+  stars.forEach((item) => {
+    item.forEach((subItem, index) => {
+      Array.prototype.push.apply(finalStars[index], subItem);
+    });
+  });
+
+  return finalStars;
 };

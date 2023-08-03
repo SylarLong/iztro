@@ -1,7 +1,7 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIGER_RULE } from '../data';
 import { FiveElementsClass, SoulAndBody } from '../data/types';
-import { fixIndex, fixLunarDate } from '../utils';
+import { fixIndex, fixLunarDate, fixLunarMonthIndex } from '../utils';
 
 /**
  * 获取命宫以及身宫数据
@@ -21,18 +21,12 @@ import { fixIndex, fixLunarDate } from '../utils';
  * @returns SoulAndBody
  */
 export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
-  const lunarDate = fixLunarDate(solarDate, timeIndex);
-  const { lunarMonth, lunarDay, isLeap } = lunarDate;
   const { yearly, timely } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
 
   // 紫微斗数以`寅`宫为第一个宫位
   const firstIndex = EARTHLY_BRANCHES.indexOf('寅');
 
-  // 正月建寅（正月地支为寅），fixLeap为是否调整闰月情况
-  // 若调整闰月，则闰月的前15天按上月算，后面天数按下月算
-  // 比如 闰二月 时，fixLeap 为 true 时 闰二月十五(含)前
-  // 的月份按二月算，之后的按三月算
-  const monthIndex = fixIndex(lunarMonth + 1 - firstIndex + (isLeap && fixLeap && lunarDay > 15 ? 1 : 0));
+  const monthIndex = fixLunarMonthIndex(solarDate, timeIndex, fixLeap);
 
   // 命宫索引，以寅宫为0，顺时针数到生月地支索引，再逆时针数到生时地支索引
   // 此处数到生月地支索引其实就是农历月份，所以不再计算生月地支索引
