@@ -232,6 +232,34 @@ describe('star/index', () => {
   test('getZuoYouIndex()', () => {
     const data = [
       {
+        lunarMonth: 1,
+        result: {
+          zuoIndex: 2,
+          youIndex: 8,
+        },
+      },
+      {
+        lunarMonth: 2,
+        result: {
+          zuoIndex: 3,
+          youIndex: 7,
+        },
+      },
+      {
+        lunarMonth: 3,
+        result: {
+          zuoIndex: 4,
+          youIndex: 6,
+        },
+      },
+      {
+        lunarMonth: 4,
+        result: {
+          zuoIndex: 5,
+          youIndex: 5,
+        },
+      },
+      {
         lunarMonth: 5,
         result: {
           zuoIndex: 6,
@@ -243,6 +271,48 @@ describe('star/index', () => {
         result: {
           zuoIndex: 7,
           youIndex: 3,
+        },
+      },
+      {
+        lunarMonth: 7,
+        result: {
+          zuoIndex: 8,
+          youIndex: 2,
+        },
+      },
+      {
+        lunarMonth: 8,
+        result: {
+          zuoIndex: 9,
+          youIndex: 1,
+        },
+      },
+      {
+        lunarMonth: 9,
+        result: {
+          zuoIndex: 10,
+          youIndex: 0,
+        },
+      },
+      {
+        lunarMonth: 10,
+        result: {
+          zuoIndex: 11,
+          youIndex: 11,
+        },
+      },
+      {
+        lunarMonth: 11,
+        result: {
+          zuoIndex: 0,
+          youIndex: 10,
+        },
+      },
+      {
+        lunarMonth: 12,
+        result: {
+          zuoIndex: 1,
+          youIndex: 9,
         },
       },
     ];
