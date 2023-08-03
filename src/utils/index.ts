@@ -1,4 +1,6 @@
+import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, STARS_INFO } from '../data';
+import { LunarDate } from '../data/types';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -50,3 +52,26 @@ export const getBrightness = (starName: keyof typeof STARS_INFO, index: number):
  */
 export const fixEarthlyBranchIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number]): number =>
   fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅'));
+
+/**
+ * 处理晚子时日期
+ *
+ * @param solarDateStr 阳历日期
+ * @param timeIndex 时辰序号【0～12】，12代表晚子时
+ * @returns LunarDate
+ */
+export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
+  let lunarDate = solar2lunar(solarDateStr);
+  // 获取当月的天数
+  const totalDaysOfLunarMonth = getTotalDaysOfLunarMonth(lunarDate.lunarYear, lunarDate.lunarMonth);
+
+  if (timeIndex >= 12 && lunarDate.lunarDay >= totalDaysOfLunarMonth) {
+    // 假如是晚子时并且日期是农历月的最后一天时，月份需要加1
+    const dt = new Date(solarDateStr);
+
+    dt.setDate(dt.getDate() + 1);
+    lunarDate = solar2lunar(dt);
+  }
+
+  return lunarDate;
+};

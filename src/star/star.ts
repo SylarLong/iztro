@@ -44,4 +44,6 @@ export const getPrimaryStar = (ziweiIndex: number, tianfuIndex: number) => {
   return stars;
 };
 
-export const setSecondaryStar = (lunarDate: LunarDate, timeIndex: number, fixLeap?: boolean) => {};
+export const setSecondaryStar = (lunarDate: LunarDate, timeIndex: number, fixLeap?: boolean) => {
+  
+};
