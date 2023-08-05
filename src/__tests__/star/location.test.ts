@@ -1,4 +1,4 @@
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from '../../data';
+import { EarthlyBranch, HeavenlyStem } from '../../data/types';
 import {
   getLuYangTuoMaIndex,
   getKuiYueIndex,
@@ -6,6 +6,7 @@ import {
   getChangQuIndex,
   getKongJieIndex,
   getHuoLingIndex,
+  getLuanXiIndex,
 } from '../../star';
 
 describe('star/location', () => {
@@ -24,12 +25,9 @@ describe('star/location', () => {
     ];
 
     data.forEach((item) => {
-      expect(
-        getLuYangTuoMaIndex(
-          item.heavenlyStem as (typeof HEAVENLY_STEMS)[number],
-          item.earthlyBranch as (typeof EARTHLY_BRANCHES)[number],
-        ),
-      ).toStrictEqual(item.result);
+      expect(getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStem, item.earthlyBranch as EarthlyBranch)).toStrictEqual(
+        item.result,
+      );
     });
   });
 
@@ -45,7 +43,7 @@ describe('star/location', () => {
     ];
 
     data.forEach((item) => {
-      expect(getKuiYueIndex(item.heavenlyStem as (typeof HEAVENLY_STEMS)[number])).toStrictEqual(item.result);
+      expect(getKuiYueIndex(item.heavenlyStem as HeavenlyStem)).toStrictEqual(item.result);
     });
   });
 
@@ -274,6 +272,27 @@ describe('star/location', () => {
 
     data.forEach((item) => {
       expect(getHuoLingIndex('午', item.timeIndex)).toStrictEqual(item.result);
+    });
+  });
+
+  test('getLuanXiIndex()', () => {
+    const data = [
+      { earchlyBranch: '卯', result: { hongluanIndex: 10, tianxiIndex: 4 } },
+      { earchlyBranch: '辰', result: { hongluanIndex: 9, tianxiIndex: 3 } },
+      { earchlyBranch: '巳', result: { hongluanIndex: 8, tianxiIndex: 2 } },
+      { earchlyBranch: '午', result: { hongluanIndex: 7, tianxiIndex: 1 } },
+      { earchlyBranch: '未', result: { hongluanIndex: 6, tianxiIndex: 0 } },
+      { earchlyBranch: '申', result: { hongluanIndex: 5, tianxiIndex: 11 } },
+      { earchlyBranch: '酉', result: { hongluanIndex: 4, tianxiIndex: 10 } },
+      { earchlyBranch: '戌', result: { hongluanIndex: 3, tianxiIndex: 9 } },
+      { earchlyBranch: '亥', result: { hongluanIndex: 2, tianxiIndex: 8 } },
+      { earchlyBranch: '子', result: { hongluanIndex: 1, tianxiIndex: 7 } },
+      { earchlyBranch: '丑', result: { hongluanIndex: 0, tianxiIndex: 6 } },
+      { earchlyBranch: '寅', result: { hongluanIndex: 11, tianxiIndex: 5 } },
+    ];
+
+    data.forEach((item) => {
+      expect(getLuanXiIndex(item.earchlyBranch as EarthlyBranch)).toStrictEqual(item.result);
     });
   });
 });

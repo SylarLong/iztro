@@ -4,6 +4,8 @@ export type Gender = '男' | '女';
 export type YinYang = '阴' | '阳';
 export type FiveElements = '木' | '金' | '水' | '火' | '土';
 export type StarBrightness = '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
+export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
+export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
 
 /**
  * 紫微斗数星耀
@@ -79,7 +81,7 @@ export type SolarDate = {
   toString: () => string;
 };
 
-export type HeavenlyStemAndEarthlyBranch = [(typeof HEAVENLY_STEMS)[number], (typeof EARTHLY_BRANCHES)[number]];
+export type HeavenlyStemAndEarthlyBranch = [HeavenlyStem, EarthlyBranch];
 
 export type HeavenlyStemAndEarthlyBranchResult = {
   /** 年柱[天干，地支] */
@@ -110,7 +112,7 @@ export type SoulAndBody = {
   /** 身宫索引 */
   bodyIndex: number;
   /** 命宫天干 */
-  heavenlyStemOfSoul: (typeof HEAVENLY_STEMS)[number];
+  heavenlyStemOfSoul: HeavenlyStem;
   /** 命宫地支 */
-  earthlyBranchOfSoul: (typeof EARTHLY_BRANCHES)[number];
+  earthlyBranchOfSoul: EarthlyBranch;
 };

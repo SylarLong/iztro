@@ -1,5 +1,5 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, RAT_RULE } from '../data';
-import { HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchResult } from '../data/types';
+import { HeavenlyStem, HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchResult } from '../data/types';
 import { fixIndex } from '../utils';
 import { lunar2solar, normalizeLunarDateStr, normalizeSolarDateStr, solar2lunar } from './convertor';
 import { getTerm } from './misc';
@@ -75,7 +75,7 @@ export const heavenlyStemAndEarthlyBranchOfDay = (date: Date, timeIndex: number)
  */
 export const heavenlyStemAndEarthlyBranchOfTime = (
   timeIndex: number,
-  heavenlyStemOfDay: (typeof HEAVENLY_STEMS)[number],
+  heavenlyStemOfDay: HeavenlyStem,
 ): HeavenlyStemAndEarthlyBranch => {
   const startHeavenlyStem = RAT_RULE[heavenlyStemOfDay];
   const heavenlyStem = HEAVENLY_STEMS[fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + fixIndex(timeIndex), 10)];

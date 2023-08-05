@@ -1,7 +1,7 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from '../data';
-import { FiveElementsClass } from '../data/types';
+import { EarthlyBranch, FiveElementsClass, HeavenlyStem } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 
 /**
@@ -94,10 +94,7 @@ export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?:
  * @param earthlyBranch 地支
  * @returns 禄存、擎羊，陀罗、天马的索引
  */
-export const getLuYangTuoMaIndex = (
-  heavenlyStem: (typeof HEAVENLY_STEMS)[number],
-  earthlyBranch: (typeof EARTHLY_BRANCHES)[number],
-) => {
+export const getLuYangTuoMaIndex = (heavenlyStem: HeavenlyStem, earthlyBranch: EarthlyBranch) => {
   let luIndex = -1; // 禄存索引
   let maIndex = -1; // 天马索引
 
@@ -181,7 +178,7 @@ export const getLuYangTuoMaIndex = (
  * @param heavenlyStem 天干
  * @returns
  */
-export const getKuiYueIndex = (heavenlyStem: (typeof HEAVENLY_STEMS)[number]) => {
+export const getKuiYueIndex = (heavenlyStem: HeavenlyStem) => {
   let kuiIndex = -1;
   let yueIndex = -1;
 
@@ -299,7 +296,7 @@ export const getKongJieIndex = (timeIndex: number) => {
  * @param timeIndex 时辰序号
  * @returns 火星、铃星索引
  */
-export const getHuoLingIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number], timeIndex: number) => {
+export const getHuoLingIndex = (earthlyBranch: EarthlyBranch, timeIndex: number) => {
   let huoIndex = -1;
   let lingIndex = -1;
 
@@ -338,4 +335,23 @@ export const getHuoLingIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number]
     huoIndex: fixIndex(huoIndex),
     lingIndex: fixIndex(lingIndex),
   };
+};
+
+/**
+ * 获取红鸾天喜所在宫位索引
+ *
+ * - 卯上起子逆数之
+ * - 数到当生太岁支
+ * - 坐守此宫红鸾位
+ * - 对宫天喜不差移
+ *
+ * @param earthlyBranch 年支
+ * @returns 红鸾、天喜索引
+ */
+export const getLuanXiIndex = (earthlyBranch: EarthlyBranch) => {
+  const hongluanIndex = fixIndex(fixEarthlyBranchIndex('卯') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
+
+  const tianxiIndex = fixIndex(hongluanIndex + 6);
+
+  return { hongluanIndex, tianxiIndex };
 };

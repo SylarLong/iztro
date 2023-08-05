@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIGER_RULE } from '../data';
-import { FiveElementsClass, SoulAndBody } from '../data/types';
+import { EarthlyBranch, FiveElementsClass, HeavenlyStem, SoulAndBody } from '../data/types';
 import { fixIndex, fixLunarDate, fixLunarMonthIndex } from '../utils';
 
 /**
@@ -101,8 +101,8 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
  * @returns 水二局 ｜ 木三局 ｜ 金四局 ｜ 土五局 ｜ 火六局
  */
 export const getFiveElementsClass = (
-  heavenlyStem: (typeof HEAVENLY_STEMS)[number],
-  earthlyBranch: (typeof EARTHLY_BRANCHES)[number],
+  heavenlyStem: HeavenlyStem,
+  earthlyBranch: EarthlyBranch,
 ): keyof typeof FiveElementsClass => {
   const fiveElementsTable: Array<keyof typeof FiveElementsClass> = ['木三局', '金四局', '水二局', '火六局', '土五局'];
 

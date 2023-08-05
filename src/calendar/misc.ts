@@ -1,6 +1,7 @@
 import { EARTHLY_BRANCHES, ZODIAC } from '../data';
+import { EarthlyBranch } from '../data/types';
 import { normalizeSolarDateStr } from './convertor';
-import { LUNAR_DAY_NAME, LUNAR_MONTH_NAME, NUM_TO_CHAR, SOLAR_MONTH, TERM_INFO } from './rules';
+import { LUNAR_DAY_NAME, LUNAR_MONTH_NAME, NUM_TO_CHAR, TERM_INFO } from './rules';
 
 /**
  * 传入公历年获得该年第termNo个节气的公历节气日
@@ -137,6 +138,6 @@ export const getSign = (solarDateStr: string) => {
  * @example
  * const zodiac = calendar.getZodiac("卯") ;// zodiac='兔'
  */
-export const getZodiac = (earthlyBranchOfYear: (typeof EARTHLY_BRANCHES)[number]) => {
+export const getZodiac = (earthlyBranchOfYear: EarthlyBranch) => {
   return ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranchOfYear)];
 };

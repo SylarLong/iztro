@@ -1,6 +1,6 @@
 import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, STARS_INFO } from '../data';
-import { LunarDate, Star } from '../data/types';
+import { EarthlyBranch, LunarDate, Star } from '../data/types';
 import { initStars } from '../star';
 
 /**
@@ -28,7 +28,7 @@ export const fixIndex = (index: number, max: number = 12): number => {
  * @param earthlyBranch 地支
  * @returns 该地支对应的宫位索引序号
  */
-export const earthlyBranchIndexToPalaceIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number]): number =>
+export const earthlyBranchIndexToPalaceIndex = (earthlyBranch: EarthlyBranch): number =>
   EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅');
 
 /**
@@ -51,7 +51,7 @@ export const getBrightness = (starName: keyof typeof STARS_INFO, index: number):
  * @param earthlyBranch 地支
  * @returns Number(0~11)
  */
-export const fixEarthlyBranchIndex = (earthlyBranch: (typeof EARTHLY_BRANCHES)[number]): number =>
+export const fixEarthlyBranchIndex = (earthlyBranch: EarthlyBranch): number =>
   fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅'));
 
 /**
