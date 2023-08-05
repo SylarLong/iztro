@@ -1,6 +1,5 @@
-import { getHeavenlyStemAndEarthlyBranchByLunarDate, getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { EARTHLY_BRANCHES } from '../data';
-import { Star, LunarDate } from '../data/types';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
+import { Star } from '../data/types';
 import { fixIndex, fixLunarMonthIndex } from '../utils';
 import {
   getChangQuIndex,
@@ -8,6 +7,7 @@ import {
   getKongJieIndex,
   getKuiYueIndex,
   getLuYangTuoMaIndex,
+  getStartIndex,
   getZuoYouIndex,
 } from './location';
 
@@ -24,11 +24,13 @@ export const initStars = (): Array<Star[]> => [[], [], [], [], [], [], [], [], [
  * - 天府顺行有太阴，贪狼而后巨门临，
  * - 随来天相天梁继，七杀空三是破军。
  *
- * @param ziweiIndex 紫微星索引
- * @param tianfuIndex 天府星索引
+ * @param solarDateStr 公历日期 YYYY-MM-DD
+ * @param timeIndex 时辰索引【0～12】
+ * @param fixLeap 是否调整农历闰月（若该月不是闰月则不会生效）
  * @returns {Array<Star[]>} 从寅宫开始每一个宫的星耀
  */
-export const getPrimaryStar = (ziweiIndex: number, tianfuIndex: number) => {
+export const getPrimaryStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+  const { ziweiIndex, tianfuIndex } = getStartIndex(solarDateStr, timeIndex, fixLeap);
   const stars = initStars();
   const ziweiGroup = ['紫微', '天机', '', '太阳', '武曲', '天同', '', '', '廉贞'];
   const tianfuGroup = ['天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '', '', '', '破军'];

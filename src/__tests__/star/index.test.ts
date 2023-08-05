@@ -1,4 +1,3 @@
-import { FiveElementsClassItem } from '../../data/types';
 import { getStartIndex, getPrimaryStar, setSecondaryStar as getSecondaryStar } from '../../star';
 import { mergeStars } from '../../utils';
 
@@ -6,154 +5,112 @@ describe('star/index', () => {
   test('getStartIndex()', () => {
     const data = [
       {
-        fiveElementsClass: '火六局' as FiveElementsClassItem,
         timeIndex: 0,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 11,
           tianfuIndex: 1,
         },
       },
       {
-        fiveElementsClass: '火六局' as FiveElementsClassItem,
         timeIndex: 1,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 11,
           tianfuIndex: 1,
         },
       },
       {
-        fiveElementsClass: '土五局' as FiveElementsClassItem,
         timeIndex: 2,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 2,
           tianfuIndex: 10,
         },
       },
       {
-        fiveElementsClass: '土五局' as FiveElementsClassItem,
         timeIndex: 3,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 2,
           tianfuIndex: 10,
         },
       },
       {
-        fiveElementsClass: '水二局' as FiveElementsClassItem,
         timeIndex: 4,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 6,
           tianfuIndex: 6,
         },
       },
       {
-        fiveElementsClass: '水二局' as FiveElementsClassItem,
         timeIndex: 5,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 6,
           tianfuIndex: 6,
         },
       },
       {
-        fiveElementsClass: '金四局' as FiveElementsClassItem,
         timeIndex: 6,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 2,
           tianfuIndex: 10,
         },
       },
       {
-        fiveElementsClass: '金四局' as FiveElementsClassItem,
         timeIndex: 7,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 2,
           tianfuIndex: 10,
         },
       },
       {
-        fiveElementsClass: '水二局' as FiveElementsClassItem,
         timeIndex: 8,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 6,
           tianfuIndex: 6,
         },
       },
       {
-        fiveElementsClass: '水二局' as FiveElementsClassItem,
         timeIndex: 9,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 6,
           tianfuIndex: 6,
         },
       },
       {
-        fiveElementsClass: '木三局' as FiveElementsClassItem,
         timeIndex: 10,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 4,
           tianfuIndex: 8,
         },
       },
       {
-        fiveElementsClass: '木三局' as FiveElementsClassItem,
         timeIndex: 11,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 4,
           tianfuIndex: 8,
         },
       },
       {
-        fiveElementsClass: '火六局' as FiveElementsClassItem,
         timeIndex: 12,
-        lunarYear: 2023,
-        lunarMonth: 6,
-        lunarDay: 15,
+        solarDate: '2023-08-01',
         result: {
           ziweiIndex: 4,
           tianfuIndex: 8,
         },
       },
       {
-        fiveElementsClass: '水二局' as FiveElementsClassItem,
         timeIndex: 12,
-        lunarYear: 2023,
-        lunarMonth: 1,
-        lunarDay: 29,
+        solarDate: '2023-02-19',
         result: {
           ziweiIndex: 11,
           tianfuIndex: 1,
@@ -161,13 +118,13 @@ describe('star/index', () => {
       },
     ];
 
-    data.forEach(({ fiveElementsClass, timeIndex, lunarYear, lunarMonth, lunarDay, result }) => {
-      expect(getStartIndex(fiveElementsClass, lunarYear, lunarMonth, lunarDay, timeIndex)).toStrictEqual(result);
+    data.forEach(({ solarDate, timeIndex, result }) => {
+      expect(getStartIndex(solarDate, timeIndex, true)).toStrictEqual(result);
     });
   });
 
   test('getPrimaryStar()', () => {
-    expect(getPrimaryStar(6, 6)).toStrictEqual([
+    expect(getPrimaryStar('2023-03-06', 4, true)).toStrictEqual([
       [{ name: '七杀', type: 'primary', scope: 'origin' }],
       [{ name: '天同', type: 'primary', scope: 'origin' }],
       [{ name: '武曲', type: 'primary', scope: 'origin' }],
@@ -190,7 +147,7 @@ describe('star/index', () => {
   });
 
   test('setSecondaryStar()', () => {
-    const primaryStars = getPrimaryStar(2, 10);
+    const primaryStars = getPrimaryStar('2023-03-06', 2, true);
     const secondaryStars = getSecondaryStar('2023-03-06', 2, true);
 
     expect(mergeStars(primaryStars, secondaryStars)).toHaveLength(12);

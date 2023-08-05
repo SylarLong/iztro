@@ -1,6 +1,7 @@
-import { getTotalDaysOfLunarMonth } from '../calendar';
+import { getFiveElementsClass, getSoulAndBody } from '../astro';
+import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from '../data';
-import { FiveElementsClass, FiveElementsClassItem } from '../data/types';
+import { FiveElementsClass } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 
 /**
@@ -16,20 +17,15 @@ import { fixEarthlyBranchIndex, fixIndex } from '../utils';
  * - 例二：13日出生火六局，以六除13，最少需要加5才能整除， 18➗8=3，从寅进3格为辰，添加数为5（奇数），故要逆回五宫，在亥安紫微。
  * - 例三：6日出生土五局，以五除6，最少需要加4才能整除，10➗5=2，从寅进2格为卯，添加数为4（偶数），顺行4格为未，在未安紫微。
  *
- * @param fiveElements 五行局
- * @param lunarYear 农历年
- * @param lunarMonth 农历月
- * @param lunarDay 农历日
+ * @param solarDateStr 公历日期 YYYY-MM-DD
  * @param timeIndex 时辰索引【0～12】
+ * @param fixLeap 是否调整农历闰月（若该月不是闰月则不会生效）
  * @returns 紫微和天府星所在宫位索引
  */
-export const getStartIndex = (
-  fiveElements: FiveElementsClassItem,
-  lunarYear: number,
-  lunarMonth: number,
-  lunarDay: number,
-  timeIndex: number,
-) => {
+export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+  const { lunarYear, lunarMonth, lunarDay } = solar2lunar(solarDateStr);
+  const fiveElements = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
   let remainder = -1; // 余数
   let quotient; // 商
   let offset = -1; // 循环次数
