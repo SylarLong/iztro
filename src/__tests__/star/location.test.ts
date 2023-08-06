@@ -7,6 +7,11 @@ import {
   getKongJieIndex,
   getHuoLingIndex,
   getLuanXiIndex,
+  getYearlyStarIndex,
+  getNianjieIndex,
+  getTimelyStarIndex,
+  getMonthlyStarIndex,
+  getDailyStarIndex,
 } from '../../star';
 
 describe('star/location', () => {
@@ -293,6 +298,87 @@ describe('star/location', () => {
 
     data.forEach((item) => {
       expect(getLuanXiIndex(item.earchlyBranch as EarthlyBranch)).toStrictEqual(item.result);
+    });
+  });
+
+  test('getNianjieIndex()', () => {
+    const data = {
+      子: 8,
+      丑: 7,
+      寅: 6,
+      卯: 5,
+      辰: 4,
+      巳: 3,
+      午: 2,
+      未: 1,
+      申: 0,
+      酉: 11,
+      戌: 10,
+      亥: 9,
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(getNianjieIndex(key as EarthlyBranch)).toEqual(value);
+    });
+  });
+
+  test('getYearlyStarIndex()', () => {
+    expect(getYearlyStarIndex('2023-03-06', 2, true)).toStrictEqual({
+      xianchiIndex: 10,
+      huagaiIndex: 5,
+      guchenIndex: 3,
+      guasuIndex: 11,
+      tiancaiIndex: 2,
+      tianshouIndex: 6,
+      tianchuIndex: 9,
+      posuiIndex: 3,
+      feilianIndex: 3,
+      longchiIndex: 5,
+      fenggeIndex: 5,
+      tiankuIndex: 1,
+      tianxuIndex: 7,
+      tianguanIndex: 4,
+      tianfuIndex: 3,
+    });
+  });
+
+  test('getMonthlyStarIndex()', () => {
+    expect(getMonthlyStarIndex('2021-08-09', 2, true)).toStrictEqual({
+      yuejieIndex: 0,
+      tianyaoIndex: 5,
+      tianxingIndex: 1,
+      yinshaIndex: 0,
+      tianyueIndex: 9,
+      tianwuIndex: 0,
+    });
+  });
+
+  test('getDailyStarIndex()', () => {
+    expect(getDailyStarIndex('2020-08-05', 1)).toStrictEqual({
+      santaiIndex: 10,
+      bazuoIndex: 0,
+      enguangIndex: 9,
+      tianguiIndex: 5,
+    });
+  });
+
+  test('getTimelyStarIndex()', () => {
+    const data = [
+      { taifuIndex: 4, fenggaoIndex: 0 },
+      { taifuIndex: 5, fenggaoIndex: 1 },
+      { taifuIndex: 6, fenggaoIndex: 2 },
+      { taifuIndex: 7, fenggaoIndex: 3 },
+      { taifuIndex: 8, fenggaoIndex: 4 },
+      { taifuIndex: 9, fenggaoIndex: 5 },
+      { taifuIndex: 10, fenggaoIndex: 6 },
+      { taifuIndex: 11, fenggaoIndex: 7 },
+      { taifuIndex: 0, fenggaoIndex: 8 },
+      { taifuIndex: 1, fenggaoIndex: 9 },
+      { taifuIndex: 2, fenggaoIndex: 10 },
+      { taifuIndex: 3, fenggaoIndex: 11 },
+    ];
+    data.forEach((item, index) => {
+      expect(getTimelyStarIndex(index)).toStrictEqual(item);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from './constants';
+import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES } from './constants';
 
 export type Gender = '男' | '女';
 export type YinYang = '阴' | '阳';
@@ -6,6 +6,7 @@ export type FiveElements = '木' | '金' | '水' | '火' | '土';
 export type StarBrightness = '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
 export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
 export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
+export type PalaceName = (typeof PALACES)[number];
 
 /**
  * 紫微斗数星耀

@@ -19,7 +19,7 @@ export const fixIndex = (index: number, max: number = 12): number => {
     return fixIndex(index - max, max);
   }
 
-  return index;
+  return 1 / index === -Infinity ? 0 : index;
 };
 
 /**
@@ -98,6 +98,8 @@ export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixL
 
   return fixIndex(lunarMonth + 1 - firstIndex + (isLeap && fixLeap && lunarDay > 15 ? 1 : 0));
 };
+
+export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) => (timeIndex >= 12 ? lunarDay : lunarDay - 1);
 
 /**
  * 将多个星耀数组合并到一起
