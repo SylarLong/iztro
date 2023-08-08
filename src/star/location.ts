@@ -1,6 +1,6 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS } from '../data';
+import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES } from '../data';
 import { EarthlyBranch, FiveElementsClass, HeavenlyStem } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex } from '../utils';
 
@@ -439,6 +439,13 @@ export const getLuanXiIndex = (earthlyBranch: EarthlyBranch) => {
  *   - 甲喜羊鸡乙龙猴，丙年蛇鼠一窝谋。丁虎擒猪戊玉兔，
  *   - 己鸡居然与虎俦。庚猪马辛鸡蛇走，壬犬马癸马蛇游。
  *
+ * -安截路空亡
+ *   - 甲己之年申酉，乙庚之年午未，
+ *   - 丙辛之年辰巳，丁壬之年寅卯，
+ *   - 戊癸之年子丑。
+ *
+ * - 安天空
+ *   - 生年支顺数的前一位就是。
  * @param solarDate 阳历日期
  * @param timeIndex 时辰序号
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
@@ -547,6 +554,20 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
       ['酉', '申', '子', '亥', '卯', '寅', '午', '巳', '午', '巳'][HEAVENLY_STEMS.indexOf(yearly[0])] as EarthlyBranch,
     ),
   );
+  const tiandeIndex = fixIndex(fixEarthlyBranchIndex('酉') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const yuedeIndex = fixIndex(fixEarthlyBranchIndex('巳') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const tiankongIndex = fixIndex(fixEarthlyBranchIndex(earthlyBranch) + 1);
+  const jieluIndex = fixIndex(
+    fixEarthlyBranchIndex(['申', '午', '辰', '寅', '子'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranch),
+  );
+  const kongwangIndex = fixIndex(
+    fixEarthlyBranchIndex(['酉', '未', '巳', '卯', '丑'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranch),
+  );
+  const xunkongIndex = fixIndex(
+    fixEarthlyBranchIndex(earthlyBranch) + HEAVENLY_STEMS.indexOf('癸') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 1,
+  );
+  const tianshangIndex = fixIndex(PALACES.indexOf('仆役') + soulIndex);
+  const tianshiIndex = fixIndex(PALACES.indexOf('疾厄') + soulIndex);
 
   return {
     xianchiIndex: fixIndex(xcIdx),
@@ -564,6 +585,14 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
     tianxuIndex,
     tianguanIndex,
     tianfuIndex,
+    tiandeIndex,
+    yuedeIndex,
+    tiankongIndex,
+    jieluIndex,
+    kongwangIndex,
+    xunkongIndex,
+    tianshangIndex,
+    tianshiIndex,
   };
 };
 

@@ -3,11 +3,17 @@ import { Star } from '../data/types';
 import { fixIndex, fixLunarMonthIndex } from '../utils';
 import {
   getChangQuIndex,
+  getDailyStarIndex,
   getHuoLingIndex,
   getKongJieIndex,
   getKuiYueIndex,
+  getLuanXiIndex,
   getLuYangTuoMaIndex,
+  getMonthlyStarIndex,
+  getNianjieIndex,
   getStartIndex,
+  getTimelyStarIndex,
+  getYearlyStarIndex,
   getZuoYouIndex,
 } from './location';
 
@@ -92,6 +98,87 @@ export const setSecondaryStar = (solarDateStr: string, timeIndex: number, fixLea
   stars[lingIndex].push({ name: '铃星', type: 'tough', scope: 'origin' });
   stars[yangIndex].push({ name: '擎羊', type: 'tough', scope: 'origin' });
   stars[tuoIndex].push({ name: '陀罗', type: 'tough', scope: 'origin' });
+
+  return stars;
+};
+
+export const getOtherStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+  const stars = initStars();
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+
+  const {
+    xianchiIndex,
+    huagaiIndex,
+    guchenIndex,
+    guasuIndex,
+    tiancaiIndex,
+    tianshouIndex,
+    tianchuIndex,
+    posuiIndex,
+    feilianIndex,
+    longchiIndex,
+    fenggeIndex,
+    tiankuIndex,
+    tianxuIndex,
+    tianguanIndex,
+    tianfuIndex,
+    tiandeIndex,
+    yuedeIndex,
+    tiankongIndex,
+    jieluIndex,
+    kongwangIndex,
+    xunkongIndex,
+    tianshangIndex,
+    tianshiIndex,
+  } = getYearlyStarIndex(solarDateStr, timeIndex, fixLeap);
+  const { yuejieIndex, tianyaoIndex, tianxingIndex, yinshaIndex, tianyueIndex, tianwuIndex } = getMonthlyStarIndex(
+    solarDateStr,
+    timeIndex,
+    fixLeap,
+  );
+  const { santaiIndex, bazuoIndex, enguangIndex, tianguiIndex } = getDailyStarIndex(solarDateStr, timeIndex);
+  const { taifuIndex, fenggaoIndex } = getTimelyStarIndex(timeIndex);
+  const { hongluanIndex, tianxiIndex } = getLuanXiIndex(yearly[1]);
+  const nianjieIndex = getNianjieIndex(yearly[1]);
+
+  stars[hongluanIndex].push({ name: '红鸾', type: 'other', scope: 'origin' });
+  stars[tianxiIndex].push({ name: '天喜', type: 'other', scope: 'origin' });
+  stars[tianyaoIndex].push({ name: '天姚', type: 'other', scope: 'origin' });
+  stars[xianchiIndex].push({ name: '咸池', type: 'other', scope: 'origin' });
+  stars[nianjieIndex].push({ name: '年解', type: 'other', scope: 'origin' });
+  stars[yuejieIndex].push({ name: '月解', type: 'other', scope: 'origin' });
+  stars[santaiIndex].push({ name: '三台', type: 'other', scope: 'origin' });
+  stars[bazuoIndex].push({ name: '八座', type: 'other', scope: 'origin' });
+  stars[enguangIndex].push({ name: '恩光', type: 'other', scope: 'origin' });
+  stars[tianguiIndex].push({ name: '天贵', type: 'other', scope: 'origin' });
+  stars[longchiIndex].push({ name: '龙池', type: 'other', scope: 'origin' });
+  stars[fenggeIndex].push({ name: '凤阁', type: 'other', scope: 'origin' });
+  stars[tiancaiIndex].push({ name: '天才', type: 'other', scope: 'origin' });
+  stars[tianshouIndex].push({ name: '天寿', type: 'other', scope: 'origin' });
+  stars[taifuIndex].push({ name: '台辅', type: 'other', scope: 'origin' });
+  stars[fenggaoIndex].push({ name: '封诰', type: 'other', scope: 'origin' });
+  stars[tianwuIndex].push({ name: '天巫', type: 'other', scope: 'origin' });
+  stars[huagaiIndex].push({ name: '华盖', type: 'other', scope: 'origin' });
+  stars[tianguanIndex].push({ name: '天官', type: 'other', scope: 'origin' });
+  stars[tianfuIndex].push({ name: '天福', type: 'other', scope: 'origin' });
+  stars[tianchuIndex].push({ name: '天厨', type: 'other', scope: 'origin' });
+  stars[tianyueIndex].push({ name: '天月', type: 'other', scope: 'origin' });
+  stars[tiandeIndex].push({ name: '天德', type: 'other', scope: 'origin' });
+  stars[yuedeIndex].push({ name: '月德', type: 'other', scope: 'origin' });
+  stars[tiankongIndex].push({ name: '天空', type: 'other', scope: 'origin' });
+  stars[xunkongIndex].push({ name: '旬空', type: 'other', scope: 'origin' });
+  stars[jieluIndex].push({ name: '截路', type: 'other', scope: 'origin' });
+  stars[kongwangIndex].push({ name: '空亡', type: 'other', scope: 'origin' });
+  stars[guchenIndex].push({ name: '孤辰', type: 'other', scope: 'origin' });
+  stars[guasuIndex].push({ name: '寡宿', type: 'other', scope: 'origin' });
+  stars[feilianIndex].push({ name: '蜚廉', type: 'other', scope: 'origin' });
+  stars[posuiIndex].push({ name: '破碎', type: 'other', scope: 'origin' });
+  stars[tianxingIndex].push({ name: '天刑', type: 'other', scope: 'origin' });
+  stars[yinshaIndex].push({ name: '阴煞', type: 'other', scope: 'origin' });
+  stars[tiankuIndex].push({ name: '天哭', type: 'other', scope: 'origin' });
+  stars[tianxuIndex].push({ name: '天虚', type: 'other', scope: 'origin' });
+  stars[tianshiIndex].push({ name: '天使', type: 'other', scope: 'origin' });
+  stars[tianshangIndex].push({ name: '天伤', type: 'other', scope: 'origin' });
 
   return stars;
 };

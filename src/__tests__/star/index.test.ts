@@ -1,4 +1,4 @@
-import { getStartIndex, getPrimaryStar, setSecondaryStar as getSecondaryStar } from '../../star';
+import { getStartIndex, getPrimaryStar, setSecondaryStar as getSecondaryStar, getOtherStar } from '../../star';
 import { mergeStars } from '../../utils';
 
 describe('star/index', () => {
@@ -149,7 +149,14 @@ describe('star/index', () => {
   test('setSecondaryStar()', () => {
     const primaryStars = getPrimaryStar('2023-03-06', 2, true);
     const secondaryStars = getSecondaryStar('2023-03-06', 2, true);
+    const otherStars = getOtherStar('2023-03-06', 2, true);
 
-    expect(mergeStars(primaryStars, secondaryStars)).toHaveLength(12);
+    const stars = mergeStars(primaryStars, otherStars, secondaryStars);
+    const total = stars.reduce((prev, next) => {
+      return (prev += next.length);
+    }, 0);
+
+    expect(stars).toHaveLength(12);
+    expect(total).toEqual(66);
   });
 });

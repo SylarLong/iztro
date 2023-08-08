@@ -339,6 +339,14 @@ describe('star/location', () => {
       tianxuIndex: 7,
       tianguanIndex: 4,
       tianfuIndex: 3,
+      jieluIndex: 10,
+      kongwangIndex: 11,
+      xunkongIndex: 2,
+      tiankongIndex: 2,
+      tiandeIndex: 10,
+      yuedeIndex: 6,
+      tianshangIndex: 4,
+      tianshiIndex: 6,
     });
   });
 
