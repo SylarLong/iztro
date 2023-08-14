@@ -1,4 +1,12 @@
-import { getStartIndex, getPrimaryStar, setSecondaryStar as getSecondaryStar, getOtherStar } from '../../star';
+import {
+  getStartIndex,
+  getMajorStar,
+  getMinorStar,
+  getPatchStar,
+  getChangesheng12,
+  getBoShi12,
+  getYearly12,
+} from '../../star';
 import { mergeStars } from '../../utils';
 
 describe('star/index', () => {
@@ -123,33 +131,33 @@ describe('star/index', () => {
     });
   });
 
-  test('getPrimaryStar()', () => {
-    expect(getPrimaryStar('2023-03-06', 4, true)).toStrictEqual([
-      [{ name: '七杀', type: 'primary', scope: 'origin' }],
-      [{ name: '天同', type: 'primary', scope: 'origin' }],
-      [{ name: '武曲', type: 'primary', scope: 'origin' }],
-      [{ name: '太阳', type: 'primary', scope: 'origin' }],
-      [{ name: '破军', type: 'primary', scope: 'origin' }],
-      [{ name: '天机', type: 'primary', scope: 'origin' }],
+  test('getMajorStar()', () => {
+    expect(getMajorStar('2023-03-06', 4, true)).toStrictEqual([
+      [{ name: '七杀', type: 'major', scope: 'origin' }],
+      [{ name: '天同', type: 'major', scope: 'origin' }],
+      [{ name: '武曲', type: 'major', scope: 'origin' }],
+      [{ name: '太阳', type: 'major', scope: 'origin' }],
+      [{ name: '破军', type: 'major', scope: 'origin' }],
+      [{ name: '天机', type: 'major', scope: 'origin' }],
       [
-        { name: '紫微', type: 'primary', scope: 'origin' },
-        { name: '天府', type: 'primary', scope: 'origin' },
+        { name: '紫微', type: 'major', scope: 'origin' },
+        { name: '天府', type: 'major', scope: 'origin' },
       ],
-      [{ name: '太阴', type: 'primary', scope: 'origin' }],
-      [{ name: '贪狼', type: 'primary', scope: 'origin' }],
-      [{ name: '巨门', type: 'primary', scope: 'origin' }],
+      [{ name: '太阴', type: 'major', scope: 'origin' }],
+      [{ name: '贪狼', type: 'major', scope: 'origin' }],
+      [{ name: '巨门', type: 'major', scope: 'origin' }],
       [
-        { name: '廉贞', type: 'primary', scope: 'origin' },
-        { name: '天相', type: 'primary', scope: 'origin' },
+        { name: '廉贞', type: 'major', scope: 'origin' },
+        { name: '天相', type: 'major', scope: 'origin' },
       ],
-      [{ name: '天梁', type: 'primary', scope: 'origin' }],
+      [{ name: '天梁', type: 'major', scope: 'origin' }],
     ]);
   });
 
-  test('setSecondaryStar()', () => {
-    const primaryStars = getPrimaryStar('2023-03-06', 2, true);
-    const secondaryStars = getSecondaryStar('2023-03-06', 2, true);
-    const otherStars = getOtherStar('2023-03-06', 2, true);
+  test('getMinorStar()', () => {
+    const primaryStars = getMajorStar('2023-03-06', 2, true);
+    const secondaryStars = getMinorStar('2023-03-06', 2, true);
+    const otherStars = getPatchStar('2023-03-06', 2, true);
 
     const stars = mergeStars(primaryStars, otherStars, secondaryStars);
     const total = stars.reduce((prev, next) => {
@@ -158,5 +166,17 @@ describe('star/index', () => {
 
     expect(stars).toHaveLength(12);
     expect(total).toEqual(66);
+  });
+
+  test('getChangesheng12()', () => {
+    console.log(getChangesheng12('2023-8-15', 0, '女', true));
+  });
+
+  test('getBoShi12()', () => {
+    console.log(getBoShi12('2023-8-15', '女'));
+  });
+
+  test('getYearly12()', () => {
+    console.log(getYearly12('2025-8-15'));
   });
 });

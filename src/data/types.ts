@@ -15,7 +15,7 @@ export type Star = {
   /** 星耀名字 */
   name: string;
   /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀） */
-  type: 'primary' | 'soft' | 'tough' | 'other';
+  type: 'major' | 'soft' | 'tough' | 'adjective';
   /** 作用范围（本命盘 | 大限盘 | 流年盘） */
   scope: 'origin' | 'stage' | 'yearly';
 };
