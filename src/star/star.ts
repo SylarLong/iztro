@@ -112,7 +112,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  * @returns 38杂耀
  */
-export const getPatchStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const stars = initStars();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
 
@@ -193,13 +193,25 @@ export const getPatchStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   return stars;
 };
 
-export const getChangesheng12 = (
+/**
+ * 长生12神。
+ *
+ * 水二局长生在申，木三局长生在亥，金四局长生在巳，土五局长生在申，火六局长生在寅，
+ * 阳男阴女顺行，阴男阳女逆行，安长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝 、胎、养。
+ *
+ * @param solarDateStr 阳历日期字符串
+ * @param timeIndex 时辰索引【0～12】
+ * @param gender 性别【男｜女】
+ * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
+ * @returns 长生12神从寅宫开始的顺序
+ */
+export const getchangsheng12 = (
   solarDateStr: string,
   timeIndex: number,
   gender: keyof typeof GENDER,
   fixLeap?: boolean,
 ) => {
-  const changesheng12 = [];
+  const changsheng12 = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [, earthlyBranchOfYear] = yearly;
   // 获取命宫干支，需要通过命宫干支计算五行局
@@ -245,12 +257,21 @@ export const getChangesheng12 = (
       idx = idx < 0 ? idx + stars.length : idx;
     }
 
-    changesheng12[idx] = stars[i];
+    changsheng12[idx] = stars[i];
   }
 
-  return changesheng12;
+  return changsheng12;
 };
 
+/**
+ * 博士12神。
+ *
+ * 从禄存起，阳男阴女顺行，阴男阳女逆行。安博士、力士、青龙、小耗、将军、奏书、飞廉、喜神、病符、大耗、伏兵、官府。
+ *
+ * @param solarDateStr 阳历日期字符串
+ * @param gender 性别【男｜女】
+ * @returns 博士12神从寅宫开始的顺序
+ */
 export const getBoShi12 = (solarDateStr: string, gender: keyof typeof GENDER) => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [heavenlyStemOfYear, earthlyBranchOfYear] = yearly;
@@ -269,9 +290,26 @@ export const getBoShi12 = (solarDateStr: string, gender: keyof typeof GENDER) =>
   return boshi12;
 };
 
+/**
+ * 流年诸星。
+ *
+ * - 流年岁前诸星
+ *   - 流年地支起岁建，岁前首先是晦气，
+ *   - 丧门贯索及官符，小耗大耗龙德继，
+ *   - 白虎天德连吊客，病符居后须当记。
+ *
+ * - 安流年将前诸星（按流年地支起将星）
+ *   - 寅午戍年将星午，申子辰年子将星，
+ *   - 巳酉丑将酉上驻，亥卯未将卯上停。
+ *   - 攀鞍岁驿并息神，华盖劫煞灾煞轻，
+ *   - 天煞指背咸池续，月煞亡神次第行。
+ *
+ * @param solarDateStr 阳历日期字符串
+ * @returns 流年诸星从寅宫开始的顺序
+ */
 export const getYearly12 = (solarDateStr: string) => {
   const jiangqian12 = [];
-  const taisui12 = [];
+  const suiqian12 = [];
 
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
 
@@ -281,7 +319,7 @@ export const getYearly12 = (solarDateStr: string) => {
   for (let i = 0; i < ts12shen.length; i++) {
     const idx = fixIndex(fixEarthlyBranchIndex(earthlyBranchOfYear) + i);
 
-    taisui12[idx] = ts12shen[i];
+    suiqian12[idx] = ts12shen[i];
   }
 
   const jq12shen = ['将星', '攀鞍', '岁驿', '息神', '华盖', '劫煞', '灾煞', '天煞', '指背', '咸池', '月煞', '亡神'];
@@ -303,5 +341,5 @@ export const getYearly12 = (solarDateStr: string) => {
     jiangqian12[idx] = jq12shen[i];
   }
 
-  return { taisui12, jiangqian12 };
+  return { suiqian12, jiangqian12 };
 };

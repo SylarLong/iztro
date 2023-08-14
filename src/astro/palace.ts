@@ -1,7 +1,7 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIGER_RULE } from '../data';
 import { EarthlyBranch, FiveElementsClass, HeavenlyStem, SoulAndBody } from '../data/types';
-import { fixIndex, fixLunarDate, fixLunarMonthIndex } from '../utils';
+import { fixIndex, fixLunarMonthIndex } from '../utils';
 
 /**
  * 获取命宫以及身宫数据

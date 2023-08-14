@@ -2,8 +2,8 @@ import {
   getStartIndex,
   getMajorStar,
   getMinorStar,
-  getPatchStar,
-  getChangesheng12,
+  getAdjectiveStar,
+  getchangsheng12,
   getBoShi12,
   getYearly12,
 } from '../../star';
@@ -157,7 +157,7 @@ describe('star/index', () => {
   test('getMinorStar()', () => {
     const primaryStars = getMajorStar('2023-03-06', 2, true);
     const secondaryStars = getMinorStar('2023-03-06', 2, true);
-    const otherStars = getPatchStar('2023-03-06', 2, true);
+    const otherStars = getAdjectiveStar('2023-03-06', 2, true);
 
     const stars = mergeStars(primaryStars, otherStars, secondaryStars);
     const total = stars.reduce((prev, next) => {
@@ -168,8 +168,8 @@ describe('star/index', () => {
     expect(total).toEqual(66);
   });
 
-  test('getChangesheng12()', () => {
-    expect(getChangesheng12('2023-8-15', 0, '女', true)).toStrictEqual([
+  test('getchangsheng12()', () => {
+    expect(getchangsheng12('2023-8-15', 0, '女', true)).toStrictEqual([
       '长生',
       '沐浴',
       '冠带',
@@ -204,7 +204,7 @@ describe('star/index', () => {
 
   test('getYearly12()', () => {
     expect(getYearly12('2025-8-15')).toStrictEqual({
-      taisui12: ['天德', '吊客', '病符', '岁建', '晦气', '丧门', '贯索', '官符', '小耗', '大耗', '龙德', '白虎'],
+      suiqian12: ['天德', '吊客', '病符', '岁建', '晦气', '丧门', '贯索', '官符', '小耗', '大耗', '龙德', '白虎'],
       jiangqian12: ['劫煞', '灾煞', '天煞', '指背', '咸池', '月煞', '亡神', '将星', '攀鞍', '岁驿', '息神', '华盖'],
     });
   });

@@ -1,4 +1,4 @@
-import { getFiveElementsClass, getSoulAndBody, getPalaceNames } from '../../astro';
+import { getFiveElementsClass, getSoulAndBody, getPalaceNames, astrolableBySolarDate } from '../../astro';
 import { FiveElementsClass } from '../../data/types';
 
 describe('astro/palace', () => {
@@ -61,5 +61,9 @@ describe('astro/palace', () => {
     expect(getPalaceNames(1)).toStrictEqual(targetList);
     expect(getPalaceNames(13)).toStrictEqual(targetList);
     expect(getPalaceNames(-11)).toStrictEqual(targetList);
+  });
+
+  test('astrolableBySolarDate()', () => {
+    astrolableBySolarDate('2023-3-6', 2, '女', true);
   });
 });
