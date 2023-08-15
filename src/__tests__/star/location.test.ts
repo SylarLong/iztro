@@ -27,6 +27,16 @@ describe('star/location', () => {
           maIndex: 3,
         },
       },
+      {
+        heavenlyStem: '庚',
+        earthlyBranch: '寅',
+        result: {
+          luIndex: 6,
+          yangIndex: 7,
+          tuoIndex: 5,
+          maIndex: 6,
+        },
+      },
     ];
 
     data.forEach((item) => {

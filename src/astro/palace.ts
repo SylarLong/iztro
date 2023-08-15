@@ -7,6 +7,7 @@ import {
   HeavenlyStem,
   PalaceName,
   SoulAndBody,
+  Stage,
 } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 
@@ -143,9 +144,16 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
 };
 
 /**
- * 起大限，阳男阴女顺行，阴男阳女逆部
+ * 起大限
+ *
+ * - 大限由命宫起，阳男阴女顺行；
+ * - 阴男阳女逆行，每十年过一宫限。
  *
  * 起小限
+ *
+ * - 小限一年一度逢，男顺女逆不相同，
+ * - 寅午戍人辰上起，申子辰人自戍宫，
+ * - 巳酉丑人未宫始，亥卯未人起丑宫。
  *
  * @param solarDateStr 公历日期
  * @param timeIndex 出生时索引
@@ -158,12 +166,12 @@ export const getHoroscope = (
   timeIndex: number,
   gender: keyof typeof GENDER,
   fixLeap?: boolean,
-) => {
+): {stages: Stage[], ages: number[][]} => {
   const stages = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const [heavenlyStem, earthlyBranch] = yearly;
-  const fiveElementsClass = getFiveElementsClass(heavenlyStem, earthlyBranch);
-  const { soulIndex } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+  const fiveElementsClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
 
   // 用五虎遁获取大限起始天干
   const startHeavenlyStem = TIGER_RULE[heavenlyStem];
@@ -173,8 +181,13 @@ export const getHoroscope = (
       GENDER[gender] === earthlyBranches[earthlyBranch].yinYang ? fixIndex(soulIndex + i) : fixIndex(soulIndex - i);
     const start = FiveElementsClass[fiveElementsClass] + 10 * i;
     const heavenlyStemIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx, 10);
+    const earthlyBranchIndex = fixIndex(EARTHLY_BRANCHES.indexOf('寅') + idx);
 
-    stages[idx] = { range: [start, start + 9], heavenlyStem: HEAVENLY_STEMS[heavenlyStemIndex] };
+    stages[idx] = {
+      range: [start, start + 9],
+      heavenlyStem: HEAVENLY_STEMS[heavenlyStemIndex],
+      earthlyBranch: EARTHLY_BRANCHES[earthlyBranchIndex],
+    };
   }
 
   let ageIdx = 0;

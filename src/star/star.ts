@@ -1,10 +1,11 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { GENDER, HEAVENLY_STEMS, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems } from '../data';
-import { FiveElementsClass, Star } from '../data/types';
+import { EarthlyBranch, FiveElementsClass, HeavenlyStem, Star } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 import {
   getChangQuIndex,
+  getChangQuIndexByHeavenlyStem,
   getDailyStarIndex,
   getHuoLingIndex,
   getKongJieIndex,
@@ -423,4 +424,38 @@ export const getYearly12 = (solarDateStr: string) => {
   }
 
   return { suiqian12, jiangqian12 };
+};
+
+/**
+ * 获取流曜
+ *
+ * 魁钺昌曲禄羊陀马鸾喜
+ *
+ * @param heavenlyStem 天干
+ * @param earchlyBranch 地支
+ */
+export const getHoroscopeStar = (
+  heavenlyStem: HeavenlyStem,
+  earchlyBranch: EarthlyBranch,
+  scope: 'stage' | 'yearly',
+): Star[][] => {
+  const prefix = { stage: '运', yearly: '流' };
+  const { kuiIndex, yueIndex } = getKuiYueIndex(heavenlyStem);
+  const { changIndex, quIndex } = getChangQuIndexByHeavenlyStem(heavenlyStem);
+  const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earchlyBranch);
+  const { hongluanIndex, tianxiIndex } = getLuanXiIndex(earchlyBranch);
+  const stars = initStars();
+
+  stars[kuiIndex].push({ name: `${prefix[scope]}魁`, type: 'soft', scope });
+  stars[yueIndex].push({ name: `${prefix[scope]}钺`, type: 'soft', scope });
+  stars[changIndex].push({ name: `${prefix[scope]}昌`, type: 'soft', scope });
+  stars[quIndex].push({ name: `${prefix[scope]}曲`, type: 'soft', scope });
+  stars[luIndex].push({ name: `${prefix[scope]}禄`, type: 'lucun', scope });
+  stars[yangIndex].push({ name: `${prefix[scope]}羊`, type: 'tough', scope });
+  stars[tuoIndex].push({ name: `${prefix[scope]}陀`, type: 'tough', scope });
+  stars[maIndex].push({ name: `${prefix[scope]}马`, type: 'tianma', scope });
+  stars[hongluanIndex].push({ name: `${prefix[scope]}鸾`, type: 'flower', scope });
+  stars[tianxiIndex].push({ name: `${prefix[scope]}喜`, type: 'flower', scope });
+
+  return stars;
 };

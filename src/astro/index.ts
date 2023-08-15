@@ -1,5 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from '../calendar';
 import { BIRTH_TIME, EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
+import { Astrolabe } from '../data/types';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex } from '../utils';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
@@ -20,7 +21,7 @@ export const astrolableBySolarDate = (
   timeIndex: number,
   gender: keyof typeof GENDER,
   fixLeap: boolean = true,
-) => {
+): Astrolabe => {
   const palaces = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(

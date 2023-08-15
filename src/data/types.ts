@@ -1,13 +1,17 @@
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS, MUTAGEN, PALACES } from './constants';
+import { BIRTH_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, MUTAGEN, PALACES, TIME_RANGE } from './constants';
 
 export type Gender = '男' | '女';
 export type YinYang = '阴' | '阳';
 export type Mutagen = (typeof MUTAGEN)[number];
 export type FiveElements = '木' | '金' | '水' | '火' | '土';
-export type StarBrightness = '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
+export type StarBrightness = '' | '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
 export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
 export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
 export type PalaceName = (typeof PALACES)[number];
+export type BirthTime = (typeof BIRTH_TIME)[number];
+export type TimeRange = (typeof TIME_RANGE)[number];
+export type Scope = 'origin' | 'stage' | 'yearly';
+export type StarType = 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
 
 /**
  * 紫微斗数星耀
@@ -16,11 +20,12 @@ export type Star = {
   /** 星耀名字 */
   name: string;
   /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀 | 桃花星 | 解神 | 禄存 | 天马） */
-  type: 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
+  type: StarType;
   /** 作用范围（本命盘 | 大限盘 | 流年盘） */
-  scope: 'origin' | 'stage' | 'yearly';
+  scope: Scope;
   /** 星耀亮度 */
-  brightness?: StarBrightness | '';
+  brightness?: StarBrightness;
+  /** 四化 */
   mutagen?: Mutagen;
 };
 
@@ -120,4 +125,70 @@ export type SoulAndBody = {
   heavenlyStemOfSoul: HeavenlyStem;
   /** 命宫地支 */
   earthlyBranchOfSoul: EarthlyBranch;
+};
+
+export type Stage = {
+  range: number[];
+  heavenlyStem: HeavenlyStem;
+  earthlyBranch: EarthlyBranch;
+};
+
+export type Palace = {
+  // 宫名
+  name: PalaceName;
+  // 是否身宫
+  isBodyPalace: boolean;
+  // 是否来因宫
+  isOriginalPalace: boolean;
+  // 宫位天干
+  heavenlyStem: HeavenlyStem;
+  // 宫位地支
+  earthlyBranch: EarthlyBranch;
+  // 主星
+  majorStars: Star[];
+  // 辅星
+  minorStars: Star[];
+  // 杂耀
+  adjectiveStars: Star[];
+  // 长生12神
+  changsheng12: string;
+  // 博士12神
+  boshi12: string;
+  // 流年将前12神
+  jiangqian12: string;
+  // 流年岁前12神
+  suiqian12: string;
+  // 大限
+  stage: Stage;
+  // 小限
+  ages: number[];
+};
+
+export type Astrolabe = {
+  // 阳历日期
+  solarDate: string;
+  // 农历日期
+  lunarDate: string;
+  // 四柱
+  chineseDate: string;
+  // 时辰
+  time: BirthTime;
+  // 时辰对应的时间段
+  timeRange: TimeRange;
+  // 星座
+  sign: string;
+  // 生肖
+  zodiac: string;
+  // 命宫地支
+  earthlyBranchOfSoulPalace: EarthlyBranch;
+  // 身宫地支
+  earthlyBranchOfBodyPalace: EarthlyBranch;
+  // 命主
+  soul: string;
+  // 身主
+  body: string;
+  // 五行局
+  fiveElementsClass: FiveElementsClassItem;
+  // 十二宫数据
+  palaces: Palace[];
 };

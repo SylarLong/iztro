@@ -666,3 +666,58 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
     tianwuIndex,
   };
 };
+
+/**
+ * 通过 大限/流年 天干获取流昌流曲
+ *
+ * - 流昌起巳位	甲乙顺流去
+ * - 不用四墓宫	日月同年岁
+ * - 流曲起酉位	甲乙逆行踪
+ * - 亦不用四墓	年日月相同
+ *
+ * @param heavenlyStem 天干
+ * @returns 文昌、文曲索引
+ */
+export const getChangQuIndexByHeavenlyStem = (heavenlyStem: HeavenlyStem) => {
+  let changIndex = -1;
+  let quIndex = -1;
+
+  switch (heavenlyStem) {
+    case '甲':
+      changIndex = fixIndex(fixEarthlyBranchIndex('巳'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('酉'));
+      break;
+    case '乙':
+      changIndex = fixIndex(fixEarthlyBranchIndex('午'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('申'));
+      break;
+    case '丙':
+    case '戊':
+      changIndex = fixIndex(fixEarthlyBranchIndex('申'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('午'));
+      break;
+    case '丁':
+    case '己':
+      changIndex = fixIndex(fixEarthlyBranchIndex('酉'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('巳'));
+      break;
+    case '庚':
+      changIndex = fixIndex(fixEarthlyBranchIndex('亥'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('卯'));
+      break;
+    case '辛':
+      changIndex = fixIndex(fixEarthlyBranchIndex('子'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('寅'));
+      break;
+    case '壬':
+      changIndex = fixIndex(fixEarthlyBranchIndex('寅'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('子'));
+      break;
+    case '癸':
+      changIndex = fixIndex(fixEarthlyBranchIndex('卯'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('亥'));
+      break;
+  }
+
+  return { changIndex, quIndex };
+};

@@ -6,6 +6,7 @@ import {
   getchangsheng12,
   getBoShi12,
   getYearly12,
+  getHoroscopeStar,
 } from '../../star';
 import { mergeStars } from '../../utils';
 
@@ -207,5 +208,57 @@ describe('star/index', () => {
       suiqian12: ['天德', '吊客', '病符', '岁建', '晦气', '丧门', '贯索', '官符', '小耗', '大耗', '龙德', '白虎'],
       jiangqian12: ['劫煞', '灾煞', '天煞', '指背', '咸池', '月煞', '亡神', '将星', '攀鞍', '岁驿', '息神', '华盖'],
     });
+  });
+
+  test('getHoroscopeStar() scope="stage"', () => {
+    expect(getHoroscopeStar('庚', '辰', 'stage')).toStrictEqual([
+      [{ name: '运马', type: 'tianma', scope: 'stage' }],
+      [{ name: '运曲', type: 'soft', scope: 'stage' }],
+      [],
+      [{ name: '运喜', type: 'flower', scope: 'stage' }],
+      [],
+      [
+        { name: '运钺', type: 'soft', scope: 'stage' },
+        { name: '运陀', type: 'tough', scope: 'stage' },
+      ],
+      [{ name: '运禄', type: 'lucun', scope: 'stage' }],
+      [{ name: '运羊', type: 'tough', scope: 'stage' }],
+      [],
+      [
+        { name: '运昌', type: 'soft', scope: 'stage' },
+        { name: '运鸾', type: 'flower', scope: 'stage' },
+      ],
+      [],
+      [{ name: '运魁', type: 'soft', scope: 'stage' }],
+    ]);
+  });
+
+  test('getHoroscopeStar() scope="stage"', () => {
+    expect(getHoroscopeStar('癸', '卯', 'yearly')).toStrictEqual([
+      [],
+      [
+        { name: '流魁', type: 'soft', scope: 'yearly' },
+        { name: '流昌', type: 'soft', scope: 'yearly' },
+      ],
+      [],
+      [
+        { name: '流钺', type: 'soft', scope: 'yearly' },
+        { name: '流马', type: 'tianma', scope: 'yearly' },
+      ],
+      [{ name: '流喜', type: 'flower', scope: 'yearly' }],
+      [],
+      [],
+      [],
+      [],
+      [
+        { name: '流曲', type: 'soft', scope: 'yearly' },
+        { name: '流陀', type: 'tough', scope: 'yearly' },
+      ],
+      [
+        { name: '流禄', type: 'lucun', scope: 'yearly' },
+        { name: '流鸾', type: 'flower', scope: 'yearly' },
+      ],
+      [{ name: '流羊', type: 'tough', scope: 'yearly' }],
+    ]);
   });
 });
