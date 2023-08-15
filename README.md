@@ -1,3 +1,5 @@
+![Coverage](https://github.com/SylarLong/astro/actions/workflows/Codecov.yml/badge.svg)
+
 # 介绍
 
 用于紫微斗数排盘的工具库
