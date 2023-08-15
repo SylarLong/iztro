@@ -1,4 +1,4 @@
-![Coverage](https://github.com/SylarLong/astro/actions/workflows/Codecov.yml/badge.svg)
+![Coverage](https://github.com/SylarLong/astro/actions/workflows/Codecov.yml/badge.svg) [![npm version](https://badge.fury.io/js/@sylarlong%2Fastro.svg)](https://badge.fury.io/js/@sylarlong%2Fastro)
 
 # 介绍
 
