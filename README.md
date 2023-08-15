@@ -19,7 +19,11 @@ npm i @sylarlong/astro -S
 ```ts
 import { astro } from '@sylarlong/astro';
 
+// 通过阳历获取星盘信息
 const astrolable = astro.astrolableBySolarDate('2000-8-16', 2, '女');
+
+// 通过农历获取星盘信息
+const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, true);
 ```
 
 ### 返回数据
