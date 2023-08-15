@@ -1,5 +1,6 @@
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/astro/Codecov.yaml)
- [![npm version](https://badge.fury.io/js/@sylarlong%2Fastro.svg)](https://badge.fury.io/js/@sylarlong%2Fastro)
+ [![npm version](https://badge.fury.io/js/@sylarlong%2Fastro.svg)](https://badge.fury.io/js/@sylarlong%2Fastro) ![NPM](https://img.shields.io/npm/l/%40sylarlong%2Fastro)
+
 
 # 介绍
 
