@@ -1,6 +1,6 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { GENDER, STARS_INFO, earthlyBranches } from '../data';
+import { GENDER, HEAVENLY_STEMS, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems } from '../data';
 import { FiveElementsClass, Star } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 import {
@@ -39,6 +39,7 @@ export const initStars = (): Star[][] => [[], [], [], [], [], [], [], [], [], []
  */
 export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const { ziweiIndex, tianfuIndex } = getStartIndex(solarDateStr, timeIndex, fixLeap);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const stars = initStars();
   const ziweiGroup = ['紫微', '天机', '', '太阳', '武曲', '天同', '', '', '廉贞'] as const;
   const tianfuGroup = ['天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '', '', '', '破军'] as const;
@@ -51,6 +52,7 @@ export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
         type: 'major',
         scope: 'origin',
         brightness: STARS_INFO[s].brightness[fixIndex(ziweiIndex - i)],
+        mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf(s as never)],
       });
     }
   });
@@ -62,6 +64,7 @@ export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
         type: 'major',
         scope: 'origin',
         brightness: STARS_INFO[s].brightness[fixIndex(tianfuIndex + i)],
+        mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf(s as never)],
       });
     }
   });
@@ -95,24 +98,28 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
     type: 'soft',
     scope: 'origin',
     brightness: STARS_INFO.左辅.brightness[zuoIndex],
+    mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf('左辅' as never)],
   });
   stars[youIndex].push({
     name: '右弼',
     type: 'soft',
     scope: 'origin',
     brightness: STARS_INFO.右弼.brightness[youIndex],
+    mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf('右弼' as never)],
   });
   stars[changIndex].push({
     name: '文昌',
     type: 'soft',
     scope: 'origin',
     brightness: STARS_INFO.文昌.brightness[changIndex],
+    mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf('文昌' as never)],
   });
   stars[quIndex].push({
     name: '文曲',
     type: 'soft',
     scope: 'origin',
     brightness: STARS_INFO.文曲.brightness[quIndex],
+    mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf('文曲' as never)],
   });
   stars[kuiIndex].push({
     name: '天魁',

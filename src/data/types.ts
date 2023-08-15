@@ -1,7 +1,8 @@
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES } from './constants';
+import { EARTHLY_BRANCHES, HEAVENLY_STEMS, MUTAGEN, PALACES } from './constants';
 
 export type Gender = '男' | '女';
 export type YinYang = '阴' | '阳';
+export type Mutagen = (typeof MUTAGEN)[number];
 export type FiveElements = '木' | '金' | '水' | '火' | '土';
 export type StarBrightness = '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
 export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
@@ -18,7 +19,9 @@ export type Star = {
   type: 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
   /** 作用范围（本命盘 | 大限盘 | 流年盘） */
   scope: 'origin' | 'stage' | 'yearly';
+  /** 星耀亮度 */
   brightness?: StarBrightness | '';
+  mutagen?: Mutagen;
 };
 
 /**

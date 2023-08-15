@@ -133,24 +133,24 @@ describe('star/index', () => {
 
   test('getMajorStar()', () => {
     expect(getMajorStar('2023-03-06', 4, true)).toStrictEqual([
-      [{ name: '七杀', type: 'major', brightness: '庙', scope: 'origin' }],
-      [{ name: '天同', type: 'major', brightness: '平', scope: 'origin' }],
-      [{ name: '武曲', type: 'major', brightness: '庙', scope: 'origin' }],
-      [{ name: '太阳', type: 'major', brightness: '旺', scope: 'origin' }],
-      [{ name: '破军', type: 'major', brightness: '庙', scope: 'origin' }],
-      [{ name: '天机', type: 'major', brightness: '陷', scope: 'origin' }],
+      [{ name: '七杀', type: 'major', brightness: '庙', scope: 'origin', mutagen: undefined }],
+      [{ name: '天同', type: 'major', brightness: '平', scope: 'origin', mutagen: undefined }],
+      [{ name: '武曲', type: 'major', brightness: '庙', scope: 'origin', mutagen: undefined }],
+      [{ name: '太阳', type: 'major', brightness: '旺', scope: 'origin', mutagen: undefined }],
+      [{ name: '破军', type: 'major', brightness: '庙', scope: 'origin', mutagen: '禄' }],
+      [{ name: '天机', type: 'major', brightness: '陷', scope: 'origin', mutagen: undefined }],
       [
-        { name: '紫微', type: 'major', brightness: '旺', scope: 'origin' },
-        { name: '天府', type: 'major', brightness: '得', scope: 'origin' },
+        { name: '紫微', type: 'major', brightness: '旺', scope: 'origin', mutagen: undefined },
+        { name: '天府', type: 'major', brightness: '得', scope: 'origin', mutagen: undefined },
       ],
-      [{ name: '太阴', type: 'major', brightness: '旺', scope: 'origin' }],
-      [{ name: '贪狼', type: 'major', brightness: '庙', scope: 'origin' }],
-      [{ name: '巨门', type: 'major', brightness: '旺', scope: 'origin' }],
+      [{ name: '太阴', type: 'major', brightness: '旺', scope: 'origin', mutagen: '科' }],
+      [{ name: '贪狼', type: 'major', brightness: '庙', scope: 'origin', mutagen: '忌' }],
+      [{ name: '巨门', type: 'major', brightness: '旺', scope: 'origin', mutagen: '权' }],
       [
-        { name: '廉贞', type: 'major', brightness: '平', scope: 'origin' },
-        { name: '天相', type: 'major', brightness: '庙', scope: 'origin' },
+        { name: '廉贞', type: 'major', brightness: '平', scope: 'origin', mutagen: undefined },
+        { name: '天相', type: 'major', brightness: '庙', scope: 'origin', mutagen: undefined },
       ],
-      [{ name: '天梁', type: 'major', brightness: '旺', scope: 'origin' }],
+      [{ name: '天梁', type: 'major', brightness: '旺', scope: 'origin', mutagen: undefined }],
     ]);
   });
 
