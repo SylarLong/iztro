@@ -8,9 +8,17 @@
 
 ## 用法
 
+### 引入依赖库
+
+```
+npm i @sylarlong/astro -S
+```
+
 ### 调用方法
 
 ```ts
+import { astro } from '@sylarlong/astro';
+
 const astrolable = astro.astrolableBySolarDate('2000-8-16', 2, '女');
 ```
 
