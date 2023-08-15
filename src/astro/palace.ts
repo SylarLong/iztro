@@ -166,7 +166,7 @@ export const getHoroscope = (
   timeIndex: number,
   gender: keyof typeof GENDER,
   fixLeap?: boolean,
-): {stages: Stage[], ages: number[][]} => {
+): { stages: Stage[]; ages: number[][] } => {
   const stages = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const [heavenlyStem, earthlyBranch] = yearly;
