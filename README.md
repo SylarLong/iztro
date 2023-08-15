@@ -1,5 +1,6 @@
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/astro/Codecov.yaml)
- [![npm version](https://badge.fury.io/js/@sylarlong%2Fastro.svg)](https://badge.fury.io/js/@sylarlong%2Fastro) ![NPM](https://img.shields.io/npm/l/%40sylarlong%2Fastro) ![Static Badge](https://img.shields.io/badge/astro-%E7%B4%AB%E5%BE%AE%E6%96%97%E6%95%B0-purple) ![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/astro)
+ [![npm version](https://badge.fury.io/js/@sylarlong%2Fastro.svg)](https://badge.fury.io/js/@sylarlong%2Fastro) ![NPM](https://img.shields.io/npm/l/%40sylarlong%2Fastro) ![Static Badge](https://img.shields.io/badge/astro-%E7%B4%AB%E5%BE%AE%E6%96%97%E6%95%B0-purple) ![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/astro) ![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)
+
 
 # 介绍
 
