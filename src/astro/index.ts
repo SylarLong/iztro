@@ -1,4 +1,4 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, solar2lunar } from '../calendar';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from '../calendar';
 import { BIRTH_TIME, EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex } from '../utils';
@@ -6,6 +6,15 @@ import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } fr
 
 export * from './palace';
 
+/**
+ * 通过阳历获取星盘信息
+ *
+ * @param solarDateStr 阳历日期【YYYY-M-D】
+ * @param timeIndex 出生时辰序号【0~12】
+ * @param gender 性别【男|女】
+ * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @returns 星盘信息
+ */
 export const astrolableBySolarDate = (
   solarDateStr: string,
   timeIndex: number,
@@ -98,4 +107,26 @@ export const astrolableBySolarDate = (
   };
 
   return result;
+};
+
+/**
+ * 通过农历获取星盘信息
+ *
+ * @param lunarDateStr 农历日期【YYYY-M-D】，例如2000年七月十七则传入 2000-7-17
+ * @param timeIndex 出生时辰序号【0~12】
+ * @param gender 性别【男|女】
+ * @param isLeapMonth 是否闰月【默认 false】，当实际月份没有闰月时该参数不生效
+ * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @returns
+ */
+export const astrolableByLunarDate = (
+  lunarDateStr: string,
+  timeIndex: number,
+  gender: keyof typeof GENDER,
+  isLeapMonth: boolean = false,
+  fixLeap: boolean = true,
+) => {
+  const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
+
+  return astrolableBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap);
 };
