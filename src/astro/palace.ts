@@ -1,7 +1,14 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIGER_RULE } from '../data';
-import { EarthlyBranch, FiveElementsClass, HeavenlyStem, SoulAndBody } from '../data/types';
-import { fixIndex, fixLunarMonthIndex } from '../utils';
+import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches } from '../data';
+import {
+  EarthlyBranch,
+  FiveElementsClass,
+  FiveElementsClassItem,
+  HeavenlyStem,
+  PalaceName,
+  SoulAndBody,
+} from '../data/types';
+import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 
 /**
  * 获取命宫以及身宫数据
@@ -103,8 +110,8 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
 export const getFiveElementsClass = (
   heavenlyStem: HeavenlyStem,
   earthlyBranch: EarthlyBranch,
-): keyof typeof FiveElementsClass => {
-  const fiveElementsTable: Array<keyof typeof FiveElementsClass> = ['木三局', '金四局', '水二局', '火六局', '土五局'];
+): FiveElementsClassItem => {
+  const fiveElementsTable: FiveElementsClassItem[] = ['木三局', '金四局', '水二局', '火六局', '土五局'];
 
   const heavenlyStemNumber = Math.floor(HEAVENLY_STEMS.indexOf(heavenlyStem) / 2) + 1;
   const earthlyBranchNumber = Math.floor(fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch), 6) / 2) + 1;
@@ -123,14 +130,77 @@ export const getFiveElementsClass = (
  * @param fromIndex 命宫索引
  * @returns 从寅宫开始的各个宫名
  */
-export const getPalaceNames = (fromIndex: number): Array<(typeof PALACES)[number]> => {
-  const names: Array<(typeof PALACES)[number]> = [];
+export const getPalaceNames = (fromIndex: number): PalaceName[] => {
+  const names: PalaceName[] = [];
 
   for (let i = 0; i < PALACES.length; i++) {
-    let idx = fixIndex(i - fromIndex);
+    const idx = fixIndex(i - fromIndex);
 
     names[i] = PALACES[idx];
   }
 
   return names;
+};
+
+/**
+ * 起大限，阳男阴女顺行，阴男阳女逆部
+ *
+ * 起小限
+ *
+ * @param solarDateStr 公历日期
+ * @param timeIndex 出生时索引
+ * @param gender 性别
+ * @param fixLeap 是否修正闰月，若修正，则闰月前15天按上月算，后15天按下月算
+ * @returns 从寅宫开始的大限年龄段
+ */
+export const getHoroscope = (
+  solarDateStr: string,
+  timeIndex: number,
+  gender: keyof typeof GENDER,
+  fixLeap?: boolean,
+) => {
+  const stages = [];
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const [heavenlyStem, earthlyBranch] = yearly;
+  const fiveElementsClass = getFiveElementsClass(heavenlyStem, earthlyBranch);
+  const { soulIndex } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+
+  // 用五虎遁获取大限起始天干
+  const startHeavenlyStem = TIGER_RULE[heavenlyStem];
+
+  for (let i = 0; i < 12; i++) {
+    const idx =
+      GENDER[gender] === earthlyBranches[earthlyBranch].yinYang ? fixIndex(soulIndex + i) : fixIndex(soulIndex - i);
+    const start = FiveElementsClass[fiveElementsClass] + 10 * i;
+    const heavenlyStemIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx, 10);
+
+    stages[idx] = { range: [start, start + 9], heavenlyStem: HEAVENLY_STEMS[heavenlyStemIndex] };
+  }
+
+  let ageIdx = 0;
+  const ages = [];
+
+  if (['寅', '午', '戌'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('辰');
+  } else if (['申', '子', '辰'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('戌');
+  } else if (['巳', '酉', '丑'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('未');
+  } else if (['亥', '卯', '未'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('丑') + 12;
+  }
+
+  for (let i = 0; i < 12; i++) {
+    const age = [];
+
+    for (let j = 0; j < 7; j++) {
+      age.push(12 * j + i + 1);
+    }
+
+    const idx = gender === '男' ? fixIndex(ageIdx + i) : fixIndex(ageIdx - i);
+
+    ages[idx] = age;
+  }
+
+  return { stages, ages };
 };

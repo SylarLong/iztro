@@ -14,10 +14,11 @@ export type PalaceName = (typeof PALACES)[number];
 export type Star = {
   /** 星耀名字 */
   name: string;
-  /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀） */
-  type: 'major' | 'soft' | 'tough' | 'adjective';
+  /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀 | 桃花星 | 解神 | 禄存 | 天马） */
+  type: 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
   /** 作用范围（本命盘 | 大限盘 | 流年盘） */
   scope: 'origin' | 'stage' | 'yearly';
+  brightness?: StarBrightness | '';
 };
 
 /**

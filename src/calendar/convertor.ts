@@ -40,13 +40,13 @@ export const normalizeSolarDateStr = (dateStr: string | Date) => {
 export const solar2lunar = (dateStr: string | Date): LunarDate => {
   const [year, month, day] = normalizeSolarDateStr(dateStr);
 
-  //参数区间1900.1.31~2100.12.31
-  //年份限定、上限
+  // 参数区间1900.1.31~2100.12.31
+  // 年份限定、上限
   if (year < 1900 || year > 2100) {
     throw new Error('不支持的年份');
   }
 
-  //公历传参最下限 1900-01-31
+  // 公历传参最下限 1900-01-31
   if (year === 1900 && month === 1 && day < 31) {
     throw new Error('日期必须在1900-1-31之后');
   }
@@ -169,12 +169,12 @@ export const lunar2solar = (dateStr: string, isLeapMonth?: boolean): SolarDate =
     offset += getTotalDaysOfLunarMonth(year, i);
   }
 
-  //转换闰月农历 需补充该年闰月的前一个月的时差
+  // 转换闰月农历 需补充该年闰月的前一个月的时差
   if (isLeapMonth) {
     offset += totalDaysOfTheMonth;
   }
 
-  //1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
+  // 1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
   const stmap = Date.UTC(1900, 1, 30, 0, 0, 0);
   const solarDate = new Date((offset + day - 31) * 86400000 + stmap);
   const solarYear = solarDate.getUTCFullYear();

@@ -107,7 +107,7 @@ export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) => (timeIn
  * @param stars 星耀数组
  * @returns 合并后的星耀
  */
-export const mergeStars = (...stars: Array<Star[][]>) => {
+export const mergeStars = (...stars: Star[][][]) => {
   const finalStars = initStars();
 
   stars.forEach((item) => {

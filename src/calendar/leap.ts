@@ -8,6 +8,7 @@ import { LUNAR_INFO } from './rules';
  * leapMonth = getLeapMonth(1987) ; // leapMonth=6
  */
 export const getLeapMonth = (year: number) => {
+  // tslint:disable-next-line:no-bitwise
   return LUNAR_INFO[year - 1900] & 0xf;
 };
 
@@ -20,6 +21,7 @@ export const getLeapMonth = (year: number) => {
  */
 export const getLeapDays = (year: number) => {
   if (getLeapMonth(year)) {
+    // tslint:disable-next-line:no-bitwise
     return LUNAR_INFO[year - 1900] & 0x10000 ? 30 : 29;
   }
 

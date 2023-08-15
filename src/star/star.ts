@@ -1,6 +1,6 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { GENDER, earthlyBranches } from '../data';
+import { GENDER, STARS_INFO, earthlyBranches } from '../data';
 import { FiveElementsClass, Star } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 import {
@@ -19,7 +19,7 @@ import {
   getZuoYouIndex,
 } from './location';
 
-export const initStars = (): Array<Star[]> => [[], [], [], [], [], [], [], [], [], [], [], []];
+export const initStars = (): Star[][] => [[], [], [], [], [], [], [], [], [], [], [], []];
 
 /**
  * 安主星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -40,26 +40,30 @@ export const initStars = (): Array<Star[]> => [[], [], [], [], [], [], [], [], [
 export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const { ziweiIndex, tianfuIndex } = getStartIndex(solarDateStr, timeIndex, fixLeap);
   const stars = initStars();
-  const ziweiGroup = ['紫微', '天机', '', '太阳', '武曲', '天同', '', '', '廉贞'];
-  const tianfuGroup = ['天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '', '', '', '破军'];
+  const ziweiGroup = ['紫微', '天机', '', '太阳', '武曲', '天同', '', '', '廉贞'] as const;
+  const tianfuGroup = ['天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '', '', '', '破军'] as const;
 
   ziweiGroup.forEach((s, i) => {
     // 安紫微星系，起始宫逆时针安
-    s &&
+    if (s !== '') {
       stars[fixIndex(ziweiIndex - i)].push({
         name: s,
         type: 'major',
         scope: 'origin',
+        brightness: STARS_INFO[s].brightness[fixIndex(ziweiIndex - i)],
       });
+    }
   });
 
   tianfuGroup.forEach((s, i) => {
-    s &&
+    if (s !== '') {
       stars[fixIndex(tianfuIndex + i)].push({
         name: s,
         type: 'major',
         scope: 'origin',
+        brightness: STARS_INFO[s].brightness[fixIndex(tianfuIndex + i)],
       });
+    }
   });
 
   return stars;
@@ -86,20 +90,90 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
 
-  stars[zuoIndex].push({ name: '左辅', type: 'soft', scope: 'origin' });
-  stars[youIndex].push({ name: '右弼', type: 'soft', scope: 'origin' });
-  stars[changIndex].push({ name: '文昌', type: 'soft', scope: 'origin' });
-  stars[quIndex].push({ name: '文曲', type: 'soft', scope: 'origin' });
-  stars[kuiIndex].push({ name: '天魁', type: 'soft', scope: 'origin' });
-  stars[yueIndex].push({ name: '天钺', type: 'soft', scope: 'origin' });
-  stars[luIndex].push({ name: '禄存', type: 'major', scope: 'origin' });
-  stars[maIndex].push({ name: '天马', type: 'major', scope: 'origin' });
-  stars[kongIndex].push({ name: '地空', type: 'tough', scope: 'origin' });
-  stars[jieIndex].push({ name: '地劫', type: 'tough', scope: 'origin' });
-  stars[huoIndex].push({ name: '火星', type: 'tough', scope: 'origin' });
-  stars[lingIndex].push({ name: '铃星', type: 'tough', scope: 'origin' });
-  stars[yangIndex].push({ name: '擎羊', type: 'tough', scope: 'origin' });
-  stars[tuoIndex].push({ name: '陀罗', type: 'tough', scope: 'origin' });
+  stars[zuoIndex].push({
+    name: '左辅',
+    type: 'soft',
+    scope: 'origin',
+    brightness: STARS_INFO.左辅.brightness[zuoIndex],
+  });
+  stars[youIndex].push({
+    name: '右弼',
+    type: 'soft',
+    scope: 'origin',
+    brightness: STARS_INFO.右弼.brightness[youIndex],
+  });
+  stars[changIndex].push({
+    name: '文昌',
+    type: 'soft',
+    scope: 'origin',
+    brightness: STARS_INFO.文昌.brightness[changIndex],
+  });
+  stars[quIndex].push({
+    name: '文曲',
+    type: 'soft',
+    scope: 'origin',
+    brightness: STARS_INFO.文曲.brightness[quIndex],
+  });
+  stars[kuiIndex].push({
+    name: '天魁',
+    type: 'soft',
+    scope: 'origin',
+    brightness: STARS_INFO.天魁.brightness[kuiIndex],
+  });
+  stars[yueIndex].push({
+    name: '天钺',
+    type: 'soft',
+    scope: 'origin',
+    brightness: STARS_INFO.天钺.brightness[yueIndex],
+  });
+  stars[luIndex].push({
+    name: '禄存',
+    type: 'lucun',
+    scope: 'origin',
+    brightness: STARS_INFO.禄存.brightness[luIndex],
+  });
+  stars[maIndex].push({
+    name: '天马',
+    type: 'tianma',
+    scope: 'origin',
+    brightness: STARS_INFO.天马.brightness[maIndex],
+  });
+  stars[kongIndex].push({
+    name: '地空',
+    type: 'tough',
+    scope: 'origin',
+    brightness: STARS_INFO.地空.brightness[kongIndex],
+  });
+  stars[jieIndex].push({
+    name: '地劫',
+    type: 'tough',
+    scope: 'origin',
+    brightness: STARS_INFO.地劫.brightness[jieIndex],
+  });
+  stars[huoIndex].push({
+    name: '火星',
+    type: 'tough',
+    scope: 'origin',
+    brightness: STARS_INFO.火星.brightness[huoIndex],
+  });
+  stars[lingIndex].push({
+    name: '铃星',
+    type: 'tough',
+    scope: 'origin',
+    brightness: STARS_INFO.铃星.brightness[lingIndex],
+  });
+  stars[yangIndex].push({
+    name: '擎羊',
+    type: 'tough',
+    scope: 'origin',
+    brightness: STARS_INFO.擎羊.brightness[yangIndex],
+  });
+  stars[tuoIndex].push({
+    name: '陀罗',
+    type: 'tough',
+    scope: 'origin',
+    brightness: STARS_INFO.陀罗.brightness[tuoIndex],
+  });
 
   return stars;
 };
@@ -151,12 +225,12 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(yearly[1]);
   const nianjieIndex = getNianjieIndex(yearly[1]);
 
-  stars[hongluanIndex].push({ name: '红鸾', type: 'adjective', scope: 'origin' });
-  stars[tianxiIndex].push({ name: '天喜', type: 'adjective', scope: 'origin' });
-  stars[tianyaoIndex].push({ name: '天姚', type: 'adjective', scope: 'origin' });
-  stars[xianchiIndex].push({ name: '咸池', type: 'adjective', scope: 'origin' });
-  stars[nianjieIndex].push({ name: '年解', type: 'adjective', scope: 'origin' });
-  stars[yuejieIndex].push({ name: '月解', type: 'adjective', scope: 'origin' });
+  stars[hongluanIndex].push({ name: '红鸾', type: 'flower', scope: 'origin' });
+  stars[tianxiIndex].push({ name: '天喜', type: 'flower', scope: 'origin' });
+  stars[tianyaoIndex].push({ name: '天姚', type: 'flower', scope: 'origin' });
+  stars[xianchiIndex].push({ name: '咸池', type: 'flower', scope: 'origin' });
+  stars[nianjieIndex].push({ name: '年解', type: 'helper', scope: 'origin' });
+  stars[yuejieIndex].push({ name: '月解', type: 'helper', scope: 'origin' });
   stars[santaiIndex].push({ name: '三台', type: 'adjective', scope: 'origin' });
   stars[bazuoIndex].push({ name: '八座', type: 'adjective', scope: 'origin' });
   stars[enguangIndex].push({ name: '恩光', type: 'adjective', scope: 'origin' });

@@ -1,5 +1,5 @@
 {
-  "name": "astro",
+  "name": "@sylarlong/astro",
   "version": "0.0.1",
   "description": "Astrolabe generator of The Purple Star Astrology (Zi Wei Dou Shu).",
   "main": "lib/index.js",
@@ -18,12 +18,15 @@
   "files": [
     "lib/**/*"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SylarLong/astro.git"
   },
   "keywords": ["zi wei dou shu", "紫微斗数", "the purple astorlabe", "排盘", "紫微斗数排盘", "星盘生成", "紫微斗数命盘"],
-  "author": "SylarLong",
+  "author": "SylarLong (sylarlong@gmail.com, alsogood@qq.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SylarLong/astro/issues"

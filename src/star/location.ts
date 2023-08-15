@@ -549,7 +549,7 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
       ['未', '辰', '巳', '寅', '卯', '酉', '亥', '酉', '戌', '午'][HEAVENLY_STEMS.indexOf(yearly[0])] as EarthlyBranch,
     ),
   );
-  let tianfuIndex = fixIndex(
+  const tianfuIndex = fixIndex(
     fixEarthlyBranchIndex(
       ['酉', '申', '子', '亥', '卯', '寅', '午', '巳', '午', '巳'][HEAVENLY_STEMS.indexOf(yearly[0])] as EarthlyBranch,
     ),

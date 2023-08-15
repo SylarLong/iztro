@@ -25,7 +25,7 @@ export const getTerm = (year: number, termNo: number) => {
   const _info = [];
 
   for (let i = 0; i < 30; i += 5) {
-    _info.push(parseInt('0x' + _table.substring(i, i + 5)).toString());
+    _info.push(parseInt('0x' + _table.substring(i, i + 5), 16).toString());
   }
 
   const _calday: string[] = [];
@@ -37,7 +37,7 @@ export const getTerm = (year: number, termNo: number) => {
     _calday.push(item.substring(4, 6));
   });
 
-  return parseInt(_calday[termNo - 1]);
+  return parseInt(_calday[termNo - 1], 10);
 };
 
 /**

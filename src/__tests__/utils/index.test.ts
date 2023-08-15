@@ -1,5 +1,5 @@
 import { EARTHLY_BRANCHES } from '../../data';
-import { fixIndex, getBrightness } from '../../utils';
+import { fixEarthlyBranchIndex, fixIndex, getBrightness } from '../../utils';
 
 describe('Utils', () => {
   test('fixIndex() should return correct index.', () => {
@@ -20,14 +20,14 @@ describe('Utils', () => {
     expect(fixIndex(37, 10)).toBe(7);
   });
 
-  test('getPalaceNames() should return correct value', () => {
-    expect(getBrightness('破军', EARTHLY_BRANCHES.indexOf('午'))).toBe('庙');
-    expect(getBrightness('太阴', EARTHLY_BRANCHES.indexOf('酉'))).toBe('旺');
-    expect(getBrightness('天机', EARTHLY_BRANCHES.indexOf('未'))).toBe('陷');
-    expect(getBrightness('天府', EARTHLY_BRANCHES.indexOf('申'))).toBe('得');
-    expect(getBrightness('廉贞', EARTHLY_BRANCHES.indexOf('子'))).toBe('平');
-    expect(getBrightness('陀罗', EARTHLY_BRANCHES.indexOf('亥'))).toBe('陷');
-    expect(getBrightness('擎羊', EARTHLY_BRANCHES.indexOf('亥'))).toBe('');
-    expect(getBrightness('擎羊', EARTHLY_BRANCHES.indexOf('酉'))).toBe('陷');
+  test('getBrightness() should return correct value', () => {
+    expect(getBrightness('破军', fixEarthlyBranchIndex('午'))).toBe('庙');
+    expect(getBrightness('太阴', fixEarthlyBranchIndex('酉'))).toBe('旺');
+    expect(getBrightness('天机', fixEarthlyBranchIndex('未'))).toBe('陷');
+    expect(getBrightness('天府', fixEarthlyBranchIndex('申'))).toBe('得');
+    expect(getBrightness('廉贞', fixEarthlyBranchIndex('子'))).toBe('平');
+    expect(getBrightness('陀罗', fixEarthlyBranchIndex('亥'))).toBe('陷');
+    expect(getBrightness('擎羊', fixEarthlyBranchIndex('亥'))).toBe('');
+    expect(getBrightness('擎羊', fixEarthlyBranchIndex('酉'))).toBe('陷');
   });
 });

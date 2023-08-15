@@ -11,7 +11,9 @@ import { LUNAR_INFO, SOLAR_MONTH } from './rules';
 export const getTotalDaysOfLunarYear = (year: number) => {
   let sum = 348;
 
+  // tslint:disable-next-line:no-bitwise
   for (let i = 0x8000; i > 0x8; i >>= 1) {
+    // tslint:disable-next-line:no-bitwise
     sum += LUNAR_INFO[year - 1900] & i ? 1 : 0;
   }
 
@@ -32,6 +34,7 @@ export const getTotalDaysOfLunarMonth = (year: number, month: number) => {
     throw new Error('农历月份参数错误');
   }
 
+  // tslint:disable-next-line:no-bitwise
   return LUNAR_INFO[year - 1900] & (0x10000 >> month) ? 30 : 29;
 };
 
@@ -50,7 +53,7 @@ export const getTotalDaysOfSolarMonth = (year: number, month: number) => {
   }
 
   if (month === 2) {
-    //2月份的闰平规律测算后确认返回28或29
+    // 2月份的闰平规律测算后确认返回28或29
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28;
   }
 
