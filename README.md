@@ -84,8 +84,6 @@ const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, tru
 
  <details><summary>返回数据 (Response data)</summary>
   <p>
-
-    ```ts
     {
       // 阳历日期
       solarDate: '2000-8-16',
@@ -395,9 +393,6 @@ const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, tru
         },
       ],
     }
-    
-    ```
-    
     </p>
 </details> 
 
