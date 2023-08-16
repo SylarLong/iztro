@@ -4,9 +4,6 @@
  ![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro) ![Website](https://img.shields.io/website?up_message=https://a.14star.cn&up_color=purple&url=https%3A%2F%2Fa.14star.cn&label=demo) ![GitHub issues](https://img.shields.io/github/issues/SylarLong/astro) ![GitHub](https://img.shields.io/github/license/sylarlong/astro)
 
 
-
-
-
 # 介绍
 
 用于紫微斗数排盘的工具库
@@ -14,6 +11,12 @@
 ## 要求
 
 - node: v14.15.1+
+
+## Demo
+
+[Demo]https://14star.cn
+
+该Demo页面尚未使用本库，但是本库代码是以Demo页面代码重构而来，在今后我会将文档补全，以方便大家按照自己的定制需求来开发自己的程序。抠码不易，希望能得到大佬们得star。😘😘😘
 
 ## 用法
 
