@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from '../calendar';
-import { BIRTH_TIME, EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
+import { BIRTH_TIME, EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, Gender } from '../data';
 import { Astrolabe } from '../data/types';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex } from '../utils';
@@ -19,7 +19,7 @@ export * from './palace';
 export const astrolableBySolarDate = (
   solarDateStr: string,
   timeIndex: number,
-  gender: keyof typeof GENDER,
+  gender: Gender,
   fixLeap: boolean = true,
 ): Astrolabe => {
   const palaces = [];
@@ -123,10 +123,10 @@ export const astrolableBySolarDate = (
 export const astrolableByLunarDate = (
   lunarDateStr: string,
   timeIndex: number,
-  gender: keyof typeof GENDER,
+  gender: Gender,
   isLeapMonth: boolean = false,
   fixLeap: boolean = true,
-) => {
+): Astrolabe => {
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
   return astrolableBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap);

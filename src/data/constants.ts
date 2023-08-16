@@ -48,6 +48,8 @@ export const GENDER = {
   女: '阴',
 } as const;
 
+export type Gender = keyof typeof GENDER;
+
 // 时辰
 export const BIRTH_TIME = [
   '早子时', // : '00:00~01:00',

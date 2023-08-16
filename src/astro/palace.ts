@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches } from '../data';
+import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches, Gender } from '../data';
 import {
   EarthlyBranch,
   FiveElementsClass,
@@ -164,7 +164,7 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
 export const getHoroscope = (
   solarDateStr: string,
   timeIndex: number,
-  gender: keyof typeof GENDER,
+  gender: Gender,
   fixLeap?: boolean,
 ): { stages: Stage[]; ages: number[][] } => {
   const stages = [];

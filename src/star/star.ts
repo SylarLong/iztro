@@ -1,6 +1,6 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { GENDER, HEAVENLY_STEMS, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems } from '../data';
+import { GENDER, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems, Gender } from '../data';
 import { EarthlyBranch, FiveElementsClass, HeavenlyStem, Star } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 import {
@@ -287,12 +287,7 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  * @returns 长生12神从寅宫开始的顺序
  */
-export const getchangsheng12 = (
-  solarDateStr: string,
-  timeIndex: number,
-  gender: keyof typeof GENDER,
-  fixLeap?: boolean,
-) => {
+export const getchangsheng12 = (solarDateStr: string, timeIndex: number, gender: Gender, fixLeap?: boolean) => {
   const changsheng12 = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [, earthlyBranchOfYear] = yearly;
@@ -354,7 +349,7 @@ export const getchangsheng12 = (
  * @param gender 性别【男｜女】
  * @returns 博士12神从寅宫开始的顺序
  */
-export const getBoShi12 = (solarDateStr: string, gender: keyof typeof GENDER) => {
+export const getBoShi12 = (solarDateStr: string, gender: Gender) => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [heavenlyStemOfYear, earthlyBranchOfYear] = yearly;
   // 博士12神的顺序

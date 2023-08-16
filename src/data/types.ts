@@ -128,67 +128,70 @@ export type SoulAndBody = {
 };
 
 export type Stage = {
+  /** 大限起止年龄 [起始年龄, 截止年龄] */
   range: number[];
+  /** 大限天干 */
   heavenlyStem: HeavenlyStem;
+  /** 大限地支 */
   earthlyBranch: EarthlyBranch;
 };
 
 export type Palace = {
-  // 宫名
+  /** 宫名 */
   name: PalaceName;
-  // 是否身宫
+  /** 是否身宫 */
   isBodyPalace: boolean;
-  // 是否来因宫
+  /** 是否来因宫 */
   isOriginalPalace: boolean;
-  // 宫位天干
+  /** 宫位天干 */
   heavenlyStem: HeavenlyStem;
-  // 宫位地支
+  /** 宫位地支 */
   earthlyBranch: EarthlyBranch;
-  // 主星
+  /** 主星 */
   majorStars: Star[];
-  // 辅星
+  /** 辅星 */
   minorStars: Star[];
-  // 杂耀
+  /** 杂耀 */
   adjectiveStars: Star[];
-  // 长生12神
+  /** 长生12神 */
   changsheng12: string;
-  // 博士12神
+  /** 博士12神 */
   boshi12: string;
-  // 流年将前12神
+  /** 流年将前12神 */
   jiangqian12: string;
-  // 流年岁前12神
+  /** 流年岁前12神 */
   suiqian12: string;
-  // 大限
+  /** 大限 */
   stage: Stage;
-  // 小限
+  /** 小限 */
   ages: number[];
 };
 
 export type Astrolabe = {
-  // 阳历日期
+  /** 阳历日期 */
   solarDate: string;
-  // 农历日期
+  /** 农历日期 */
   lunarDate: string;
-  // 四柱
+  /** 四柱 */
   chineseDate: string;
-  // 时辰
+  /** 时辰 */
   time: BirthTime;
-  // 时辰对应的时间段
+  /** 时辰对应的时间段 */
   timeRange: TimeRange;
-  // 星座
+  /** 星座 */
   sign: string;
-  // 生肖
+  /** 生肖 */
   zodiac: string;
-  // 命宫地支
+  /** 命宫地支 */
   earthlyBranchOfSoulPalace: EarthlyBranch;
-  // 身宫地支
+  /** 身宫地支 */
   earthlyBranchOfBodyPalace: EarthlyBranch;
-  // 命主
+  /** 命主 */
   soul: string;
-  // 身主
+  /** 身主 */
   body: string;
-  // 五行局
+  /** 五行局 */
   fiveElementsClass: FiveElementsClassItem;
-  // 十二宫数据
+  /** 十二宫数据 */
   palaces: Palace[];
 };
