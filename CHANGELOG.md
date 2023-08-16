@@ -1,5 +1,17 @@
 # 紫微斗数排盘 Astrolabe generator of The purple star Astrology(Zi Wei Dou Shu)
 
+## v0.1.1
+
+### 改进（enhancement）
+
+`CN`
+
+- 增加CHANGELOG
+
+`EN`
+
+- add CHANGELOG
+
 ## v0.1.0
 
 ### 功能（feature）
