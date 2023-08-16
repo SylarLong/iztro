@@ -8,7 +8,7 @@
 
 用于紫微斗数排盘的工具库，文档还在整理中，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/issues)提问交流，也可以直接向我发送邮件（sylarlong@gmail.com，alsogood@qq.com）。扣码不易，希望得到各位大佬的星星。之后会陆续添加更多实用功能和国际化，敬请期待。🍻
 
-This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). The document is under progressing. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/issues) or just send an email (sylarlong@gmail or alsogood@qq.com) to me directly. I'll appreciate your star. More useful functions and localization are coming soon. stay tuned!🍻
+This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). The document is under progressing. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/issues) or just send an email (sylarlong@gmail.com or alsogood@qq.com) to me directly. I'll appreciate your star. More useful functions and localization are coming soon. stay tuned!🍻
 
 ## 举个栗子🌰（Demo）
 
