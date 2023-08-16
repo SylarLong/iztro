@@ -37,6 +37,46 @@ describe('star/location', () => {
           maIndex: 6,
         },
       },
+      {
+        heavenlyStem: '辛',
+        earthlyBranch: '巳',
+        result: {
+          luIndex: 7,
+          yangIndex: 8,
+          tuoIndex: 6,
+          maIndex: 9,
+        },
+      },
+      {
+        heavenlyStem: '壬',
+        earthlyBranch: '午',
+        result: {
+          luIndex: 9,
+          yangIndex: 10,
+          tuoIndex: 8,
+          maIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: '癸',
+        earthlyBranch: '未',
+        result: {
+          luIndex: 10,
+          yangIndex: 11,
+          tuoIndex: 9,
+          maIndex: 3,
+        },
+      },
+      {
+        heavenlyStem: '甲',
+        earthlyBranch: '申',
+        result: {
+          luIndex: 0,
+          yangIndex: 1,
+          tuoIndex: 11,
+          maIndex: 0,
+        },
+      },
     ];
 
     data.forEach((item) => {
