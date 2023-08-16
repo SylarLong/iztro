@@ -358,6 +358,31 @@ describe('star/location', () => {
       tianshangIndex: 4,
       tianshiIndex: 6,
     });
+    expect(getYearlyStarIndex('2001-08-16', 2, true)).toStrictEqual({
+      xianchiIndex: 4,
+      huagaiIndex: 11,
+      guchenIndex: 6,
+      guasuIndex: 2,
+      tiancaiIndex: 8,
+      tianshouIndex: 0,
+      tianchuIndex: 4,
+      posuiIndex: 7,
+      feilianIndex: 5,
+      longchiIndex: 7,
+      fenggeIndex: 3,
+      tiankuIndex: 11,
+      tianxuIndex: 9,
+      tianguanIndex: 7,
+      tianfuIndex: 3,
+      jieluIndex: 2,
+      kongwangIndex: 3,
+      xunkongIndex: 6,
+      tiankongIndex: 4,
+      tiandeIndex: 0,
+      yuedeIndex: 8,
+      tianshangIndex: 8,
+      tianshiIndex: 10,
+    });
   });
 
   test('getMonthlyStarIndex()', () => {
