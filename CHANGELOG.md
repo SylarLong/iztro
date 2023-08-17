@@ -4,7 +4,9 @@
 
 - 修复（fix）
 
+  - 将`年解`星放置到流耀里面去
   - 修复错误拼写
+  - move `年解` to the horoscope star list
   - fix typo
 
 - 改进（enhancement）

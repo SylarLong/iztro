@@ -166,7 +166,7 @@ describe('star/index', () => {
     }, 0);
 
     expect(stars).toHaveLength(12);
-    expect(total).toEqual(66);
+    expect(total).toEqual(65);
   });
 
   test('getchangsheng12()', () => {
@@ -246,7 +246,7 @@ describe('star/index', () => {
         { name: '流马', type: 'tianma', scope: 'yearly' },
       ],
       [{ name: '流喜', type: 'flower', scope: 'yearly' }],
-      [],
+      [{ name: '年解', scope: 'yearly', type: 'helper' }],
       [],
       [],
       [],

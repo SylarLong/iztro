@@ -231,13 +231,11 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   const { santaiIndex, bazuoIndex, enguangIndex, tianguiIndex } = getDailyStarIndex(solarDateStr, timeIndex);
   const { taifuIndex, fenggaoIndex } = getTimelyStarIndex(timeIndex);
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(yearly[1]);
-  const nianjieIndex = getNianjieIndex(yearly[1]);
 
   stars[hongluanIndex].push({ name: '红鸾', type: 'flower', scope: 'origin' });
   stars[tianxiIndex].push({ name: '天喜', type: 'flower', scope: 'origin' });
   stars[tianyaoIndex].push({ name: '天姚', type: 'flower', scope: 'origin' });
   stars[xianchiIndex].push({ name: '咸池', type: 'flower', scope: 'origin' });
-  stars[nianjieIndex].push({ name: '年解', type: 'helper', scope: 'origin' });
   stars[yuejieIndex].push({ name: '月解', type: 'helper', scope: 'origin' });
   stars[santaiIndex].push({ name: '三台', type: 'adjective', scope: 'origin' });
   stars[bazuoIndex].push({ name: '八座', type: 'adjective', scope: 'origin' });
@@ -451,6 +449,12 @@ export const getHoroscopeStar = (
   stars[maIndex].push({ name: `${prefix[scope]}马`, type: 'tianma', scope });
   stars[hongluanIndex].push({ name: `${prefix[scope]}鸾`, type: 'flower', scope });
   stars[tianxiIndex].push({ name: `${prefix[scope]}喜`, type: 'flower', scope });
+
+  if (scope === 'yearly') {
+    const nianjieIndex = getNianjieIndex(earthlyBranch);
+
+    stars[nianjieIndex].push({ name: '年解', type: 'helper', scope: 'yearly' });
+  }
 
   return stars;
 };
