@@ -1,77 +1,59 @@
-# 紫微斗数排盘 Astrolabe generator of The purple star Astrology(Zi Wei Dou Shu)
+# 紫微斗数 @sylarlong/astro
+
+## v0.1.3
+
+- 修复（fix）
+
+  - 修复错误拼写
+  - fix typo
+
+- 改进（enhancement）
+
+  - 完善ReadMe
+  - imporove README
 
 ## v0.1.2
 
-### 改进（enhancement）
+- 改进（enhancement）
 
-`CN`
-
-- 优化注释
-- 优化“性别”类型
-
-`EN`
-
-- optimize comments
-- optimize `Gender` type
+  - 优化注释
+  - 优化“性别”类型
+  - optimize comments
+  - optimize `Gender` type
 
 ## v0.1.1
 
-### 改进（enhancement）
+- 改进（enhancement）
 
-`CN`
-
-- 增加CHANGELOG
-
-`EN`
-
-- add CHANGELOG
+  - 增加CHANGELOG
+  - add CHANGELOG
 
 ## v0.1.0
 
-### 功能（feature）
+- 功能（feature）
 
-`CN`
-
-- 核心功能的实现
-
-`EN`
-
-- core functions implementation
+  - 核心功能的实现
+  - core functions implementation
 
 ## v0.0.2
 
-### 功能（feature）
+- 功能（feature）
 
-`CN`
+  - 实现工具方法
+  - util functions implementation
 
-- 实现工具方法
+- 改进（enhancement）
 
-`EN`
+  - 优化代码结构
+  - 完善注释
+  - code structure optimization
+  - comments improvement
 
-- util functions implementation
+### v0.0.1
 
-### 改进（enhancement）
+- 功能（feature）
 
-`CN`
-
-- 优化代码结构
-- 完善注释
-
-`EN`
-
-- code structure optimization
-- comments improvement
-
-## v0.0.1
-
-### 功能（feature）
-
-`CN`
-
-- 项目初始化
-- 准备依赖数据
-
-`EN`
-
-- project initialization
-- dependencies preparation
+  - 项目初始化
+  - 准备依赖数据
+  - project initialization
+  - dependencies preparation

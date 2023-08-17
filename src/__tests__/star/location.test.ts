@@ -332,22 +332,22 @@ describe('star/location', () => {
 
   test('getLuanXiIndex()', () => {
     const data = [
-      { earchlyBranch: '卯', result: { hongluanIndex: 10, tianxiIndex: 4 } },
-      { earchlyBranch: '辰', result: { hongluanIndex: 9, tianxiIndex: 3 } },
-      { earchlyBranch: '巳', result: { hongluanIndex: 8, tianxiIndex: 2 } },
-      { earchlyBranch: '午', result: { hongluanIndex: 7, tianxiIndex: 1 } },
-      { earchlyBranch: '未', result: { hongluanIndex: 6, tianxiIndex: 0 } },
-      { earchlyBranch: '申', result: { hongluanIndex: 5, tianxiIndex: 11 } },
-      { earchlyBranch: '酉', result: { hongluanIndex: 4, tianxiIndex: 10 } },
-      { earchlyBranch: '戌', result: { hongluanIndex: 3, tianxiIndex: 9 } },
-      { earchlyBranch: '亥', result: { hongluanIndex: 2, tianxiIndex: 8 } },
-      { earchlyBranch: '子', result: { hongluanIndex: 1, tianxiIndex: 7 } },
-      { earchlyBranch: '丑', result: { hongluanIndex: 0, tianxiIndex: 6 } },
-      { earchlyBranch: '寅', result: { hongluanIndex: 11, tianxiIndex: 5 } },
+      { earthlyBranch: '卯', result: { hongluanIndex: 10, tianxiIndex: 4 } },
+      { earthlyBranch: '辰', result: { hongluanIndex: 9, tianxiIndex: 3 } },
+      { earthlyBranch: '巳', result: { hongluanIndex: 8, tianxiIndex: 2 } },
+      { earthlyBranch: '午', result: { hongluanIndex: 7, tianxiIndex: 1 } },
+      { earthlyBranch: '未', result: { hongluanIndex: 6, tianxiIndex: 0 } },
+      { earthlyBranch: '申', result: { hongluanIndex: 5, tianxiIndex: 11 } },
+      { earthlyBranch: '酉', result: { hongluanIndex: 4, tianxiIndex: 10 } },
+      { earthlyBranch: '戌', result: { hongluanIndex: 3, tianxiIndex: 9 } },
+      { earthlyBranch: '亥', result: { hongluanIndex: 2, tianxiIndex: 8 } },
+      { earthlyBranch: '子', result: { hongluanIndex: 1, tianxiIndex: 7 } },
+      { earthlyBranch: '丑', result: { hongluanIndex: 0, tianxiIndex: 6 } },
+      { earthlyBranch: '寅', result: { hongluanIndex: 11, tianxiIndex: 5 } },
     ];
 
     data.forEach((item) => {
-      expect(getLuanXiIndex(item.earchlyBranch as EarthlyBranch)).toStrictEqual(item.result);
+      expect(getLuanXiIndex(item.earthlyBranch as EarthlyBranch)).toStrictEqual(item.result);
     });
   });
 

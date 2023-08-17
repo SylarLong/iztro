@@ -6,9 +6,9 @@ import {
   getchangsheng12,
   getBoShi12,
   getYearly12,
-  getHoroscopeStar,
 } from '../../star';
 import { mergeStars } from '../../utils';
+import { star } from '../../index';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -211,7 +211,7 @@ describe('star/index', () => {
   });
 
   test('getHoroscopeStar() scope="stage"', () => {
-    expect(getHoroscopeStar('庚', '辰', 'stage')).toStrictEqual([
+    expect(star.getHoroscopeStar('庚', '辰', 'stage')).toStrictEqual([
       [{ name: '运马', type: 'tianma', scope: 'stage' }],
       [{ name: '运曲', type: 'soft', scope: 'stage' }],
       [],
@@ -234,7 +234,7 @@ describe('star/index', () => {
   });
 
   test('getHoroscopeStar() scope="stage"', () => {
-    expect(getHoroscopeStar('癸', '卯', 'yearly')).toStrictEqual([
+    expect(star.getHoroscopeStar('癸', '卯', 'yearly')).toStrictEqual([
       [],
       [
         { name: '流魁', type: 'soft', scope: 'yearly' },

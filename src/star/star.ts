@@ -427,18 +427,18 @@ export const getYearly12 = (solarDateStr: string) => {
  * 魁钺昌曲禄羊陀马鸾喜
  *
  * @param heavenlyStem 天干
- * @param earchlyBranch 地支
+ * @param earthlyBranch 地支
  */
 export const getHoroscopeStar = (
   heavenlyStem: HeavenlyStem,
-  earchlyBranch: EarthlyBranch,
+  earthlyBranch: EarthlyBranch,
   scope: 'stage' | 'yearly',
 ): Star[][] => {
   const prefix = { stage: '运', yearly: '流' };
   const { kuiIndex, yueIndex } = getKuiYueIndex(heavenlyStem);
   const { changIndex, quIndex } = getChangQuIndexByHeavenlyStem(heavenlyStem);
-  const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earchlyBranch);
-  const { hongluanIndex, tianxiIndex } = getLuanXiIndex(earchlyBranch);
+  const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earthlyBranch);
+  const { hongluanIndex, tianxiIndex } = getLuanXiIndex(earthlyBranch);
   const stars = initStars();
 
   stars[kuiIndex].push({ name: `${prefix[scope]}魁`, type: 'soft', scope });
