@@ -5,7 +5,11 @@
 
 # 📢 介绍（Introduction）
 
+🇨🇳
+
 用于紫微斗数排盘的工具库，文档还在整理中，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/issues)提问交流，也可以直接向我发送邮件（sylarlong@gmail.com，alsogood@qq.com）。扣码不易，希望得到各位大佬的星星。之后会陆续添加更多实用功能和国际化，敬请期待。🍻
+
+🇺🇸
 
 This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). The document is under progressing. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/issues) or just send an email (sylarlong@gmail.com or alsogood@qq.com) to me directly. I'll appreciate your star. More useful functions and localization are coming soon. stay tuned!🍻
 
@@ -23,17 +27,33 @@ npm i @sylarlong/astro -S
 
 ### ❓ 调用方法（Usage）
 
-```ts
-import { astro } from '@sylarlong/astro';
+- ES6 Module
 
-// 通过阳历获取星盘信息
-// generate astrolabe by solar date
-const astrolable = astro.astrolableBySolarDate('2000-8-16', 2, '女');
+  ```ts
+  import { astro } from '@sylarlong/astro';
 
-// 通过农历获取星盘信息
-// generate astrolabe by lunar date
-const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, true);
-```
+  // 通过阳历获取星盘信息
+  // generate astrolabe by solar date
+  const astrolable = astro.astrolableBySolarDate('2000-8-16', 2, '女');
+
+  // 通过农历获取星盘信息
+  // generate astrolabe by lunar date
+  const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, true);
+  ```
+
+- CommonJS
+
+  ```ts
+  var astroObj = require("@sylarlong/astro")
+
+  // 通过阳历获取星盘信息
+  // generate astrolabe by solar date
+  var astrolable = astroObj.astro.astrolableBySolarDate('2000-8-16', 2, '女');
+  
+  // 通过农历获取星盘信息
+  // generate astrolabe by lunar date
+  var astrolable = astroObj.astro.astrolableByLunarDate('2000-7-17', 2, '女', false, true);
+  ```
 
 #### ✍️ 方法定义（function definition）
 
@@ -248,13 +268,25 @@ export type Astrolabe = {
 
 #### ❓ 调用方法（Usage）
 
-```ts
-import { star } from '@sylarlong/astro';
+- ES6 Module
 
-// 通过天干地支获取流耀
-// get horoscope stars by heavenly stem and earthly branch
-const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'decadal');
-```
+  ```ts
+  import { star } from '@sylarlong/astro';
+
+  // 通过天干地支获取流耀
+  // get horoscope stars by heavenly stem and earthly branch
+  const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'decadal');
+  ```
+
+- CommonJS
+
+  ```ts
+  var astroObj = require("@sylarlong/astro")
+
+  // 通过天干地支获取流耀
+  // get horoscope stars by heavenly stem and earthly branch
+  var horoscopeStars = astroObj.star.getHoroscopeStar('庚', '辰', 'decadal');
+  ```
 
 #### ✍️ 方法定义（function definition）
 
@@ -305,8 +337,18 @@ const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'decadal');
 
 ### ☕ 总结（Summary）
 
+🇨🇳
+
 以上数据可以生成如下星盘，其中`palaces`数据用于填充12宫，其他数据用于填充中宫。
+
+🇺🇸
 
 You can create the astrolabe below based on the response data above. `palaces` is used to fill the 12-Palace and other fields are used to fill the Center Palace.
 
 ![demo](https://github.com/SylarLong/astro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
+
+### 📜 版权（LICENSE）
+
+MIT License
+
+Copyright &copy; 2023 Sylar Long
