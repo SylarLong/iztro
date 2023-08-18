@@ -149,7 +149,7 @@ const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, tru
           // 流年岁前12神
           suiqian12: '吊客',
           // 大限
-          stage: { range: [44, 53], heavenlyStem: '戊' },
+          decadal: { range: [44, 53], heavenlyStem: '戊' },
           // 小限
           ages: [9, 21, 33, 45, 57, 69, 81],
         },
@@ -174,7 +174,7 @@ export type Star = {
   mutagen?: Mutagen;
 };
 
-export type Stage = {
+export type Decadal = {
   /** 大限起止年龄 [起始年龄, 截止年龄] */
   range: number[];
   /** 大限天干 */
@@ -209,7 +209,7 @@ export type Palace = {
   /** 流年岁前12神 */
   suiqian12: string;
   /** 大限 */
-  stage: Stage;
+  decadal: Decadal;
   /** 小限 */
   ages: number[];
 };
@@ -253,7 +253,7 @@ import { star } from '@sylarlong/astro';
 
 // 通过天干地支获取流耀
 // get horoscope stars by heavenly stem and earthly branch
-const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'stage');
+const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'decadal');
 ```
 
 #### ✍️ 方法定义（function definition）
@@ -274,7 +274,7 @@ const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'stage');
   type getHoroscopeStar = (
     heavenlyStem: HeavenlyStem,
     earthlyBranch: EarthlyBranch,
-    scope: 'stage' | 'yearly',
+    scope: 'decadal' | 'yearly',
   ) => Star[][];
   ```
 
@@ -282,24 +282,24 @@ const horoscopeStars = star.getHoroscopeStar('庚', '辰', 'stage');
 
 ```ts
 [
-  [{ name: '运马', type: 'tianma', scope: 'stage' }],
-  [{ name: '运曲', type: 'soft', scope: 'stage' }],
+  [{ name: '运马', type: 'tianma', scope: 'decadal' }],
+  [{ name: '运曲', type: 'soft', scope: 'decadal' }],
   [],
-  [{ name: '运喜', type: 'flower', scope: 'stage' }],
-  [],
-  [
-    { name: '运钺', type: 'soft', scope: 'stage' },
-    { name: '运陀', type: 'tough', scope: 'stage' },
-  ],
-  [{ name: '运禄', type: 'lucun', scope: 'stage' }],
-  [{ name: '运羊', type: 'tough', scope: 'stage' }],
+  [{ name: '运喜', type: 'flower', scope: 'decadal' }],
   [],
   [
-    { name: '运昌', type: 'soft', scope: 'stage' },
-    { name: '运鸾', type: 'flower', scope: 'stage' },
+    { name: '运钺', type: 'soft', scope: 'decadal' },
+    { name: '运陀', type: 'tough', scope: 'decadal' },
+  ],
+  [{ name: '运禄', type: 'lucun', scope: 'decadal' }],
+  [{ name: '运羊', type: 'tough', scope: 'decadal' }],
+  [],
+  [
+    { name: '运昌', type: 'soft', scope: 'decadal' },
+    { name: '运鸾', type: 'flower', scope: 'decadal' },
   ],
   [],
-  [{ name: '运魁', type: 'soft', scope: 'stage' }],
+  [{ name: '运魁', type: 'soft', scope: 'decadal' }],
 ];
 ```
 

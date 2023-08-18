@@ -10,7 +10,7 @@ export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
 export type PalaceName = (typeof PALACES)[number];
 export type BirthTime = (typeof BIRTH_TIME)[number];
 export type TimeRange = (typeof TIME_RANGE)[number];
-export type Scope = 'origin' | 'stage' | 'yearly';
+export type Scope = 'origin' | 'decadal' | 'yearly';
 export type StarType = 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
 
 /**
@@ -127,7 +127,7 @@ export type SoulAndBody = {
   earthlyBranchOfSoul: EarthlyBranch;
 };
 
-export type Stage = {
+export type Decadal = {
   /** 大限起止年龄 [起始年龄, 截止年龄] */
   range: number[];
   /** 大限天干 */
@@ -162,7 +162,7 @@ export type Palace = {
   /** 流年岁前12神 */
   suiqian12: string;
   /** 大限 */
-  stage: Stage;
+  decadal: Decadal;
   /** 小限 */
   ages: number[];
 };

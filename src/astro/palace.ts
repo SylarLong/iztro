@@ -7,7 +7,7 @@ import {
   HeavenlyStem,
   PalaceName,
   SoulAndBody,
-  Stage,
+  Decadal,
 } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 
@@ -166,8 +166,8 @@ export const getHoroscope = (
   timeIndex: number,
   gender: Gender,
   fixLeap?: boolean,
-): { stages: Stage[]; ages: number[][] } => {
-  const stages = [];
+): { decadals: Decadal[]; ages: number[][] } => {
+  const decadals = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const [heavenlyStem, earthlyBranch] = yearly;
   const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
@@ -183,7 +183,7 @@ export const getHoroscope = (
     const heavenlyStemIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx, 10);
     const earthlyBranchIndex = fixIndex(EARTHLY_BRANCHES.indexOf('寅') + idx);
 
-    stages[idx] = {
+    decadals[idx] = {
       range: [start, start + 9],
       heavenlyStem: HEAVENLY_STEMS[heavenlyStemIndex],
       earthlyBranch: EARTHLY_BRANCHES[earthlyBranchIndex],
@@ -215,5 +215,5 @@ export const getHoroscope = (
     ages[idx] = age;
   }
 
-  return { stages, ages };
+  return { decadals, ages };
 };

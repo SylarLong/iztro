@@ -210,30 +210,30 @@ describe('star/index', () => {
     });
   });
 
-  test('getHoroscopeStar() scope="stage"', () => {
-    expect(star.getHoroscopeStar('庚', '辰', 'stage')).toStrictEqual([
-      [{ name: '运马', type: 'tianma', scope: 'stage' }],
-      [{ name: '运曲', type: 'soft', scope: 'stage' }],
+  test('getHoroscopeStar() scope="decadal"', () => {
+    expect(star.getHoroscopeStar('庚', '辰', 'decadal')).toStrictEqual([
+      [{ name: '运马', type: 'tianma', scope: 'decadal' }],
+      [{ name: '运曲', type: 'soft', scope: 'decadal' }],
       [],
-      [{ name: '运喜', type: 'flower', scope: 'stage' }],
-      [],
-      [
-        { name: '运钺', type: 'soft', scope: 'stage' },
-        { name: '运陀', type: 'tough', scope: 'stage' },
-      ],
-      [{ name: '运禄', type: 'lucun', scope: 'stage' }],
-      [{ name: '运羊', type: 'tough', scope: 'stage' }],
+      [{ name: '运喜', type: 'flower', scope: 'decadal' }],
       [],
       [
-        { name: '运昌', type: 'soft', scope: 'stage' },
-        { name: '运鸾', type: 'flower', scope: 'stage' },
+        { name: '运钺', type: 'soft', scope: 'decadal' },
+        { name: '运陀', type: 'tough', scope: 'decadal' },
+      ],
+      [{ name: '运禄', type: 'lucun', scope: 'decadal' }],
+      [{ name: '运羊', type: 'tough', scope: 'decadal' }],
+      [],
+      [
+        { name: '运昌', type: 'soft', scope: 'decadal' },
+        { name: '运鸾', type: 'flower', scope: 'decadal' },
       ],
       [],
-      [{ name: '运魁', type: 'soft', scope: 'stage' }],
+      [{ name: '运魁', type: 'soft', scope: 'decadal' }],
     ]);
   });
 
-  test('getHoroscopeStar() scope="stage"', () => {
+  test('getHoroscopeStar() scope="decadal"', () => {
     expect(star.getHoroscopeStar('癸', '卯', 'yearly')).toStrictEqual([
       [],
       [

@@ -32,7 +32,7 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('body', '文昌');
     expect(result).toHaveProperty('fiveElementsClass', '木三局');
     expect(result.palaces).toHaveLength(12);
-    expect(result.palaces[0].stage).toStrictEqual({ range: [43, 52], heavenlyStem: '戊', earthlyBranch: '寅' });
-    expect(result.palaces[11].stage).toStrictEqual({ range: [53, 62], heavenlyStem: '己', earthlyBranch: '丑' });
+    expect(result.palaces[0].decadal).toStrictEqual({ range: [43, 52], heavenlyStem: '戊', earthlyBranch: '寅' });
+    expect(result.palaces[11].decadal).toStrictEqual({ range: [53, 62], heavenlyStem: '己', earthlyBranch: '丑' });
   });
 });

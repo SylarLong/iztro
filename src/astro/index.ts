@@ -36,7 +36,7 @@ export const astrolableBySolarDate = (
   const changsheng12 = getchangsheng12(solarDateStr, timeIndex, gender, fixLeap);
   const boshi12 = getBoShi12(solarDateStr, gender);
   const { jiangqian12, suiqian12 } = getYearly12(solarDateStr);
-  const { stages, ages } = getHoroscope(solarDateStr, timeIndex, gender, fixLeap);
+  const { decadals, ages } = getHoroscope(solarDateStr, timeIndex, gender, fixLeap);
 
   for (let i = 0; i < 12; i++) {
     const heavenlyStemOfPalace =
@@ -69,7 +69,7 @@ export const astrolableBySolarDate = (
       // 流年岁前12神
       suiqian12: suiqian12[i],
       // 大限
-      stage: stages[i],
+      decadal: decadals[i],
       // 小限
       ages: ages[i],
     });

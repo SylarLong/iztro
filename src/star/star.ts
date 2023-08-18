@@ -430,9 +430,9 @@ export const getYearly12 = (solarDateStr: string) => {
 export const getHoroscopeStar = (
   heavenlyStem: HeavenlyStem,
   earthlyBranch: EarthlyBranch,
-  scope: 'stage' | 'yearly',
+  scope: 'decadal' | 'yearly',
 ): Star[][] => {
-  const prefix = { stage: '运', yearly: '流' };
+  const prefix = { decadal: '运', yearly: '流' };
   const { kuiIndex, yueIndex } = getKuiYueIndex(heavenlyStem);
   const { changIndex, quIndex } = getChangQuIndexByHeavenlyStem(heavenlyStem);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earthlyBranch);
