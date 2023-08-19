@@ -173,6 +173,7 @@ export type HoroscopeItem = {
   heavenlyStem: HeavenlyStem;
   palaceNames: PalaceName[];
   mutagen: (typeof heavenlyStems)[HeavenlyStem]['mutagen'];
+  stars?: Star[][];
 };
 
 export type Horoscope = {

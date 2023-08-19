@@ -15,8 +15,16 @@ import {
   Gender,
   heavenlyStems,
 } from '../data';
-import { Astrolabe, HeavenlyStem } from '../data/types';
-import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
+import { Astrolabe, EarthlyBranch, HeavenlyStem } from '../data/types';
+import {
+  getAdjectiveStar,
+  getBoShi12,
+  getchangsheng12,
+  getHoroscopeStar,
+  getMajorStar,
+  getMinorStar,
+  getYearly12,
+} from '../star';
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
 
@@ -153,6 +161,7 @@ export const astrolableBySolarDate = (
       let decadalIndex = -1;
       // 大限天干
       let heavenlyStemOfDecade: HeavenlyStem = '甲';
+      let earthlyBranchOfDecade: EarthlyBranch = '子';
       // 小限索引
       let ageIndex = -1;
       // 流年索引
@@ -167,6 +176,7 @@ export const astrolableBySolarDate = (
         if (nominalAge >= decadal.range[0] && nominalAge <= decadal.range[1]) {
           decadalIndex = index;
           heavenlyStemOfDecade = decadal.heavenlyStem;
+          earthlyBranchOfDecade = decadal.earthlyBranch;
 
           return true;
         }
@@ -200,6 +210,7 @@ export const astrolableBySolarDate = (
           heavenlyStem: heavenlyStemOfDecade,
           palaceNames: getPalaceNames(decadalIndex),
           mutagen: heavenlyStems[heavenlyStemOfDecade].mutagen,
+          stars: getHoroscopeStar(heavenlyStemOfDecade, earthlyBranchOfDecade, 'decadal'),
         },
         age: {
           index: ageIndex,
@@ -210,6 +221,7 @@ export const astrolableBySolarDate = (
           heavenlyStem: targetYearly[0],
           palaceNames: getPalaceNames(yearlyIndex),
           mutagen: heavenlyStems[targetYearly[0]].mutagen,
+          stars: getHoroscopeStar(targetYearly[0], targetYearly[1], 'yearly'),
         },
         monthly: {
           index: monthlyIndex,
