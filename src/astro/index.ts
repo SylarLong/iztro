@@ -1,8 +1,23 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from '../calendar';
-import { BIRTH_TIME, EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, Gender } from '../data';
-import { Astrolabe } from '../data/types';
+import {
+  getHeavenlyStemAndEarthlyBranchBySolarDate,
+  getSign,
+  getZodiac,
+  lunar2solar,
+  normalizeSolarDateStr,
+  solar2lunar,
+} from '../calendar';
+import {
+  BIRTH_TIME,
+  EARTHLY_BRANCHES,
+  HEAVENLY_STEMS,
+  TIME_RANGE,
+  earthlyBranches,
+  Gender,
+  heavenlyStems,
+} from '../data';
+import { Astrolabe, HeavenlyStem } from '../data/types';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
-import { fixIndex } from '../utils';
+import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
 
 export * from './palace';
@@ -75,8 +90,10 @@ export const astrolableBySolarDate = (
     });
   }
 
+  // 宫位是从寅宫开始，而寅的索引是2，所以需要+2
   const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
   const earthlyBranchOfBodyPalace = EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)];
+  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
 
   const result = {
     // 阳历日期
@@ -84,7 +101,7 @@ export const astrolableBySolarDate = (
     // 农历日期
     lunarDate: solar2lunar(solarDateStr).toString(true),
     // 四柱
-    chineseDate: getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex).toString(),
+    chineseDate: chineseDate.toString(),
     // 时辰
     time: BIRTH_TIME[timeIndex],
     // 时辰对应的时间段
@@ -105,6 +122,111 @@ export const astrolableBySolarDate = (
     fiveElementsClass: getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul),
     // 十二宫数据
     palaces,
+
+    /**
+     * 获取运限数据，包括大限，小限，流年，年月，流日
+     *
+     * @param targetDate 阳历日期【可选】，如果不填写会获取当前时间
+     * @returns Horoscope
+     */
+    horoscope(targetDate: string | Date = new Date()) {
+      const _birthday = solar2lunar(solarDateStr);
+      const _date = solar2lunar(targetDate);
+      const {
+        yearly: targetYearly,
+        monthly: targetMonthly,
+        daily: targetDaily,
+      } = getHeavenlyStemAndEarthlyBranchBySolarDate(targetDate.toString(), 0);
+      let nominalAge = _date.lunarYear - _birthday.lunarYear;
+
+      // 假如目标日期已经过了生日，则需要加1岁
+      // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
+      // 但在 2023年九月初二 以后，虚岁则为 2 岁
+      if (
+        (_date.lunarMonth === _birthday.lunarMonth && _date.lunarDay > _birthday.lunarDay) ||
+        _date.lunarMonth > _birthday.lunarMonth
+      ) {
+        nominalAge += 1;
+      }
+
+      // 大限索引
+      let decadalIndex = -1;
+      // 大限天干
+      let heavenlyStemOfDecade: HeavenlyStem = '甲';
+      // 小限索引
+      let ageIndex = -1;
+      // 流年索引
+      const yearlyIndex = fixEarthlyBranchIndex(targetYearly[1]);
+      // 流月索引
+      let monthlyIndex = -1;
+      // 流日索引
+      let dailyIndex = -1;
+
+      // 查询大限索引
+      decadals.some((decadal, index) => {
+        if (nominalAge >= decadal.range[0] && nominalAge <= decadal.range[1]) {
+          decadalIndex = index;
+          heavenlyStemOfDecade = decadal.heavenlyStem;
+
+          return true;
+        }
+      });
+
+      // 查询小限索引
+      ages.some((age, index) => {
+        if (age.includes(nominalAge)) {
+          ageIndex = index;
+
+          return true;
+        }
+      });
+
+      // 获取流月索引, 流年地支逆数到生月所在宫位，再从该宫位顺数到生时，为正月所在宫位，之后每月一宫
+      monthlyIndex = fixIndex(
+        yearlyIndex -
+          EARTHLY_BRANCHES.indexOf(chineseDate.monthly[1]) +
+          EARTHLY_BRANCHES.indexOf(chineseDate.timely[1]) +
+          EARTHLY_BRANCHES.indexOf(targetMonthly[1]),
+      );
+
+      // 获取流日索引
+      dailyIndex = (monthlyIndex + _date.lunarDay - 1) % 12;
+
+      const scope = {
+        solarDate: normalizeSolarDateStr(targetDate).join('-'),
+        lunarDate: _date.toString(true),
+        decadal: {
+          index: decadalIndex,
+          heavenlyStem: heavenlyStemOfDecade,
+          palaceNames: getPalaceNames(decadalIndex),
+          mutagen: heavenlyStems[heavenlyStemOfDecade].mutagen,
+        },
+        age: {
+          index: ageIndex,
+          nominalAge,
+        },
+        yearly: {
+          index: yearlyIndex,
+          heavenlyStem: targetYearly[0],
+          palaceNames: getPalaceNames(yearlyIndex),
+          mutagen: heavenlyStems[targetYearly[0]].mutagen,
+        },
+        monthly: {
+          index: monthlyIndex,
+          heavenlyStem: targetMonthly[0],
+          palaceNames: getPalaceNames(monthlyIndex),
+          mutagen: heavenlyStems[targetMonthly[0]].mutagen,
+        },
+        daily: {
+          index: dailyIndex,
+          heavenlyStem: targetDaily[0],
+          palaceNames: getPalaceNames(dailyIndex),
+          mutagen: heavenlyStems[targetDaily[0]].mutagen,
+        },
+      };
+
+      return scope;
+    },
   };
 
   return result;

@@ -352,3 +352,11 @@ You can create the astrolabe below based on the response data above. `palaces` i
 MIT License
 
 Copyright &copy; 2023 Sylar Long
+
+🇨🇳
+
+请合理使用本开源代码，禁止用于非法目的。
+
+🇺🇸
+
+Please use this open-source code responsibly and refrain from using it for illegal purposes.

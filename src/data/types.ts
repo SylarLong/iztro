@@ -1,4 +1,5 @@
 import { BIRTH_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, MUTAGEN, PALACES, TIME_RANGE } from './constants';
+import { heavenlyStems } from '../data';
 
 export type Gender = '男' | '女';
 export type YinYang = '阴' | '阳';
@@ -167,6 +168,23 @@ export type Palace = {
   ages: number[];
 };
 
+export type HoroscopeItem = {
+  index: number;
+  heavenlyStem: HeavenlyStem;
+  palaceNames: PalaceName[];
+  mutagen: (typeof heavenlyStems)[HeavenlyStem]['mutagen'];
+};
+
+export type Horoscope = {
+  lunarDate: string;
+  solarDate: string;
+  decadal: HoroscopeItem;
+  age: { index: number; nominalAge: number };
+  yearly: HoroscopeItem;
+  monthly: HoroscopeItem;
+  daily: HoroscopeItem;
+};
+
 export type Astrolabe = {
   /** 阳历日期 */
   solarDate: string;
@@ -194,4 +212,6 @@ export type Astrolabe = {
   fiveElementsClass: FiveElementsClassItem;
   /** 十二宫数据 */
   palaces: Palace[];
+
+  horoscope: (date?: string | Date) => Horoscope;
 };

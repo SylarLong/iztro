@@ -15,6 +15,80 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('soul', '破军');
     expect(result).toHaveProperty('body', '文昌');
     expect(result).toHaveProperty('fiveElementsClass', '木三局');
+
+    const horoscope = result.horoscope('2023-8-19');
+
+    expect(horoscope).toHaveProperty('solarDate', '2023-8-19');
+    expect(horoscope.decadal).toHaveProperty('index', 2);
+    expect(horoscope.decadal).toHaveProperty('heavenlyStem', '庚');
+    expect(horoscope.decadal).toHaveProperty('palaceNames', [
+      '夫妻',
+      '兄弟',
+      '命宫',
+      '父母',
+      '福德',
+      '田宅',
+      '官禄',
+      '仆役',
+      '迁移',
+      '疾厄',
+      '财帛',
+      '子女',
+    ]);
+    expect(horoscope.decadal).toHaveProperty('mutagen', ['太阳', '武曲', '太阴', '天同']);
+    expect(horoscope.age).toHaveProperty('index', 10);
+    expect(horoscope.age).toHaveProperty('nominalAge', 23);
+    expect(horoscope.yearly).toHaveProperty('index', 1);
+    expect(horoscope.yearly).toHaveProperty('heavenlyStem', '癸');
+    expect(horoscope.yearly).toHaveProperty('palaceNames', [
+      '兄弟',
+      '命宫',
+      '父母',
+      '福德',
+      '田宅',
+      '官禄',
+      '仆役',
+      '迁移',
+      '疾厄',
+      '财帛',
+      '子女',
+      '夫妻',
+    ]);
+    expect(horoscope.yearly).toHaveProperty('mutagen', ['破军', '巨门', '太阴', '贪狼']);
+    expect(horoscope.monthly).toHaveProperty('index', 3);
+    expect(horoscope.monthly).toHaveProperty('heavenlyStem', '庚');
+    expect(horoscope.monthly).toHaveProperty('palaceNames', [
+      '子女',
+      '夫妻',
+      '兄弟',
+      '命宫',
+      '父母',
+      '福德',
+      '田宅',
+      '官禄',
+      '仆役',
+      '迁移',
+      '疾厄',
+      '财帛',
+    ]);
+    expect(horoscope.monthly).toHaveProperty('mutagen', ['太阳', '武曲', '太阴', '天同']);
+    expect(horoscope.daily).toHaveProperty('index', 6);
+    expect(horoscope.daily).toHaveProperty('heavenlyStem', '己');
+    expect(horoscope.daily).toHaveProperty('palaceNames', [
+      '迁移',
+      '疾厄',
+      '财帛',
+      '子女',
+      '夫妻',
+      '兄弟',
+      '命宫',
+      '父母',
+      '福德',
+      '田宅',
+      '官禄',
+      '仆役',
+    ]);
+    expect(horoscope.daily).toHaveProperty('mutagen', ['武曲', '贪狼', '天梁', '文曲']);
   });
 
   test('astrolableByLunarDate()', () => {
