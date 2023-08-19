@@ -1,32 +1,74 @@
-import { BIRTH_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, MUTAGEN, PALACES, TIME_RANGE } from './constants';
-import { heavenlyStems } from '../data';
+import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIME_RANGE } from './constants';
+import { ADJECTIVE_STARTS, heavenlyStems, HOROSCOPE_STARS, MAJOR_STARS, MINOR_STARTS, MUTAGEN } from '../data';
 
+/** 性别 */
 export type Gender = '男' | '女';
+
+/** 阴阳 */
 export type YinYang = '阴' | '阳';
+
+/** 四化 */
 export type Mutagen = (typeof MUTAGEN)[number];
+
+/** 五行 */
 export type FiveElements = '木' | '金' | '水' | '火' | '土';
+
+/** 星耀亮度 */
 export type StarBrightness = '' | '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
+
+/** 地支 */
 export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
+
+/** 天干 */
 export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
+
+/** 宫位名称 */
 export type PalaceName = (typeof PALACES)[number];
-export type BirthTime = (typeof BIRTH_TIME)[number];
+
+/** 时辰，子时分早晚 */
+export type ChineseTime = (typeof CHINESE_TIME)[number];
+
+/** 时辰对应的时间段 */
 export type TimeRange = (typeof TIME_RANGE)[number];
+
+/** 范围：本命｜大限｜流年 */
 export type Scope = 'origin' | 'decadal' | 'yearly';
+
+/** 星耀类型 */
 export type StarType = 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
+
+/** 十四主星 */
+export type MajorStar = (typeof MAJOR_STARS)[number];
+
+/** 十四辅星 */
+export type MinorStar = (typeof MINOR_STARTS)[number];
+
+/** 37杂耀 */
+export type AdjectiveStar = (typeof ADJECTIVE_STARTS)[number];
+
+/** 流耀 */
+export type HoroscopeStar = (typeof HOROSCOPE_STARS)[number];
 
 /**
  * 紫微斗数星耀
+ *
+ * @property
+ * - name 星耀名字
+ * - type 星耀类型
+ * - scope 作用范围
+ * - brightness 星耀亮度
+ * - mutagen 四化
  */
 export type Star = {
   /** 星耀名字 */
-  name: string;
+  name: MajorStar | MinorStar | AdjectiveStar | HoroscopeStar;
   /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀 | 桃花星 | 解神 | 禄存 | 天马） */
   type: StarType;
   /** 作用范围（本命盘 | 大限盘 | 流年盘） */
   scope: Scope;
-  /** 星耀亮度 */
+  /** 星耀亮度，若没有亮度数据则此字段为`空字符串`或者 `undefined` */
   brightness?: StarBrightness;
-  /** 四化 */
+  /** 四化，若未产生四化则此字段为 `undefined` */
   mutagen?: Mutagen;
 };
 
@@ -34,6 +76,13 @@ export type Star = {
  * 五行局，用于定紫微星和算起运年龄
  * 几局就从几岁（虚岁）开始起运
  * 比如 木三局 就从3岁开始起运
+ *
+ * @enum
+ *  - 2 水二局
+ *  - 3 木三局
+ *  - 4 金四局
+ *  - 5 土五局
+ *  - 6 火六局
  */
 export enum FiveElementsClass {
   水二局 = 2,
@@ -45,6 +94,17 @@ export enum FiveElementsClass {
 
 export type FiveElementsClassItem = keyof typeof FiveElementsClass;
 
+/**
+ * 农历日期对象
+ *
+ * @property
+ * - lunarYear 年
+ * - lunarMonth 月
+ * - lunarDay 日
+ * - isLeap 月份是否闰月
+ *
+ * @function toString() 输出 YYYY-M-D 或 农历中文 字符串
+ */
 export type LunarDate = {
   /** 农历年 */
   lunarYear: number;
@@ -71,6 +131,16 @@ export type LunarDate = {
   toString: (toCnStr?: boolean) => string;
 };
 
+/**
+ * 阳历日期对象
+ *
+ * @property
+ * - solarYear 年
+ * - solarMonth 月
+ * - solarDay 日
+ *
+ * @function toString() 将对象以 YYYY-M-D 格式字符串输出
+ */
 export type SolarDate = {
   /** 公历年 */
   solarYear: number;
@@ -92,9 +162,22 @@ export type SolarDate = {
   toString: () => string;
 };
 
+/** [天干，地支] */
 export type HeavenlyStemAndEarthlyBranch = [HeavenlyStem, EarthlyBranch];
 
-export type HeavenlyStemAndEarthlyBranchResult = {
+/**
+ * 干支纪年日期对象
+ *
+ * @property
+ * - yearly 年柱[天干，地支]
+ * - monthly 月柱[天干，地支]
+ * - monthly 月柱[天干，地支]
+ * - daily 日柱[天干，地支]
+ * - timely 时柱[天干，地支]
+ *
+ * @function toString() 将对象以干支纪年字符串输出
+ */
+export type HeavenlyStemAndEarthlyBranchDate = {
   /** 年柱[天干，地支] */
   yearly: HeavenlyStemAndEarthlyBranch;
   /** 月柱[天干，地支] */
@@ -117,6 +200,15 @@ export type HeavenlyStemAndEarthlyBranchResult = {
   toString: () => string;
 };
 
+/**
+ * 命宫、身宫对象
+ *
+ * @property
+ * - soulIndex 命宫索引
+ * - bodyIndex 身宫索引
+ * - heavenlyStemOfSoul 命宫天干
+ * - earthlyBranchOfSoul 命宫地支
+ */
 export type SoulAndBody = {
   /** 命宫索引 */
   soulIndex: number;
@@ -128,17 +220,44 @@ export type SoulAndBody = {
   earthlyBranchOfSoul: EarthlyBranch;
 };
 
+/**
+ * 大限
+ *
+ * @property
+ * - range 大限起止年龄 [起始年龄, 截止年龄]
+ * - heavenlyStem 大限天干
+ * - earthlyBranch 大限地支
+ */
 export type Decadal = {
   /** 大限起止年龄 [起始年龄, 截止年龄] */
-  range: number[];
+  range: [number, number];
   /** 大限天干 */
   heavenlyStem: HeavenlyStem;
   /** 大限地支 */
   earthlyBranch: EarthlyBranch;
 };
 
+/**
+ * 宫位对象
+ *
+ * @property
+ * - name 宫位名称
+ * - isBodyPalace 是否身宫
+ * - isOriginalPalace 是否来因宫
+ * - heavenlyStem 宫位天干
+ * - earthlyBranch 宫位地支
+ * - majorStars 主星
+ * - minorStars 辅星
+ * - adjectiveStars 杂耀
+ * - changsheng12 长生12神之一
+ * - boshi12 博士12神之一
+ * - jiangqian12 将前12神之一
+ * - suiqian12 岁前12神之一
+ * - decadal 大限
+ * - ages 小限
+ */
 export type Palace = {
-  /** 宫名 */
+  /** 宫位名称 */
   name: PalaceName;
   /** 是否身宫 */
   isBodyPalace: boolean;
@@ -168,33 +287,110 @@ export type Palace = {
   ages: number[];
 };
 
+/**
+ * 运限对象
+ *
+ * @property
+ * - index 所在宫位的索引
+ * - heavenlyStem 该运限天干
+ * - palaceNames 该运限的十二宫
+ * - mutagen 四化星
+ * - stars 流耀
+ */
 export type HoroscopeItem = {
+  /** 所在宫位的索引 */
   index: number;
+  /** 该运限天干 */
   heavenlyStem: HeavenlyStem;
+  /** 该运限的十二宫 */
   palaceNames: PalaceName[];
+  /** 四化星 */
   mutagen: (typeof heavenlyStems)[HeavenlyStem]['mutagen'];
+  /** 流耀 */
   stars?: Star[][];
 };
 
+/**
+ * 运限
+ *
+ * @property
+ * - lunarDate 农历日期
+ * - solarDate 阳历日期
+ * - decadal 大限
+ * - age 小限
+ * - yearly 流年
+ * - monthly 流月
+ * - daily 流日
+ */
 export type Horoscope = {
+  /** 农历日期 */
   lunarDate: string;
+  /** 阳历日期 */
   solarDate: string;
+  /** 大限 */
   decadal: HoroscopeItem;
-  age: { index: number; nominalAge: number };
+  /**
+   * 小限
+   *
+   * @property
+   * - index 小限所在宫位索引
+   * - nominalAge 虚岁
+   */
+  age: {
+    /** 小限所在宫位索引 */
+    index: number;
+    /** 虚岁 */
+    nominalAge: number;
+  };
+  /** 流年 */
   yearly: HoroscopeItem;
+  /** 流月 */
   monthly: HoroscopeItem;
+  /** 流日 */
   daily: HoroscopeItem;
 };
 
+/**
+ * 星盘对象
+ *
+ * @property
+ * - solarDate 阳历日期
+ * - lunarDate 农历日期
+ * - chineseDate 干支纪年日期
+ * - time 时辰
+ * - timeRange 时辰对应的时间段
+ * - sign 星座
+ * - zodiac 生肖
+ * - earthlyBranchOfSoulPalace 命宫地支
+ * - earthlyBranchOfBodyPalace 身宫地支
+ * - soul 命主
+ * - body 身主
+ * - palaces 十二宫数据
+ *
+ * @function horoscope() 获取运限数据
+ */
 export type Astrolabe = {
   /** 阳历日期 */
   solarDate: string;
   /** 农历日期 */
   lunarDate: string;
-  /** 四柱 */
+  /** 干支纪年日期 */
   chineseDate: string;
+  /**
+   * 原始日期数据，用于今后内部方法使用
+   *
+   * @property
+   * - lunar 农历日期对象
+   * - chinese 干支纪年日期对象
+   */
+  rawDates: {
+    /** 农历日期对象 */
+    lunarDate: LunarDate;
+    /** 干支纪年日期对象 */
+    chineseDate: HeavenlyStemAndEarthlyBranchDate;
+  };
   /** 时辰 */
-  time: BirthTime;
+  time: ChineseTime;
   /** 时辰对应的时间段 */
   timeRange: TimeRange;
   /** 星座 */
@@ -214,5 +410,13 @@ export type Astrolabe = {
   /** 十二宫数据 */
   palaces: Palace[];
 
+  /**
+   * 获取运限数据
+   *
+   * @version v0.2.0
+   *
+   * @param date 阳历日期【可选】，默认为调用时的日期
+   * @returns 运限数据
+   */
   horoscope: (date?: string | Date) => Horoscope;
 };

@@ -1,7 +1,7 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { GENDER, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems, Gender } from '../data';
-import { EarthlyBranch, FiveElementsClass, HeavenlyStem, Star } from '../data/types';
+import { GENDER, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems } from '../data';
+import { EarthlyBranch, FiveElementsClass, HeavenlyStem, Star, Gender } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 import {
   getChangQuIndex,
@@ -420,7 +420,7 @@ export const getYearly12 = (solarDateStr: string) => {
 };
 
 /**
- * 获取流曜
+ * 获取流耀
  *
  * 魁钺昌曲禄羊陀马鸾喜
  *
@@ -432,23 +432,22 @@ export const getHoroscopeStar = (
   earthlyBranch: EarthlyBranch,
   scope: 'decadal' | 'yearly',
 ): Star[][] => {
-  const prefix = { decadal: '运', yearly: '流' };
   const { kuiIndex, yueIndex } = getKuiYueIndex(heavenlyStem);
   const { changIndex, quIndex } = getChangQuIndexByHeavenlyStem(heavenlyStem);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earthlyBranch);
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(earthlyBranch);
   const stars = initStars();
 
-  stars[kuiIndex].push({ name: `${prefix[scope]}魁`, type: 'soft', scope });
-  stars[yueIndex].push({ name: `${prefix[scope]}钺`, type: 'soft', scope });
-  stars[changIndex].push({ name: `${prefix[scope]}昌`, type: 'soft', scope });
-  stars[quIndex].push({ name: `${prefix[scope]}曲`, type: 'soft', scope });
-  stars[luIndex].push({ name: `${prefix[scope]}禄`, type: 'lucun', scope });
-  stars[yangIndex].push({ name: `${prefix[scope]}羊`, type: 'tough', scope });
-  stars[tuoIndex].push({ name: `${prefix[scope]}陀`, type: 'tough', scope });
-  stars[maIndex].push({ name: `${prefix[scope]}马`, type: 'tianma', scope });
-  stars[hongluanIndex].push({ name: `${prefix[scope]}鸾`, type: 'flower', scope });
-  stars[tianxiIndex].push({ name: `${prefix[scope]}喜`, type: 'flower', scope });
+  stars[kuiIndex].push({ name: scope === 'decadal' ? '运魁' : '流魁', type: 'soft', scope });
+  stars[yueIndex].push({ name: scope === 'decadal' ? '运钺' : '流钺', type: 'soft', scope });
+  stars[changIndex].push({ name: scope === 'decadal' ? '运昌' : '流昌', type: 'soft', scope });
+  stars[quIndex].push({ name: scope === 'decadal' ? '运曲' : '流曲', type: 'soft', scope });
+  stars[luIndex].push({ name: scope === 'decadal' ? '运禄' : '流禄', type: 'lucun', scope });
+  stars[yangIndex].push({ name: scope === 'decadal' ? '运羊' : '流羊', type: 'tough', scope });
+  stars[tuoIndex].push({ name: scope === 'decadal' ? '运陀' : '流陀', type: 'tough', scope });
+  stars[maIndex].push({ name: scope === 'decadal' ? '运马' : '流马', type: 'tianma', scope });
+  stars[hongluanIndex].push({ name: scope === 'decadal' ? '运鸾' : '流鸾', type: 'flower', scope });
+  stars[tianxiIndex].push({ name: scope === 'decadal' ? '运喜' : '流喜', type: 'flower', scope });
 
   if (scope === 'yearly') {
     const nianjieIndex = getNianjieIndex(earthlyBranch);

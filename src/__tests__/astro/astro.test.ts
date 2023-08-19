@@ -1,4 +1,4 @@
-import { astro } from '../index';
+import { astro } from '../../index';
 
 describe('Astrolabe', () => {
   test('astrolabeBySolarDate()', () => {

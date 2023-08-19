@@ -233,7 +233,7 @@ describe('star/index', () => {
     ]);
   });
 
-  test('getHoroscopeStar() scope="decadal"', () => {
+  test('getHoroscopeStar() scope="yearly"', () => {
     expect(star.getHoroscopeStar('癸', '卯', 'yearly')).toStrictEqual([
       [],
       [

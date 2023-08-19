@@ -3,6 +3,7 @@ import { LUNAR_INFO, SOLAR_MONTH } from './rules';
 
 /**
  * 返回农历年一整年的总天数
+ *
  * @param year 农历年份
  * @return number
  * @example

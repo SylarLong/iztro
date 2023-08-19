@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches, Gender } from '../data';
+import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches } from '../data';
 import {
   EarthlyBranch,
   FiveElementsClass,
@@ -8,6 +8,7 @@ import {
   PalaceName,
   SoulAndBody,
   Decadal,
+  Gender,
 } from '../data/types';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 
@@ -167,7 +168,7 @@ export const getHoroscope = (
   gender: Gender,
   fixLeap?: boolean,
 ): { decadals: Decadal[]; ages: number[][] } => {
-  const decadals = [];
+  const decadals: Decadal[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const [heavenlyStem, earthlyBranch] = yearly;
   const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);

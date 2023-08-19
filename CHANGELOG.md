@@ -1,5 +1,17 @@
 # 紫微斗数 @sylarlong/astro
 
+## v0.2.1
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+  - 优化代码结构
+  - 完善注释
+
+  🇺🇸
+  - code structure optimization
+  - comments improvement
+
 ## v0.2.0
 
 - 🛠️ 修复（fix）

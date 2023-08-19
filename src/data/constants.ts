@@ -1,13 +1,13 @@
-// 十天干
+/** 十天干 */
 export const HEAVENLY_STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'] as const;
 
-// 十二地支
+/** 十二地支 */
 export const EARTHLY_BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'] as const;
 
-// 十二生肖（按地支顺序）
-export const ZODIAC = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+/** 十二生肖（按地支顺序） */
+export const ZODIAC = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'] as const;
 
-// 紫微斗数十二宫名称
+/** 紫微斗数十二宫名称 */
 export const PALACES = [
   '命宫',
   '父母',
@@ -23,10 +23,7 @@ export const PALACES = [
   '兄弟',
 ] as const;
 
-// 紫微斗数四化
-export const MUTAGEN = ['禄', '权', '科', '忌'] as const;
-
-// 宫位对应方位，此处是以宫位定位而不是地支
+/** 宫位对应方位，此处是以宫位定位而不是地支 */
 export const PALACE_LOCATION = {
   寅: '东偏北',
   卯: '正东方',
@@ -42,16 +39,17 @@ export const PALACE_LOCATION = {
   丑: '北偏东',
 } as const;
 
-// 性别对应阴阳
+/** 性别对应阴阳，男为阳，女为阴 */
 export const GENDER = {
   男: '阳',
   女: '阴',
 } as const;
 
-export type Gender = keyof typeof GENDER;
-
-// 时辰
-export const BIRTH_TIME = [
+/**
+ * 时辰, 子时分早晚。
+ * 其中 00:00-01:00 为早子时，23:00-00:00 为晚子时
+ */
+export const CHINESE_TIME = [
   '早子时', // : '00:00~01:00',
   '丑时', // : '01:00~03:00',
   '寅时', // : '03:00~05:00',
@@ -67,6 +65,7 @@ export const BIRTH_TIME = [
   '晚子时', // : '23:00~00:00',
 ] as const;
 
+/** 时辰序号所对应的时间段，与 `CHINESE_TIME` 一一对应 */
 export const TIME_RANGE = [
   '00:00~01:00',
   '01:00~03:00',

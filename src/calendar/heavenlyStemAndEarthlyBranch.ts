@@ -1,5 +1,5 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, RAT_RULE } from '../data';
-import { HeavenlyStem, HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchResult } from '../data/types';
+import { HeavenlyStem, HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchDate } from '../data/types';
 import { fixIndex } from '../utils';
 import { lunar2solar, normalizeLunarDateStr, normalizeSolarDateStr, solar2lunar } from './convertor';
 import { getTerm } from './misc';
@@ -7,7 +7,7 @@ import { getTerm } from './misc';
 /**
  * 传入offset偏移量返回干支
  *
- * @param offset 相对甲子的偏移量
+ * @param offset 相对甲子的偏移量，单位为天
  * @return [干, 支]
  */
 const heavenlyStemAndEarthlyBranchFromOffset = (offset: number): HeavenlyStemAndEarthlyBranch => {
@@ -96,7 +96,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
   dateStr: string,
   timeIndex: number,
   isLeap?: boolean,
-): HeavenlyStemAndEarthlyBranchResult => {
+): HeavenlyStemAndEarthlyBranchDate => {
   const [lunarYear] = normalizeLunarDateStr(dateStr);
   const solar = lunar2solar(dateStr, isLeap);
   const solarDate = new Date(solar.toString());
@@ -118,7 +118,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
 };
 
 /**
- * 通过公历获取生辰干支
+ * 将阳历转化为干支纪年
  *
  * @param dateStr 公历日期 YYYY-MM-DD
  * @param timeIndex 时辰索引【0～12】
@@ -127,7 +127,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
 export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
   dateStr: string,
   timeIndex: number,
-): HeavenlyStemAndEarthlyBranchResult => {
+): HeavenlyStemAndEarthlyBranchDate => {
   const solarDate = new Date(dateStr);
   const { lunarYear } = solar2lunar(dateStr);
 

@@ -294,7 +294,7 @@ export type Astrolabe = {
 
   ```ts
   /**
-   * 获取流曜
+   * 获取流耀
    * get horoscope stars
    *
    * 魁钺昌曲禄羊陀马鸾喜
