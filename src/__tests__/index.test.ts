@@ -1,8 +1,8 @@
 import { astro } from '../index';
 
 describe('Astrolabe', () => {
-  test('astrolableBySolarDate()', () => {
-    const result = astro.astrolableBySolarDate('2000-8-16', 2, '女', true);
+  test('astrolabeBySolarDate()', () => {
+    const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true);
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
@@ -91,8 +91,8 @@ describe('Astrolabe', () => {
     expect(horoscope.daily).toHaveProperty('mutagen', ['武曲', '贪狼', '天梁', '文曲']);
   });
 
-  test('astrolableByLunarDate()', () => {
-    const result = astro.astrolableByLunarDate('2000-7-17', 2, '女', true, true);
+  test('astrolabeByLunarDate()', () => {
+    const result = astro.astrolabeByLunarDate('2000-7-17', 2, '女', true, true);
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');

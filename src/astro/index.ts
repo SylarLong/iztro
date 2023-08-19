@@ -39,7 +39,7 @@ export * from './palace';
  * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
  * @returns 星盘信息
  */
-export const astrolableBySolarDate = (
+export const astrolabeBySolarDate = (
   solarDateStr: string,
   timeIndex: number,
   gender: Gender,
@@ -254,7 +254,7 @@ export const astrolableBySolarDate = (
  * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
  * @returns
  */
-export const astrolableByLunarDate = (
+export const astrolabeByLunarDate = (
   lunarDateStr: string,
   timeIndex: number,
   gender: Gender,
@@ -263,5 +263,5 @@ export const astrolableByLunarDate = (
 ): Astrolabe => {
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
-  return astrolableBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap);
+  return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap);
 };

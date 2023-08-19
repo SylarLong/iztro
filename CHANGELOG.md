@@ -2,6 +2,14 @@
 
 ## v0.2.0
 
+- 🛠️ 修复（fix）
+
+  🇨🇳
+  - 修复错别字：`astrolable` --> `astrolabe`
+
+  🇺🇸
+  - fix typo: `astrolable` --> `astrolabe`
+
 - 🪄 功能（feature）
 
   🇨🇳

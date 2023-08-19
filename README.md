@@ -34,11 +34,11 @@ npm i @sylarlong/astro -S
 
   // 通过阳历获取星盘信息
   // generate astrolabe by solar date
-  const astrolable = astro.astrolableBySolarDate('2000-8-16', 2, '女');
+  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女');
 
   // 通过农历获取星盘信息
   // generate astrolabe by lunar date
-  const astrolable = astro.astrolableByLunarDate('2000-7-17', 2, '女', false, true);
+  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
   ```
 
 - CommonJS
@@ -48,16 +48,16 @@ npm i @sylarlong/astro -S
 
   // 通过阳历获取星盘信息
   // generate astrolabe by solar date
-  var astrolable = astroObj.astro.astrolableBySolarDate('2000-8-16', 2, '女');
+  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女');
   
   // 通过农历获取星盘信息
   // generate astrolabe by lunar date
-  var astrolable = astroObj.astro.astrolableByLunarDate('2000-7-17', 2, '女', false, true);
+  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
   ```
 
 #### ✍️ 方法定义（function definition）
 
-- astrolableBySolarDate
+- astrolabeBySolarDate
 
   ```ts
   /**
@@ -70,7 +70,7 @@ npm i @sylarlong/astro -S
    * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
    * @returns 星盘信息
    */
-  type astrolableBySolarDate = (
+  type astrolabeBySolarDate = (
     solarDateStr: string,
     timeIndex: number,
     gender: Gender,
@@ -78,7 +78,7 @@ npm i @sylarlong/astro -S
   ) => Astrolabe;
   ```
 
-- astrolableByLunarDate
+- astrolabeByLunarDate
 
   ```ts
   /**
@@ -92,7 +92,7 @@ npm i @sylarlong/astro -S
    * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
    * @returns 星盘信息
    */
-  type astrolableByLunarDate = (
+  type astrolabeByLunarDate = (
     lunarDateStr: string,
     timeIndex: number,
     gender: Gender,
