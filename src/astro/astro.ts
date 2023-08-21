@@ -233,8 +233,8 @@ export const astrolabeBySolarDate = (
     body: earthlyBranches[yearly[1]].body,
     fiveElementsClass: getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul),
     palaces,
-    horoscope(targetDate: string | Date = new Date(), timeIndex?: number) {
-      return _getHoroscopeBySolarDate(this, targetDate, timeIndex);
+    horoscope(targetDate: string | Date = new Date(), timeIndexOfTarget?: number) {
+      return _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
     },
   };
 
