@@ -12,6 +12,7 @@ import {
   getTimelyStarIndex,
   getMonthlyStarIndex,
   getDailyStarIndex,
+  getChangQuIndexByHeavenlyStem,
 } from '../../star';
 
 describe('star/location', () => {
@@ -638,6 +639,23 @@ describe('star/location', () => {
     ];
     data.forEach((item, index) => {
       expect(getTimelyStarIndex(index)).toStrictEqual(item);
+    });
+  });
+
+  test('getChangQuIndexByHeavenlyStem()', () => {
+    const data = [
+      { heavenlyStem: '甲', result: { changIndex: 3, quIndex: 7 } },
+      { heavenlyStem: '乙', result: { changIndex: 4, quIndex: 6 } },
+      { heavenlyStem: '丙', result: { changIndex: 6, quIndex: 4 } },
+      { heavenlyStem: '戊', result: { changIndex: 6, quIndex: 4 } },
+      { heavenlyStem: '丁', result: { changIndex: 7, quIndex: 3 } },
+      { heavenlyStem: '己', result: { changIndex: 7, quIndex: 3 } },
+      { heavenlyStem: '辛', result: { changIndex: 10, quIndex: 0 } },
+      { heavenlyStem: '壬', result: { changIndex: 0, quIndex: 10 } },
+    ];
+
+    data.forEach((item) => {
+      expect(getChangQuIndexByHeavenlyStem(item.heavenlyStem as HeavenlyStem)).toStrictEqual(item.result);
     });
   });
 });
