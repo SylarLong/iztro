@@ -77,6 +77,56 @@ describe('star/location', () => {
           maIndex: 0,
         },
       },
+      {
+        heavenlyStem: '丁',
+        earthlyBranch: '亥',
+        result: {
+          luIndex: 4,
+          maIndex: 3,
+          tuoIndex: 3,
+          yangIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '乙',
+        earthlyBranch: '酉',
+        result: {
+          luIndex: 1,
+          maIndex: 9,
+          tuoIndex: 0,
+          yangIndex: 2,
+        },
+      },
+      {
+        heavenlyStem: '戊',
+        earthlyBranch: '戌',
+        result: {
+          luIndex: 3,
+          maIndex: 6,
+          tuoIndex: 2,
+          yangIndex: 4,
+        },
+      },
+      {
+        heavenlyStem: '己',
+        earthlyBranch: '未',
+        result: {
+          luIndex: 4,
+          maIndex: 3,
+          tuoIndex: 3,
+          yangIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '丙',
+        earthlyBranch: '午',
+        result: {
+          luIndex: 3,
+          maIndex: 6,
+          tuoIndex: 2,
+          yangIndex: 4,
+        },
+      },
     ];
 
     data.forEach((item) => {
@@ -89,10 +139,73 @@ describe('star/location', () => {
   test('getKuiYueIndex()', () => {
     const data = [
       {
+        heavenlyStem: '壬',
+        result: {
+          kuiIndex: 1,
+          yueIndex: 3,
+        },
+      },
+      {
         heavenlyStem: '癸',
         result: {
           kuiIndex: 1,
           yueIndex: 3,
+        },
+      },
+      {
+        heavenlyStem: '甲',
+        result: {
+          kuiIndex: 11,
+          yueIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '戊',
+        result: {
+          kuiIndex: 11,
+          yueIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '庚',
+        result: {
+          kuiIndex: 11,
+          yueIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '乙',
+        result: {
+          kuiIndex: 10,
+          yueIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: '己',
+        result: {
+          kuiIndex: 10,
+          yueIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: '辛',
+        result: {
+          kuiIndex: 4,
+          yueIndex: 0,
+        },
+      },
+      {
+        heavenlyStem: '丙',
+        result: {
+          kuiIndex: 9,
+          yueIndex: 7,
+        },
+      },
+      {
+        heavenlyStem: '丁',
+        result: {
+          kuiIndex: 9,
+          yueIndex: 7,
         },
       },
     ];
@@ -327,6 +440,69 @@ describe('star/location', () => {
 
     data.forEach((item) => {
       expect(getHuoLingIndex('午', item.timeIndex)).toStrictEqual(item.result);
+    });
+
+    const data2 = [
+      {
+        earthlyBranch: '寅',
+        result: {
+          huoIndex: 11,
+          lingIndex: 1,
+        },
+      },
+      {
+        earthlyBranch: '申',
+        result: {
+          huoIndex: 0,
+          lingIndex: 8,
+        },
+      },
+      {
+        earthlyBranch: '子',
+        result: {
+          huoIndex: 0,
+          lingIndex: 8,
+        },
+      },
+      {
+        earthlyBranch: '巳',
+        result: {
+          huoIndex: 1,
+          lingIndex: 8,
+        },
+      },
+      {
+        earthlyBranch: '酉',
+        result: {
+          huoIndex: 1,
+          lingIndex: 8,
+        },
+      },
+      {
+        earthlyBranch: '丑',
+        result: {
+          huoIndex: 1,
+          lingIndex: 8,
+        },
+      },
+      {
+        earthlyBranch: '亥',
+        result: {
+          huoIndex: 7,
+          lingIndex: 8,
+        },
+      },
+      {
+        earthlyBranch: '未',
+        result: {
+          huoIndex: 7,
+          lingIndex: 8,
+        },
+      },
+    ];
+
+    data2.forEach((item) => {
+      expect(getHuoLingIndex(item.earthlyBranch as EarthlyBranch, 0)).toStrictEqual(item.result);
     });
   });
 
