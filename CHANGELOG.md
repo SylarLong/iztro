@@ -7,10 +7,12 @@
   🇨🇳
   - 优化代码结构
   - 完善注释
+  - 增加Release后自动发布到npm的工作流
 
   🇺🇸
   - code structure optimization
   - comments improvement
+  - add a workflow to `publish to npm after released`
 
 ## v0.2.0
 
