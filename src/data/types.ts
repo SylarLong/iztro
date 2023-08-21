@@ -302,6 +302,8 @@ export type HoroscopeItem = {
   index: number;
   /** 该运限天干 */
   heavenlyStem: HeavenlyStem;
+  /** 该运限地支 */
+  earthlyBranch: EarthlyBranch;
   /** 该运限的十二宫 */
   palaceNames: PalaceName[];
   /** 四化星 */
@@ -348,6 +350,8 @@ export type Horoscope = {
   monthly: HoroscopeItem;
   /** 流日 */
   daily: HoroscopeItem;
+  /** 流时 */
+  timely: HoroscopeItem;
 };
 
 /**
@@ -416,7 +420,8 @@ export type Astrolabe = {
    * @version v0.2.0
    *
    * @param date 阳历日期【可选】，默认为调用时的日期
+   * @param timeIndex 时辰索引【可选】，默认会自动读取当前时间的时辰
    * @returns 运限数据
    */
-  horoscope: (date?: string | Date) => Horoscope;
+  horoscope: (date?: string | Date, timeIndex?: number) => Horoscope;
 };

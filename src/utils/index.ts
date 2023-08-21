@@ -118,3 +118,23 @@ export const mergeStars = (...stars: Star[][][]) => {
 
   return finalStars;
 };
+
+/**
+ * 将时间的小时转化为时辰的索引
+ *
+ * @param hour 当前时间的小时数
+ * @returns 时辰的索引
+ */
+export const timeToIndex = (hour: number) => {
+  if (hour === 0) {
+    // 00:00～01:00 为早子时
+    return 0;
+  }
+
+  if (hour === 23) {
+    // 23:00～00:00 为晚子时
+    return 12;
+  }
+
+  return Math.floor((hour + 1) / 2);
+};

@@ -17,7 +17,7 @@ import {
   getMinorStar,
   getYearly12,
 } from '../star';
-import { fixEarthlyBranchIndex, fixIndex } from '../utils';
+import { fixEarthlyBranchIndex, fixIndex, timeToIndex } from '../utils';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
 
 /**
@@ -29,12 +29,21 @@ import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } fr
  *
  * @param $ 星盘对象
  * @param targetDate 阳历日期【可选】，默认为调用时日期
+ * @param timeIndex 时辰序号【可选】，若不传会返回 `targetDate` 中时间所在的时辰
  * @returns 运限数据
  */
-const _getHoroscopeBySolarDate = ($: Astrolabe, targetDate: string | Date = new Date()): Horoscope => {
+const _getHoroscopeBySolarDate = (
+  $: Astrolabe,
+  targetDate: string | Date = new Date(),
+  timeIndex?: number,
+): Horoscope => {
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
-  const { yearly, monthly, daily } = getHeavenlyStemAndEarthlyBranchBySolarDate(targetDate.toString(), 0);
+  const convertTimeIndex = timeToIndex(new Date(targetDate).getHours());
+  const { yearly, monthly, daily, timely } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+    targetDate.toString(),
+    timeIndex || convertTimeIndex,
+  );
   // 虚岁
   let nominalAge = _date.lunarYear - _birthday.lunarYear;
 
@@ -62,6 +71,8 @@ const _getHoroscopeBySolarDate = ($: Astrolabe, targetDate: string | Date = new 
   let monthlyIndex = -1;
   // 流日索引
   let dailyIndex = -1;
+  // 流时索引
+  let timelyIndex = -1;
 
   // 查询大限索引
   $.palaces.some(({ decadal }, index) => {
@@ -94,12 +105,16 @@ const _getHoroscopeBySolarDate = ($: Astrolabe, targetDate: string | Date = new 
   // 获取流日索引
   dailyIndex = (monthlyIndex + _date.lunarDay - 1) % 12;
 
+  // 获取流时索引
+  timelyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(timely[1]));
+
   const scope: Horoscope = {
     solarDate: normalizeSolarDateStr(targetDate).join('-'),
     lunarDate: _date.toString(true),
     decadal: {
       index: decadalIndex,
       heavenlyStem: heavenlyStemOfDecade,
+      earthlyBranch: earthlyBranchOfDecade,
       palaceNames: getPalaceNames(decadalIndex),
       mutagen: heavenlyStems[heavenlyStemOfDecade].mutagen,
       stars: getHoroscopeStar(heavenlyStemOfDecade, earthlyBranchOfDecade, 'decadal'),
@@ -111,6 +126,7 @@ const _getHoroscopeBySolarDate = ($: Astrolabe, targetDate: string | Date = new 
     yearly: {
       index: yearlyIndex,
       heavenlyStem: yearly[0],
+      earthlyBranch: yearly[1],
       palaceNames: getPalaceNames(yearlyIndex),
       mutagen: heavenlyStems[yearly[0]].mutagen,
       stars: getHoroscopeStar(yearly[0], yearly[1], 'yearly'),
@@ -118,14 +134,23 @@ const _getHoroscopeBySolarDate = ($: Astrolabe, targetDate: string | Date = new 
     monthly: {
       index: monthlyIndex,
       heavenlyStem: monthly[0],
+      earthlyBranch: monthly[1],
       palaceNames: getPalaceNames(monthlyIndex),
       mutagen: heavenlyStems[monthly[0]].mutagen,
     },
     daily: {
       index: dailyIndex,
       heavenlyStem: daily[0],
+      earthlyBranch: daily[1],
       palaceNames: getPalaceNames(dailyIndex),
       mutagen: heavenlyStems[daily[0]].mutagen,
+    },
+    timely: {
+      index: timelyIndex,
+      heavenlyStem: timely[0],
+      earthlyBranch: timely[1],
+      palaceNames: getPalaceNames(timelyIndex),
+      mutagen: heavenlyStems[timely[0]].mutagen,
     },
   };
 
@@ -208,8 +233,8 @@ export const astrolabeBySolarDate = (
     body: earthlyBranches[yearly[1]].body,
     fiveElementsClass: getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul),
     palaces,
-    horoscope(targetDate: string | Date = new Date()) {
-      return _getHoroscopeBySolarDate(this, targetDate);
+    horoscope(targetDate: string | Date = new Date(), timeIndex?: number) {
+      return _getHoroscopeBySolarDate(this, targetDate, timeIndex);
     },
   };
 
