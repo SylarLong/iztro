@@ -343,7 +343,7 @@ export type Astrolabe = {
 
 ### ☕ Summary
 
-Buy me a coffe if it's useful for you.👍 [Paypal Me](PayPal.Me/sylarlong)
+Buy me a coffe if it's useful for you.👍 [Paypal Me](https://PayPal.Me/sylarlong)
 
 You can create the astrolabe below based on the response data above. `palaces` is used to fill the 12-Palace and other fields are used to fill the Center Palace.
 
