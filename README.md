@@ -343,7 +343,7 @@ export type Astrolabe = {
 
 ### ☕ 总结
 
-如果您觉得本程序对您有用的话，可以给我带杯咖啡吗？👍 [Paypal Me](PayPal.Me/sylarlong)
+如果您觉得本程序对您有用的话，可以给我带杯咖啡吗？👍 [Paypal Me](https://PayPal.Me/sylarlong)
 
 以上数据可以生成如下星盘，其中`palaces`数据用于填充12宫，其他数据用于填充中宫。
 
