@@ -1,0 +1,1 @@
+import{_ as e,o,c as t,k as a}from"./chunks/framework.3dda5700.js";const h=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en_US/foo.md","filePath":"en_US/foo.md"}'),n={name:"en_US/foo.md"},s=a("p",null,"english",-1),r=[s];function c(_,d,i,f,l,p){return o(),t("div",null,r)}const u=e(n,[["render",c]]);export{h as __pageData,u as default};

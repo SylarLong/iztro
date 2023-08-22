@@ -1,0 +1,1 @@
+import{_ as t,o as e,c as o}from"./chunks/framework.3dda5700.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"astro/type-definition.md","filePath":"astro/type-definition.md"}'),a={name:"astro/type-definition.md"};function n(i,r,s,c,p,d){return e(),o("div")}const m=t(a,[["render",n]]);export{_ as __pageData,m as default};
