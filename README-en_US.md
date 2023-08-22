@@ -24,7 +24,7 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 </div>
 
-## 📢 Introduction
+### 📢 Introduction
 
 This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). The document is under progressing. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/discussions). feel free to create issues in [here](https://github.com/SylarLong/astro/issues) if you found any bugs. I'll appreciate your star. More useful functions and localization are coming soon. stay tuned!🍻
 
