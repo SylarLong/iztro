@@ -24,23 +24,23 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 </div>
 
-# 📢 Introduction
+## 📢 Introduction
 
 This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). The document is under progressing. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/discussions). feel free to create issues in [here](https://github.com/SylarLong/astro/issues) if you found any bugs. I'll appreciate your star. More useful functions and localization are coming soon. stay tuned!🍻
 
-## 🌰 Demo
+### 🌰 Demo
 
 Demo：https://a.14star.cn
 
-## 🎲 How to use it?
+### 🎲 How to use it?
 
-### 🚀 Let's get started
+#### 🚀 Let's get started
 
 ```
 npm i @sylarlong/astro -S
 ```
 
-### ❓ Usage
+#### ❓ Usage
 
 - ES6 Module
 
@@ -66,7 +66,7 @@ npm i @sylarlong/astro -S
   var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
   ```
 
-#### ✍️ function definition
+##### ✍️ function definition
 
 - astrolabeBySolarDate
 
@@ -111,7 +111,7 @@ npm i @sylarlong/astro -S
   ) => Astrolabe;
   ```
 
-#### 📑 Response data
+##### 📑 Response data
 
 ```ts
     {
@@ -188,7 +188,7 @@ npm i @sylarlong/astro -S
     }
 ```
 
-#### ✍️ Response data definition
+##### ✍️ Response data definition
 
 ```ts
 export type Star = {
@@ -274,9 +274,9 @@ export type Astrolabe = {
 };
 ```
 
-### ✨ Get horoscope stars
+#### ✨ Get horoscope stars
 
-#### ❓ Usage
+##### ❓ Usage
 
 - ES6 Module
 
@@ -296,7 +296,7 @@ export type Astrolabe = {
   var horoscopeStars = astroObj.star.getHoroscopeStar('庚', '辰', 'decadal');
   ```
 
-#### ✍️ function definition
+##### ✍️ function definition
 
 - getHoroscopeStar
 
@@ -316,7 +316,7 @@ export type Astrolabe = {
   ) => Star[][];
   ```
 
-#### 📑 返回数据 (Response data)
+##### 📑 返回数据 (Response data)
 
 ```ts
 [
@@ -341,7 +341,7 @@ export type Astrolabe = {
 ];
 ```
 
-### ☕ Summary
+#### ☕ Summary
 
 Buy me a coffe if it's useful for you.👍 [Paypal Me](https://PayPal.Me/sylarlong)
 
@@ -349,7 +349,7 @@ You can create the astrolabe below based on the response data above. `palaces` i
 
 ![demo](https://github.com/SylarLong/astro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
-### 📜 LICENSE
+#### 📜 LICENSE
 
 MIT License
 

@@ -24,23 +24,23 @@
 
 </div>
 
-# 📢 介绍
+### 📢 介绍
 
 用于紫微斗数排盘的工具库，文档还在整理中，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/discussions)提问交流，如果发现程序有不对的地方，欢迎到[这里](https://github.com/SylarLong/astro/issues)提交Bug。扣码不易，希望得到各位大佬的星星。之后会陆续添加更多实用功能和国际化，敬请期待。🍻
 
-## 🌰 举个栗子
+### 🌰 举个栗子
 
 Demo 地址：https://a.14star.cn
 
-## 🎲 用法
+### 🎲 用法
 
-### 🚀 让我们开始把
+#### 🚀 让我们开始把
 
 ```
 npm i @sylarlong/astro -S
 ```
 
-### ❓ 调用方法
+#### ❓ 调用方法
 
 - ES6 Module
 
@@ -66,7 +66,7 @@ npm i @sylarlong/astro -S
   var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
   ```
 
-#### ✍️ 方法定义
+##### ✍️ 方法定义
 
 - astrolabeBySolarDate
 
@@ -110,7 +110,7 @@ npm i @sylarlong/astro -S
   ) => Astrolabe;
   ```
 
-#### 📑 返回数据
+##### 📑 返回数据
 
 ```ts
     {
@@ -187,7 +187,7 @@ npm i @sylarlong/astro -S
     }
 ```
 
-#### ✍️ 返回数据定义
+##### ✍️ 返回数据定义
 
 ```ts
 export type Star = {
@@ -273,9 +273,9 @@ export type Astrolabe = {
 };
 ```
 
-### ✨ 获取流耀
+#### ✨ 获取流耀
 
-#### ❓ 调用方法
+##### ❓ 调用方法
 
 - ES6 Module
 
@@ -295,7 +295,7 @@ export type Astrolabe = {
   var horoscopeStars = astroObj.star.getHoroscopeStar('庚', '辰', 'decadal');
   ```
 
-#### ✍️ 方法定义
+##### ✍️ 方法定义
 
 - getHoroscopeStar
 
@@ -316,7 +316,7 @@ export type Astrolabe = {
   ) => Star[][];
   ```
 
-#### 📑 返回数据
+##### 📑 返回数据
 
 ```ts
 [
@@ -341,7 +341,7 @@ export type Astrolabe = {
 ];
 ```
 
-### ☕ 总结
+#### ☕ 总结
 
 如果您觉得本程序对您有用的话，可以给我带杯咖啡吗？👍 [Paypal Me](https://PayPal.Me/sylarlong)
 
@@ -349,7 +349,7 @@ export type Astrolabe = {
 
 ![demo](https://github.com/SylarLong/astro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
-### 📜 版权（LICENSE）
+#### 📜 版权（LICENSE）
 
 MIT License
 
