@@ -1,7 +1,8 @@
 import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
-import { EARTHLY_BRANCHES, STARS_INFO } from '../data';
-import { EarthlyBranch, LunarDate, Star } from '../data/types';
+import { EARTHLY_BRANCHES, heavenlyStems, MUTAGEN, STARS_INFO } from '../data';
+import { EarthlyBranch, HeavenlyStem, Language, Star } from '../data/types';
 import { initStars } from '../star';
+import i18next, { Brightness, Mutagen, StarName, t } from '../i18n';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -37,12 +38,20 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranch: EarthlyBranch): n
  * @param starName 星耀名字
  * @param index 所在宫位索引
  */
-export const getBrightness = (starName: keyof typeof STARS_INFO, index: number): string => {
+export const getBrightness = (starName: keyof typeof STARS_INFO, index: number): Brightness => {
   if (!starName) {
     return '';
   }
 
-  return STARS_INFO[starName].brightness[fixIndex(index)];
+  return t(STARS_INFO[starName].brightness[fixIndex(index)]) as Brightness;
+};
+
+export const getMutagen = (starName: StarName, heavenlyStem: HeavenlyStem): Mutagen => {
+  if (!starName) {
+    throw new Error('star name is required');
+  }
+
+  return t(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starName as never)]) as Mutagen;
 };
 
 /**

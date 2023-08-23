@@ -5,11 +5,11 @@ import {
   FiveElementsClass,
   FiveElementsClassItem,
   HeavenlyStem,
-  PalaceName,
   SoulAndBody,
   Decadal,
   Gender,
 } from '../data/types';
+import { PalaceName, t } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 
 /**
@@ -138,7 +138,7 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
   for (let i = 0; i < PALACES.length; i++) {
     const idx = fixIndex(i - fromIndex);
 
-    names[i] = PALACES[idx];
+    names[i] = t(PALACES[idx]) as PalaceName;
   }
 
   return names;

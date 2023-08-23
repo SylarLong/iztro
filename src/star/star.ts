@@ -2,7 +2,8 @@ import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { GENDER, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems } from '../data';
 import { EarthlyBranch, FiveElementsClass, HeavenlyStem, Star, Gender } from '../data/types';
-import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
+import { Mutagen, StarName, t } from '../i18n';
+import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import {
   getChangQuIndex,
   getChangQuIndexByHeavenlyStem,
@@ -49,11 +50,11 @@ export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
     // 安紫微星系，起始宫逆时针安
     if (s !== '') {
       stars[fixIndex(ziweiIndex - i)].push({
-        name: s,
+        name: t(s) as StarName,
         type: 'major',
         scope: 'origin',
-        brightness: STARS_INFO[s].brightness[fixIndex(ziweiIndex - i)],
-        mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf(s as never)],
+        brightness: getBrightness(s, fixIndex(ziweiIndex - i)),
+        mutagen: getMutagen(s, yearly[0]),
       });
     }
   });
@@ -61,11 +62,11 @@ export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   tianfuGroup.forEach((s, i) => {
     if (s !== '') {
       stars[fixIndex(tianfuIndex + i)].push({
-        name: s,
+        name: t(s) as StarName,
         type: 'major',
         scope: 'origin',
-        brightness: STARS_INFO[s].brightness[fixIndex(tianfuIndex + i)],
-        mutagen: MUTAGEN[heavenlyStems[yearly[0]].mutagen.indexOf(s as never)],
+        brightness: getBrightness(s, fixIndex(tianfuIndex + i)),
+        mutagen: getMutagen(s, yearly[0]),
       });
     }
   });
@@ -236,7 +237,7 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   stars[tianxiIndex].push({ name: '天喜', type: 'flower', scope: 'origin' });
   stars[tianyaoIndex].push({ name: '天姚', type: 'flower', scope: 'origin' });
   stars[xianchiIndex].push({ name: '咸池', type: 'flower', scope: 'origin' });
-  stars[yuejieIndex].push({ name: '月解', type: 'helper', scope: 'origin' });
+  stars[yuejieIndex].push({ name: '解神', type: 'helper', scope: 'origin' });
   stars[santaiIndex].push({ name: '三台', type: 'adjective', scope: 'origin' });
   stars[bazuoIndex].push({ name: '八座', type: 'adjective', scope: 'origin' });
   stars[enguangIndex].push({ name: '恩光', type: 'adjective', scope: 'origin' });
@@ -285,8 +286,13 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  * @returns 长生12神从寅宫开始的顺序
  */
-export const getchangsheng12 = (solarDateStr: string, timeIndex: number, gender: Gender, fixLeap?: boolean) => {
-  const changsheng12 = [];
+export const getchangsheng12 = (
+  solarDateStr: string,
+  timeIndex: number,
+  gender: Gender,
+  fixLeap?: boolean,
+): StarName[] => {
+  const changsheng12: StarName[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [, earthlyBranchOfYear] = yearly;
   // 获取命宫干支，需要通过命宫干支计算五行局
@@ -294,7 +300,7 @@ export const getchangsheng12 = (solarDateStr: string, timeIndex: number, gender:
   // 获取五行局，通过五行局获取起运年龄
   const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
   // 长生12神顺序
-  const stars = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
+  const stars: StarName[] = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
 
   let startIdx = 0;
 
@@ -347,13 +353,26 @@ export const getchangsheng12 = (solarDateStr: string, timeIndex: number, gender:
  * @param gender 性别【男｜女】
  * @returns 博士12神从寅宫开始的顺序
  */
-export const getBoShi12 = (solarDateStr: string, gender: Gender) => {
+export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [heavenlyStemOfYear, earthlyBranchOfYear] = yearly;
   // 博士12神的顺序
-  const stars = ['博士', '力士', '青龙', '小耗', '将军', '奏书', '蜚廉', '喜神', '病符', '大耗', '伏兵', '官府'];
+  const stars: StarName[] = [
+    '博士',
+    '力士',
+    '青龙',
+    '小耗',
+    '将军',
+    '奏书',
+    '蜚廉',
+    '喜神',
+    '病符',
+    '大耗',
+    '伏兵',
+    '官府',
+  ];
   const { luIndex } = getLuYangTuoMaIndex(heavenlyStemOfYear, earthlyBranchOfYear);
-  const boshi12 = [];
+  const boshi12: StarName[] = [];
 
   for (let i = 0; i < stars.length; i++) {
     // 阳男阴女顺行，阴男阳女逆部
@@ -382,14 +401,27 @@ export const getBoShi12 = (solarDateStr: string, gender: Gender) => {
  * @param solarDateStr 阳历日期字符串
  * @returns 流年诸星从寅宫开始的顺序
  */
-export const getYearly12 = (solarDateStr: string) => {
-  const jiangqian12 = [];
-  const suiqian12 = [];
+export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
+  const jiangqian12: StarName[] = [];
+  const suiqian12: StarName[] = [];
 
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
 
   const [, earthlyBranchOfYear] = yearly;
-  const ts12shen = ['岁建', '晦气', '丧门', '贯索', '官符', '小耗', '大耗', '龙德', '白虎', '天德', '吊客', '病符'];
+  const ts12shen: StarName[] = [
+    '岁建',
+    '晦气',
+    '丧门',
+    '贯索',
+    '官符',
+    '小耗',
+    '大耗',
+    '龙德',
+    '白虎',
+    '天德',
+    '吊客',
+    '病符',
+  ];
 
   for (let i = 0; i < ts12shen.length; i++) {
     const idx = fixIndex(fixEarthlyBranchIndex(earthlyBranchOfYear) + i);
@@ -397,7 +429,20 @@ export const getYearly12 = (solarDateStr: string) => {
     suiqian12[idx] = ts12shen[i];
   }
 
-  const jq12shen = ['将星', '攀鞍', '岁驿', '息神', '华盖', '劫煞', '灾煞', '天煞', '指背', '咸池', '月煞', '亡神'];
+  const jq12shen: StarName[] = [
+    '将星',
+    '攀鞍',
+    '岁驿',
+    '息神',
+    '华盖',
+    '劫煞',
+    '灾煞',
+    '天煞',
+    '指背',
+    '咸池',
+    '月煞',
+    '亡神',
+  ];
 
   let jqStartIdx = -1;
 

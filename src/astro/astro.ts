@@ -7,7 +7,8 @@ import {
   solar2lunar,
 } from '../calendar';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, heavenlyStems } from '../data';
-import { Astrolabe, EarthlyBranch, HeavenlyStem, Gender, Horoscope, Palace } from '../data/types';
+import { Astrolabe, EarthlyBranch, HeavenlyStem, Gender, Horoscope, Palace, Language } from '../data/types';
+import { setLanguage } from '../i18n';
 import {
   getAdjectiveStar,
   getBoShi12,
@@ -171,7 +172,10 @@ export const astrolabeBySolarDate = (
   timeIndex: number,
   gender: Gender,
   fixLeap: boolean = true,
+  language: Language = 'zh-CN',
 ): Astrolabe => {
+  setLanguage(language);
+
   const palaces: Palace[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
@@ -257,8 +261,9 @@ export const astrolabeByLunarDate = (
   gender: Gender,
   isLeapMonth: boolean = false,
   fixLeap: boolean = true,
+  language?: Language,
 ): Astrolabe => {
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
-  return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap);
+  return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap, language);
 };

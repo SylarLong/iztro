@@ -87,8 +87,8 @@ export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?:
  *
  * 安天马（按年支），天马只会出现在四马地【寅申巳亥】
  *
- * - 寅午戍年马在申，申子辰年马在寅。
- * - 巳酉丑年马在亥，亥卯未年马在巳。
+ * - 寅午戍流马在申，申子辰流马在寅。
+ * - 巳酉丑流马在亥，亥卯未流马在巳。
  *
  * @param heavenlyStem 天干
  * @param earthlyBranch 地支
