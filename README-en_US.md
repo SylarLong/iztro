@@ -268,7 +268,7 @@ export type Astrolabe = {
   /** 身主 */
   body: string;
   /** 五行局 */
-  fiveElementsClass: FiveElementsClassItem;
+  fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
   palaces: Palace[];
 };

@@ -1,8 +1,18 @@
 import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, heavenlyStems, MUTAGEN, STARS_INFO } from '../data';
-import { EarthlyBranch, HeavenlyStem, Language, Star } from '../data/types';
 import { initStars } from '../star';
-import i18next, { Brightness, Mutagen, StarName, t } from '../i18n';
+import {
+  Brightness,
+  EarthlyBranchKey,
+  EarthlyBranchName,
+  HeavenlyStemKey,
+  HeavenlyStemName,
+  Mutagen,
+  StarName,
+  kot,
+  t,
+} from '../i18n';
+import { Star } from '../data/types';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -29,8 +39,12 @@ export const fixIndex = (index: number, max: number = 12): number => {
  * @param earthlyBranch 地支
  * @returns 该地支对应的宫位索引序号
  */
-export const earthlyBranchIndexToPalaceIndex = (earthlyBranch: EarthlyBranch): number =>
-  EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅');
+export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranchName): number => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const yin = kot<EarthlyBranchKey>('寅');
+
+  return EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin);
+};
 
 /**
  * 配置星耀亮度
@@ -38,20 +52,34 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranch: EarthlyBranch): n
  * @param starName 星耀名字
  * @param index 所在宫位索引
  */
-export const getBrightness = (starName: keyof typeof STARS_INFO, index: number): Brightness => {
+export const getBrightness = (starName: StarName, index: number): Brightness => {
   if (!starName) {
     return '';
   }
 
-  return t(STARS_INFO[starName].brightness[fixIndex(index)]) as Brightness;
+  const star = kot<keyof typeof STARS_INFO>(starName);
+
+  return t<Brightness>(STARS_INFO[star].brightness[fixIndex(index)]);
 };
 
-export const getMutagen = (starName: StarName, heavenlyStem: HeavenlyStem): Mutagen => {
+export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+
   if (!starName) {
-    throw new Error('star name is required');
+    throw new Error('star name is required to getMutagen()');
   }
 
-  return t(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starName as never)]) as Mutagen;
+  return t<Mutagen>(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starName as never)]);
+};
+
+export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): StarName[] => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+
+  if (!heavenlyStems[heavenlyStem]) {
+    throw new Error(`${heavenlyStem} is invalid to getMutagensByHeavenlyStem()`);
+  }
+
+  return heavenlyStems[heavenlyStem].mutagen.map((star) => t<StarName>(star));
 };
 
 /**
@@ -60,8 +88,11 @@ export const getMutagen = (starName: StarName, heavenlyStem: HeavenlyStem): Muta
  * @param earthlyBranch 地支
  * @returns Number(0~11)
  */
-export const fixEarthlyBranchIndex = (earthlyBranch: EarthlyBranch): number =>
-  fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅'));
+export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): number => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+
+  return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅'));
+};
 
 /**
  * 处理晚子时日期

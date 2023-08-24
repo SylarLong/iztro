@@ -1,8 +1,17 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { GENDER, MUTAGEN, STARS_INFO, earthlyBranches, heavenlyStems } from '../data';
-import { EarthlyBranch, FiveElementsClass, HeavenlyStem, Star, Gender } from '../data/types';
-import { Mutagen, StarName, t } from '../i18n';
+import { GENDER, earthlyBranches } from '../data';
+import { FiveElementsClass, Star, Gender } from '../data/types';
+import {
+  StarName,
+  HeavenlyStemKey,
+  t,
+  EarthlyBranchKey,
+  kot,
+  FiveElementsClassKey,
+  HeavenlyStemName,
+  EarthlyBranchName,
+} from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import {
   getChangQuIndex,
@@ -294,11 +303,12 @@ export const getchangsheng12 = (
 ): StarName[] => {
   const changsheng12: StarName[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
-  const [, earthlyBranchOfYear] = yearly;
+  const [, earthlyBranchNameOfYear] = yearly;
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
   // 获取命宫干支，需要通过命宫干支计算五行局
   const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
   // 获取五行局，通过五行局获取起运年龄
-  const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
+  const fiveElementClass = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
   // 长生12神顺序
   const stars: StarName[] = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
 
@@ -355,7 +365,9 @@ export const getchangsheng12 = (
  */
 export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
-  const [heavenlyStemOfYear, earthlyBranchOfYear] = yearly;
+  const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
+  const heavenlyStemOfYear = kot<HeavenlyStemKey>(heavenlyStemNameOfYear);
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
   // 博士12神的顺序
   const stars: StarName[] = [
     '博士',
@@ -473,10 +485,12 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
  * @param earthlyBranch 地支
  */
 export const getHoroscopeStar = (
-  heavenlyStem: HeavenlyStem,
-  earthlyBranch: EarthlyBranch,
+  heavenlyStemName: HeavenlyStemName,
+  earthlyBranchName: EarthlyBranchName,
   scope: 'decadal' | 'yearly',
 ): Star[][] => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
   const { kuiIndex, yueIndex } = getKuiYueIndex(heavenlyStem);
   const { changIndex, quIndex } = getChangQuIndexByHeavenlyStem(heavenlyStem);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earthlyBranch);

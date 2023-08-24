@@ -1,4 +1,4 @@
-import { EarthlyBranch, HeavenlyStem } from '../../data/types';
+import { EarthlyBranchName, HeavenlyStemName } from '../../i18n';
 import {
   getLuYangTuoMaIndex,
   getKuiYueIndex,
@@ -131,9 +131,9 @@ describe('star/location', () => {
     ];
 
     data.forEach((item) => {
-      expect(getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStem, item.earthlyBranch as EarthlyBranch)).toStrictEqual(
-        item.result,
-      );
+      expect(
+        getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStemName, item.earthlyBranch as EarthlyBranchName),
+      ).toStrictEqual(item.result);
     });
   });
 
@@ -212,7 +212,7 @@ describe('star/location', () => {
     ];
 
     data.forEach((item) => {
-      expect(getKuiYueIndex(item.heavenlyStem as HeavenlyStem)).toStrictEqual(item.result);
+      expect(getKuiYueIndex(item.heavenlyStem as HeavenlyStemName)).toStrictEqual(item.result);
     });
   });
 
@@ -503,7 +503,7 @@ describe('star/location', () => {
     ];
 
     data2.forEach((item) => {
-      expect(getHuoLingIndex(item.earthlyBranch as EarthlyBranch, 0)).toStrictEqual(item.result);
+      expect(getHuoLingIndex(item.earthlyBranch as EarthlyBranchName, 0)).toStrictEqual(item.result);
     });
   });
 
@@ -524,7 +524,7 @@ describe('star/location', () => {
     ];
 
     data.forEach((item) => {
-      expect(getLuanXiIndex(item.earthlyBranch as EarthlyBranch)).toStrictEqual(item.result);
+      expect(getLuanXiIndex(item.earthlyBranch as EarthlyBranchName)).toStrictEqual(item.result);
     });
   });
 
@@ -545,7 +545,7 @@ describe('star/location', () => {
     };
 
     Object.entries(data).forEach(([key, value]) => {
-      expect(getNianjieIndex(key as EarthlyBranch)).toEqual(value);
+      expect(getNianjieIndex(key as EarthlyBranchName)).toEqual(value);
     });
   });
 
@@ -655,7 +655,7 @@ describe('star/location', () => {
     ];
 
     data.forEach((item) => {
-      expect(getChangQuIndexByHeavenlyStem(item.heavenlyStem as HeavenlyStem)).toStrictEqual(item.result);
+      expect(getChangQuIndexByHeavenlyStem(item.heavenlyStem as HeavenlyStemName)).toStrictEqual(item.result);
     });
   });
 });

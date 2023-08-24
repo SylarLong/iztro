@@ -1,5 +1,5 @@
 import { EARTHLY_BRANCHES, ZODIAC } from '../data';
-import { EarthlyBranch } from '../data/types';
+import { EarthlyBranchKey, EarthlyBranchName, kot } from '../i18n';
 import { normalizeSolarDateStr } from './convertor';
 import { LUNAR_DAY_NAME, LUNAR_MONTH_NAME, NUM_TO_CHAR, TERM_INFO } from './rules';
 
@@ -138,6 +138,8 @@ export const getSign = (solarDateStr: string) => {
  * @example
  * const zodiac = calendar.getZodiac("卯") ;// zodiac='兔'
  */
-export const getZodiac = (earthlyBranchOfYear: EarthlyBranch) => {
-  return ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranchOfYear)];
+export const getZodiac = (earthlyBranchOfYear: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchOfYear);
+
+  return ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranch)];
 };

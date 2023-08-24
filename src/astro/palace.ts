@@ -1,15 +1,17 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches } from '../data';
+import { FiveElementsClass, SoulAndBody, Decadal, Gender } from '../data/types';
 import {
-  EarthlyBranch,
-  FiveElementsClass,
-  FiveElementsClassItem,
-  HeavenlyStem,
-  SoulAndBody,
-  Decadal,
-  Gender,
-} from '../data/types';
-import { PalaceName, t } from '../i18n';
+  EarthlyBranchKey,
+  EarthlyBranchName,
+  FiveElementsClassKey,
+  FiveElementsClassName,
+  HeavenlyStemKey,
+  HeavenlyStemName,
+  PalaceName,
+  kot,
+  t,
+} from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
 
 /**
@@ -31,6 +33,8 @@ import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
  */
 export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
   const { yearly, timely } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
+  const earthlyBranchOfTime = kot<EarthlyBranchKey>(timely[1]);
+  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0]);
 
   // 紫微斗数以`寅`宫为第一个宫位
   const firstIndex = EARTHLY_BRANCHES.indexOf('寅');
@@ -39,24 +43,24 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
 
   // 命宫索引，以寅宫为0，顺时针数到生月地支索引，再逆时针数到生时地支索引
   // 此处数到生月地支索引其实就是农历月份，所以不再计算生月地支索引
-  const soulIndex = fixIndex(monthIndex - EARTHLY_BRANCHES.indexOf(timely[1]));
+  const soulIndex = fixIndex(monthIndex - EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
 
   // 身宫索引，以寅宫为0，顺时针数到生月地支索引，再顺时针数到生时地支索引
   // 与命宫索引一样，不再赘述
-  const bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(timely[1]));
+  const bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
 
   // 用五虎遁取得寅宫的天干
-  const startHevenlyStem = TIGER_RULE[yearly[0]];
+  const startHevenlyStem = TIGER_RULE[heavenlyStemOfYear];
 
   // 获取命宫天干索引，起始天干索引加上命宫的索引即是
   // 天干循环数为10
   const heavenlyStemOfSoulIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHevenlyStem) + soulIndex, 10);
 
   // 命宫的天干
-  const heavenlyStemOfSoul = HEAVENLY_STEMS[heavenlyStemOfSoulIndex];
+  const heavenlyStemOfSoul = t<HeavenlyStemName>(HEAVENLY_STEMS[heavenlyStemOfSoulIndex]);
 
   // 命宫地支，命宫索引 + `寅`的索引（因为紫微斗数里寅宫是第一个宫位）
-  const earthlyBranchOfSoul = EARTHLY_BRANCHES[fixIndex(soulIndex + firstIndex)];
+  const earthlyBranchOfSoul = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(soulIndex + firstIndex)]);
 
   return {
     soulIndex,
@@ -105,15 +109,17 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
  *  - 辛未：辛4 未1=5 ——> 土 ——> 土五局
  *  - 庚申：庚4 申2=6 ——> 6-5=1 ——> 木 ——> 木三局
  *
- * @param heavenlyStem 天干
- * @param earthlyBranch 地支
+ * @param heavenlyStemName 天干
+ * @param earthlyBranchName 地支
  * @returns 水二局 ｜ 木三局 ｜ 金四局 ｜ 土五局 ｜ 火六局
  */
 export const getFiveElementsClass = (
-  heavenlyStem: HeavenlyStem,
-  earthlyBranch: EarthlyBranch,
-): FiveElementsClassItem => {
-  const fiveElementsTable: FiveElementsClassItem[] = ['木三局', '金四局', '水二局', '火六局', '土五局'];
+  heavenlyStemName: HeavenlyStemName,
+  earthlyBranchName: EarthlyBranchName,
+): FiveElementsClassName => {
+  const fiveElementsTable: FiveElementsClassKey[] = ['木三局', '金四局', '水二局', '火六局', '土五局'];
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
   const heavenlyStemNumber = Math.floor(HEAVENLY_STEMS.indexOf(heavenlyStem) / 2) + 1;
   const earthlyBranchNumber = Math.floor(fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch), 6) / 2) + 1;
@@ -123,7 +129,7 @@ export const getFiveElementsClass = (
     index -= 5;
   }
 
-  return fiveElementsTable[index - 1];
+  return t<FiveElementsClassName>(fiveElementsTable[index - 1]);
 };
 
 /**
@@ -170,9 +176,10 @@ export const getHoroscope = (
 ): { decadals: Decadal[]; ages: number[][] } => {
   const decadals: Decadal[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
-  const [heavenlyStem, earthlyBranch] = yearly;
+  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0]);
+  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1]);
   const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
-  const fiveElementsClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
+  const fiveElementsClass = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
 
   // 用五虎遁获取大限起始天干
   const startHeavenlyStem = TIGER_RULE[heavenlyStem];
@@ -186,8 +193,8 @@ export const getHoroscope = (
 
     decadals[idx] = {
       range: [start, start + 9],
-      heavenlyStem: HEAVENLY_STEMS[heavenlyStemIndex],
-      earthlyBranch: EARTHLY_BRANCHES[earthlyBranchIndex],
+      heavenlyStem: t(HEAVENLY_STEMS[heavenlyStemIndex]),
+      earthlyBranch: t(EARTHLY_BRANCHES[earthlyBranchIndex]),
     };
   }
 

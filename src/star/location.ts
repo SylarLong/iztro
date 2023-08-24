@@ -1,7 +1,15 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES } from '../data';
-import { EarthlyBranch, FiveElementsClass, HeavenlyStem } from '../data/types';
+import { FiveElementsClass } from '../data/types';
+import {
+  EarthlyBranchKey,
+  EarthlyBranchName,
+  FiveElementsClassKey,
+  HeavenlyStemKey,
+  HeavenlyStemName,
+  kot,
+} from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex } from '../utils';
 
 /**
@@ -25,7 +33,7 @@ import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex }
 export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
   const { lunarYear, lunarMonth, lunarDay } = solar2lunar(solarDateStr);
-  const fiveElements = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
+  const fiveElements = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
   let remainder = -1; // 余数
   let quotient; // 商
   let offset = -1; // 循环次数
@@ -90,13 +98,16 @@ export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?:
  * - 寅午戍流马在申，申子辰流马在寅。
  * - 巳酉丑流马在亥，亥卯未流马在巳。
  *
- * @param heavenlyStem 天干
- * @param earthlyBranch 地支
+ * @param heavenlyStemName 天干
+ * @param earthlyBranchName 地支
  * @returns 禄存、擎羊，陀罗、天马的索引
  */
-export const getLuYangTuoMaIndex = (heavenlyStem: HeavenlyStem, earthlyBranch: EarthlyBranch) => {
+export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyBranchName: EarthlyBranchName) => {
   let luIndex = -1; // 禄存索引
   let maIndex = -1; // 天马索引
+
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
   switch (earthlyBranch) {
     case '寅':
@@ -175,12 +186,13 @@ export const getLuYangTuoMaIndex = (heavenlyStem: HeavenlyStem, earthlyBranch: E
  * - 壬癸之年卯巳
  * - 丙丁之年亥酉
  *
- * @param heavenlyStem 天干
+ * @param heavenlyStemName 天干
  * @returns
  */
-export const getKuiYueIndex = (heavenlyStem: HeavenlyStem) => {
+export const getKuiYueIndex = (heavenlyStemName: HeavenlyStemName) => {
   let kuiIndex = -1;
   let yueIndex = -1;
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
 
   switch (heavenlyStem) {
     case '甲':
@@ -338,14 +350,15 @@ export const getKongJieIndex = (timeIndex: number) => {
  *
  * 例如壬辰年卯时生人，据[申子辰人寅戌扬]口诀，故火星在寅宫起子时，铃星在戌宫起子时，顺数至卯时，即火星在巳，铃星在丑。
  *
- * @param earthlyBranch 地支
+ * @param earthlyBranchName 地支
  * @param timeIndex 时辰序号
  * @returns 火星、铃星索引
  */
-export const getHuoLingIndex = (earthlyBranch: EarthlyBranch, timeIndex: number) => {
+export const getHuoLingIndex = (earthlyBranchName: EarthlyBranchName, timeIndex: number) => {
   let huoIndex = -1;
   let lingIndex = -1;
   const fixedTimeIndex = fixIndex(timeIndex);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
   switch (earthlyBranch) {
     case '寅':
@@ -392,12 +405,12 @@ export const getHuoLingIndex = (earthlyBranch: EarthlyBranch, timeIndex: number)
  * - 坐守此宫红鸾位
  * - 对宫天喜不差移
  *
- * @param earthlyBranch 年支
+ * @param earthlyBranchName 年支
  * @returns 红鸾、天喜索引
  */
-export const getLuanXiIndex = (earthlyBranch: EarthlyBranch) => {
+export const getLuanXiIndex = (earthlyBranchName: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
   const hongluanIndex = fixIndex(fixEarthlyBranchIndex('卯') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
-
   const tianxiIndex = fixIndex(hongluanIndex + 6);
 
   return { hongluanIndex, tianxiIndex };
@@ -453,7 +466,8 @@ export const getLuanXiIndex = (earthlyBranch: EarthlyBranch) => {
 export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap?: boolean) => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
   const { soulIndex, bodyIndex } = getSoulAndBody(solarDate, timeIndex, fixLeap);
-  const [heavenlyStem, earthlyBranch] = yearly;
+  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0]);
+  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1]);
   let hgIdx = -1;
   let xcIdx = -1;
   let guIdx = -1;
@@ -527,17 +541,17 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
     fixEarthlyBranchIndex(
       ['巳', '午', '子', '巳', '午', '申', '寅', '午', '酉', '亥'][
         HEAVENLY_STEMS.indexOf(heavenlyStem)
-      ] as EarthlyBranch,
+      ] as EarthlyBranchKey,
     ),
   );
   const posuiIndex = fixIndex(
-    fixEarthlyBranchIndex(['巳', '丑', '酉'][EARTHLY_BRANCHES.indexOf(earthlyBranch) % 3] as EarthlyBranch),
+    fixEarthlyBranchIndex(['巳', '丑', '酉'][EARTHLY_BRANCHES.indexOf(earthlyBranch) % 3] as EarthlyBranchKey),
   );
   const feilianIndex = fixIndex(
     fixEarthlyBranchIndex(
       ['申', '酉', '戌', '巳', '午', '未', '寅', '卯', '辰', '亥', '子', '丑'][
         EARTHLY_BRANCHES.indexOf(earthlyBranch)
-      ] as EarthlyBranch,
+      ] as EarthlyBranchKey,
     ),
   );
   const longchiIndex = fixIndex(fixEarthlyBranchIndex('辰') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
@@ -546,22 +560,26 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
   const tianxuIndex = fixIndex(fixEarthlyBranchIndex('午') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianguanIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['未', '辰', '巳', '寅', '卯', '酉', '亥', '酉', '戌', '午'][HEAVENLY_STEMS.indexOf(yearly[0])] as EarthlyBranch,
+      ['未', '辰', '巳', '寅', '卯', '酉', '亥', '酉', '戌', '午'][
+        HEAVENLY_STEMS.indexOf(heavenlyStem)
+      ] as EarthlyBranchKey,
     ),
   );
   const tianfuIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['酉', '申', '子', '亥', '卯', '寅', '午', '巳', '午', '巳'][HEAVENLY_STEMS.indexOf(yearly[0])] as EarthlyBranch,
+      ['酉', '申', '子', '亥', '卯', '寅', '午', '巳', '午', '巳'][
+        HEAVENLY_STEMS.indexOf(heavenlyStem)
+      ] as EarthlyBranchKey,
     ),
   );
   const tiandeIndex = fixIndex(fixEarthlyBranchIndex('酉') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const yuedeIndex = fixIndex(fixEarthlyBranchIndex('巳') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tiankongIndex = fixIndex(fixEarthlyBranchIndex(earthlyBranch) + 1);
   const jieluIndex = fixIndex(
-    fixEarthlyBranchIndex(['申', '午', '辰', '寅', '子'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranch),
+    fixEarthlyBranchIndex(['申', '午', '辰', '寅', '子'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchKey),
   );
   const kongwangIndex = fixIndex(
-    fixEarthlyBranchIndex(['酉', '未', '巳', '卯', '丑'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranch),
+    fixEarthlyBranchIndex(['酉', '未', '巳', '卯', '丑'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchKey),
   );
   const xunkongIndex = fixIndex(
     fixEarthlyBranchIndex(earthlyBranch) + HEAVENLY_STEMS.indexOf('癸') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 1,
@@ -605,15 +623,17 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
  * @param earthlyBranch 地支（年）
  * @returns 年解索引
  */
-export const getNianjieIndex = (earthlyBranch: EarthlyBranch) =>
-  fixIndex(
+export const getNianjieIndex = (earthlyBranchName: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+
+  return fixIndex(
     fixEarthlyBranchIndex(
       ['戌', '酉', '申', '未', '午', '巳', '辰', '卯', '寅', '丑', '子', '亥'][
         EARTHLY_BRANCHES.indexOf(earthlyBranch)
-      ] as EarthlyBranch,
+      ] as EarthlyBranchKey,
     ),
   );
-
+};
 /**
  * 获取以月份索引为基准的星耀索引，包括解神，天姚，天刑，阴煞，天月，天巫
  * 解神分为年解和月解，月解作用更加直接快速，年解稍迟钝，且作用力没有月解那么大
@@ -639,23 +659,22 @@ export const getNianjieIndex = (earthlyBranch: EarthlyBranch) =>
  * @returns
  */
 export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLeap?: boolean) => {
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
   const monthIndex = fixLunarMonthIndex(solarDate, timeIndex, fixLeap);
 
   const jieshenIndex = fixIndex(
-    fixEarthlyBranchIndex(['申', '戌', '子', '寅', '辰', '午'][Math.floor(monthIndex / 2)] as EarthlyBranch),
+    fixEarthlyBranchIndex(['申', '戌', '子', '寅', '辰', '午'][Math.floor(monthIndex / 2)] as EarthlyBranchKey),
   );
   const tianyaoIndex = fixIndex(fixEarthlyBranchIndex('丑') + monthIndex);
   const tianxingIndex = fixIndex(fixEarthlyBranchIndex('酉') + monthIndex);
   const yinshaIndex = fixIndex(
-    fixEarthlyBranchIndex(['寅', '子', '戌', '申', '午', '辰'][monthIndex % 6] as EarthlyBranch),
+    fixEarthlyBranchIndex(['寅', '子', '戌', '申', '午', '辰'][monthIndex % 6] as EarthlyBranchKey),
   );
   const tianyueIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['戌', '巳', '辰', '寅', '未', '卯', '亥', '未', '寅', '午', '戌', '寅'][monthIndex] as EarthlyBranch,
+      ['戌', '巳', '辰', '寅', '未', '卯', '亥', '未', '寅', '午', '戌', '寅'][monthIndex] as EarthlyBranchKey,
     ),
   );
-  const tianwuIndex = fixIndex(fixEarthlyBranchIndex(['巳', '申', '寅', '亥'][monthIndex % 4] as EarthlyBranch));
+  const tianwuIndex = fixIndex(fixEarthlyBranchIndex(['巳', '申', '寅', '亥'][monthIndex % 4] as EarthlyBranchKey));
 
   return {
     yuejieIndex: jieshenIndex,
@@ -675,12 +694,13 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
  * - 流曲起酉位	甲乙逆行踪
  * - 亦不用四墓	年日月相同
  *
- * @param heavenlyStem 天干
+ * @param heavenlyStemName 天干
  * @returns 文昌、文曲索引
  */
-export const getChangQuIndexByHeavenlyStem = (heavenlyStem: HeavenlyStem) => {
+export const getChangQuIndexByHeavenlyStem = (heavenlyStemName: HeavenlyStemName) => {
   let changIndex = -1;
   let quIndex = -1;
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
 
   switch (heavenlyStem) {
     case '甲':
