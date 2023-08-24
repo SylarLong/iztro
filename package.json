@@ -38,10 +38,11 @@
     "zodiac",
     "sign"
   ],
-  "author": "SylarLong (sylarlong@gmail.com, alsogood@qq.com)",
+  "author": "SylarLong",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SylarLong/astro/issues"
+    "url": "https://github.com/SylarLong/astro/issues",
+    "email": "sylarlong@gmail.com"
   },
   "homepage": "https://astro.14star.cn",
   "devDependencies": {

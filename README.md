@@ -26,11 +26,12 @@
 
 ### 📢 介绍
 
-用于紫微斗数排盘的工具库，文档还在整理中，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/discussions)提问交流，如果发现程序有不对的地方，欢迎到[这里](https://github.com/SylarLong/astro/issues)提交Bug。扣码不易，希望得到各位大佬的星星。之后会陆续添加更多实用功能和国际化，敬请期待。🍻
+用于紫微斗数排盘的工具库，目前支持简体中文、繁体中文、英文、韩文、日文，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/discussions)提问交流，如果发现程序有不对的地方，欢迎到[这里](https://github.com/SylarLong/astro/issues)提交Bug。扣码不易，希望得到各位大佬的星星。🍻
 
 ### 🌰 举个栗子
 
-Demo 地址：https://a.14star.cn
+- [Demo](https://a.14star.cn)
+- [文档](https://astro.14star.cn)
 
 ### 🎲 用法
 
