@@ -48,10 +48,10 @@ npm i @sylarlong/astro -S
   import { astro } from '@sylarlong/astro';
 
   // generate astrolabe by solar date
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女');
+  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
 
   // generate astrolabe by lunar date
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
+  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 - CommonJS
@@ -60,10 +60,10 @@ npm i @sylarlong/astro -S
   var astroObj = require('@sylarlong/astro');
 
   // generate astrolabe by solar date
-  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女');
+  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
 
   // generate astrolabe by lunar date
-  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
+  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 ##### ✍️ function definition
@@ -78,6 +78,7 @@ npm i @sylarlong/astro -S
    * @param timeIndex index of time【0~12】
    * @param gender gender【男|女】
    * @param fixLeap fix leap month or not【default to true】
+   * @param language specify language 【default to zh-CN】. now we support 'zh-CN' 'zh-TW' 'en-US' 'ko-KR' and 'ja-JP'
    * @returns astrolabe information
    */
   type astrolabeBySolarDate = (
@@ -85,6 +86,7 @@ npm i @sylarlong/astro -S
     timeIndex: number,
     gender: Gender,
     fixLeap: boolean = true,
+    language: Language = 'zh-CN'
   ) => Astrolabe;
   ```
 
@@ -100,6 +102,7 @@ npm i @sylarlong/astro -S
    * @param isLeapMonth is passed month a leap month of lunar year【default to false】
    *                    it will be omitted if the month in the year is not a leap month
    * @param fixLeap fix leap month or not【default to true】
+   * @param language specify language 【default to zh-CN】. now we support 'zh-CN' 'zh-TW' 'en-US' 'ko-KR' and 'ja-JP'
    * @returns 星盘信息
    */
   type astrolabeByLunarDate = (
@@ -108,6 +111,7 @@ npm i @sylarlong/astro -S
     gender: Gender,
     isLeapMonth: boolean = false,
     fixLeap: boolean = true,
+    language: Language = 'zh-CN'
   ) => Astrolabe;
   ```
 

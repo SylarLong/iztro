@@ -115,7 +115,7 @@ describe('Astrolabe', () => {
 
   test('astrolabeBySolarDate() Korean', () => {
     const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'ko-KR');
-    console.log(result);
+
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
     expect(result).toHaveProperty('chineseDate', '경진 갑신 병오 경인');
