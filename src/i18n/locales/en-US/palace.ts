@@ -1,0 +1,15 @@
+export default {
+  命宫: 'soul',
+  身宫: 'body',
+  兄弟: 'siblings',
+  夫妻: 'spouse',
+  子女: 'children',
+  财帛: 'wealth',
+  疾厄: 'health',
+  迁移: 'surface',
+  仆役: 'friends',
+  官禄: 'career',
+  田宅: 'property',
+  福德: 'spirit',
+  父母: 'parents',
+} as const;

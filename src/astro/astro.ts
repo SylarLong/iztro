@@ -7,7 +7,8 @@ import {
   solar2lunar,
 } from '../calendar';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, heavenlyStems } from '../data';
-import { Astrolabe, EarthlyBranch, HeavenlyStem, Gender, Horoscope, Palace } from '../data/types';
+import { Astrolabe, Gender, Horoscope, Palace, Language } from '../data/types';
+import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemKey, HeavenlyStemName, kot, setLanguage, t } from '../i18n';
 import {
   getAdjectiveStar,
   getBoShi12,
@@ -17,7 +18,7 @@ import {
   getMinorStar,
   getYearly12,
 } from '../star';
-import { fixEarthlyBranchIndex, fixIndex, timeToIndex } from '../utils';
+import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
 
 /**
@@ -60,9 +61,9 @@ const _getHoroscopeBySolarDate = (
   // 大限索引
   let decadalIndex = -1;
   // 大限天干
-  let heavenlyStemOfDecade: HeavenlyStem = '甲';
+  let heavenlyStemOfDecade: HeavenlyStemName = t('甲');
   // 大限地支
-  let earthlyBranchOfDecade: EarthlyBranch = '子';
+  let earthlyBranchOfDecade: EarthlyBranchName = t('子');
   // 小限索引
   let ageIndex = -1;
   // 流年索引
@@ -97,16 +98,16 @@ const _getHoroscopeBySolarDate = (
   // 获取流月索引, 流年地支逆数到生月所在宫位，再从该宫位顺数到生时，为正月所在宫位，之后每月一宫
   monthlyIndex = fixIndex(
     yearlyIndex -
-      EARTHLY_BRANCHES.indexOf($.rawDates.chineseDate.monthly[1]) +
-      EARTHLY_BRANCHES.indexOf($.rawDates.chineseDate.timely[1]) +
-      EARTHLY_BRANCHES.indexOf(monthly[1]),
+      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.monthly[1])) +
+      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.timely[1])) +
+      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(monthly[1])),
   );
 
   // 获取流日索引
   dailyIndex = (monthlyIndex + _date.lunarDay - 1) % 12;
 
   // 获取流时索引
-  timelyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(timely[1]));
+  timelyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(timely[1])));
 
   const scope: Horoscope = {
     solarDate: normalizeSolarDateStr(targetDate).join('-'),
@@ -116,8 +117,12 @@ const _getHoroscopeBySolarDate = (
       heavenlyStem: heavenlyStemOfDecade,
       earthlyBranch: earthlyBranchOfDecade,
       palaceNames: getPalaceNames(decadalIndex),
-      mutagen: heavenlyStems[heavenlyStemOfDecade].mutagen,
-      stars: getHoroscopeStar(heavenlyStemOfDecade, earthlyBranchOfDecade, 'decadal'),
+      mutagen: getMutagensByHeavenlyStem(heavenlyStemOfDecade),
+      stars: getHoroscopeStar(
+        kot<HeavenlyStemKey>(heavenlyStemOfDecade),
+        kot<EarthlyBranchKey>(earthlyBranchOfDecade),
+        'decadal',
+      ),
     },
     age: {
       index: ageIndex,
@@ -128,7 +133,7 @@ const _getHoroscopeBySolarDate = (
       heavenlyStem: yearly[0],
       earthlyBranch: yearly[1],
       palaceNames: getPalaceNames(yearlyIndex),
-      mutagen: heavenlyStems[yearly[0]].mutagen,
+      mutagen: getMutagensByHeavenlyStem(yearly[0]),
       stars: getHoroscopeStar(yearly[0], yearly[1], 'yearly'),
     },
     monthly: {
@@ -136,21 +141,21 @@ const _getHoroscopeBySolarDate = (
       heavenlyStem: monthly[0],
       earthlyBranch: monthly[1],
       palaceNames: getPalaceNames(monthlyIndex),
-      mutagen: heavenlyStems[monthly[0]].mutagen,
+      mutagen: getMutagensByHeavenlyStem(monthly[0]),
     },
     daily: {
       index: dailyIndex,
       heavenlyStem: daily[0],
       earthlyBranch: daily[1],
       palaceNames: getPalaceNames(dailyIndex),
-      mutagen: heavenlyStems[daily[0]].mutagen,
+      mutagen: getMutagensByHeavenlyStem(daily[0]),
     },
     timely: {
       index: timelyIndex,
       heavenlyStem: timely[0],
       earthlyBranch: timely[1],
       palaceNames: getPalaceNames(timelyIndex),
-      mutagen: heavenlyStems[timely[0]].mutagen,
+      mutagen: getMutagensByHeavenlyStem(timely[0]),
     },
   };
 
@@ -171,9 +176,14 @@ export const astrolabeBySolarDate = (
   timeIndex: number,
   gender: Gender,
   fixLeap: boolean = true,
+  language: Language = 'zh-CN',
 ): Astrolabe => {
+  setLanguage(language);
+
   const palaces: Palace[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0]);
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1]);
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
     solarDateStr,
     timeIndex,
@@ -190,15 +200,15 @@ export const astrolabeBySolarDate = (
 
   for (let i = 0; i < 12; i++) {
     const heavenlyStemOfPalace =
-      HEAVENLY_STEMS[fixIndex(HEAVENLY_STEMS.indexOf(heavenlyStemOfSoul) - soulIndex + i, 10)];
+      HEAVENLY_STEMS[fixIndex(HEAVENLY_STEMS.indexOf(kot<HeavenlyStemKey>(heavenlyStemOfSoul)) - soulIndex + i, 10)];
     const earthlyBranchOfPalace = EARTHLY_BRANCHES[fixIndex(2 + i)];
 
     palaces.push({
       name: palaceNames[i],
       isBodyPalace: bodyIndex === i,
-      isOriginalPalace: !['子', '丑'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === yearly[0],
-      heavenlyStem: heavenlyStemOfPalace,
-      earthlyBranch: earthlyBranchOfPalace,
+      isOriginalPalace: !['子', '丑'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === heavenlyStemOfYear,
+      heavenlyStem: t(heavenlyStemOfPalace),
+      earthlyBranch: t(earthlyBranchOfPalace),
       majorStars: majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),
       minorStars: minorStars[i].filter((star) => !['lucun', 'tianma'].includes(star.type)),
       adjectiveStars: adjectiveStars[i],
@@ -213,7 +223,7 @@ export const astrolabeBySolarDate = (
 
   // 宫位是从寅宫开始，而寅的索引是2，所以需要+2
   const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
-  const earthlyBranchOfBodyPalace = EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)];
+  const earthlyBranchOfBodyPalace = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]);
 
   const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const lunarDate = solar2lunar(solarDateStr);
@@ -223,14 +233,14 @@ export const astrolabeBySolarDate = (
     lunarDate: lunarDate.toString(true),
     chineseDate: chineseDate.toString(),
     rawDates: { lunarDate, chineseDate },
-    time: CHINESE_TIME[timeIndex],
+    time: t(CHINESE_TIME[timeIndex]),
     timeRange: TIME_RANGE[timeIndex],
     sign: getSign(solarDateStr),
     zodiac: getZodiac(yearly[1]),
-    earthlyBranchOfSoulPalace,
+    earthlyBranchOfSoulPalace: t<EarthlyBranchName>(earthlyBranchOfSoulPalace),
     earthlyBranchOfBodyPalace,
-    soul: earthlyBranches[earthlyBranchOfSoulPalace].soul,
-    body: earthlyBranches[yearly[1]].body,
+    soul: t(earthlyBranches[earthlyBranchOfSoulPalace].soul),
+    body: t(earthlyBranches[earthlyBranchOfYear].body),
     fiveElementsClass: getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul),
     palaces,
     horoscope(targetDate: string | Date = new Date(), timeIndexOfTarget?: number) {
@@ -257,8 +267,9 @@ export const astrolabeByLunarDate = (
   gender: Gender,
   isLeapMonth: boolean = false,
   fixLeap: boolean = true,
+  language?: Language,
 ): Astrolabe => {
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
-  return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap);
+  return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap, language);
 };

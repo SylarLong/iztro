@@ -1,5 +1,6 @@
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, RAT_RULE } from '../data';
-import { HeavenlyStem, HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchDate } from '../data/types';
+import { HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchDate } from '../data/types';
+import { HeavenlyStemKey, HeavenlyStemName, kot, t } from '../i18n';
 import { fixIndex } from '../utils';
 import { lunar2solar, normalizeLunarDateStr, normalizeSolarDateStr, solar2lunar } from './convertor';
 import { getTerm } from './misc';
@@ -11,7 +12,7 @@ import { getTerm } from './misc';
  * @return [干, 支]
  */
 const heavenlyStemAndEarthlyBranchFromOffset = (offset: number): HeavenlyStemAndEarthlyBranch => {
-  return [HEAVENLY_STEMS[offset % 10], EARTHLY_BRANCHES[offset % 12]];
+  return [t(HEAVENLY_STEMS[offset % 10]), t(EARTHLY_BRANCHES[offset % 12])];
 };
 
 /**
@@ -27,7 +28,7 @@ export const heavenlyStemAndEarthlyBranchOfYear = (year: number): HeavenlyStemAn
   if (heavenStemKey === 0) heavenStemKey = 10; // 如果余数为0则为最后一个天干
   if (earthlyBranchKey === 0) earthlyBranchKey = 12; // 如果余数为0则为最后一个地支
 
-  return [HEAVENLY_STEMS[heavenStemKey - 1], EARTHLY_BRANCHES[earthlyBranchKey - 1]];
+  return [t(HEAVENLY_STEMS[heavenStemKey - 1]), t(EARTHLY_BRANCHES[earthlyBranchKey - 1])];
 };
 
 /**
@@ -70,18 +71,19 @@ export const heavenlyStemAndEarthlyBranchOfDay = (date: Date, timeIndex: number)
  * 通过当天的日天干获取第 `t` （0~11）个时辰的干支，需要通过五鼠遁来定时辰天干
  *
  * @param timeIndex 时辰序号（0~11），子时为0，亥时为11
- * @param heavenlyStemOfDay 当日天干
+ * @param heavenlyStemNameOfDay 当日天干
  * @returns [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfTime = (
   timeIndex: number,
-  heavenlyStemOfDay: HeavenlyStem,
+  heavenlyStemNameOfDay: HeavenlyStemName,
 ): HeavenlyStemAndEarthlyBranch => {
+  const heavenlyStemOfDay = kot<HeavenlyStemKey>(heavenlyStemNameOfDay);
   const startHeavenlyStem = RAT_RULE[heavenlyStemOfDay];
   const heavenlyStem = HEAVENLY_STEMS[fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + fixIndex(timeIndex), 10)];
   const earthlyBranch = EARTHLY_BRANCHES[fixIndex(timeIndex)];
 
-  return [heavenlyStem, earthlyBranch];
+  return [t(heavenlyStem), t(earthlyBranch)];
 };
 
 /**

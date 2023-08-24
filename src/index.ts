@@ -1,3 +1,4 @@
+import i18next from './i18n';
 export * as data from './data';
 export * as star from './star';
 export * as util from './utils';

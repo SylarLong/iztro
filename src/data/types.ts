@@ -1,5 +1,16 @@
-import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES, TIME_RANGE } from './constants';
-import { ADJECTIVE_STARTS, heavenlyStems, HOROSCOPE_STARS, MAJOR_STARS, MINOR_STARTS, MUTAGEN } from '../data';
+import { CHINESE_TIME, LANGUAGES, TIME_RANGE } from './constants';
+import {
+  Brightness,
+  EarthlyBranchName,
+  FiveElementsClassName,
+  HeavenlyStemName,
+  Mutagen,
+  PalaceName,
+  StarName,
+} from '../i18n';
+
+/** 支持的语言 */
+export type Language = (typeof LANGUAGES)[number];
 
 /** 性别 */
 export type Gender = '男' | '女';
@@ -7,23 +18,8 @@ export type Gender = '男' | '女';
 /** 阴阳 */
 export type YinYang = '阴' | '阳';
 
-/** 四化 */
-export type Mutagen = (typeof MUTAGEN)[number];
-
 /** 五行 */
 export type FiveElements = '木' | '金' | '水' | '火' | '土';
-
-/** 星耀亮度 */
-export type StarBrightness = '' | '庙' | '旺' | '利' | '得' | '平' | '不' | '陷';
-
-/** 地支 */
-export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
-
-/** 天干 */
-export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
-
-/** 宫位名称 */
-export type PalaceName = (typeof PALACES)[number];
 
 /** 时辰，子时分早晚 */
 export type ChineseTime = (typeof CHINESE_TIME)[number];
@@ -37,18 +33,6 @@ export type Scope = 'origin' | 'decadal' | 'yearly';
 /** 星耀类型 */
 export type StarType = 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';
 
-/** 十四主星 */
-export type MajorStar = (typeof MAJOR_STARS)[number];
-
-/** 十四辅星 */
-export type MinorStar = (typeof MINOR_STARTS)[number];
-
-/** 37杂耀 */
-export type AdjectiveStar = (typeof ADJECTIVE_STARTS)[number];
-
-/** 流耀 */
-export type HoroscopeStar = (typeof HOROSCOPE_STARS)[number];
-
 /**
  * 紫微斗数星耀
  *
@@ -61,13 +45,13 @@ export type HoroscopeStar = (typeof HOROSCOPE_STARS)[number];
  */
 export type Star = {
   /** 星耀名字 */
-  name: MajorStar | MinorStar | AdjectiveStar | HoroscopeStar;
+  name: StarName;
   /** 星耀类型（主星 | 吉星 | 煞星 | 杂耀 | 桃花星 | 解神 | 禄存 | 天马） */
   type: StarType;
   /** 作用范围（本命盘 | 大限盘 | 流年盘） */
   scope: Scope;
   /** 星耀亮度，若没有亮度数据则此字段为`空字符串`或者 `undefined` */
-  brightness?: StarBrightness;
+  brightness?: Brightness;
   /** 四化，若未产生四化则此字段为 `undefined` */
   mutagen?: Mutagen;
 };
@@ -91,8 +75,6 @@ export enum FiveElementsClass {
   土五局,
   火六局,
 }
-
-export type FiveElementsClassItem = keyof typeof FiveElementsClass;
 
 /**
  * 农历日期对象
@@ -163,7 +145,7 @@ export type SolarDate = {
 };
 
 /** [天干，地支] */
-export type HeavenlyStemAndEarthlyBranch = [HeavenlyStem, EarthlyBranch];
+export type HeavenlyStemAndEarthlyBranch = [HeavenlyStemName, EarthlyBranchName];
 
 /**
  * 干支纪年日期对象
@@ -215,9 +197,9 @@ export type SoulAndBody = {
   /** 身宫索引 */
   bodyIndex: number;
   /** 命宫天干 */
-  heavenlyStemOfSoul: HeavenlyStem;
+  heavenlyStemOfSoul: HeavenlyStemName;
   /** 命宫地支 */
-  earthlyBranchOfSoul: EarthlyBranch;
+  earthlyBranchOfSoul: EarthlyBranchName;
 };
 
 /**
@@ -232,9 +214,9 @@ export type Decadal = {
   /** 大限起止年龄 [起始年龄, 截止年龄] */
   range: [number, number];
   /** 大限天干 */
-  heavenlyStem: HeavenlyStem;
+  heavenlyStem: HeavenlyStemName;
   /** 大限地支 */
-  earthlyBranch: EarthlyBranch;
+  earthlyBranch: EarthlyBranchName;
 };
 
 /**
@@ -264,9 +246,9 @@ export type Palace = {
   /** 是否来因宫 */
   isOriginalPalace: boolean;
   /** 宫位天干 */
-  heavenlyStem: HeavenlyStem;
+  heavenlyStem: HeavenlyStemName;
   /** 宫位地支 */
-  earthlyBranch: EarthlyBranch;
+  earthlyBranch: EarthlyBranchName;
   /** 主星 */
   majorStars: Star[];
   /** 辅星 */
@@ -274,13 +256,13 @@ export type Palace = {
   /** 杂耀 */
   adjectiveStars: Star[];
   /** 长生12神 */
-  changsheng12: string;
+  changsheng12: StarName;
   /** 博士12神 */
-  boshi12: string;
+  boshi12: StarName;
   /** 流年将前12神 */
-  jiangqian12: string;
+  jiangqian12: StarName;
   /** 流年岁前12神 */
-  suiqian12: string;
+  suiqian12: StarName;
   /** 大限 */
   decadal: Decadal;
   /** 小限 */
@@ -301,13 +283,13 @@ export type HoroscopeItem = {
   /** 所在宫位的索引 */
   index: number;
   /** 该运限天干 */
-  heavenlyStem: HeavenlyStem;
+  heavenlyStem: HeavenlyStemName;
   /** 该运限地支 */
-  earthlyBranch: EarthlyBranch;
+  earthlyBranch: EarthlyBranchName;
   /** 该运限的十二宫 */
   palaceNames: PalaceName[];
   /** 四化星 */
-  mutagen: (typeof heavenlyStems)[HeavenlyStem]['mutagen'];
+  mutagen: StarName[];
   /** 流耀 */
   stars?: Star[][];
 };
@@ -402,15 +384,15 @@ export type Astrolabe = {
   /** 生肖 */
   zodiac: string;
   /** 命宫地支 */
-  earthlyBranchOfSoulPalace: EarthlyBranch;
+  earthlyBranchOfSoulPalace: EarthlyBranchName;
   /** 身宫地支 */
-  earthlyBranchOfBodyPalace: EarthlyBranch;
+  earthlyBranchOfBodyPalace: EarthlyBranchName;
   /** 命主 */
-  soul: string;
+  soul: StarName;
   /** 身主 */
-  body: string;
+  body: StarName;
   /** 五行局 */
-  fiveElementsClass: FiveElementsClassItem;
+  fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
   palaces: Palace[];
 

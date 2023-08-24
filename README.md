@@ -26,11 +26,12 @@
 
 ### 📢 介绍
 
-用于紫微斗数排盘的工具库，文档还在整理中，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/discussions)提问交流，如果发现程序有不对的地方，欢迎到[这里](https://github.com/SylarLong/astro/issues)提交Bug。扣码不易，希望得到各位大佬的星星。之后会陆续添加更多实用功能和国际化，敬请期待。🍻
+用于紫微斗数排盘的工具库，目前支持简体中文、繁体中文、英文、韩文、日文，大家有任何问题欢迎到[这里](https://github.com/SylarLong/astro/discussions)提问交流，如果发现程序有不对的地方，欢迎到[这里](https://github.com/SylarLong/astro/issues)提交Bug。扣码不易，希望得到各位大佬的星星。🍻
 
 ### 🌰 举个栗子
 
-Demo 地址：https://a.14star.cn
+- [Demo](https://a.14star.cn)
+- [文档](https://astro.14star.cn)
 
 ### 🎲 用法
 
@@ -48,10 +49,10 @@ npm i @sylarlong/astro -S
   import { astro } from '@sylarlong/astro';
 
   // 通过阳历获取星盘信息
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女');
+  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
 
   // 通过农历获取星盘信息
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
+  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 - CommonJS
@@ -60,10 +61,10 @@ npm i @sylarlong/astro -S
   var astroObj = require('@sylarlong/astro');
 
   // 通过阳历获取星盘信息
-  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女');
+  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
 
   // 通过农历获取星盘信息
-  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
+  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 ##### ✍️ 方法定义
@@ -78,6 +79,7 @@ npm i @sylarlong/astro -S
    * @param timeIndex 出生时辰序号【0~12】，对应从早子时（0）一直到晚子时（12）的序号
    * @param gender 性别【男|女】
    * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+   * @param language 指定返回数据语言【默认 zh-CN】，目前支持zh-CN、zh-TW、en-US、ko-KR、ja-JP
    * @returns 星盘信息
    */
   type astrolabeBySolarDate = (
@@ -85,6 +87,7 @@ npm i @sylarlong/astro -S
     timeIndex: number,
     gender: Gender,
     fixLeap: boolean = true,
+    language: Language = 'zh-CN'
   ) => Astrolabe;
   ```
 
@@ -99,6 +102,7 @@ npm i @sylarlong/astro -S
    * @param gender 性别【男|女】
    * @param isLeapMonth 是否闰月【默认 false】，当实际月份没有闰月时该参数不生效
    * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+   * @param language 指定返回数据语言【默认 zh-CN】，目前支持zh-CN、zh-TW、en-US、ko-KR、ja-JP
    * @returns 星盘信息
    */
   type astrolabeByLunarDate = (
@@ -107,6 +111,7 @@ npm i @sylarlong/astro -S
     gender: Gender,
     isLeapMonth: boolean = false,
     fixLeap: boolean = true,
+    language: Language = 'zh-CN'
   ) => Astrolabe;
   ```
 
@@ -267,7 +272,7 @@ export type Astrolabe = {
   /** 身主 */
   body: string;
   /** 五行局 */
-  fiveElementsClass: FiveElementsClassItem;
+  fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
   palaces: Palace[];
 };

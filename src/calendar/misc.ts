@@ -1,5 +1,5 @@
 import { EARTHLY_BRANCHES, ZODIAC } from '../data';
-import { EarthlyBranch } from '../data/types';
+import { EarthlyBranchKey, EarthlyBranchName, kot, t } from '../i18n';
 import { normalizeSolarDateStr } from './convertor';
 import { LUNAR_DAY_NAME, LUNAR_MONTH_NAME, NUM_TO_CHAR, TERM_INFO } from './rules';
 
@@ -127,8 +127,9 @@ export const getSign = (solarDateStr: string) => {
   const [, month, day] = normalizeSolarDateStr(solarDateStr);
   const s = '摩羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手摩羯';
   const arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+  const start = month * 2 - (day < arr[month - 1] ? 2 : 0);
 
-  return s.substr(month * 2 - (day < arr[month - 1] ? 2 : 0), 2) + '座';
+  return t<string>(s.substring(start, start + 2) + '座');
 };
 
 /**
@@ -138,6 +139,8 @@ export const getSign = (solarDateStr: string) => {
  * @example
  * const zodiac = calendar.getZodiac("卯") ;// zodiac='兔'
  */
-export const getZodiac = (earthlyBranchOfYear: EarthlyBranch) => {
-  return ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranchOfYear)];
+export const getZodiac = (earthlyBranchOfYear: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchOfYear);
+
+  return t<string>(ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranch)]);
 };

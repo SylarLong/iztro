@@ -1,3 +1,6 @@
+/** 支持的语言 */
+export const LANGUAGES = ['en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW'];
+
 /** 十天干 */
 export const HEAVENLY_STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'] as const;
 
@@ -22,22 +25,6 @@ export const PALACES = [
   '夫妻',
   '兄弟',
 ] as const;
-
-/** 宫位对应方位，此处是以宫位定位而不是地支 */
-export const PALACE_LOCATION = {
-  寅: '东偏北',
-  卯: '正东方',
-  辰: '东偏南',
-  巳: '南偏东',
-  午: '正南方',
-  未: '南偏西',
-  申: '西偏南',
-  酉: '正西方',
-  戌: '西偏北',
-  亥: '北偏西',
-  子: '正北方',
-  丑: '北偏东',
-} as const;
 
 /** 性别对应阴阳，男为阳，女为阴 */
 export const GENDER = {

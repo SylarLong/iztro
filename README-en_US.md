@@ -26,11 +26,12 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 ### 📢 Introduction
 
-This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). The document is under progressing. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/discussions). feel free to create issues in [here](https://github.com/SylarLong/astro/issues) if you found any bugs. I'll appreciate your star. More useful functions and localization are coming soon. stay tuned!🍻
+This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). We support Simplified Chinese, Tradional Chinese, English, Korean and Japenese for now. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/astro/discussions). feel free to create issues in [here](https://github.com/SylarLong/astro/issues) if you found any bugs. I'll appreciate your star.🍻
 
 ### 🌰 Demo
 
-Demo：https://a.14star.cn
+- [Demo](https://a.14star.cn)
+- [Document](https://astro.14star.cn)
 
 ### 🎲 How to use it?
 
@@ -48,10 +49,10 @@ npm i @sylarlong/astro -S
   import { astro } from '@sylarlong/astro';
 
   // generate astrolabe by solar date
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女');
+  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
 
   // generate astrolabe by lunar date
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
+  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 - CommonJS
@@ -60,10 +61,10 @@ npm i @sylarlong/astro -S
   var astroObj = require('@sylarlong/astro');
 
   // generate astrolabe by solar date
-  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女');
+  var astrolabe = astroObj.astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
 
   // generate astrolabe by lunar date
-  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true);
+  var astrolabe = astroObj.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 ##### ✍️ function definition
@@ -78,6 +79,7 @@ npm i @sylarlong/astro -S
    * @param timeIndex index of time【0~12】
    * @param gender gender【男|女】
    * @param fixLeap fix leap month or not【default to true】
+   * @param language specify language 【default to zh-CN】. now we support 'zh-CN' 'zh-TW' 'en-US' 'ko-KR' and 'ja-JP'
    * @returns astrolabe information
    */
   type astrolabeBySolarDate = (
@@ -85,6 +87,7 @@ npm i @sylarlong/astro -S
     timeIndex: number,
     gender: Gender,
     fixLeap: boolean = true,
+    language: Language = 'zh-CN'
   ) => Astrolabe;
   ```
 
@@ -100,6 +103,7 @@ npm i @sylarlong/astro -S
    * @param isLeapMonth is passed month a leap month of lunar year【default to false】
    *                    it will be omitted if the month in the year is not a leap month
    * @param fixLeap fix leap month or not【default to true】
+   * @param language specify language 【default to zh-CN】. now we support 'zh-CN' 'zh-TW' 'en-US' 'ko-KR' and 'ja-JP'
    * @returns 星盘信息
    */
   type astrolabeByLunarDate = (
@@ -108,6 +112,7 @@ npm i @sylarlong/astro -S
     gender: Gender,
     isLeapMonth: boolean = false,
     fixLeap: boolean = true,
+    language: Language = 'zh-CN'
   ) => Astrolabe;
   ```
 
@@ -268,7 +273,7 @@ export type Astrolabe = {
   /** 身主 */
   body: string;
   /** 五行局 */
-  fiveElementsClass: FiveElementsClassItem;
+  fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
   palaces: Palace[];
 };
