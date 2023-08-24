@@ -1,7 +1,7 @@
 export default {
-  水二局: 'second water',
-  木三局: 'third wood',
-  金四局: 'fourth gold',
-  土五局: 'fifth earth',
-  火六局: 'sixth fire',
+  水二局: 'water 2nd',
+  木三局: 'wood 3rd',
+  金四局: 'metal 4th',
+  土五局: 'earth 5th',
+  火六局: 'fire 6th',
 } as const;
