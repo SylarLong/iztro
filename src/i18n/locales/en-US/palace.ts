@@ -6,7 +6,7 @@ export default {
   子女: 'children',
   财帛: 'wealth',
   疾厄: 'health',
-  迁移: 'travel',
+  迁移: 'surface',
   仆役: 'friends',
   官禄: 'career',
   田宅: 'property',
