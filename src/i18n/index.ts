@@ -41,7 +41,6 @@ import starZhCN from './locales/zh-CN/star';
 import starZhTW from './locales/zh-TW/star';
 import { Language } from '../data/types';
 
-// 设置默认语言和加载翻译文件
 const resources: { [key: Language]: any } = {
   'en-US': {
     translation: {
@@ -105,6 +104,7 @@ const resources: { [key: Language]: any } = {
   },
 };
 
+// 设置默认语言和加载翻译文件
 i18next.init({ lng: 'zh-CN', resources });
 
 type StarEnUS = (typeof starEnUS)[keyof typeof starEnUS];

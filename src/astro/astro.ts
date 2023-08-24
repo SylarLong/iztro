@@ -233,7 +233,7 @@ export const astrolabeBySolarDate = (
     lunarDate: lunarDate.toString(true),
     chineseDate: chineseDate.toString(),
     rawDates: { lunarDate, chineseDate },
-    time: CHINESE_TIME[timeIndex],
+    time: t(CHINESE_TIME[timeIndex]),
     timeRange: TIME_RANGE[timeIndex],
     sign: getSign(solarDateStr),
     zodiac: getZodiac(yearly[1]),

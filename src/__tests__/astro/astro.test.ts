@@ -119,9 +119,9 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
     expect(result).toHaveProperty('chineseDate', '경진 갑신 병오 경인');
-    expect(result).toHaveProperty('time', '寅时');
-    expect(result).toHaveProperty('sign', '狮子座');
-    expect(result).toHaveProperty('zodiac', '龙');
+    expect(result).toHaveProperty('time', '인시');
+    expect(result).toHaveProperty('sign', '사자궁');
+    expect(result).toHaveProperty('zodiac', '용');
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '오');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '술');
     expect(result).toHaveProperty('soul', '파군');
