@@ -41,7 +41,7 @@ import starZhCN from './locales/zh-CN/star';
 import starZhTW from './locales/zh-TW/star';
 import { Language } from '../data/types';
 
-const resources: { [key: Language]: any } = {
+const resources: { [key: Language]: { translation: { [key: string]: string } } } = {
   'en-US': {
     translation: {
       ...commonEnUS,
@@ -222,7 +222,7 @@ export const kot = <T>(value: string) => {
   const res = resources[i18next.language].translation;
 
   for (const key in res) {
-    if (res.hasOwnProperty(key) && res[key] === value) {
+    if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
       return key as T;
     }
   }

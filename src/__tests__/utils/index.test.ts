@@ -1,4 +1,3 @@
-import { EARTHLY_BRANCHES } from '../../data';
 import { fixEarthlyBranchIndex, fixIndex, getBrightness, timeToIndex } from '../../utils';
 
 describe('Utils', () => {

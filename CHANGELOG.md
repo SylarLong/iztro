@@ -1,5 +1,17 @@
 # 紫微斗数 @sylarlong/astro
 
+## v0.3.1
+
+- 🧹 琐事（Chore）
+
+  🇨🇳
+
+  - 使用eslint替换tslint
+
+  🇺🇸
+
+  - replace tslint to eslint
+
 ## v0.3.0
 
 - 🪄 功能（feature）
