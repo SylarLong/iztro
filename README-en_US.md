@@ -8,11 +8,9 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 <div align="center">
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/astro/Codecov.yaml) ![npm](https://img.shields.io/npm/v/%40sylarlong%2Fastro) ![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/astro) ![Codecov](https://img.shields.io/codecov/c/github/sylarlong/astro) ![npm](https://img.shields.io/npm/dw/%40sylarlong/astro) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
-
-![GitHub](https://img.shields.io/github/license/sylarlong/astro) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/astro) ![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro) ![GitHub issues](https://img.shields.io/github/issues/SylarLong/astro)
-
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/author/sylarlong/astro)
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/astro/Codecov.yaml)](https://github.com/SylarLong/astro/actions) [![npm](https://img.shields.io/npm/v/%40sylarlong%2Fastro)](https://www.npmjs.com/package/@sylarlong/astro) [![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/astro)](https://github.com/search?q=repo%3ASylarLong%2Fastro++language%3ATypeScript&type=code) [![Codecov](https://img.shields.io/codecov/c/github/sylarlong/astro)](https://app.codecov.io/gh/SylarLong/astro/tree/main/src%2Fstar) [![npm](https://img.shields.io/npm/dw/%40sylarlong/astro)](https://www.npmjs.com/package/@sylarlong/astro) [![Maintenance](https://img.shields.io/maintenance/yes/2023)](https://github.com/SylarLong/astro)
+[![GitHub](https://img.shields.io/github/license/sylarlong/astro)](https://www.npmjs.com/package/@sylarlong/astro) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/astro)](https://www.npmjs.com/package/@sylarlong/astro) [![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/@sylarlong/astro) [![GitHub issues](https://img.shields.io/github/issues/SylarLong/astro)](https://github.com/SylarLong/astro/issues)
+[![GitHub package.json dynamic](https://img.shields.io/github/package-json/author/sylarlong/astro)](https://github.com/SylarLong)
 
 </div>
 
