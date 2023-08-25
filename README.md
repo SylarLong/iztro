@@ -8,7 +8,7 @@
 
 <div align="center">
 
-![Static Badge](https://img.shields.io/badge/astro-%E7%B4%AB%E5%BE%AE%E6%96%97%E6%95%B0-purple) ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/astro/Codecov.yaml) ![npm](https://img.shields.io/npm/v/%40sylarlong%2Fastro) ![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/astro) ![Codecov](https://img.shields.io/codecov/c/github/sylarlong/astro) ![npm](https://img.shields.io/npm/dw/%40sylarlong/astro) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/astro/Codecov.yaml) ![npm](https://img.shields.io/npm/v/%40sylarlong%2Fastro) ![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/astro) ![Codecov](https://img.shields.io/codecov/c/github/sylarlong/astro) ![npm](https://img.shields.io/npm/dw/%40sylarlong/astro) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
 ![GitHub](https://img.shields.io/github/license/sylarlong/astro) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/astro) ![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro) ![GitHub issues](https://img.shields.io/github/issues/SylarLong/astro)
 
