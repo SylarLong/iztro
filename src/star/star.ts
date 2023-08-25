@@ -497,21 +497,21 @@ export const getHoroscopeStar = (
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(earthlyBranch);
   const stars = initStars();
 
-  stars[kuiIndex].push({ name: scope === 'decadal' ? '运魁' : '流魁', type: 'soft', scope });
-  stars[yueIndex].push({ name: scope === 'decadal' ? '运钺' : '流钺', type: 'soft', scope });
-  stars[changIndex].push({ name: scope === 'decadal' ? '运昌' : '流昌', type: 'soft', scope });
-  stars[quIndex].push({ name: scope === 'decadal' ? '运曲' : '流曲', type: 'soft', scope });
-  stars[luIndex].push({ name: scope === 'decadal' ? '运禄' : '流禄', type: 'lucun', scope });
-  stars[yangIndex].push({ name: scope === 'decadal' ? '运羊' : '流羊', type: 'tough', scope });
-  stars[tuoIndex].push({ name: scope === 'decadal' ? '运陀' : '流陀', type: 'tough', scope });
-  stars[maIndex].push({ name: scope === 'decadal' ? '运马' : '流马', type: 'tianma', scope });
-  stars[hongluanIndex].push({ name: scope === 'decadal' ? '运鸾' : '流鸾', type: 'flower', scope });
-  stars[tianxiIndex].push({ name: scope === 'decadal' ? '运喜' : '流喜', type: 'flower', scope });
+  stars[kuiIndex].push({ name: scope === 'decadal' ? t('运魁') : t('流魁'), type: 'soft', scope });
+  stars[yueIndex].push({ name: scope === 'decadal' ? t('运钺') : t('流钺'), type: 'soft', scope });
+  stars[changIndex].push({ name: scope === 'decadal' ? t('运昌') : t('流昌'), type: 'soft', scope });
+  stars[quIndex].push({ name: scope === 'decadal' ? t('运曲') : t('流曲'), type: 'soft', scope });
+  stars[luIndex].push({ name: scope === 'decadal' ? t('运禄') : t('流禄'), type: 'lucun', scope });
+  stars[yangIndex].push({ name: scope === 'decadal' ? t('运羊') : t('流羊'), type: 'tough', scope });
+  stars[tuoIndex].push({ name: scope === 'decadal' ? t('运陀') : t('流陀'), type: 'tough', scope });
+  stars[maIndex].push({ name: scope === 'decadal' ? t('运马') : t('流马'), type: 'tianma', scope });
+  stars[hongluanIndex].push({ name: scope === 'decadal' ? t('运鸾') : t('流鸾'), type: 'flower', scope });
+  stars[tianxiIndex].push({ name: scope === 'decadal' ? t('运喜') : t('流喜'), type: 'flower', scope });
 
   if (scope === 'yearly') {
     const nianjieIndex = getNianjieIndex(earthlyBranch);
 
-    stars[nianjieIndex].push({ name: '年解', type: 'helper', scope: 'yearly' });
+    stars[nianjieIndex].push({ name: t('年解'), type: 'helper', scope: 'yearly' });
   }
 
   return stars;

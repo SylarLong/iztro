@@ -2,6 +2,16 @@
 
 ## v0.3.1
 
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 完善流耀的翻译
+
+  🇺🇸
+
+  - enhance the translations of horoscope stars
+
 - 🧹 琐事（Chore）
 
   🇨🇳

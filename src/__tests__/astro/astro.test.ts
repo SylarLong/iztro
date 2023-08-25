@@ -134,6 +134,26 @@ describe('Astrolabe', () => {
     expect(horoscope.decadal).toHaveProperty('index', 2);
     expect(horoscope.decadal).toHaveProperty('heavenlyStem', '경');
     expect(horoscope.decadal).toHaveProperty('earthlyBranch', '진');
+    expect(horoscope.decadal.stars).toStrictEqual([
+      [{ name: '천마(십년)', type: 'tianma', scope: 'decadal' }],
+      [{ name: '문곡(십년)', type: 'soft', scope: 'decadal' }],
+      [],
+      [{ name: '천희(십년)', type: 'flower', scope: 'decadal' }],
+      [],
+      [
+        { name: '천월(십년)', type: 'soft', scope: 'decadal' },
+        { name: '타라(십년)', type: 'tough', scope: 'decadal' },
+      ],
+      [{ name: '록존(십년)', type: 'lucun', scope: 'decadal' }],
+      [{ name: '경양(십년)', type: 'tough', scope: 'decadal' }],
+      [],
+      [
+        { name: '문창(십년)', type: 'soft', scope: 'decadal' },
+        { name: '홍란(십년)', type: 'flower', scope: 'decadal' },
+      ],
+      [],
+      [{ name: '천괴(십년)', type: 'soft', scope: 'decadal' }],
+    ]);
     expect(horoscope.decadal).toHaveProperty('palaceNames', [
       '부처',
       '형제',
@@ -154,6 +174,32 @@ describe('Astrolabe', () => {
     expect(horoscope.yearly).toHaveProperty('index', 1);
     expect(horoscope.yearly).toHaveProperty('heavenlyStem', '계');
     expect(horoscope.yearly).toHaveProperty('earthlyBranch', '묘');
+    expect(horoscope.yearly.stars).toStrictEqual([
+      [],
+      [
+        { name: '천괴(년)', type: 'soft', scope: 'yearly' },
+        { name: '문창(년)', type: 'soft', scope: 'yearly' },
+      ],
+      [],
+      [
+        { name: '천월(년)', type: 'soft', scope: 'yearly' },
+        { name: '천마(년)', type: 'tianma', scope: 'yearly' },
+      ],
+      [{ name: '천희(년)', type: 'flower', scope: 'yearly' }],
+      [{ name: '해신(년)', type: 'helper', scope: 'yearly' }],
+      [],
+      [],
+      [],
+      [
+        { name: '문곡(년)', type: 'soft', scope: 'yearly' },
+        { name: '타라(년)', type: 'tough', scope: 'yearly' },
+      ],
+      [
+        { name: '록존(년)', type: 'lucun', scope: 'yearly' },
+        { name: '홍란(년)', type: 'flower', scope: 'yearly' },
+      ],
+      [{ name: '경양(년)', type: 'tough', scope: 'yearly' }],
+    ]);
     expect(horoscope.yearly).toHaveProperty('palaceNames', [
       '형제',
       '명궁',
