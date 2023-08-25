@@ -6,7 +6,7 @@ import {
   normalizeSolarDateStr,
   solar2lunar,
 } from '../calendar';
-import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, heavenlyStems } from '../data';
+import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Astrolabe, Gender, Horoscope, Palace, Language } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemKey, HeavenlyStemName, kot, setLanguage, t } from '../i18n';
 import {

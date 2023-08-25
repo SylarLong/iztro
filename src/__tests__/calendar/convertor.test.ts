@@ -24,8 +24,8 @@ describe('calendar/convertor', () => {
 
     try {
       solar2lunar('2023-22-22');
-    } catch (err: any) {
-      expect(err.message).toBe('日期错误');
+    } catch (err) {
+      expect((err as Error).message).toBe('日期错误');
     }
   });
 
