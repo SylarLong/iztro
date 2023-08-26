@@ -12,6 +12,16 @@
 
   - code optimization. change the variable names from Chinese to english in order to avoid compatibility issues
 
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 翻译错误
+
+  🇺🇸
+
+  - translation error
+
 ## v0.3.1
 
 - ✨ 改进（enhancement）
