@@ -1,6 +1,6 @@
 export default {
-  禄: 'addtional',
-  权: 'forceful',
-  科: 'easygoing',
-  忌: 'focused',
+  sihuaLu: 'addtional',
+  sihuaQuan: 'forceful',
+  sihuaKe: 'easygoing',
+  sihuaJi: 'focused',
 } as const;

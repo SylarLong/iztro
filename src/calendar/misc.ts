@@ -125,11 +125,25 @@ export const lunarDateToStr = (lunarDateStr: string, isLeap: boolean) => {
  */
 export const getSign = (solarDateStr: string) => {
   const [, month, day] = normalizeSolarDateStr(solarDateStr);
-  const s = '摩羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手摩羯';
+  const s = [
+    'capricorn',
+    'aquarius',
+    'pisces',
+    'aries',
+    'taurus',
+    'gemini',
+    'cancer',
+    'leo',
+    'virgo',
+    'libra',
+    'scorpio',
+    'sagittarius',
+    'capricorn',
+  ];
   const arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
-  const start = month * 2 - (day < arr[month - 1] ? 2 : 0);
+  const idx = Math.floor((month * 2 - (day < arr[month - 1] ? 2 : 0)) / 2);
 
-  return t<string>(s.substring(start, start + 2) + '座');
+  return t<string>(s[idx]);
 };
 
 /**

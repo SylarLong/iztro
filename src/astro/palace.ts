@@ -37,7 +37,7 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0]);
 
   // 紫微斗数以`寅`宫为第一个宫位
-  const firstIndex = EARTHLY_BRANCHES.indexOf('寅');
+  const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
 
   const monthIndex = fixLunarMonthIndex(solarDate, timeIndex, fixLeap);
 
@@ -117,7 +117,7 @@ export const getFiveElementsClass = (
   heavenlyStemName: HeavenlyStemName,
   earthlyBranchName: EarthlyBranchName,
 ): FiveElementsClassName => {
-  const fiveElementsTable: FiveElementsClassKey[] = ['木三局', '金四局', '水二局', '火六局', '土五局'];
+  const fiveElementsTable: FiveElementsClassKey[] = ['wood3rd', 'metal4th', 'water2nd', 'fire6th', 'earth5th'];
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
@@ -189,7 +189,7 @@ export const getHoroscope = (
       GENDER[gender] === earthlyBranches[earthlyBranch].yinYang ? fixIndex(soulIndex + i) : fixIndex(soulIndex - i);
     const start = FiveElementsClass[fiveElementsClass] + 10 * i;
     const heavenlyStemIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx, 10);
-    const earthlyBranchIndex = fixIndex(EARTHLY_BRANCHES.indexOf('寅') + idx);
+    const earthlyBranchIndex = fixIndex(EARTHLY_BRANCHES.indexOf('yinEarthly') + idx);
 
     decadals[idx] = {
       range: [start, start + 9],
@@ -201,14 +201,14 @@ export const getHoroscope = (
   let ageIdx = 0;
   const ages = [];
 
-  if (['寅', '午', '戌'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('辰');
-  } else if (['申', '子', '辰'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('戌');
-  } else if (['巳', '酉', '丑'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('未');
-  } else if (['亥', '卯', '未'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('丑') + 12;
+  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('chen');
+  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('xu');
+  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('wei');
+  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('chou') + 12;
   }
 
   for (let i = 0; i < 12; i++) {

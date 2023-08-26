@@ -1,6 +1,6 @@
 export default {
-  禄: '록',
-  权: '권',
-  科: '과',
-  忌: '기',
+  sihuaLu: '록',
+  sihuaQuan: '권',
+  sihuaKe: '과',
+  sihuaJi: '기',
 } as const;

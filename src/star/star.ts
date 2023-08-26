@@ -316,23 +316,23 @@ export const getchangsheng12 = (
 
   switch (FiveElementsClass[fiveElementClass]) {
     case 2: {
-      startIdx = fixEarthlyBranchIndex('申');
+      startIdx = fixEarthlyBranchIndex('shen');
       break;
     }
     case 3: {
-      startIdx = fixEarthlyBranchIndex('亥');
+      startIdx = fixEarthlyBranchIndex('hai');
       break;
     }
     case 4: {
-      startIdx = fixEarthlyBranchIndex('巳');
+      startIdx = fixEarthlyBranchIndex('si');
       break;
     }
     case 5: {
-      startIdx = fixEarthlyBranchIndex('申');
+      startIdx = fixEarthlyBranchIndex('shen');
       break;
     }
     case 6: {
-      startIdx = fixEarthlyBranchIndex('寅');
+      startIdx = fixEarthlyBranchIndex('yin');
       break;
     }
   }
@@ -366,7 +366,6 @@ export const getchangsheng12 = (
 export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
-  const heavenlyStemOfYear = kot<HeavenlyStemKey>(heavenlyStemNameOfYear);
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
   // 博士12神的顺序
   const stars: StarName[] = [
@@ -383,7 +382,7 @@ export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => 
     '伏兵',
     '官府',
   ];
-  const { luIndex } = getLuYangTuoMaIndex(heavenlyStemOfYear, earthlyBranchOfYear);
+  const { luIndex } = getLuYangTuoMaIndex(heavenlyStemNameOfYear, earthlyBranchNameOfYear);
   const boshi12: StarName[] = [];
 
   for (let i = 0; i < stars.length; i++) {
@@ -418,8 +417,7 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
   const suiqian12: StarName[] = [];
 
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
-
-  const [, earthlyBranchOfYear] = yearly;
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1]);
   const ts12shen: StarName[] = [
     '岁建',
     '晦气',
@@ -436,7 +434,7 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
   ];
 
   for (let i = 0; i < ts12shen.length; i++) {
-    const idx = fixIndex(fixEarthlyBranchIndex(earthlyBranchOfYear) + i);
+    const idx = fixIndex(fixEarthlyBranchIndex(yearly[1]) + i);
 
     suiqian12[idx] = t(ts12shen[i]) as StarName;
   }
@@ -458,14 +456,14 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
 
   let jqStartIdx = -1;
 
-  if (['寅', '午', '戌'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('午');
-  } else if (['申', '子', '辰'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('子');
-  } else if (['巳', '酉', '丑'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('酉');
-  } else if (['亥', '卯', '未'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('卯');
+  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
+    jqStartIdx = fixEarthlyBranchIndex('woo');
+  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
+    jqStartIdx = fixEarthlyBranchIndex('zi');
+  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
+    jqStartIdx = fixEarthlyBranchIndex('you');
+  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
+    jqStartIdx = fixEarthlyBranchIndex('mao');
   }
   for (let i = 0; i < jq12shen.length; i++) {
     const idx = fixIndex(jqStartIdx + i);
@@ -485,12 +483,10 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
  * @param earthlyBranch 地支
  */
 export const getHoroscopeStar = (
-  heavenlyStemName: HeavenlyStemName,
-  earthlyBranchName: EarthlyBranchName,
+  heavenlyStem: HeavenlyStemName,
+  earthlyBranch: EarthlyBranchName,
   scope: 'decadal' | 'yearly',
 ): Star[][] => {
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
   const { kuiIndex, yueIndex } = getKuiYueIndex(heavenlyStem);
   const { changIndex, quIndex } = getChangQuIndexByHeavenlyStem(heavenlyStem);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(heavenlyStem, earthlyBranch);

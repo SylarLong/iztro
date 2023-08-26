@@ -61,9 +61,9 @@ const _getHoroscopeBySolarDate = (
   // 大限索引
   let decadalIndex = -1;
   // 大限天干
-  let heavenlyStemOfDecade: HeavenlyStemName = t('甲');
+  let heavenlyStemOfDecade: HeavenlyStemName = 'jia';
   // 大限地支
-  let earthlyBranchOfDecade: EarthlyBranchName = t('子');
+  let earthlyBranchOfDecade: EarthlyBranchName = 'zi';
   // 小限索引
   let ageIndex = -1;
   // 流年索引
@@ -118,11 +118,7 @@ const _getHoroscopeBySolarDate = (
       earthlyBranch: earthlyBranchOfDecade,
       palaceNames: getPalaceNames(decadalIndex),
       mutagen: getMutagensByHeavenlyStem(heavenlyStemOfDecade),
-      stars: getHoroscopeStar(
-        kot<HeavenlyStemKey>(heavenlyStemOfDecade),
-        kot<EarthlyBranchKey>(earthlyBranchOfDecade),
-        'decadal',
-      ),
+      stars: getHoroscopeStar(heavenlyStemOfDecade, earthlyBranchOfDecade, 'decadal'),
     },
     age: {
       index: ageIndex,
@@ -206,7 +202,8 @@ export const astrolabeBySolarDate = (
     palaces.push({
       name: palaceNames[i],
       isBodyPalace: bodyIndex === i,
-      isOriginalPalace: !['子', '丑'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === heavenlyStemOfYear,
+      isOriginalPalace:
+        !['ziEarthly', 'chouEarthly'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === heavenlyStemOfYear,
       heavenlyStem: t(heavenlyStemOfPalace),
       earthlyBranch: t(earthlyBranchOfPalace),
       majorStars: majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),

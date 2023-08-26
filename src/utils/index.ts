@@ -41,7 +41,7 @@ export const fixIndex = (index: number, max: number = 12): number => {
  */
 export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranchName): number => {
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
-  const yin = kot<EarthlyBranchKey>('寅');
+  const yin = kot<EarthlyBranchKey>('yinEarthly');
 
   return EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin);
 };
@@ -91,7 +91,7 @@ export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): S
 export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): number => {
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
-  return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('寅'));
+  return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('yinEarthly'));
 };
 
 /**
@@ -134,7 +134,7 @@ export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixL
   const lunarDate = fixLunarDate(solarDateStr, timeIndex);
   const { lunarMonth, lunarDay, isLeap } = lunarDate;
   // 紫微斗数以`寅`宫为第一个宫位
-  const firstIndex = EARTHLY_BRANCHES.indexOf('寅');
+  const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
 
   return fixIndex(lunarMonth + 1 - firstIndex + (isLeap && fixLeap && lunarDay > 15 ? 1 : 0));
 };

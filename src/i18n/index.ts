@@ -219,11 +219,12 @@ export const t = <T>(str: string) => {
  * @returns 翻译文本的Key值
  */
 export const kot = <T>(value: string) => {
-  const res = resources[i18next.language].translation;
-
-  for (const key in res) {
-    if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
-      return key as T;
+  for (const lng in resources) {
+    const res = resources[lng].translation;
+    for (const key in res) {
+      if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
+        return key as T;
+      }
     }
   }
 

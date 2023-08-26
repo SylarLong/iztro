@@ -69,11 +69,11 @@ export type Star = {
  *  - 6 火六局
  */
 export enum FiveElementsClass {
-  水二局 = 2,
-  木三局,
-  金四局,
-  土五局,
-  火六局,
+  water2nd = 2,
+  wood3rd,
+  metal4th,
+  earth5th,
+  fire6th,
 }
 
 /**

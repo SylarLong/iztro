@@ -2,28 +2,65 @@
 export const LANGUAGES = ['en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW'];
 
 /** 十天干 */
-export const HEAVENLY_STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'] as const;
+export const HEAVENLY_STEMS = [
+  'jiaHeavenly',
+  'yiHeavenly',
+  'bingHeavenly',
+  'dingHeavenly',
+  'wuHeavenly',
+  'jiHeavenly',
+  'gengHeavenly',
+  'xinHeavenly',
+  'renHeavenly',
+  'guiHeavenly',
+] as const;
 
 /** 十二地支 */
-export const EARTHLY_BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'] as const;
+export const EARTHLY_BRANCHES = [
+  'ziEarthly',
+  'chouEarthly',
+  'yinEarthly',
+  'maoEarthly',
+  'chenEarthly',
+  'siEarthly',
+  'wuEarthly',
+  'weiEarthly',
+  'shenEarthly',
+  'youEarthly',
+  'xuEarthly',
+  'haiEarthly',
+] as const;
 
 /** 十二生肖（按地支顺序） */
-export const ZODIAC = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'] as const;
+export const ZODIAC = [
+  'rat',
+  'ox',
+  'tiger',
+  'rabbit',
+  'dragon',
+  'snake',
+  'horse',
+  'sheep',
+  'monkey',
+  'rooster',
+  'dog',
+  'pig',
+] as const;
 
 /** 紫微斗数十二宫名称 */
 export const PALACES = [
-  '命宫',
-  '父母',
-  '福德',
-  '田宅',
-  '官禄',
-  '仆役',
-  '迁移',
-  '疾厄',
-  '财帛',
-  '子女',
-  '夫妻',
-  '兄弟',
+  'soulPalace',
+  'parentsPalace',
+  'spiritPalace',
+  'propertyPalace',
+  'careerPalace',
+  'friendsPalace',
+  'surfacePalace',
+  'healthPalace',
+  'wealthPalace',
+  'childrenPalace',
+  'spousePalace',
+  'siblingsPalace',
 ] as const;
 
 /** 性别对应阴阳，男为阳，女为阴 */
@@ -37,19 +74,19 @@ export const GENDER = {
  * 其中 00:00-01:00 为早子时，23:00-00:00 为晚子时
  */
 export const CHINESE_TIME = [
-  '早子时', // : '00:00~01:00',
-  '丑时', // : '01:00~03:00',
-  '寅时', // : '03:00~05:00',
-  '卯时', // : '05:00~07:00',
-  '辰时', // : '07:00~09:00',
-  '巳时', // : '09:00~11:00',
-  '午时', // : '11:00~13:00',
-  '未时', // : '13:00~15:00',
-  '申时', // : '15:00~17:00',
-  '酉时', // : '17:00~19:00',
-  '戌时', // : '19:00~21:00',
-  '亥时', // : '21:00~23:00',
-  '晚子时', // : '23:00~00:00',
+  'earlyRatHour', // : '00:00~01:00',
+  'oxHour', // : '01:00~03:00',
+  'tigerHour', // : '03:00~05:00',
+  'rabbitHour', // : '05:00~07:00',
+  'dragonHour', // : '07:00~09:00',
+  'snakeHour', // : '09:00~11:00',
+  'horseHour', // : '11:00~13:00',
+  'goatHour', // : '13:00~15:00',
+  'monkeyHour', // : '15:00~17:00',
+  'roosterHour', // : '17:00~19:00',
+  'dogHour', // : '19:00~21:00',
+  'pigHour', // : '21:00~23:00',
+  'lateRatHour', // : '23:00~00:00',
 ] as const;
 
 /** 时辰序号所对应的时间段，与 `CHINESE_TIME` 一一对应 */
@@ -83,16 +120,16 @@ export const TIME_RANGE = [
  * - 甲寅之上好追求
  */
 export const TIGER_RULE = {
-  甲: '丙',
-  乙: '戊',
-  丙: '庚',
-  丁: '壬',
-  戊: '甲',
-  己: '丙',
-  庚: '戊',
-  辛: '庚',
-  壬: '壬',
-  癸: '甲',
+  jiaHeavenly: 'bingHeavenly',
+  yiHeavenly: 'wuHeavenly',
+  bingHeavenly: 'gengHeavenly',
+  dingHeavenly: 'renHeavenly',
+  wuHeavenly: 'jiaHeavenly',
+  jiHeavenly: 'bingHeavenly',
+  gengHeavenly: 'wuHeavenly',
+  xinHeavenly: 'gengHeavenly',
+  renHeavenly: 'renHeavenly',
+  guiHeavenly: 'jiaHeavenly',
 } as const;
 
 /**
@@ -106,14 +143,14 @@ export const TIGER_RULE = {
  * - 戊癸起壬子，周而复始求。
  */
 export const RAT_RULE = {
-  甲: '甲',
-  乙: '丙',
-  丙: '戊',
-  丁: '庚',
-  戊: '壬',
-  己: '甲',
-  庚: '丙',
-  辛: '戊',
-  壬: '庚',
-  癸: '壬',
+  jiaHeavenly: 'jiaHeavenly',
+  yiHeavenly: 'bingHeavenly',
+  bingHeavenly: 'wuHeavenly',
+  dingHeavenly: 'gengHeavenly',
+  wuHeavenly: 'renHeavenly',
+  jiHeavenly: 'jiaHeavenly',
+  gengHeavenly: 'bingHeavenly',
+  xinHeavenly: 'wuHeavenly',
+  renHeavenly: 'gengHeavenly',
+  guiHeavenly: 'renHeavenly',
 } as const;

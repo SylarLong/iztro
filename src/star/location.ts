@@ -110,61 +110,61 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
   switch (earthlyBranch) {
-    case '寅':
-    case '午':
-    case '戌':
-      maIndex = fixEarthlyBranchIndex('申');
+    case 'yinEarthly':
+    case 'wuEarthly':
+    case 'xuEarthly':
+      maIndex = fixEarthlyBranchIndex('shen');
       break;
-    case '申':
-    case '子':
-    case '辰':
-      maIndex = fixEarthlyBranchIndex('寅');
+    case 'shenEarthly':
+    case 'ziEarthly':
+    case 'chenEarthly':
+      maIndex = fixEarthlyBranchIndex('yin');
       break;
-    case '巳':
-    case '酉':
-    case '丑':
-      maIndex = fixEarthlyBranchIndex('亥');
+    case 'siEarthly':
+    case 'youEarthly':
+    case 'chouEarthly':
+      maIndex = fixEarthlyBranchIndex('hai');
       break;
-    case '亥':
-    case '卯':
-    case '未':
-      maIndex = fixEarthlyBranchIndex('巳');
+    case 'haiEarthly':
+    case 'maoEarthly':
+    case 'weiEarthly':
+      maIndex = fixEarthlyBranchIndex('si');
       break;
   }
 
   switch (heavenlyStem) {
-    case '甲': {
-      luIndex = fixEarthlyBranchIndex('寅');
+    case 'jiaHeavenly': {
+      luIndex = fixEarthlyBranchIndex('yin');
       break;
     }
-    case '乙': {
-      luIndex = fixEarthlyBranchIndex('卯');
+    case 'yiHeavenly': {
+      luIndex = fixEarthlyBranchIndex('mao');
       break;
     }
-    case '丙':
-    case '戊': {
-      luIndex = fixEarthlyBranchIndex('巳');
+    case 'bingHeavenly':
+    case 'wuHeavenly': {
+      luIndex = fixEarthlyBranchIndex('si');
       break;
     }
-    case '丁':
-    case '己': {
-      luIndex = fixEarthlyBranchIndex('午');
+    case 'dingHeavenly':
+    case 'jiHeavenly': {
+      luIndex = fixEarthlyBranchIndex('woo');
       break;
     }
-    case '庚': {
-      luIndex = fixEarthlyBranchIndex('申');
+    case 'gengHeavenly': {
+      luIndex = fixEarthlyBranchIndex('shen');
       break;
     }
-    case '辛': {
-      luIndex = fixEarthlyBranchIndex('酉');
+    case 'xinHeavenly': {
+      luIndex = fixEarthlyBranchIndex('you');
       break;
     }
-    case '壬': {
-      luIndex = fixEarthlyBranchIndex('亥');
+    case 'renHeavenly': {
+      luIndex = fixEarthlyBranchIndex('hai');
       break;
     }
-    case '癸': {
-      luIndex = fixEarthlyBranchIndex('子');
+    case 'guiHeavenly': {
+      luIndex = fixEarthlyBranchIndex('zi');
       break;
     }
   }
@@ -195,30 +195,30 @@ export const getKuiYueIndex = (heavenlyStemName: HeavenlyStemName) => {
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
 
   switch (heavenlyStem) {
-    case '甲':
-    case '戊':
-    case '庚':
-      kuiIndex = fixEarthlyBranchIndex('丑');
-      yueIndex = fixEarthlyBranchIndex('未');
+    case 'jiaHeavenly':
+    case 'wuHeavenly':
+    case 'gengHeavenly':
+      kuiIndex = fixEarthlyBranchIndex('chou');
+      yueIndex = fixEarthlyBranchIndex('wei');
       break;
-    case '乙':
-    case '己':
-      kuiIndex = fixEarthlyBranchIndex('子');
-      yueIndex = fixEarthlyBranchIndex('申');
+    case 'yiHeavenly':
+    case 'jiHeavenly':
+      kuiIndex = fixEarthlyBranchIndex('zi');
+      yueIndex = fixEarthlyBranchIndex('shen');
       break;
-    case '辛':
-      kuiIndex = fixEarthlyBranchIndex('午');
-      yueIndex = fixEarthlyBranchIndex('寅');
+    case 'xinHeavenly':
+      kuiIndex = fixEarthlyBranchIndex('woo');
+      yueIndex = fixEarthlyBranchIndex('yin');
       break;
-    case '丙':
-    case '丁':
-      kuiIndex = fixEarthlyBranchIndex('亥');
-      yueIndex = fixEarthlyBranchIndex('酉');
+    case 'bingHeavenly':
+    case 'dingHeavenly':
+      kuiIndex = fixEarthlyBranchIndex('hai');
+      yueIndex = fixEarthlyBranchIndex('you');
       break;
-    case '壬':
-    case '癸':
-      kuiIndex = fixEarthlyBranchIndex('卯');
-      yueIndex = fixEarthlyBranchIndex('巳');
+    case 'renHeavenly':
+    case 'guiHeavenly':
+      kuiIndex = fixEarthlyBranchIndex('mao');
+      yueIndex = fixEarthlyBranchIndex('si');
       break;
   }
 
@@ -240,8 +240,8 @@ export const getKuiYueIndex = (heavenlyStemName: HeavenlyStemName) => {
  * @returns 左辅、右弼索引
  */
 export const getZuoYouIndex = (lunarMonth: number) => {
-  const zuoIndex = fixIndex(fixEarthlyBranchIndex('辰') + (lunarMonth - 1));
-  const youIndex = fixIndex(fixEarthlyBranchIndex('戌') - (lunarMonth - 1));
+  const zuoIndex = fixIndex(fixEarthlyBranchIndex('chen') + (lunarMonth - 1));
+  const youIndex = fixIndex(fixEarthlyBranchIndex('xu') - (lunarMonth - 1));
 
   return { zuoIndex, youIndex };
 };
@@ -263,8 +263,8 @@ export const getZuoYouIndex = (lunarMonth: number) => {
  * @returns 文昌、文曲索引
  */
 export const getChangQuIndex = (timeIndex: number) => {
-  const changIndex = fixIndex(fixEarthlyBranchIndex('戌') - fixIndex(timeIndex));
-  const quIndex = fixIndex(fixEarthlyBranchIndex('辰') + fixIndex(timeIndex));
+  const changIndex = fixIndex(fixEarthlyBranchIndex('xu') - fixIndex(timeIndex));
+  const quIndex = fixIndex(fixEarthlyBranchIndex('chen') + fixIndex(timeIndex));
 
   return { changIndex, quIndex };
 };
@@ -307,8 +307,8 @@ export const getDailyStarIndex = (solarDateStr: string, timeIndex: number) => {
  * @returns 台辅，封诰索引
  */
 export const getTimelyStarIndex = (timeIndex: number) => {
-  const taifuIndex = fixIndex(fixEarthlyBranchIndex('午') + fixIndex(timeIndex));
-  const fenggaoIndex = fixIndex(fixEarthlyBranchIndex('寅') + fixIndex(timeIndex));
+  const taifuIndex = fixIndex(fixEarthlyBranchIndex('woo') + fixIndex(timeIndex));
+  const fenggaoIndex = fixIndex(fixEarthlyBranchIndex('yin') + fixIndex(timeIndex));
 
   return { taifuIndex, fenggaoIndex };
 };
@@ -331,7 +331,7 @@ export const getTimelyStarIndex = (timeIndex: number) => {
  */
 export const getKongJieIndex = (timeIndex: number) => {
   const fixedTimeIndex = fixIndex(timeIndex);
-  const haiIndex = fixEarthlyBranchIndex('亥');
+  const haiIndex = fixEarthlyBranchIndex('hai');
   const kongIndex = fixIndex(haiIndex - fixedTimeIndex);
   const jieIndex = fixIndex(haiIndex + fixedTimeIndex);
 
@@ -361,32 +361,32 @@ export const getHuoLingIndex = (earthlyBranchName: EarthlyBranchName, timeIndex:
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
 
   switch (earthlyBranch) {
-    case '寅':
-    case '午':
-    case '戌': {
-      huoIndex = fixEarthlyBranchIndex('丑') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('卯') + fixedTimeIndex;
+    case 'yinEarthly':
+    case 'wuEarthly':
+    case 'xuEarthly': {
+      huoIndex = fixEarthlyBranchIndex('chou') + fixedTimeIndex;
+      lingIndex = fixEarthlyBranchIndex('mao') + fixedTimeIndex;
       break;
     }
-    case '申':
-    case '子':
-    case '辰': {
-      huoIndex = fixEarthlyBranchIndex('寅') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('戌') + fixedTimeIndex;
+    case 'shenEarthly':
+    case 'ziEarthly':
+    case 'chenEarthly': {
+      huoIndex = fixEarthlyBranchIndex('yin') + fixedTimeIndex;
+      lingIndex = fixEarthlyBranchIndex('xu') + fixedTimeIndex;
       break;
     }
-    case '巳':
-    case '酉':
-    case '丑': {
-      huoIndex = fixEarthlyBranchIndex('卯') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('戌') + fixedTimeIndex;
+    case 'siEarthly':
+    case 'youEarthly':
+    case 'chouEarthly': {
+      huoIndex = fixEarthlyBranchIndex('mao') + fixedTimeIndex;
+      lingIndex = fixEarthlyBranchIndex('xu') + fixedTimeIndex;
       break;
     }
-    case '亥':
-    case '未':
-    case '卯': {
-      huoIndex = fixEarthlyBranchIndex('酉') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('戌') + fixedTimeIndex;
+    case 'haiEarthly':
+    case 'weiEarthly':
+    case 'maoEarthly': {
+      huoIndex = fixEarthlyBranchIndex('you') + fixedTimeIndex;
+      lingIndex = fixEarthlyBranchIndex('xu') + fixedTimeIndex;
       break;
     }
   }
@@ -410,7 +410,7 @@ export const getHuoLingIndex = (earthlyBranchName: EarthlyBranchName, timeIndex:
  */
 export const getLuanXiIndex = (earthlyBranchName: EarthlyBranchName) => {
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
-  const hongluanIndex = fixIndex(fixEarthlyBranchIndex('卯') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const hongluanIndex = fixIndex(fixEarthlyBranchIndex('mao') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianxiIndex = fixIndex(hongluanIndex + 6);
 
   return { hongluanIndex, tianxiIndex };
@@ -474,63 +474,63 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
   let guaIdx = -1;
 
   switch (earthlyBranch) {
-    case '寅':
-    case '午':
-    case '戌': {
-      hgIdx = fixEarthlyBranchIndex('戌');
-      xcIdx = fixEarthlyBranchIndex('卯');
+    case 'yinEarthly':
+    case 'wuEarthly':
+    case 'xuEarthly': {
+      hgIdx = fixEarthlyBranchIndex('xu');
+      xcIdx = fixEarthlyBranchIndex('mao');
       break;
     }
-    case '申':
-    case '子':
-    case '辰': {
-      hgIdx = fixEarthlyBranchIndex('辰');
-      xcIdx = fixEarthlyBranchIndex('酉');
+    case 'shenEarthly':
+    case 'ziEarthly':
+    case 'chenEarthly': {
+      hgIdx = fixEarthlyBranchIndex('chen');
+      xcIdx = fixEarthlyBranchIndex('you');
       break;
     }
-    case '巳':
-    case '酉':
-    case '丑': {
-      hgIdx = fixEarthlyBranchIndex('丑') + 12;
-      xcIdx = fixEarthlyBranchIndex('午');
+    case 'siEarthly':
+    case 'youEarthly':
+    case 'chouEarthly': {
+      hgIdx = fixEarthlyBranchIndex('chou') + 12;
+      xcIdx = fixEarthlyBranchIndex('woo');
       break;
     }
-    case '亥':
-    case '未':
-    case '卯': {
-      hgIdx = fixEarthlyBranchIndex('未');
-      xcIdx = fixEarthlyBranchIndex('子') + 12;
+    case 'haiEarthly':
+    case 'weiEarthly':
+    case 'maoEarthly': {
+      hgIdx = fixEarthlyBranchIndex('wei');
+      xcIdx = fixEarthlyBranchIndex('zi') + 12;
       break;
     }
   }
 
   switch (earthlyBranch) {
-    case '寅':
-    case '卯':
-    case '辰': {
-      guIdx = fixEarthlyBranchIndex('巳');
-      guaIdx = fixEarthlyBranchIndex('丑') + 12;
+    case 'yinEarthly':
+    case 'maoEarthly':
+    case 'chenEarthly': {
+      guIdx = fixEarthlyBranchIndex('si');
+      guaIdx = fixEarthlyBranchIndex('chou') + 12;
       break;
     }
-    case '巳':
-    case '午':
-    case '未': {
-      guIdx = fixEarthlyBranchIndex('申');
-      guaIdx = fixEarthlyBranchIndex('辰');
+    case 'siEarthly':
+    case 'wuEarthly':
+    case 'weiEarthly': {
+      guIdx = fixEarthlyBranchIndex('shen');
+      guaIdx = fixEarthlyBranchIndex('chen');
       break;
     }
-    case '申':
-    case '酉':
-    case '戌': {
-      guIdx = fixEarthlyBranchIndex('亥');
-      guaIdx = fixEarthlyBranchIndex('未');
+    case 'shenEarthly':
+    case 'youEarthly':
+    case 'xuEarthly': {
+      guIdx = fixEarthlyBranchIndex('hai');
+      guaIdx = fixEarthlyBranchIndex('wei');
       break;
     }
-    case '亥':
-    case '子':
-    case '丑': {
-      guIdx = fixEarthlyBranchIndex('寅');
-      guaIdx = fixEarthlyBranchIndex('戌');
+    case 'haiEarthly':
+    case 'ziEarthly':
+    case 'chouEarthly': {
+      guIdx = fixEarthlyBranchIndex('yin');
+      guaIdx = fixEarthlyBranchIndex('xu');
       break;
     }
   }
@@ -539,53 +539,57 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
   const tianshouIndex = fixIndex(bodyIndex + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianchuIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['巳', '午', '子', '巳', '午', '申', '寅', '午', '酉', '亥'][
+      ['si', 'woo', 'zi', 'si', 'woo', 'shen', 'yin', 'woo', 'you', 'hai'][
         HEAVENLY_STEMS.indexOf(heavenlyStem)
-      ] as EarthlyBranchKey,
+      ] as EarthlyBranchName,
     ),
   );
   const posuiIndex = fixIndex(
-    fixEarthlyBranchIndex(['巳', '丑', '酉'][EARTHLY_BRANCHES.indexOf(earthlyBranch) % 3] as EarthlyBranchKey),
+    fixEarthlyBranchIndex(['si', 'chou', 'you'][EARTHLY_BRANCHES.indexOf(earthlyBranch) % 3] as EarthlyBranchName),
   );
   const feilianIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['申', '酉', '戌', '巳', '午', '未', '寅', '卯', '辰', '亥', '子', '丑'][
+      ['shen', 'you', 'xu', 'si', 'woo', 'wei', 'yin', 'mao', 'chen', 'hai', 'zi', 'chou'][
         EARTHLY_BRANCHES.indexOf(earthlyBranch)
-      ] as EarthlyBranchKey,
+      ] as EarthlyBranchName,
     ),
   );
-  const longchiIndex = fixIndex(fixEarthlyBranchIndex('辰') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
-  const fenggeIndex = fixIndex(fixEarthlyBranchIndex('戌') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
-  const tiankuIndex = fixIndex(fixEarthlyBranchIndex('午') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
-  const tianxuIndex = fixIndex(fixEarthlyBranchIndex('午') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const longchiIndex = fixIndex(fixEarthlyBranchIndex('chen') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const fenggeIndex = fixIndex(fixEarthlyBranchIndex('xu') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const tiankuIndex = fixIndex(fixEarthlyBranchIndex('woo') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const tianxuIndex = fixIndex(fixEarthlyBranchIndex('woo') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianguanIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['未', '辰', '巳', '寅', '卯', '酉', '亥', '酉', '戌', '午'][
+      ['wei', 'chen', 'si', 'yin', 'mao', 'you', 'hai', 'you', 'xu', 'woo'][
         HEAVENLY_STEMS.indexOf(heavenlyStem)
-      ] as EarthlyBranchKey,
+      ] as EarthlyBranchName,
     ),
   );
   const tianfuIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['酉', '申', '子', '亥', '卯', '寅', '午', '巳', '午', '巳'][
+      ['you', 'shen', 'zi', 'hai', 'mao', 'yin', 'woo', 'si', 'woo', 'si'][
         HEAVENLY_STEMS.indexOf(heavenlyStem)
-      ] as EarthlyBranchKey,
+      ] as EarthlyBranchName,
     ),
   );
-  const tiandeIndex = fixIndex(fixEarthlyBranchIndex('酉') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
-  const yuedeIndex = fixIndex(fixEarthlyBranchIndex('巳') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
-  const tiankongIndex = fixIndex(fixEarthlyBranchIndex(earthlyBranch) + 1);
+  const tiandeIndex = fixIndex(fixEarthlyBranchIndex('you') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const yuedeIndex = fixIndex(fixEarthlyBranchIndex('si') + EARTHLY_BRANCHES.indexOf(earthlyBranch));
+  const tiankongIndex = fixIndex(fixEarthlyBranchIndex(yearly[1]) + 1);
   const jieluIndex = fixIndex(
-    fixEarthlyBranchIndex(['申', '午', '辰', '寅', '子'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchKey),
+    fixEarthlyBranchIndex(
+      ['shen', 'woo', 'chen', 'yin', 'zi'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchName,
+    ),
   );
   const kongwangIndex = fixIndex(
-    fixEarthlyBranchIndex(['酉', '未', '巳', '卯', '丑'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchKey),
+    fixEarthlyBranchIndex(
+      ['you', 'wei', 'si', 'mao', 'chou'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchName,
+    ),
   );
   const xunkongIndex = fixIndex(
-    fixEarthlyBranchIndex(earthlyBranch) + HEAVENLY_STEMS.indexOf('癸') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 1,
+    fixEarthlyBranchIndex(yearly[1]) + HEAVENLY_STEMS.indexOf('guiHeavenly') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 1,
   );
-  const tianshangIndex = fixIndex(PALACES.indexOf('仆役') + soulIndex);
-  const tianshiIndex = fixIndex(PALACES.indexOf('疾厄') + soulIndex);
+  const tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
+  const tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
 
   return {
     xianchiIndex: fixIndex(xcIdx),
@@ -628,9 +632,9 @@ export const getNianjieIndex = (earthlyBranchName: EarthlyBranchName) => {
 
   return fixIndex(
     fixEarthlyBranchIndex(
-      ['戌', '酉', '申', '未', '午', '巳', '辰', '卯', '寅', '丑', '子', '亥'][
+      ['xu', 'you', 'shen', 'wei', 'woo', 'si', 'chen', 'mao', 'yin', 'chou', 'zi', 'hai'][
         EARTHLY_BRANCHES.indexOf(earthlyBranch)
-      ] as EarthlyBranchKey,
+      ] as EarthlyBranchName,
     ),
   );
 };
@@ -662,19 +666,23 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
   const monthIndex = fixLunarMonthIndex(solarDate, timeIndex, fixLeap);
 
   const jieshenIndex = fixIndex(
-    fixEarthlyBranchIndex(['申', '戌', '子', '寅', '辰', '午'][Math.floor(monthIndex / 2)] as EarthlyBranchKey),
+    fixEarthlyBranchIndex(['shen', 'xu', 'zi', 'yin', 'chen', 'woo'][Math.floor(monthIndex / 2)] as EarthlyBranchName),
   );
-  const tianyaoIndex = fixIndex(fixEarthlyBranchIndex('丑') + monthIndex);
-  const tianxingIndex = fixIndex(fixEarthlyBranchIndex('酉') + monthIndex);
+  const tianyaoIndex = fixIndex(fixEarthlyBranchIndex('chou') + monthIndex);
+  const tianxingIndex = fixIndex(fixEarthlyBranchIndex('you') + monthIndex);
   const yinshaIndex = fixIndex(
-    fixEarthlyBranchIndex(['寅', '子', '戌', '申', '午', '辰'][monthIndex % 6] as EarthlyBranchKey),
+    fixEarthlyBranchIndex(['yin', 'zi', 'xu', 'shen', 'woo', 'chen'][monthIndex % 6] as EarthlyBranchName),
   );
   const tianyueIndex = fixIndex(
     fixEarthlyBranchIndex(
-      ['戌', '巳', '辰', '寅', '未', '卯', '亥', '未', '寅', '午', '戌', '寅'][monthIndex] as EarthlyBranchKey,
+      ['xu', 'si', 'chen', 'yin', 'wei', 'mao', 'hai', 'wei', 'yin', 'woo', 'xu', 'yin'][
+        monthIndex
+      ] as EarthlyBranchName,
     ),
   );
-  const tianwuIndex = fixIndex(fixEarthlyBranchIndex(['巳', '申', '寅', '亥'][monthIndex % 4] as EarthlyBranchKey));
+  const tianwuIndex = fixIndex(
+    fixEarthlyBranchIndex(['si', 'chen', 'yin', 'hai'][monthIndex % 4] as EarthlyBranchName),
+  );
 
   return {
     yuejieIndex: jieshenIndex,
@@ -703,39 +711,39 @@ export const getChangQuIndexByHeavenlyStem = (heavenlyStemName: HeavenlyStemName
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
 
   switch (heavenlyStem) {
-    case '甲':
-      changIndex = fixIndex(fixEarthlyBranchIndex('巳'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('酉'));
+    case 'jiaHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('si'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('you'));
       break;
-    case '乙':
-      changIndex = fixIndex(fixEarthlyBranchIndex('午'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('申'));
+    case 'yiHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('woo'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('shen'));
       break;
-    case '丙':
-    case '戊':
-      changIndex = fixIndex(fixEarthlyBranchIndex('申'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('午'));
+    case 'bingHeavenly':
+    case 'wuHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('shen'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('woo'));
       break;
-    case '丁':
-    case '己':
-      changIndex = fixIndex(fixEarthlyBranchIndex('酉'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('巳'));
+    case 'dingHeavenly':
+    case 'jiHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('you'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('si'));
       break;
-    case '庚':
-      changIndex = fixIndex(fixEarthlyBranchIndex('亥'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('卯'));
+    case 'gengHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('hai'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('mao'));
       break;
-    case '辛':
-      changIndex = fixIndex(fixEarthlyBranchIndex('子'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('寅'));
+    case 'xinHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('zi'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('yin'));
       break;
-    case '壬':
-      changIndex = fixIndex(fixEarthlyBranchIndex('寅'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('子'));
+    case 'renHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('yin'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('zi'));
       break;
-    case '癸':
-      changIndex = fixIndex(fixEarthlyBranchIndex('卯'));
-      quIndex = fixIndex(fixEarthlyBranchIndex('亥'));
+    case 'guiHeavenly':
+      changIndex = fixIndex(fixEarthlyBranchIndex('mao'));
+      quIndex = fixIndex(fixEarthlyBranchIndex('hai'));
       break;
   }
 

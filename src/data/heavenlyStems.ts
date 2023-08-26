@@ -24,62 +24,62 @@
  *    - 癸:【破，巨，阴，贪】
  */
 export const heavenlyStems = {
-  甲: {
+  jiaHeavenly: {
     yinYang: '阳',
     fiveElements: '木',
-    crash: '庚',
+    crash: 'gengHeavenly',
     mutagen: ['廉贞', '破军', '武曲', '太阳'],
   },
-  乙: {
+  yiHeavenly: {
     yinYang: '阴',
     fiveElements: '木',
-    crash: '辛',
+    crash: 'xinHeavenly',
     mutagen: ['天机', '天梁', '紫微', '太阴'],
   },
-  丙: {
+  bingHeavenly: {
     yinYang: '阳',
     fiveElements: '火',
-    crash: '壬',
+    crash: 'renHeavenly',
     mutagen: ['天同', '天机', '文昌', '廉贞'],
   },
-  丁: {
+  dingHeavenly: {
     yinYang: '阴',
     fiveElements: '火',
-    crash: '癸',
+    crash: 'guiHeavenly',
     mutagen: ['太阴', '天同', '天机', '巨门'],
   },
-  戊: {
+  wuHeavenly: {
     yinYang: '阳',
     fiveElements: '土',
     mutagen: ['贪狼', '太阴', '右弼', '天机'],
   },
-  己: {
+  jiHeavenly: {
     yinYang: '阴',
     fiveElements: '土',
     mutagen: ['武曲', '贪狼', '天梁', '文曲'],
   },
-  庚: {
+  gengHeavenly: {
     yinYang: '阳',
     fiveElements: '金',
-    crash: '甲',
+    crash: 'jiaHeavenly',
     mutagen: ['太阳', '武曲', '太阴', '天同'],
   },
-  辛: {
+  xinHeavenly: {
     yinYang: '阴',
     fiveElements: '金',
-    crash: '乙',
+    crash: 'yiHeavenly',
     mutagen: ['巨门', '太阳', '文曲', '文昌'],
   },
-  壬: {
+  renHeavenly: {
     yinYang: '阳',
     fiveElements: '水',
-    crash: '丙',
+    crash: 'bingHeavenly',
     mutagen: ['天梁', '紫微', '左辅', '武曲'],
   },
-  癸: {
+  guiHeavenly: {
     yinYang: '阴',
     fiveElements: '水',
-    crash: '丁',
+    crash: 'dingHeavenly',
     mutagen: ['破军', '巨门', '太阴', '贪狼'],
   },
 } as const;

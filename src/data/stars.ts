@@ -1,5 +1,5 @@
 /** 紫微斗数四化 */
-export const MUTAGEN = ['禄', '权', '科', '忌'] as const;
+export const MUTAGEN = ['sihuaLu', 'sihuaQuan', 'sihuaKe', 'sihuaJi'] as const;
 
 /**
  * 星耀信息
@@ -11,94 +11,94 @@ export const MUTAGEN = ['禄', '权', '科', '忌'] as const;
  */
 export const STARS_INFO = {
   紫微: {
-    brightness: ['旺', '旺', '得', '旺', '庙', '庙', '旺', '旺', '得', '旺', '平', '庙'],
+    brightness: ['wang', 'wang', 'de', 'wang', 'miao', 'miao', 'wang', 'wang', 'de', 'wang', 'ping', 'miao'],
     fiveElements: '土',
     yinYang: '阴',
     healthTip: '胰脏、脾脏、大脑中枢',
   },
   天机: {
-    brightness: ['得', '旺', '利', '平', '庙', '陷', '得', '旺', '利', '平', '庙', '陷'],
+    brightness: ['de', 'wang', 'li', 'ping', 'miao', 'xian', 'de', 'wang', 'li', 'ping', 'miao', 'xian'],
     fiveElements: '木',
     yinYang: '阴',
     healthTip: '肝 胆、神经系统、手指尖神经末梢',
   },
   太阳: {
-    brightness: ['庙', '庙', '旺', '旺', '庙', '得', '得', '平', '陷', '陷', '陷', '不'],
+    brightness: ['miao', 'miao', 'wang', 'wang', 'miao', 'de', 'de', 'ping', 'xian', 'xian', 'xian', 'bu'],
     fiveElements: '',
     yinYang: '',
     healthTip: '心、脑、眼睛、心血管系统',
   },
   武曲: {
-    brightness: ['得', '利', '庙', '平', '旺', '庙', '得', '利', '庙', '平', '旺', '庙'],
+    brightness: ['de', 'li', 'miao', 'ping', 'wang', 'miao', 'de', 'li', 'miao', 'ping', 'wang', 'miao'],
     fiveElements: '金',
     yinYang: '阴',
     healthTip: '呼吸系统、鼻、气管、支气管及肺部',
   },
   天同: {
-    brightness: ['利', '平', '平', '庙', '陷', '不', '旺', '平', '平', '庙', '旺', '不'],
+    brightness: ['li', 'ping', 'ping', 'miao', 'xian', 'bu', 'wang', 'ping', 'ping', 'miao', 'wang', 'bu'],
     fiveElements: '水',
     yinYang: '阳',
     healthTip: '膀胱、肾水系统、耳朵听力',
   },
   廉贞: {
-    brightness: ['庙', '平', '利', '陷', '平', '利', '庙', '平', '利', '陷', '平', '利'],
+    brightness: ['miao', 'ping', 'li', 'xian', 'ping', 'li', 'miao', 'ping', 'li', 'xian', 'ping', 'li'],
     fiveElements: '火',
     yinYang: '阴',
     healthTip: '血液血管，免疫力、生殖系统（子宫、卵巢、输卵管、输精管）、青春痘',
   },
   天府: {
-    brightness: ['庙', '得', '庙', '得', '旺', '庙', '得', '旺', '庙', '得', '庙', '庙'],
+    brightness: ['miao', 'de', 'miao', 'de', 'wang', 'miao', 'de', 'wang', 'miao', 'de', 'miao', 'miao'],
     fiveElements: '土',
     yinYang: '阳',
     healthTip: '胃脏、十二指肠、小肠',
   },
   太阴: {
-    brightness: ['旺', '陷', '陷', '陷', '陷', '不', '利', '旺', '旺', '庙', '庙', '庙'],
+    brightness: ['wang', 'xian', 'xian', 'xian', 'xian', 'bu', 'li', 'wang', 'wang', 'miao', 'miao', 'miao'],
     fiveElements: '水',
     yinYang: '阴',
     healthTip: '肾脏、肾水系统、眼睛视力',
   },
   贪狼: {
-    brightness: ['平', '利', '庙', '陷', '旺', '庙', '平', '利', '庙', '陷', '旺', '庙'],
+    brightness: ['ping', 'li', 'miao', 'xian', 'wang', 'miao', 'ping', 'li', 'miao', 'xian', 'wang', 'miao'],
     fiveElements: '水',
     yinYang: '',
     healthTip: '生殖器官',
   },
   巨门: {
-    brightness: ['庙', '庙', '平', '旺', '旺', '不', '庙', '庙', '平', '旺', '旺', '不'],
+    brightness: ['miao', 'miao', 'ping', 'wang', 'wang', 'bu', 'miao', 'miao', 'ping', 'wang', 'wang', 'bu'],
     fiveElements: '土',
     yinYang: '阴',
     healthTip: '食道、喉管、口、通道管状部位',
   },
   天相: {
-    brightness: ['庙', '陷', '得', '得', '旺', '得', '庙', '陷', '得', '得', '庙', '庙'],
+    brightness: ['miao', 'xian', 'de', 'de', 'wang', 'de', 'miao', 'xian', 'de', 'de', 'miao', 'miao'],
     fiveElements: '水',
     yinYang: '',
     healthTip: '面部、脸',
   },
   天梁: {
-    brightness: ['庙', '庙', '旺', '陷', '庙', '庙', '庙', '得', '庙', '陷', '庙', '旺'],
+    brightness: ['miao', 'miao', 'wang', 'xian', 'miao', 'miao', 'miao', 'de', 'miao', 'xian', 'miao', 'wang'],
     fiveElements: '土',
     yinYang: '',
     healthTip: '肌肉、肋骨',
   },
   七杀: {
-    brightness: ['庙', '旺', '庙', '平', '旺', '庙', '庙', '旺', '庙', '平', '旺', '庙'],
+    brightness: ['miao', 'wang', 'miao', 'ping', 'wang', 'miao', 'miao', 'wang', 'miao', 'ping', 'wang', 'miao'],
     fiveElements: '',
     yinYang: '',
     healthTip: '骨头、脊椎骨、直肠大肠',
   },
   破军: {
-    brightness: ['得', '陷', '旺', '平', '庙', '旺', '得', '陷', '旺', '平', '庙', '旺'],
+    brightness: ['de', 'xian', 'wang', 'ping', 'miao', 'wang', 'de', 'xian', 'wang', 'ping', 'miao', 'wang'],
     fiveElements: '水',
     yinYang: '',
     healthTip: '生殖器官、肾脏、脑神经、皮肤',
   },
   文昌: {
-    brightness: ['陷', '利', '得', '庙', '陷', '利', '得', '庙', '陷', '利', '得', '庙'],
+    brightness: ['xian', 'li', 'de', 'miao', 'xian', 'li', 'de', 'miao', 'xian', 'li', 'de', 'miao'],
   },
   文曲: {
-    brightness: ['平', '旺', '得', '庙', '陷', '旺', '得', '庙', '陷', '旺', '得', '庙'],
+    brightness: ['ping', 'wang', 'de', 'miao', 'xian', 'wang', 'de', 'miao', 'xian', 'wang', 'de', 'miao'],
   },
   天钺: {
     brightness: ['', '', '', '', '', '', '', '', '', '', '', ''],
@@ -119,16 +119,16 @@ export const STARS_INFO = {
     brightness: ['', '', '', '', '', '', '', '', '', '', '', ''],
   },
   火星: {
-    brightness: ['庙', '利', '陷', '得', '庙', '利', '陷', '得', '庙', '利', '陷', '得'],
+    brightness: ['miao', 'li', 'xian', 'de', 'miao', 'li', 'xian', 'de', 'miao', 'li', 'xian', 'de'],
   },
   铃星: {
-    brightness: ['庙', '利', '陷', '得', '庙', '利', '陷', '得', '庙', '利', '陷', '得'],
+    brightness: ['miao', 'li', 'xian', 'de', 'miao', 'li', 'xian', 'de', 'miao', 'li', 'xian', 'de'],
   },
   擎羊: {
-    brightness: ['', '陷', '庙', '', '陷', '庙', '', '陷', '庙', '', '陷', '庙'],
+    brightness: ['', 'xian', 'miao', '', 'xian', 'miao', '', 'xian', 'miao', '', 'xian', 'miao'],
   },
   陀罗: {
-    brightness: ['陷', '', '庙', '陷', '', '庙', '陷', '', '庙', '陷', '', '庙'],
+    brightness: ['xian', '', 'miao', 'xian', '', 'miao', 'xian', '', 'miao', 'xian', '', 'miao'],
   },
   禄存: {
     brightness: ['', '', '', '', '', '', '', '', '', '', '', ''],
