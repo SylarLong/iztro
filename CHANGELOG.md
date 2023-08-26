@@ -6,6 +6,18 @@
 
   🇨🇳
 
+  - 优化代码，将变量名改为英文，提高兼容性
+
+  🇺🇸
+
+  - code optimization. change the variable names from Chinese to english in order to avoid compatibility issues
+
+## v0.3.1
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
   - 完善流耀的翻译
 
   🇺🇸

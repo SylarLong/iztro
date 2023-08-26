@@ -11,6 +11,7 @@ import {
   StarName,
   kot,
   t,
+  StarKey,
 } from '../i18n';
 import { Star } from '../data/types';
 
@@ -59,17 +60,18 @@ export const getBrightness = (starName: StarName, index: number): Brightness => 
 
   const star = kot<keyof typeof STARS_INFO>(starName);
 
-  return t<Brightness>(STARS_INFO[star].brightness[fixIndex(index)]);
+  return t<Brightness>(STARS_INFO[star]?.brightness[fixIndex(index)]);
 };
 
 export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const starKey = kot<StarKey>(starName);
 
   if (!starName) {
     throw new Error('star name is required to getMutagen()');
   }
 
-  return t<Mutagen>(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starName as never)]);
+  return t<Mutagen>(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starKey as never)]);
 };
 
 export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): StarName[] => {
