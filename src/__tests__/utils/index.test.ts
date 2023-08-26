@@ -1,5 +1,12 @@
 import { EarthlyBranchName } from '../../i18n';
-import { fixEarthlyBranchIndex, fixIndex, getAgeIndex, getBrightness, timeToIndex } from '../../utils';
+import {
+  earthlyBranchIndexToPalaceIndex,
+  fixEarthlyBranchIndex,
+  fixIndex,
+  getAgeIndex,
+  getBrightness,
+  timeToIndex,
+} from '../../utils';
 
 describe('Utils', () => {
   test('fixIndex() should return correct index.', () => {
@@ -82,6 +89,27 @@ describe('Utils', () => {
 
     Object.entries(data).forEach(([key, value]) => {
       expect(getAgeIndex(key as EarthlyBranchName)).toEqual(value);
+    });
+  });
+
+  test('earthlyBranchIndexToPalaceIndex()', () => {
+    const data = {
+      yin: 0,
+      mao: 1,
+      chen: 2,
+      si: 3,
+      woo: 4,
+      wei: 5,
+      shen: 6,
+      you: 7,
+      xu: 8,
+      hai: 9,
+      zi: 10,
+      chou: 11,
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(earthlyBranchIndexToPalaceIndex(key as EarthlyBranchName)).toEqual(value);
     });
   });
 });

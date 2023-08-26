@@ -7,10 +7,11 @@ import {
   getBoShi12,
   getYearly12,
   getChangesheng12StartIndex,
+  getJiangqian12StartIndex,
 } from '../../star';
 import { mergeStars } from '../../utils';
 import { star } from '../../index';
-import { FiveElementsClassName } from '../../i18n';
+import { EarthlyBranchName, FiveElementsClassName } from '../../i18n';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -269,6 +270,27 @@ describe('star/index', () => {
 
     Object.entries(data).forEach(([key, value]) => {
       expect(getChangesheng12StartIndex(key as FiveElementsClassName)).toEqual(value);
+    });
+  });
+
+  test('getJiangqian12StartIndex()', () => {
+    const data = {
+      yin: 4,
+      woo: 4,
+      xu: 4,
+      shen: 10,
+      zi: 10,
+      chen: 10,
+      si: 7,
+      you: 7,
+      chou: 7,
+      hai: 1,
+      mao: 1,
+      wei: 1,
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(getJiangqian12StartIndex(key as EarthlyBranchName)).toEqual(value);
     });
   });
 });

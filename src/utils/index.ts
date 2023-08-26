@@ -54,10 +54,6 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranch
  * @param index 所在宫位索引
  */
 export const getBrightness = (starName: StarName, index: number): Brightness => {
-  if (!starName) {
-    return '';
-  }
-
   const star = kot<keyof typeof STARS_INFO>(starName);
 
   return t<Brightness>(STARS_INFO[star]?.brightness[fixIndex(index)]);
@@ -66,10 +62,6 @@ export const getBrightness = (starName: StarName, index: number): Brightness => 
 export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
   const starKey = kot<StarKey>(starName);
-
-  if (!starName) {
-    throw new Error('star name is required to getMutagen()');
-  }
 
   return t<Mutagen>(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starKey as never)]);
 };

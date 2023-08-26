@@ -379,11 +379,9 @@ export const getchangsheng12 = (
     let idx = 0;
 
     if (GENDER[gender] === earthlyBranches[earthlyBranchOfYear].yinYang) {
-      idx = i + startIdx;
-      idx = idx >= stars.length ? idx - stars.length : idx;
+      idx = fixIndex(i + startIdx);
     } else {
-      idx = startIdx - i;
-      idx = idx < 0 ? idx + stars.length : idx;
+      idx = fixIndex(startIdx - i);
     }
 
     changsheng12[idx] = t(stars[i]);
@@ -434,6 +432,33 @@ export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => 
 };
 
 /**
+ * 安流年将前诸星（按流年地支起将星）
+ * - 寅午戍年将星午，申子辰年子将星，
+ * - 巳酉丑将酉上驻，亥卯未将卯上停。
+ * - 攀鞍岁驿并息神，华盖劫煞灾煞轻，
+ * - 天煞指背咸池续，月煞亡神次第行。
+ *
+ * @param earthlyBranchName 地支
+ * @returns 将前诸星起始索引
+ */
+export const getJiangqian12StartIndex = (earthlyBranchName: EarthlyBranchName) => {
+  let jqStartIdx = -1;
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchName);
+
+  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranchOfYear)) {
+    jqStartIdx = fixEarthlyBranchIndex('woo');
+  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranchOfYear)) {
+    jqStartIdx = fixEarthlyBranchIndex('zi');
+  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].includes(earthlyBranchOfYear)) {
+    jqStartIdx = fixEarthlyBranchIndex('you');
+  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranchOfYear)) {
+    jqStartIdx = fixEarthlyBranchIndex('mao');
+  }
+
+  return fixIndex(jqStartIdx);
+};
+
+/**
  * 流年诸星。
  *
  * - 流年岁前诸星
@@ -453,9 +478,8 @@ export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => 
 export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
   const jiangqian12: StarName[] = [];
   const suiqian12: StarName[] = [];
-
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1]);
+
   const ts12shen: StarName[] = [
     '岁建',
     '晦气',
@@ -492,19 +516,10 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
     '亡神',
   ];
 
-  let jqStartIdx = -1;
+  const jiangqian12StartIndex = getJiangqian12StartIndex(yearly[1]);
 
-  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('woo');
-  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('zi');
-  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('you');
-  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].indexOf(earthlyBranchOfYear) >= 0) {
-    jqStartIdx = fixEarthlyBranchIndex('mao');
-  }
   for (let i = 0; i < jq12shen.length; i++) {
-    const idx = fixIndex(jqStartIdx + i);
+    const idx = fixIndex(jiangqian12StartIndex + i);
 
     jiangqian12[idx] = t(jq12shen[i]);
   }
