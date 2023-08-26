@@ -14,11 +14,11 @@ import { LUNAR_DAY_NAME, LUNAR_MONTH_NAME, NUM_TO_CHAR, TERM_INFO } from './rule
  */
 export const getTerm = (year: number, termNo: number) => {
   if (year < 1900 || year > 2100) {
-    throw new Error('公历年份参数错误');
+    throw new Error('Year should be greater or equal then 1900.');
   }
 
   if (termNo < 1 || termNo > 24) {
-    throw new Error('节气序号参数错误');
+    throw new Error('termNo should be between 1 and 24.');
   }
 
   const _table = TERM_INFO[year - 1900];
@@ -70,7 +70,7 @@ export const lunarYearToStr = (lunarYear: number) => {
  */
 export const lunarMonthToStr = (lunarMonth: number) => {
   if (lunarMonth > 12 || lunarMonth < 1) {
-    throw new Error('农历月份不正确');
+    throw new Error('lunarMonth should be between 1 and 12.');
   }
 
   return `${LUNAR_MONTH_NAME[lunarMonth]}月`;

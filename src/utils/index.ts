@@ -69,10 +69,6 @@ export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemNam
 export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): StarName[] => {
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
 
-  if (!heavenlyStems[heavenlyStem]) {
-    throw new Error(`${heavenlyStem} is invalid to getMutagensByHeavenlyStem()`);
-  }
-
   return heavenlyStems[heavenlyStem].mutagen.map((star) => t<StarName>(star));
 };
 

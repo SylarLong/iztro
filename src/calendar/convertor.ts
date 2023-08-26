@@ -25,7 +25,7 @@ export const normalizeSolarDateStr = (dateStr: string | Date) => {
   const date = new Date(dateStr);
 
   if (date.toString() === 'Invalid Date') {
-    throw new Error('日期错误');
+    throw new Error('invalid date.');
   }
 
   return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
@@ -43,12 +43,12 @@ export const solar2lunar = (dateStr: string | Date): LunarDate => {
   // 参数区间1900.1.31~2100.12.31
   // 年份限定、上限
   if (year < 1900 || year > 2100) {
-    throw new Error('不支持的年份');
+    throw new Error('year should be between 1900 and 2100.');
   }
 
   // 公历传参最下限 1900-01-31
   if (year === 1900 && month === 1 && day < 31) {
-    throw new Error('日期必须在1900-1-31之后');
+    throw new Error('date must be after 1900-1-31.');
   }
 
   const utcDate = Date.UTC(year, month - 1, day); // 获取当前日期UTC值
@@ -148,7 +148,7 @@ export const lunar2solar = (dateStr: string, isLeapMonth?: boolean): SolarDate =
 
   if (year < 1900 || year > 2100 || day > totalDays) {
     // 日期不合法
-    throw new Error('日期错误');
+    throw new Error('invalid date.');
   }
 
   // 农历日期时间偏移量
