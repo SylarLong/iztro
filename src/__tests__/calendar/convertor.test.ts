@@ -36,6 +36,12 @@ describe('calendar/convertor', () => {
     }
 
     try {
+      solar2lunar('2101-1-22');
+    } catch (err) {
+      expect((err as Error).message).toBe('year should be between 1900 and 2100.');
+    }
+
+    try {
       solar2lunar('1900-1-22');
     } catch (err) {
       expect((err as Error).message).toBe('date must be after 1900-1-31.');
@@ -63,6 +69,12 @@ describe('calendar/convertor', () => {
 
     try {
       lunar2solar('1988-1-22');
+    } catch (err) {
+      expect((err as Error).message).toBe('invalid date.');
+    }
+
+    try {
+      lunar2solar('2101-1-22');
     } catch (err) {
       expect((err as Error).message).toBe('invalid date.');
     }

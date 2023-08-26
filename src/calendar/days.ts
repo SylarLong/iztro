@@ -30,7 +30,7 @@ export const getTotalDaysOfLunarYear = (year: number) => {
  */
 export const getTotalDaysOfLunarMonth = (year: number, month: number) => {
   if (month > 12 || month < 1) {
-    throw new Error('农历月份参数错误');
+    throw new Error('invalid month.');
   }
 
   return LUNAR_INFO[year - 1900] & (0x10000 >> month) ? 30 : 29;
@@ -47,7 +47,7 @@ export const getTotalDaysOfLunarMonth = (year: number, month: number) => {
  */
 export const getTotalDaysOfSolarMonth = (year: number, month: number) => {
   if (month > 12 || month < 1) {
-    throw new Error('公历月份参数错误');
+    throw new Error('invalid month.');
   }
 
   if (month === 2) {
