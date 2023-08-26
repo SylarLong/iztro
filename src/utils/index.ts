@@ -44,7 +44,7 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranch
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
   const yin = kot<EarthlyBranchKey>('yinEarthly');
 
-  return EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin);
+  return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin));
 };
 
 /**
