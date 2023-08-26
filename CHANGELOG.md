@@ -1,6 +1,6 @@
 # 紫微斗数 @sylarlong/astro
 
-## v0.3.1
+## v0.3.2
 
 - ✨ 改进（enhancement）
 
