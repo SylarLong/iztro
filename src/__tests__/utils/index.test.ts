@@ -1,4 +1,5 @@
-import { fixEarthlyBranchIndex, fixIndex, getBrightness, timeToIndex } from '../../utils';
+import { EarthlyBranchName } from '../../i18n';
+import { fixEarthlyBranchIndex, fixIndex, getAgeIndex, getBrightness, timeToIndex } from '../../utils';
 
 describe('Utils', () => {
   test('fixIndex() should return correct index.', () => {
@@ -60,6 +61,27 @@ describe('Utils', () => {
 
     data.forEach(([key, value]) => {
       expect(timeToIndex(key)).toEqual(value);
+    });
+  });
+
+  test('getAgeIndex()', () => {
+    const data = {
+      yin: 2,
+      woo: 2,
+      xu: 2,
+      shen: 8,
+      zi: 8,
+      chen: 8,
+      si: 5,
+      you: 5,
+      chou: 5,
+      hai: 11,
+      mao: 11,
+      wei: 11,
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(getAgeIndex(key as EarthlyBranchName)).toEqual(value);
     });
   });
 });

@@ -12,7 +12,7 @@ import {
   kot,
   t,
 } from '../i18n';
-import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex } from '../utils';
+import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
 
 /**
  * 获取命宫以及身宫数据
@@ -156,12 +156,6 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
  * - 大限由命宫起，阳男阴女顺行；
  * - 阴男阳女逆行，每十年过一宫限。
  *
- * 起小限
- *
- * - 小限一年一度逢，男顺女逆不相同，
- * - 寅午戍人辰上起，申子辰人自戍宫，
- * - 巳酉丑人未宫始，亥卯未人起丑宫。
- *
  * @param solarDateStr 公历日期
  * @param timeIndex 出生时索引
  * @param gender 性别
@@ -198,18 +192,8 @@ export const getHoroscope = (
     };
   }
 
-  let ageIdx = 0;
+  const ageIdx = getAgeIndex(yearly[1]);
   const ages = [];
-
-  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('chen');
-  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('xu');
-  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('wei');
-  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('chou') + 12;
-  }
 
   for (let i = 0; i < 12; i++) {
     const age = [];

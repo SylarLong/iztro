@@ -13,6 +13,8 @@ import {
   getMonthlyStarIndex,
   getDailyStarIndex,
   getChangQuIndexByHeavenlyStem,
+  getHuagaiXianchiIndex,
+  getGuGuaIndex,
 } from '../../star';
 
 describe('star/location', () => {
@@ -656,6 +658,48 @@ describe('star/location', () => {
 
     data.forEach((item) => {
       expect(getChangQuIndexByHeavenlyStem(item.heavenlyStem as HeavenlyStemName)).toStrictEqual(item.result);
+    });
+  });
+
+  test('getHuagaiXianchiIndex()', () => {
+    const data = {
+      yin: { huagaiIndex: 8, xianchiIndex: 1 },
+      woo: { huagaiIndex: 8, xianchiIndex: 1 },
+      xu: { huagaiIndex: 8, xianchiIndex: 1 },
+      shen: { huagaiIndex: 2, xianchiIndex: 7 },
+      zi: { huagaiIndex: 2, xianchiIndex: 7 },
+      chen: { huagaiIndex: 2, xianchiIndex: 7 },
+      si: { huagaiIndex: 11, xianchiIndex: 4 },
+      you: { huagaiIndex: 11, xianchiIndex: 4 },
+      chou: { huagaiIndex: 11, xianchiIndex: 4 },
+      hai: { huagaiIndex: 5, xianchiIndex: 10 },
+      wei: { huagaiIndex: 5, xianchiIndex: 10 },
+      mao: { huagaiIndex: 5, xianchiIndex: 10 },
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(getHuagaiXianchiIndex(key as EarthlyBranchName)).toStrictEqual(value);
+    });
+  });
+
+  test('getGuGuaIndex()', () => {
+    const data = {
+      yin: { guchenIndex: 3, guasuIndex: 11 },
+      mao: { guchenIndex: 3, guasuIndex: 11 },
+      chen: { guchenIndex: 3, guasuIndex: 11 },
+      si: { guchenIndex: 6, guasuIndex: 2 },
+      woo: { guchenIndex: 6, guasuIndex: 2 },
+      wei: { guchenIndex: 6, guasuIndex: 2 },
+      shen: { guchenIndex: 9, guasuIndex: 5 },
+      you: { guchenIndex: 9, guasuIndex: 5 },
+      xu: { guchenIndex: 9, guasuIndex: 5 },
+      hai: { guchenIndex: 0, guasuIndex: 8 },
+      zi: { guchenIndex: 0, guasuIndex: 8 },
+      chou: { guchenIndex: 0, guasuIndex: 8 },
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(getGuGuaIndex(key as EarthlyBranchName)).toStrictEqual(value);
     });
   });
 });

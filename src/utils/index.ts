@@ -180,3 +180,30 @@ export const timeToIndex = (hour: number) => {
 
   return Math.floor((hour + 1) / 2);
 };
+
+/**
+ * 起小限
+ *
+ * - 小限一年一度逢，男顺女逆不相同，
+ * - 寅午戍人辰上起，申子辰人自戍宫，
+ * - 巳酉丑人未宫始，亥卯未人起丑宫。
+ *
+ * @param earthlyBranchName 地支
+ * @returns 小限开始的宫位索引
+ */
+export const getAgeIndex = (earthlyBranchName: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  let ageIdx = -1;
+
+  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('chen');
+  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('xu');
+  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex('wei');
+  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranch)) {
+    ageIdx = fixIndex(fixEarthlyBranchIndex('chou'));
+  }
+
+  return ageIdx;
+};

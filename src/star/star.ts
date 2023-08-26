@@ -2,7 +2,16 @@ import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { GENDER, earthlyBranches } from '../data';
 import { FiveElementsClass, Star, Gender } from '../data/types';
-import { StarName, t, EarthlyBranchKey, kot, FiveElementsClassKey, HeavenlyStemName, EarthlyBranchName } from '../i18n';
+import {
+  StarName,
+  t,
+  EarthlyBranchKey,
+  kot,
+  FiveElementsClassKey,
+  HeavenlyStemName,
+  EarthlyBranchName,
+  FiveElementsClassName,
+} from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import {
   getChangQuIndex,
@@ -297,34 +306,18 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
 };
 
 /**
- * 长生12神。
+ * 获取长生12神开始的宫位索引
  *
- * 水二局长生在申，木三局长生在亥，金四局长生在巳，土五局长生在申，火六局长生在寅，
- * 阳男阴女顺行，阴男阳女逆行，安长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝 、胎、养。
- *
- * @param solarDateStr 阳历日期字符串
- * @param timeIndex 时辰索引【0～12】
- * @param gender 性别【男｜女】
- * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
- * @returns 长生12神从寅宫开始的顺序
+ * - 水二局长生在申
+ * - 木三局长生在亥
+ * - 金四局长生在巳
+ * - 土五局长生在申
+ * - 火六局长生在寅，
+ * @param fiveElementClassName 五行局
+ * @returns 长生12神开始的索引
  */
-export const getchangsheng12 = (
-  solarDateStr: string,
-  timeIndex: number,
-  gender: Gender,
-  fixLeap?: boolean,
-): StarName[] => {
-  const changsheng12: StarName[] = [];
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
-  const [, earthlyBranchNameOfYear] = yearly;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
-  // 获取命宫干支，需要通过命宫干支计算五行局
-  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
-  // 获取五行局，通过五行局获取起运年龄
-  const fiveElementClass = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
-  // 长生12神顺序
-  const stars: StarName[] = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
-
+export const getChangesheng12StartIndex = (fiveElementClassName: FiveElementsClassName) => {
+  const fiveElementClass = kot<FiveElementsClassKey>(fiveElementClassName);
   let startIdx = 0;
 
   switch (FiveElementsClass[fiveElementClass]) {
@@ -349,6 +342,38 @@ export const getchangsheng12 = (
       break;
     }
   }
+
+  return startIdx;
+};
+
+/**
+ * 长生12神。
+ *
+ * 阳男阴女顺行，阴男阳女逆行，安长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝 、胎、养。
+ *
+ * @param solarDateStr 阳历日期字符串
+ * @param timeIndex 时辰索引【0～12】
+ * @param gender 性别【男｜女】
+ * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
+ * @returns 长生12神从寅宫开始的顺序
+ */
+export const getchangsheng12 = (
+  solarDateStr: string,
+  timeIndex: number,
+  gender: Gender,
+  fixLeap?: boolean,
+): StarName[] => {
+  const changsheng12: StarName[] = [];
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
+  const [, earthlyBranchNameOfYear] = yearly;
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
+  // 获取命宫干支，需要通过命宫干支计算五行局
+  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+  // 获取五行局，通过五行局获取起运年龄
+  const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
+  // 长生12神顺序
+  const stars: StarName[] = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
+  const startIdx = getChangesheng12StartIndex(fiveElementClass);
 
   for (let i = 0; i < stars.length; i++) {
     let idx = 0;

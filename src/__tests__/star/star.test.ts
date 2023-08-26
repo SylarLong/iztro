@@ -6,9 +6,11 @@ import {
   getchangsheng12,
   getBoShi12,
   getYearly12,
+  getChangesheng12StartIndex,
 } from '../../star';
 import { mergeStars } from '../../utils';
 import { star } from '../../index';
+import { FiveElementsClassName } from '../../i18n';
 
 describe('star/index', () => {
   test('getStartIndex()', () => {
@@ -260,5 +262,13 @@ describe('star/index', () => {
       ],
       [{ name: '流羊', type: 'tough', scope: 'yearly' }],
     ]);
+  });
+
+  test('getChangesheng12StartIndex()', () => {
+    const data = { 水二局: 6, 木三局: 9, 金四局: 3, 土五局: 6, 火六局: 0 };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(getChangesheng12StartIndex(key as FiveElementsClassName)).toEqual(value);
+    });
   });
 });

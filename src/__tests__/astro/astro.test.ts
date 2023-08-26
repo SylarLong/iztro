@@ -111,6 +111,11 @@ describe('Astrolabe', () => {
       '田宅',
     ]);
     expect(horoscope.timely).toHaveProperty('mutagen', ['天同', '天机', '文昌', '廉贞']);
+
+    const horoscope2 = result.horoscope('2023-10-19 3:12');
+
+    expect(horoscope2.age).toHaveProperty('index', 9);
+    expect(horoscope2.age).toHaveProperty('nominalAge', 24);
   });
 
   test('astrolabeBySolarDate() Korean', () => {

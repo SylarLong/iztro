@@ -417,18 +417,115 @@ export const getLuanXiIndex = (earthlyBranchName: EarthlyBranchName) => {
 };
 
 /**
+ * 安华盖
+ * - 子辰申年在辰，丑巳酉年在丑
+ * - 寅午戍年在戍，卯未亥年在未。
+ *
+ * 安咸池
+ * - 子辰申年在酉，丑巳酉年在午
+ * - 寅午戍年在卯，卯未亥年在子。
+ *
+ * @param earthlyBranchName 地支
+ * @returns 华盖、咸池索引
+ */
+export const getHuagaiXianchiIndex = (earthlyBranchName: EarthlyBranchName) => {
+  let hgIdx = -1;
+  let xcIdx = -1;
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+
+  switch (earthlyBranch) {
+    case 'yinEarthly':
+    case 'wuEarthly':
+    case 'xuEarthly': {
+      hgIdx = fixEarthlyBranchIndex('xu');
+      xcIdx = fixEarthlyBranchIndex('mao');
+      break;
+    }
+    case 'shenEarthly':
+    case 'ziEarthly':
+    case 'chenEarthly': {
+      hgIdx = fixEarthlyBranchIndex('chen');
+      xcIdx = fixEarthlyBranchIndex('you');
+      break;
+    }
+    case 'siEarthly':
+    case 'youEarthly':
+    case 'chouEarthly': {
+      hgIdx = fixEarthlyBranchIndex('chou');
+      xcIdx = fixEarthlyBranchIndex('woo');
+      break;
+    }
+    case 'haiEarthly':
+    case 'weiEarthly':
+    case 'maoEarthly': {
+      hgIdx = fixEarthlyBranchIndex('wei');
+      xcIdx = fixEarthlyBranchIndex('zi');
+      break;
+    }
+  }
+
+  return {
+    huagaiIndex: fixIndex(hgIdx),
+    xianchiIndex: fixIndex(xcIdx),
+  };
+};
+
+/**
+ * 安孤辰寡宿
+ * - 寅卯辰年安巳丑
+ * - 巳午未年安申辰
+ * - 申酉戍年安亥未
+ * - 亥子丑年安寅戍。
+ *
+ * @param earthlyBranchName 地支
+ * @returns 孤辰、寡宿索引
+ */
+export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
+  let guIdx = -1;
+  let guaIdx = -1;
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+
+  switch (earthlyBranch) {
+    case 'yinEarthly':
+    case 'maoEarthly':
+    case 'chenEarthly': {
+      guIdx = fixEarthlyBranchIndex('si');
+      guaIdx = fixEarthlyBranchIndex('chou');
+      break;
+    }
+    case 'siEarthly':
+    case 'wuEarthly':
+    case 'weiEarthly': {
+      guIdx = fixEarthlyBranchIndex('shen');
+      guaIdx = fixEarthlyBranchIndex('chen');
+      break;
+    }
+    case 'shenEarthly':
+    case 'youEarthly':
+    case 'xuEarthly': {
+      guIdx = fixEarthlyBranchIndex('hai');
+      guaIdx = fixEarthlyBranchIndex('wei');
+      break;
+    }
+    case 'haiEarthly':
+    case 'ziEarthly':
+    case 'chouEarthly': {
+      guIdx = fixEarthlyBranchIndex('yin');
+      guaIdx = fixEarthlyBranchIndex('xu');
+      break;
+    }
+  }
+
+  return {
+    guchenIndex: fixIndex(guIdx),
+    guasuIndex: fixIndex(guaIdx),
+  };
+};
+
+/**
  * 获取年系星的索引，包括
  * 咸池，华盖，孤辰，寡宿, 天厨，破碎，天才，天寿，蜚蠊, 龙池，凤阁，天哭，天虚，
  * 天官，天福
- *
- * - 安华盖
- *   - 子辰申年在辰，丑巳酉年在丑，寅午戍年在戍，卯未亥年在未。
- *
- * - 安咸池
- *   - 子辰申年在酉，丑巳酉年在午，寅午戍年在卯，卯未亥年在子。
- *
- * - 安孤辰寡宿
- *   - 寅卯辰年安巳丑，巳午未年安申辰，申酉戍年安亥未，亥子丑年安寅戍。
  *
  * - 安天才天寿
  *   - 天才由命宫起子，顺行至本生年支安之。天寿由身宫起子，顺行至本生年支安之。
@@ -468,73 +565,9 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
   const { soulIndex, bodyIndex } = getSoulAndBody(solarDate, timeIndex, fixLeap);
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0]);
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1]);
-  let hgIdx = -1;
-  let xcIdx = -1;
-  let guIdx = -1;
-  let guaIdx = -1;
 
-  switch (earthlyBranch) {
-    case 'yinEarthly':
-    case 'wuEarthly':
-    case 'xuEarthly': {
-      hgIdx = fixEarthlyBranchIndex('xu');
-      xcIdx = fixEarthlyBranchIndex('mao');
-      break;
-    }
-    case 'shenEarthly':
-    case 'ziEarthly':
-    case 'chenEarthly': {
-      hgIdx = fixEarthlyBranchIndex('chen');
-      xcIdx = fixEarthlyBranchIndex('you');
-      break;
-    }
-    case 'siEarthly':
-    case 'youEarthly':
-    case 'chouEarthly': {
-      hgIdx = fixEarthlyBranchIndex('chou') + 12;
-      xcIdx = fixEarthlyBranchIndex('woo');
-      break;
-    }
-    case 'haiEarthly':
-    case 'weiEarthly':
-    case 'maoEarthly': {
-      hgIdx = fixEarthlyBranchIndex('wei');
-      xcIdx = fixEarthlyBranchIndex('zi') + 12;
-      break;
-    }
-  }
-
-  switch (earthlyBranch) {
-    case 'yinEarthly':
-    case 'maoEarthly':
-    case 'chenEarthly': {
-      guIdx = fixEarthlyBranchIndex('si');
-      guaIdx = fixEarthlyBranchIndex('chou') + 12;
-      break;
-    }
-    case 'siEarthly':
-    case 'wuEarthly':
-    case 'weiEarthly': {
-      guIdx = fixEarthlyBranchIndex('shen');
-      guaIdx = fixEarthlyBranchIndex('chen');
-      break;
-    }
-    case 'shenEarthly':
-    case 'youEarthly':
-    case 'xuEarthly': {
-      guIdx = fixEarthlyBranchIndex('hai');
-      guaIdx = fixEarthlyBranchIndex('wei');
-      break;
-    }
-    case 'haiEarthly':
-    case 'ziEarthly':
-    case 'chouEarthly': {
-      guIdx = fixEarthlyBranchIndex('yin');
-      guaIdx = fixEarthlyBranchIndex('xu');
-      break;
-    }
-  }
-
+  const { huagaiIndex, xianchiIndex } = getHuagaiXianchiIndex(yearly[1]);
+  const { guchenIndex, guasuIndex } = getGuGuaIndex(yearly[1]);
   const tiancaiIndex = fixIndex(soulIndex + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianshouIndex = fixIndex(bodyIndex + EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianchuIndex = fixIndex(
@@ -592,10 +625,10 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
   const tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
 
   return {
-    xianchiIndex: fixIndex(xcIdx),
-    huagaiIndex: fixIndex(hgIdx),
-    guchenIndex: fixIndex(guIdx),
-    guasuIndex: fixIndex(guaIdx),
+    xianchiIndex,
+    huagaiIndex,
+    guchenIndex,
+    guasuIndex,
     tiancaiIndex,
     tianshouIndex,
     tianchuIndex,
