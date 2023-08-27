@@ -1,5 +1,17 @@
 # 紫微斗数 @sylarlong/astro
 
+## v1.0.0
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 新增宫位以及星耀分析方法
+
+  🇺🇸
+
+  - add `palace` and `star` analyzation function
+
 ## v0.3.2
 
 - ✨ 改进（enhancement）

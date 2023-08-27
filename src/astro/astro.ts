@@ -8,7 +8,16 @@ import {
 } from '../calendar';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Astrolabe, Gender, Horoscope, Palace, Language } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemKey, HeavenlyStemName, kot, setLanguage, t } from '../i18n';
+import {
+  EarthlyBranchKey,
+  EarthlyBranchName,
+  HeavenlyStemKey,
+  HeavenlyStemName,
+  kot,
+  PalaceName,
+  setLanguage,
+  t,
+} from '../i18n';
 import {
   getAdjectiveStar,
   getBoShi12,
@@ -19,6 +28,7 @@ import {
   getYearly12,
 } from '../star';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
+import { getPalace } from './analyzer';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
 
 /**
@@ -178,7 +188,6 @@ export const astrolabeBySolarDate = (
 
   const palaces: Palace[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
-  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0]);
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1]);
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
     solarDateStr,
@@ -203,7 +212,7 @@ export const astrolabeBySolarDate = (
       name: palaceNames[i],
       isBodyPalace: bodyIndex === i,
       isOriginalPalace:
-        !['ziEarthly', 'chouEarthly'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === heavenlyStemOfYear,
+        !['ziEarthly', 'chouEarthly'].includes(earthlyBranchOfPalace) && earthlyBranchOfPalace === earthlyBranchOfYear,
       heavenlyStem: t(heavenlyStemOfPalace),
       earthlyBranch: t(earthlyBranchOfPalace),
       majorStars: majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),
@@ -242,6 +251,9 @@ export const astrolabeBySolarDate = (
     palaces,
     horoscope(targetDate: string | Date = new Date(), timeIndexOfTarget?: number) {
       return _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
+    },
+    palace(indexOrName: number | PalaceName) {
+      return getPalace(this, indexOrName);
     },
   };
 

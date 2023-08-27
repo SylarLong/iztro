@@ -353,7 +353,9 @@ export type Horoscope = {
  * - body 身主
  * - palaces 十二宫数据
  *
- * @function horoscope() 获取运限数据
+ * @function
+ * - horoscope() 获取运限数据
+ * - palace() 获取宫位数据
  */
 export type Astrolabe = {
   /** 阳历日期 */
@@ -406,4 +408,14 @@ export type Astrolabe = {
    * @returns 运限数据
    */
   horoscope: (date?: string | Date, timeIndex?: number) => Horoscope;
+
+  /**
+   * 获取星盘的某一个宫位
+   *
+   * @version v1.0.0
+   *
+   * @param indexOrName 宫位索引或者宫位名称
+   * @returns 对应的宫位数据，弱没有找到则返回undefined
+   */
+  palace: (indexOrName: number | PalaceName) => Palace | undefined;
 };

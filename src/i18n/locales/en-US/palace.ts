@@ -12,4 +12,5 @@ export default {
   propertyPalace: 'property',
   spiritPalace: 'spirit',
   parentsPalace: 'parents',
+  originalPalace: 'origin'
 } as const;

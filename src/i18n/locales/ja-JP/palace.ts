@@ -12,4 +12,5 @@ export default {
   propertyPalace: '田宅',
   spiritPalace: '福德',
   parentsPalace: '父母',
+  originalPalace: '来因',
 } as const;
