@@ -57,6 +57,23 @@ describe('astro/analyzer', () => {
     expect(result.palace('子女')?.has(['天机', '天梁', '文曲', '天空', '阴煞'])).toBe(true);
   });
 
+  test('notHaveStars()', () => {
+    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+
+    expect(result.palace(1)?.notHave(['太阳'])).toBe(true);
+    expect(result.palace(1)?.notHave(['天相'])).toBe(false);
+    expect(result.palace(2)?.notHave(['天机', '天梁'])).toBe(false);
+    expect(result.palace(3)?.notHave(['紫微', '天梁'])).toBe(false);
+    expect(result.palace(4)?.notHave(['天喜', '天姚', '天官', '台辅'])).toBe(false);
+    expect(result.palace(7)?.notHave(['廉贞', '破军', '左辅', '火星'])).toBe(false);
+    expect(result.palace(9)?.notHave(['天府', '陀罗', '地空', '地劫', '天厨'])).toBe(false);
+
+    expect(result.palace('命宫')?.notHave(['武曲'])).toBe(true);
+    expect(result.palace('迁移')?.notHave(['武曲', '贪狼', '擎羊', '三台', '八座'])).toBe(false);
+    expect(result.palace('财帛')?.notHave(['天相'])).toBe(false);
+    expect(result.palace('子女')?.notHave(['天机', '天梁', '文曲', '天空', '阴煞'])).toBe(false);
+  });
+
   test('hasOneOfStars()', () => {
     const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
 
@@ -68,5 +85,56 @@ describe('astro/analyzer', () => {
 
     expect(result.palace('命宫')?.hasOneOf(['武曲', '天贵'])).toBe(true);
     expect(result.palace('父母')?.hasOneOf(['月德', '天巫', '巨门'])).toBe(true);
+  });
+
+  test('isSurroundedByStars()', () => {
+    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+
+    expect(result.isSurrounded('命宫', ['武曲', '贪狼', '擎羊', '天相', '天魁', '天月', '地空', '地劫'])).toBe(true);
+    expect(result.isSurrounded('命宫', ['武曲', '擎羊', '天相', '天魁', '天月', '地空', '地劫', '太阴'])).toBe(false);
+    expect(
+      result.isSurrounded(0, [
+        '太阳',
+        '巨门',
+        '月德',
+        '天巫',
+        '天喜',
+        '天姚',
+        '天官',
+        '台辅',
+        '文昌',
+        '铃星',
+        '天才',
+        '天寿',
+        '天刑',
+        '天使',
+        '封诰',
+      ]),
+    ).toBe(true);
+    expect(
+      result.isSurrounded(2, [
+        '天机',
+        '天梁',
+        '文曲',
+        '天空',
+        '阴煞',
+        '旬空',
+        '文昌',
+        '铃星',
+        '天才',
+        '天寿',
+        '月德',
+        '天巫',
+        '天同',
+        '太阴',
+        '禄存',
+        '解神',
+        '红鸾',
+        '咸池',
+        '天伤',
+        '天德',
+        '截路',
+      ]),
+    ).toBe(true);
   });
 });

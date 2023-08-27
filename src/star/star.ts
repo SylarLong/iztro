@@ -267,7 +267,7 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   stars[hongluanIndex].push({ name: t('hongluan'), type: 'flower', scope: 'origin' });
   stars[tianxiIndex].push({ name: t('tianxi'), type: 'flower', scope: 'origin' });
   stars[tianyaoIndex].push({ name: t('tianyao'), type: 'flower', scope: 'origin' });
-  stars[xianchiIndex].push({ name: t('咸池'), type: 'flower', scope: 'origin' });
+  stars[xianchiIndex].push({ name: t('xianchi'), type: 'flower', scope: 'origin' });
   stars[yuejieIndex].push({ name: t('jieshen'), type: 'helper', scope: 'origin' });
   stars[santaiIndex].push({ name: t('santai'), type: 'adjective', scope: 'origin' });
   stars[bazuoIndex].push({ name: t('bazuo'), type: 'adjective', scope: 'origin' });
@@ -280,12 +280,12 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   stars[taifuIndex].push({ name: t('taifu'), type: 'adjective', scope: 'origin' });
   stars[fenggaoIndex].push({ name: t('fenggao'), type: 'adjective', scope: 'origin' });
   stars[tianwuIndex].push({ name: t('tianwu'), type: 'adjective', scope: 'origin' });
-  stars[huagaiIndex].push({ name: t('华盖'), type: 'adjective', scope: 'origin' });
+  stars[huagaiIndex].push({ name: t('huagai'), type: 'adjective', scope: 'origin' });
   stars[tianguanIndex].push({ name: t('tianguan'), type: 'adjective', scope: 'origin' });
   stars[tianfuIndex].push({ name: t('tianfu'), type: 'adjective', scope: 'origin' });
   stars[tianchuIndex].push({ name: t('tianchu'), type: 'adjective', scope: 'origin' });
   stars[tianyueIndex].push({ name: t('tianyue'), type: 'adjective', scope: 'origin' });
-  stars[tiandeIndex].push({ name: t('天德'), type: 'adjective', scope: 'origin' });
+  stars[tiandeIndex].push({ name: t('tiande'), type: 'adjective', scope: 'origin' });
   stars[yuedeIndex].push({ name: t('yuede'), type: 'adjective', scope: 'origin' });
   stars[tiankongIndex].push({ name: t('tiankong'), type: 'adjective', scope: 'origin' });
   stars[xunkongIndex].push({ name: t('xunkong'), type: 'adjective', scope: 'origin' });

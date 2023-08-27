@@ -714,7 +714,7 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
     ),
   );
   const tianwuIndex = fixIndex(
-    fixEarthlyBranchIndex(['si', 'chen', 'yin', 'hai'][monthIndex % 4] as EarthlyBranchName),
+    fixEarthlyBranchIndex(['si', 'shen', 'yin', 'hai'][monthIndex % 4] as EarthlyBranchName),
   );
 
   return {

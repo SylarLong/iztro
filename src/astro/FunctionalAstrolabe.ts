@@ -1,10 +1,10 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES } from '../data';
 import { Astrolabe, Horoscope } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName } from '../i18n';
+import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarName } from '../i18n';
 import { getHoroscopeStar } from '../star';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
-import { getPalace } from './analyzer';
+import { getPalace, isSurroundedByStars } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames } from './palace';
 
@@ -166,6 +166,15 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @returns 对应的宫位数据，若没有找到则返回undefined
    */
   palace: (indexOrName: number | PalaceName) => IFunctionalPalace | undefined;
+
+  /**
+   * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
+   *
+   * @param indexOrName 宫位索引或者宫位名称
+   * @param stars 星耀名称数组
+   * @returns true | false
+   */
+  isSurrounded: (indexOrName: number | PalaceName, stars: StarName[]) => boolean;
 }
 
 export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
@@ -201,11 +210,11 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.palaces = data.palaces;
   }
 
-  horoscope(targetDate: string | Date = new Date(), timeIndexOfTarget?: number) {
-    return _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
-  }
+  horoscope = (targetDate: string | Date = new Date(), timeIndexOfTarget?: number) =>
+    _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
 
-  palace(indexOrName: number | PalaceName): IFunctionalPalace | undefined {
-    return getPalace(this, indexOrName);
-  }
+  palace = (indexOrName: number | PalaceName): IFunctionalPalace | undefined => getPalace(this, indexOrName);
+
+  isSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
+    isSurroundedByStars(this, indexOrName, stars);
 }

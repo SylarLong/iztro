@@ -1,6 +1,6 @@
 import { Palace } from '../data/types';
 import { StarName } from '../i18n';
-import { hasOneOfStars, hasStars } from './analyzer';
+import { hasOneOfStars, hasStars, notHaveStars } from './analyzer';
 
 export interface IFunctionalPalace extends Palace {
   /**
@@ -12,6 +12,14 @@ export interface IFunctionalPalace extends Palace {
    * @returns true | false
    */
   has: (stars: StarName[]) => boolean;
+
+  /**
+   * 判断某个宫位内是否有传入的星耀，要所有星耀都不在宫位内才会返回true
+   *
+   * @param stars 星耀名称，可以包含主星、辅星、杂耀
+   * @returnstrue | false
+   */
+  notHave: (stars: StarName[]) => boolean;
 
   /**
    * 判断某个宫位内是否有传入星耀的其中一个，只要命中一个就会返回true
@@ -59,11 +67,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     return this;
   }
 
-  has(stars: StarName[]): boolean {
-    return hasStars(this, stars);
-  }
-
-  hasOneOf(stars: StarName[]): boolean {
-    return hasOneOfStars(this, stars);
-  }
+  has = (stars: StarName[]): boolean => hasStars(this, stars);
+  notHave = (stars: StarName[]): boolean => notHaveStars(this, stars);
+  hasOneOf = (stars: StarName[]): boolean => hasOneOfStars(this, stars);
 }

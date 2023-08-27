@@ -12,6 +12,16 @@
 
   - add `palace` and `star` analyzation function
 
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 已知Bug
+
+  🇺🇸
+
+  - fix known bugs
+
 ## v0.3.2
 
 - ✨ 改进（enhancement）

@@ -613,6 +613,14 @@ describe('star/location', () => {
       tianyueIndex: 9,
       tianwuIndex: 0,
     });
+    expect(getMonthlyStarIndex('2023-08-15', 0, true)).toStrictEqual({
+      yuejieIndex: 10,
+      tianyaoIndex: 4,
+      tianxingIndex: 0,
+      yinshaIndex: 2,
+      tianyueIndex: 1,
+      tianwuIndex: 6,
+    });
   });
 
   test('getDailyStarIndex()', () => {
