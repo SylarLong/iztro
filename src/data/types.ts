@@ -8,6 +8,7 @@ import {
   PalaceName,
   StarName,
 } from '../i18n';
+import { IFunctionalPalace } from '../astro/FunctionalPalace';
 
 /** 支持的语言 */
 export type Language = (typeof LANGUAGES)[number];
@@ -396,26 +397,5 @@ export type Astrolabe = {
   /** 五行局 */
   fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
-  palaces: Palace[];
-
-  /**
-   * 获取运限数据
-   *
-   * @version v0.2.0
-   *
-   * @param date 阳历日期【可选】，默认为调用时的日期
-   * @param timeIndex 时辰索引【可选】，默认会自动读取当前时间的时辰
-   * @returns 运限数据
-   */
-  horoscope: (date?: string | Date, timeIndex?: number) => Horoscope;
-
-  /**
-   * 获取星盘的某一个宫位
-   *
-   * @version v1.0.0
-   *
-   * @param indexOrName 宫位索引或者宫位名称
-   * @returns 对应的宫位数据，弱没有找到则返回undefined
-   */
-  palace: (indexOrName: number | PalaceName) => Palace | undefined;
+  palaces: IFunctionalPalace[];
 };
