@@ -65,7 +65,7 @@ npm i iztro -S
   var astrolabe = iztro.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
-相信文档请移步[开发文档](https://docs.isztro.com)
+详细文档请移步[开发文档](https://docs.isztro.com)
 
 #### ☕ 总结
 
