@@ -13,9 +13,6 @@ import { IFunctionalPalace } from '../astro/FunctionalPalace';
 /** 支持的语言 */
 export type Language = (typeof LANGUAGES)[number];
 
-/** 性别 */
-export type Gender = '男' | '女';
-
 /** 阴阳 */
 export type YinYang = '阴' | '阳';
 

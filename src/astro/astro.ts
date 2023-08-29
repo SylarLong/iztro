@@ -1,7 +1,7 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from '../calendar';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
-import { Gender, Language } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
+import { Language } from '../data/types';
+import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
@@ -20,7 +20,7 @@ import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } fr
 export const astrolabeBySolarDate = (
   solarDateStr: string,
   timeIndex: number,
-  gender: Gender,
+  gender: GenderName,
   fixLeap: boolean = true,
   language: Language = 'zh-CN',
 ) => {
@@ -110,7 +110,7 @@ export const astrolabeBySolarDate = (
 export const astrolabeByLunarDate = (
   lunarDateStr: string,
   timeIndex: number,
-  gender: Gender,
+  gender: GenderName,
   isLeapMonth: boolean = false,
   fixLeap: boolean = true,
   language?: Language,

@@ -39,6 +39,11 @@ import starJaJP from './locales/ja-JP/star';
 import starKoKR from './locales/ko-KR/star';
 import starZhCN from './locales/zh-CN/star';
 import starZhTW from './locales/zh-TW/star';
+import genderEnUS from './locales/en-US/gender';
+import genderJaJP from './locales/ja-JP/gender';
+import genderKoKR from './locales/ko-KR/gender';
+import genderZhCN from './locales/zh-CN/gender';
+import genderZhTW from './locales/zh-TW/gender';
 import { Language } from '../data/types';
 
 const resources: { [key: Language]: { translation: { [key: string]: string } } } = {
@@ -52,6 +57,7 @@ const resources: { [key: Language]: { translation: { [key: string]: string } } }
       ...mutagenEnUS,
       ...starEnUS,
       ...palaceEnUS,
+      ...genderEnUS,
     },
   },
   'ja-JP': {
@@ -64,6 +70,7 @@ const resources: { [key: Language]: { translation: { [key: string]: string } } }
       ...mutagenJaJP,
       ...starJaJP,
       ...palaceJaJP,
+      ...genderJaJP,
     },
   },
   'ko-KR': {
@@ -76,6 +83,7 @@ const resources: { [key: Language]: { translation: { [key: string]: string } } }
       ...mutagenKoKR,
       ...starKoKR,
       ...palaceKoKR,
+      ...genderKoKR,
     },
   },
   'zh-CN': {
@@ -88,6 +96,7 @@ const resources: { [key: Language]: { translation: { [key: string]: string } } }
       ...mutagenZhCN,
       ...starZhCN,
       ...palaceZhCN,
+      ...genderZhCN,
     },
   },
   'zh-TW': {
@@ -100,6 +109,7 @@ const resources: { [key: Language]: { translation: { [key: string]: string } } }
       ...mutagenZhTW,
       ...starZhTW,
       ...palaceZhTW,
+      ...genderZhTW,
     },
   },
 };
@@ -184,6 +194,15 @@ export type FiveElementsClassName =
   | FiveElementsClassZhCN
   | FiveElementsClassZhTW;
 export type FiveElementsClassKey = keyof typeof fiveElementsClassZhCN;
+
+type GenderEnUS = (typeof genderEnUS)[keyof typeof genderEnUS];
+type GenderJaJP = (typeof genderJaJP)[keyof typeof genderJaJP];
+type GenderKoKR = (typeof genderKoKR)[keyof typeof genderKoKR];
+type GenderZhCN = (typeof genderZhCN)[keyof typeof genderZhCN];
+type GenderZhTW = (typeof genderZhTW)[keyof typeof genderZhTW];
+
+export type GenderName = GenderEnUS | GenderJaJP | GenderKoKR | GenderZhCN | GenderZhTW;
+export type GenderKey = keyof typeof genderZhCN;
 
 /**
  * 设置国际化语言。
