@@ -70,6 +70,26 @@ export const GENDER = {
 } as const;
 
 /**
+ * 五行局，用于定紫微星和算起运年龄
+ * 几局就从几岁（虚岁）开始起运
+ * 比如 木三局 就从3岁开始起运
+ *
+ * @enum
+ *  - 2 水二局
+ *  - 3 木三局
+ *  - 4 金四局
+ *  - 5 土五局
+ *  - 6 火六局
+ */
+export enum FiveElementsClass {
+  water2nd = 2,
+  wood3rd,
+  metal4th,
+  earth5th,
+  fire6th,
+}
+
+/**
  * 时辰, 子时分早晚。
  * 其中 00:00-01:00 为早子时，23:00-00:00 为晚子时
  */

@@ -1,7 +1,6 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS, PALACES } from '../data';
-import { FiveElementsClass } from '../data/types';
+import { EARTHLY_BRANCHES, FiveElementsClass, HEAVENLY_STEMS, PALACES } from '../data';
 import {
   EarthlyBranchKey,
   EarthlyBranchName,

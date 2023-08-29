@@ -1,4 +1,4 @@
-import { Star } from '../data/types';
+import { Star, SurroundedPalaces } from '../data/types';
 import { kot, PalaceKey, PalaceName, StarKey, StarName } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
@@ -27,6 +27,59 @@ const _includeOneOf = (allStarsInPalace: StarKey[], targetStars: StarName[]) => 
   const starKeys = targetStars.map((item) => kot<StarKey>(item));
 
   return starKeys.some((star) => allStarsInPalace.includes(star));
+};
+
+const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: SurroundedPalaces) =>
+  _concatStars(
+    target.majorStars,
+    target.minorStars,
+    target.adjectiveStars,
+    opposite.majorStars,
+    opposite.minorStars,
+    opposite.adjectiveStars,
+    wealth.majorStars,
+    wealth.minorStars,
+    wealth.adjectiveStars,
+    career.majorStars,
+    career.minorStars,
+    career.adjectiveStars,
+  );
+
+/**
+ * 获取三方四正宫位，所谓三方四正就是传入的目标宫位，以及其对宫，财帛位和官禄位，总共四个宫位
+ *
+ * @version v1.1.0
+ *
+ * @param $ 星盘实例
+ * @param indexOrName 宫位索引或者宫位名称
+ * @returns 三方四正宫位
+ */
+export const getSurroundedPalaces = ($: IFunctionalAstrolabe, indexOrName: number | PalaceName): SurroundedPalaces => {
+  // 获取目标宫位
+  const palace = getPalace($, indexOrName);
+
+  if (!palace) {
+    throw new Error('indexOrName is inccorrect.');
+  }
+  // 获取目标宫位索引
+  const palaceIndex = fixEarthlyBranchIndex(palace.earthlyBranch);
+  // 获取对宫
+  const palace6 = getPalace($, fixIndex(palaceIndex + 6));
+  // 财帛位
+  const palace4 = getPalace($, fixIndex(palaceIndex + 4));
+  // 官禄位
+  const palace8 = getPalace($, fixIndex(palaceIndex + 8));
+
+  if (!palace4 || !palace6 || !palace8) {
+    throw new Error('indexOrName is inccorrect.');
+  }
+
+  return {
+    target: palace,
+    wealth: palace4,
+    opposite: palace6,
+    career: palace8,
+  };
 };
 
 /**
@@ -120,38 +173,46 @@ export const isSurroundedByStars = (
   indexOrName: number | PalaceName,
   stars: StarName[],
 ): boolean => {
-  // 获取目标宫位
-  const palace = getPalace($, indexOrName);
-
-  if (!palace) {
-    return false;
-  }
-  // 获取目标宫位索引
-  const palaceIndex = fixEarthlyBranchIndex(palace.earthlyBranch);
-  // 获取对宫
-  const palace6 = getPalace($, fixIndex(palaceIndex + 6));
-  // 获取三方宫位
-  const palace4 = getPalace($, fixIndex(palaceIndex + 4));
-  const palace8 = getPalace($, fixIndex(palaceIndex + 8));
-
-  if (!palace4 || !palace6 || !palace8) {
-    return false;
-  }
-
-  const allStarsInPalace = _concatStars(
-    palace.majorStars,
-    palace.minorStars,
-    palace.adjectiveStars,
-    palace4.majorStars,
-    palace4.minorStars,
-    palace4.adjectiveStars,
-    palace6.majorStars,
-    palace6.minorStars,
-    palace6.adjectiveStars,
-    palace8.majorStars,
-    palace8.minorStars,
-    palace8.adjectiveStars,
-  );
+  const surroundedPalaces = getSurroundedPalaces($, indexOrName);
+  const allStarsInPalace = _getAllStarsInSurroundedPalaces(surroundedPalaces);
 
   return _includeAll(allStarsInPalace, stars);
+};
+
+/**
+ * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
+ *
+ * @version v1.1.0
+ *
+ * @param $ 星盘实例
+ * @param indexOrName 宫位索引或者宫位名称
+ * @param stars 星耀名称数组
+ * @returns true | false
+ */
+export const isSurroundedByOneOfStars = (
+  $: IFunctionalAstrolabe,
+  indexOrName: number | PalaceName,
+  stars: StarName[],
+) => {
+  const surroundedPalaces = getSurroundedPalaces($, indexOrName);
+  const allStarsInPalace = _getAllStarsInSurroundedPalaces(surroundedPalaces);
+
+  return _includeOneOf(allStarsInPalace, stars);
+};
+
+/**
+ * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
+ *
+ * @version v1.1.0
+ *
+ * @param $ 星盘实例
+ * @param indexOrName 宫位索引或者宫位名称
+ * @param stars 星耀名称数组
+ * @returns true | false
+ */
+export const notSurroundedByStars = ($: IFunctionalAstrolabe, indexOrName: number | PalaceName, stars: StarName[]) => {
+  const surroundedPalaces = getSurroundedPalaces($, indexOrName);
+  const allStarsInPalace = _getAllStarsInSurroundedPalaces(surroundedPalaces);
+
+  return _excludeAll(allStarsInPalace, stars);
 };

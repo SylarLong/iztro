@@ -1,5 +1,5 @@
 import { getFiveElementsClass, getSoulAndBody, getPalaceNames } from '../../astro';
-import { FiveElementsClass } from '../../data/types';
+import { FiveElementsClass } from '../../data';
 import { t } from '../../i18n';
 
 describe('astro/palace', () => {

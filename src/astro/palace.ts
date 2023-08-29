@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches } from '../data';
-import { FiveElementsClass, SoulAndBody, Decadal } from '../data/types';
+import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches, FiveElementsClass } from '../data';
+import { SoulAndBody, Decadal } from '../data/types';
 import {
   EarthlyBranchKey,
   EarthlyBranchName,
