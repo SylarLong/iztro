@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches } from '../data';
-import { FiveElementsClass, SoulAndBody, Decadal, Gender } from '../data/types';
+import { FiveElementsClass, SoulAndBody, Decadal } from '../data/types';
 import {
   EarthlyBranchKey,
   EarthlyBranchName,
@@ -11,6 +11,8 @@ import {
   PalaceName,
   kot,
   t,
+  GenderName,
+  GenderKey,
 } from '../i18n';
 import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
 
@@ -165,10 +167,11 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
 export const getHoroscope = (
   solarDateStr: string,
   timeIndex: number,
-  gender: Gender,
+  gender: GenderName,
   fixLeap?: boolean,
 ): { decadals: Decadal[]; ages: number[][] } => {
   const decadals: Decadal[] = [];
+  const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0]);
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1]);
@@ -180,7 +183,7 @@ export const getHoroscope = (
 
   for (let i = 0; i < 12; i++) {
     const idx =
-      GENDER[gender] === earthlyBranches[earthlyBranch].yinYang ? fixIndex(soulIndex + i) : fixIndex(soulIndex - i);
+      GENDER[genderKey] === earthlyBranches[earthlyBranch].yinYang ? fixIndex(soulIndex + i) : fixIndex(soulIndex - i);
     const start = FiveElementsClass[fiveElementsClass] + 10 * i;
     const heavenlyStemIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx, 10);
     const earthlyBranchIndex = fixIndex(EARTHLY_BRANCHES.indexOf('yinEarthly') + idx);

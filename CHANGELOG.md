@@ -1,5 +1,17 @@
 # 紫微斗数 @sylarlong/astro
 
+## v1.1.0
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 支持性别国际化
+
+  🇺🇸
+
+  - localization for gender
+
 ## v1.0.0
 
 - 🪄 功能（feature）

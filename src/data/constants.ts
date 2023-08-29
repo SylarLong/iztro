@@ -65,8 +65,8 @@ export const PALACES = [
 
 /** 性别对应阴阳，男为阳，女为阴 */
 export const GENDER = {
-  男: '阳',
-  女: '阴',
+  male: '阳',
+  female: '阴',
 } as const;
 
 /**

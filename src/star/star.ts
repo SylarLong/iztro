@@ -1,7 +1,7 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { GENDER, earthlyBranches } from '../data';
-import { FiveElementsClass, Star, Gender } from '../data/types';
+import { FiveElementsClass, Star } from '../data/types';
 import {
   StarName,
   t,
@@ -11,6 +11,8 @@ import {
   HeavenlyStemName,
   EarthlyBranchName,
   FiveElementsClassName,
+  GenderName,
+  GenderKey,
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import {
@@ -360,10 +362,11 @@ export const getChangesheng12StartIndex = (fiveElementClassName: FiveElementsCla
 export const getchangsheng12 = (
   solarDateStr: string,
   timeIndex: number,
-  gender: Gender,
+  gender: GenderName,
   fixLeap?: boolean,
 ): StarName[] => {
   const changsheng12: StarName[] = [];
+  const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [, earthlyBranchNameOfYear] = yearly;
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
@@ -378,7 +381,7 @@ export const getchangsheng12 = (
   for (let i = 0; i < stars.length; i++) {
     let idx = 0;
 
-    if (GENDER[gender] === earthlyBranches[earthlyBranchOfYear].yinYang) {
+    if (GENDER[genderKey] === earthlyBranches[earthlyBranchOfYear].yinYang) {
       idx = fixIndex(i + startIdx);
     } else {
       idx = fixIndex(startIdx - i);
@@ -399,7 +402,8 @@ export const getchangsheng12 = (
  * @param gender 性别【男｜女】
  * @returns 博士12神从寅宫开始的顺序
  */
-export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => {
+export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[] => {
+  const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
@@ -423,7 +427,9 @@ export const getBoShi12 = (solarDateStr: string, gender: Gender): StarName[] => 
 
   for (let i = 0; i < stars.length; i++) {
     // 阳男阴女顺行，阴男阳女逆部
-    const idx = fixIndex(GENDER[gender] === earthlyBranches[earthlyBranchOfYear].yinYang ? luIndex + i : luIndex - i);
+    const idx = fixIndex(
+      GENDER[genderKey] === earthlyBranches[earthlyBranchOfYear].yinYang ? luIndex + i : luIndex - i,
+    );
 
     boshi12[idx] = t(stars[i]);
   }
