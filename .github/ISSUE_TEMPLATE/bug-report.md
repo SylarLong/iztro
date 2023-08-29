@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: If you found any bugs. Please use this template to create an issue.
-title: "[BUG]"
+title: "{version}:{function}-"
 labels: 漏洞｜bug
 assignees: SylarLong
 
