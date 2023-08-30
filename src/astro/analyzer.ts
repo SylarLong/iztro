@@ -65,9 +65,9 @@ export const getSurroundedPalaces = ($: IFunctionalAstrolabe, indexOrName: numbe
   const palaceIndex = fixEarthlyBranchIndex(palace.earthlyBranch);
   // 获取对宫
   const palace6 = getPalace($, fixIndex(palaceIndex + 6));
-  // 财帛位
-  const palace4 = getPalace($, fixIndex(palaceIndex + 4));
   // 官禄位
+  const palace4 = getPalace($, fixIndex(palaceIndex + 4));
+  // 财帛位
   const palace8 = getPalace($, fixIndex(palaceIndex + 8));
 
   if (!palace4 || !palace6 || !palace8) {
@@ -76,9 +76,9 @@ export const getSurroundedPalaces = ($: IFunctionalAstrolabe, indexOrName: numbe
 
   return {
     target: palace,
-    wealth: palace4,
+    wealth: palace8,
     opposite: palace6,
-    career: palace8,
+    career: palace4,
   };
 };
 
