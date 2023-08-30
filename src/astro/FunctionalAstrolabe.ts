@@ -34,7 +34,7 @@ const _getHoroscopeBySolarDate = (
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(new Date(targetDate).getHours());
-  const { yearly, monthly, daily, timely } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+  const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
     targetDate.toString(),
     timeIndex || convertTimeIndex,
   );
@@ -66,7 +66,7 @@ const _getHoroscopeBySolarDate = (
   // 流日索引
   let dailyIndex = -1;
   // 流时索引
-  let timelyIndex = -1;
+  let hourlyIndex = -1;
 
   // 查询大限索引
   $.palaces.some(({ decadal }, index) => {
@@ -92,7 +92,7 @@ const _getHoroscopeBySolarDate = (
   monthlyIndex = fixIndex(
     yearlyIndex -
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.monthly[1])) +
-      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.timely[1])) +
+      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(monthly[1])),
   );
 
@@ -100,7 +100,7 @@ const _getHoroscopeBySolarDate = (
   dailyIndex = (monthlyIndex + _date.lunarDay - 1) % 12;
 
   // 获取流时索引
-  timelyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(timely[1])));
+  hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1])));
 
   const scope: Horoscope = {
     solarDate: normalizeSolarDateStr(targetDate).join('-'),
@@ -139,12 +139,12 @@ const _getHoroscopeBySolarDate = (
       palaceNames: getPalaceNames(dailyIndex),
       mutagen: getMutagensByHeavenlyStem(daily[0]),
     },
-    timely: {
-      index: timelyIndex,
-      heavenlyStem: timely[0],
-      earthlyBranch: timely[1],
-      palaceNames: getPalaceNames(timelyIndex),
-      mutagen: getMutagensByHeavenlyStem(timely[0]),
+    hourly: {
+      index: hourlyIndex,
+      heavenlyStem: hourly[0],
+      earthlyBranch: hourly[1],
+      palaceNames: getPalaceNames(hourlyIndex),
+      mutagen: getMutagensByHeavenlyStem(hourly[0]),
     },
   };
 

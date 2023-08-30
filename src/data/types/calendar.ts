@@ -79,7 +79,7 @@ export type HeavenlyStemAndEarthlyBranch = [HeavenlyStemName, EarthlyBranchName]
  * - monthly 月柱[天干，地支]
  * - monthly 月柱[天干，地支]
  * - daily 日柱[天干，地支]
- * - timely 时柱[天干，地支]
+ * - hourly 时柱[天干，地支]
  *
  * @function toString() 将对象以干支纪年字符串输出
  */
@@ -91,7 +91,7 @@ export type HeavenlyStemAndEarthlyBranchDate = {
   /** 日柱[天干，地支] */
   daily: HeavenlyStemAndEarthlyBranch;
   /** 时柱[天干，地支] */
-  timely: HeavenlyStemAndEarthlyBranch;
+  hourly: HeavenlyStemAndEarthlyBranch;
   /**
    * 获取四柱的字符串
    *
@@ -100,7 +100,7 @@ export type HeavenlyStemAndEarthlyBranchDate = {
    * yearly = ['癸', '卯'];
    * monthly = ['戊', '午'];
    * daily = ['癸', '亥'];
-   * timely = ['甲', '寅'];
+   * hourly = ['甲', '寅'];
    * toString(); // 癸卯 戊午 癸亥 甲寅
    */
   toString: () => string;

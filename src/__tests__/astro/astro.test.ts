@@ -93,10 +93,10 @@ describe('Astrolabe', () => {
       '仆役',
     ]);
     expect(horoscope.daily).toHaveProperty('mutagen', ['武曲', '贪狼', '天梁', '文曲']);
-    expect(horoscope.timely).toHaveProperty('index', 8);
-    expect(horoscope.timely).toHaveProperty('heavenlyStem', '丙');
-    expect(horoscope.timely).toHaveProperty('earthlyBranch', '寅');
-    expect(horoscope.timely).toHaveProperty('palaceNames', [
+    expect(horoscope.hourly).toHaveProperty('index', 8);
+    expect(horoscope.hourly).toHaveProperty('heavenlyStem', '丙');
+    expect(horoscope.hourly).toHaveProperty('earthlyBranch', '寅');
+    expect(horoscope.hourly).toHaveProperty('palaceNames', [
       '官禄',
       '仆役',
       '迁移',
@@ -110,7 +110,7 @@ describe('Astrolabe', () => {
       '福德',
       '田宅',
     ]);
-    expect(horoscope.timely).toHaveProperty('mutagen', ['天同', '天机', '文昌', '廉贞']);
+    expect(horoscope.hourly).toHaveProperty('mutagen', ['天同', '天机', '文昌', '廉贞']);
 
     const horoscope2 = result.horoscope('2023-10-19 3:12');
 
@@ -256,10 +256,10 @@ describe('Astrolabe', () => {
       '노복',
     ]);
     expect(horoscope.daily).toHaveProperty('mutagen', ['무곡', '탐랑', '천량', '문곡']);
-    expect(horoscope.timely).toHaveProperty('index', 8);
-    expect(horoscope.timely).toHaveProperty('heavenlyStem', '병');
-    expect(horoscope.timely).toHaveProperty('earthlyBranch', '인');
-    expect(horoscope.timely).toHaveProperty('palaceNames', [
+    expect(horoscope.hourly).toHaveProperty('index', 8);
+    expect(horoscope.hourly).toHaveProperty('heavenlyStem', '병');
+    expect(horoscope.hourly).toHaveProperty('earthlyBranch', '인');
+    expect(horoscope.hourly).toHaveProperty('palaceNames', [
       '관록',
       '노복',
       '천이',
@@ -273,7 +273,7 @@ describe('Astrolabe', () => {
       '복덕',
       '전택',
     ]);
-    expect(horoscope.timely).toHaveProperty('mutagen', ['천동', '천기', '문창', '염정']);
+    expect(horoscope.hourly).toHaveProperty('mutagen', ['천동', '천기', '문창', '염정']);
   });
 
   test('astrolabeByLunarDate()', () => {

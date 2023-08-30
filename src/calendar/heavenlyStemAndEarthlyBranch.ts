@@ -106,15 +106,15 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
   const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
   const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);
   const daily = heavenlyStemAndEarthlyBranchOfDay(solarDate, timeIndex);
-  const timely = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
+  const hourly = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
 
   return {
     yearly,
     monthly,
     daily,
-    timely,
+    hourly,
     toString() {
-      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${timely.join('')}`;
+      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
     },
   };
 };
@@ -136,15 +136,15 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
   const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
   const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);
   const daily = heavenlyStemAndEarthlyBranchOfDay(solarDate, timeIndex);
-  const timely = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
+  const hourly = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
 
   return {
     yearly,
     monthly,
     daily,
-    timely,
+    hourly,
     toString() {
-      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${timely.join('')}`;
+      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
     },
   };
 };

@@ -85,7 +85,7 @@ export type Horoscope = {
   /** 流日 */
   daily: HoroscopeItem;
   /** 流时 */
-  timely: HoroscopeItem;
+  hourly: HoroscopeItem;
 };
 
 /**

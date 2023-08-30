@@ -1,5 +1,13 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { EARTHLY_BRANCHES, GENDER, HEAVENLY_STEMS, PALACES, TIGER_RULE, earthlyBranches, FiveElementsClass } from '../data';
+import {
+  EARTHLY_BRANCHES,
+  GENDER,
+  HEAVENLY_STEMS,
+  PALACES,
+  TIGER_RULE,
+  earthlyBranches,
+  FiveElementsClass,
+} from '../data';
 import { SoulAndBody, Decadal } from '../data/types';
 import {
   EarthlyBranchKey,
@@ -34,8 +42,8 @@ import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
  * @returns SoulAndBody
  */
 export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
-  const { yearly, timely } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
-  const earthlyBranchOfTime = kot<EarthlyBranchKey>(timely[1]);
+  const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
+  const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1]);
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0]);
 
   // 紫微斗数以`寅`宫为第一个宫位
