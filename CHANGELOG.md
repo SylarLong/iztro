@@ -2,15 +2,27 @@
 
 ## v1.1.0
 
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 实现三方四正宫位功能 #21
+
+  🇺🇸
+
+  - implement surrounded palaces feature #21
+
 - ✨ 改进（enhancement）
 
   🇨🇳
 
   - 支持性别国际化
+  - 优化`types`结构，将`types.ts`拆分进`types`文件夹内，方便维护
 
   🇺🇸
 
   - localization for gender
+  - optimize the structure of `types`: split `types.ts` into several parts and store them into `types` directory.
 
 ## v1.0.0
 

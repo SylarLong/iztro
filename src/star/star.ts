@@ -1,7 +1,7 @@
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
-import { GENDER, earthlyBranches } from '../data';
-import { FiveElementsClass, Star } from '../data/types';
+import { GENDER, earthlyBranches, FiveElementsClass } from '../data';
+import { Star } from '../data/types';
 import {
   StarName,
   t,
