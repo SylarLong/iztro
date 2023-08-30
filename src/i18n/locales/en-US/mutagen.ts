@@ -1,5 +1,5 @@
 export default {
-  sihuaLu: 'addtional',
+  sihuaLu: 'additional',
   sihuaQuan: 'forceful',
   sihuaKe: 'easygoing',
   sihuaJi: 'focused',

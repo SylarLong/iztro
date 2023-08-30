@@ -1,5 +1,17 @@
 # 紫微斗数 @sylarlong/astro
 
+## v1.1.1
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 更改错别字
+
+  🇺🇸
+
+  - fix typo
+
 ## v1.1.0
 
 - 🪄 功能（feature）
