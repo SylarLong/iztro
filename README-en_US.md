@@ -1,6 +1,6 @@
 <div align="center">
 
-# IZTRO
+# 📦 IZTRO
 
 A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
@@ -9,7 +9,7 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 <div align="center">
 
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/iztro/Codecov.yaml)](https://github.com/SylarLong/iztro/actions) [![npm](https://img.shields.io/npm/v/iztro)](https://www.npmjs.com/package/iztro) [![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/iztro)](https://github.com/search?q=repo%3ASylarLong%2Fiztro++language%3ATypeScript&type=code) [![Codecov](https://img.shields.io/codecov/c/github/sylarlong/iztro)](https://app.codecov.io/gh/SylarLong/iztro/tree/main/src%2Fstar) [![npm](https://img.shields.io/npm/dw/%40sylarlong/iztro)](https://www.npmjs.com/package/iztro) [![Maintenance](https://img.shields.io/maintenance/yes/2023)](https://github.com/SylarLong/iztro)
-[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro) [![npm bundle size](https://img.shields.io/bundlephobia/min/iztro)](https://www.npmjs.com/package/iztro) [![GitHub issues](https://img.shields.io/github/issues/SylarLong/iztro)](https://github.com/SylarLong/iztro/issues)
+[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro) [![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro) [![GitHub issues](https://img.shields.io/github/issues/SylarLong/iztro)](https://github.com/SylarLong/iztro/issues)
 [![GitHub package.json dynamic](https://img.shields.io/github/package-json/author/sylarlong/iztro)](https://github.com/SylarLong)
 
 </div>
@@ -18,39 +18,72 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 <div align="center">
 
-[简体中文](./README.md) 🔸 English
+简体中文 🔸 [English](./README-en_US.md)
 
 </div>
 
-### 📢 Introduction
+---
 
-This framework is used to generate the astrolabe of The Purple Star Astrology(Zi Wei Dou Shu). We support Simplified Chinese, Tradional Chinese, English, Korean and Japenese for now. If you have any issue please feel free to create issues in [here](https://github.com/SylarLong/iztro/discussions). feel free to create issues in [here](https://github.com/SylarLong/iztro/issues) if you found any bugs. I'll appreciate your star.🍻
+### Summary
 
-### 🌰 Demo
+It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
 
-- [Demo](https://a.14star.cn)
+Feature list
+
+- To obtain the astrology data by birthday (`Solar calendar` or `Lunar calendar`) and birth time (`Chinese hour`).
+  - basic information(`birthday`, `Chinese hour`, `sign`, `Chinese zodiac`, `body lord`, `soul lord` etc.)
+  - palace information(`name`, `heavenly stem` and `earthly branch`, `stars` etc.)
+  - star information(`brightness`, `mutagen` and `type`)
+  - horoscope information(`decadal`, `nominal age`, `yearly`, `monthly`, `daily`, `hourly`)
+  - mutagen
+- get `mutagen` by `heavenly stem`
+- get `surrounded palaces` by palace `index` or `name`
+- check whether specific `stars` in a specific `palace`
+- check whether specific `stars` in `surrounded palaces`
+- multilingual input/output results
+
+### Quick link
+
 - [Document](https://docs.iztro.com)
+- [Discussions](https://github.com/SylarLong/iztro/discussions)
+- [Issues](https://github.com/SylarLong/iztro/issues)
 
-### 🎲 How to use it?
+### Installation
 
-#### 🚀 Let's get started
+you can choose any package manager to install `iztro`.
 
-```
-npm i iztro -S
-```
+- NPM
 
-#### ❓ Usage
+  ```
+  npm install iztro -S
+  ```
+
+- Yarn
+
+  ```
+  yarn add iztro
+  ```
+
+- pnpm
+
+  ```
+  pnpm install iztro -S
+  ```
+
+### Simple example
+
+This is a very simple example to show how to use `iztro` to get the astrolabe data. please visit [develop document](https://docs.iztro.com) for details.
 
 - ES6 Module
 
   ```ts
   import { astro } from 'iztro';
 
-  // generate astrolabe by solar date
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
+  // get astrolabe data by solar date
+  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, 'male', true, 'en-US');
 
-  // generate astrolabe by lunar date
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
+  // get astrolabe data by lunar date
+  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
 - CommonJS
@@ -58,27 +91,31 @@ npm i iztro -S
   ```ts
   var iztro = require('iztro');
 
-  // generate astrolabe by solar date
-  var astrolabe = iztro.astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
+  // get astrolabe data by solar date
+  var astrolabe = iztro.astro.astrolabeBySolarDate('2000-8-16', 2, 'male', true, 'en-US');
 
-  // generate astrolabe by lunar date
-  var astrolabe = iztro.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
+  // get astrolabe data by lunar date
+  var astrolabe = iztro.astro.astrolabeByLunarDate('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
-Please refer to [document](https://docs.iztro.com) for details.
+### [CONTRIBUTING](https://github.com/SylarLong/iztro/blob/main/CONTRIBUTING.md)
 
-#### ☕ Summary
+If you're interested in `iztro` and wish to join us,it's very welcome. You can contribute by:
 
-Buy me a coffe if it's useful for you.👍 [Paypal Me](https://PayPal.Me/sylarlong)
+- create an issue [here](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E5%8A%9F%E8%83%BD%EF%BD%9Cfeature&projects=&template=new-feature.md&title=%7B%E6%A0%87%E9%A2%98%7D%EF%BD%9C%7Btitle%7D) if you have any good ideas or suggestions.
+- report a bug [here](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-) if you found any bugs.
+- you can also `fork` this code to your repository and create PRs for your changes.
+- also, you can contribute the `localization` files. please refer to [locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales) and create the localization files for your lanuage.
+- additionally, buy me a coffee is another great way to support me👍 [Paypal Me](https://PayPal.Me/sylarlong)
 
-You can create the astrolabe below based on the response data above. `palaces` is used to fill the 12-Palace and other fields are used to fill the Center Palace.
+### Summary
+
+You can generate an astrolabe by using the returned data. Of course it's just an example. You can focus on astrolabe design or data analyzation. This program solves the most tedious work for you, so that you can put more energy on the things you need to pay attention to.
 
 ![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
-#### 📜 LICENSE
+### [LICENSE](https://github.com/SylarLong/iztro/blob/main/LICENSE)
 
 MIT License
 
 Copyright &copy; 2023 Sylar Long
-
-Please use this open-source code responsibly and refrain from using it for illegal purposes.
