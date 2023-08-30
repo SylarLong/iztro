@@ -137,4 +137,54 @@ describe('astro/analyzer', () => {
       ]),
     ).toBe(true);
   });
+
+  test('getSurroundedPalaces() by palace index', () => {
+    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+
+    const { target, opposite, wealth, career } = result.surroundedPalaces(0);
+
+    expect(target).toHaveProperty('name', '疾厄');
+    expect(opposite).toHaveProperty('name', '父母');
+    expect(wealth).toHaveProperty('name', '田宅');
+    expect(career).toHaveProperty('name', '兄弟');
+  });
+
+  test('getSurroundedPalaces() by palace name', () => {
+    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+
+    const { target, opposite, wealth, career } = result.surroundedPalaces('命宫');
+
+    expect(target).toHaveProperty('name', '命宫');
+    expect(opposite).toHaveProperty('name', '迁移');
+    expect(wealth).toHaveProperty('name', '财帛');
+    expect(career).toHaveProperty('name', '官禄');
+  });
+
+  test('isSurroundedByOneOfStars()', () => {
+    const result = astro.astrolabeBySolarDate('2023-8-16', 2, '女', true);
+
+    expect(result.isSurroundedOneOf('命宫', ['太阳', '文曲'])).toBe(true);
+    expect(result.isSurroundedOneOf('命宫', ['天喜', '天钺'])).toBe(true);
+    expect(result.isSurroundedOneOf('命宫', ['天梁', '禄存'])).toBe(true);
+    expect(result.isSurroundedOneOf('命宫', ['左辅', '右弼'])).toBe(true);
+    expect(result.isSurroundedOneOf('命宫', ['地空', '地劫'])).toBe(false);
+
+    expect(result.isSurroundedOneOf(3, ['武曲', '天马'])).toBe(true);
+    expect(result.isSurroundedOneOf(3, ['火星', '贪狼'])).toBe(true);
+    expect(result.isSurroundedOneOf(3, ['天空', '天官'])).toBe(false);
+  });
+
+  test('notSurroundedByStars()', () => {
+    const result = astro.astrolabeBySolarDate('2023-8-16', 2, '女', true);
+
+    expect(result.notSurrounded('命宫', ['太阳', '文曲'])).toBe(false);
+    expect(result.notSurrounded('命宫', ['天喜', '天钺'])).toBe(false);
+    expect(result.notSurrounded('命宫', ['天梁', '禄存'])).toBe(false);
+    expect(result.notSurrounded('命宫', ['左辅', '右弼'])).toBe(false);
+    expect(result.notSurrounded('命宫', ['地空', '地劫'])).toBe(true);
+
+    expect(result.notSurrounded(3, ['武曲', '天马'])).toBe(false);
+    expect(result.notSurrounded(3, ['火星', '贪狼'])).toBe(false);
+    expect(result.notSurrounded(3, ['天魁', '天官'])).toBe(true);
+  });
 });
