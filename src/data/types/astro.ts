@@ -1,7 +1,6 @@
 import { IFunctionalPalace } from '../../astro/FunctionalPalace';
 import { EarthlyBranchName, FiveElementsClassName, HeavenlyStemName, PalaceName, StarName } from '../../i18n';
 import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from './calendar';
-import { ChineseTime, TimeRange } from './general';
 import { Star } from './star';
 
 /**
@@ -130,9 +129,9 @@ export type Astrolabe = {
     chineseDate: HeavenlyStemAndEarthlyBranchDate;
   };
   /** 时辰 */
-  time: ChineseTime;
+  time: string;
   /** 时辰对应的时间段 */
-  timeRange: TimeRange;
+  timeRange: string;
   /** 星座 */
   sign: string;
   /** 生肖 */
