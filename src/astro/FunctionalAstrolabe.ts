@@ -186,6 +186,8 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   /**
    * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
    *
+   * @version v1.0.0
+   *
    * @param indexOrName 宫位索引或者宫位名称
    * @param stars 星耀名称数组
    * @returns true | false
