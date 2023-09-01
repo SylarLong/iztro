@@ -1,1 +1,0 @@
-import{_ as e,o as a,c as t}from"./chunks/framework.bffeebda.js";const i=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"posts/palace.md","filePath":"posts/palace.md"}'),s={name:"posts/palace.md"};function o(c,p,r,n,l,_){return a(),t("div")}const m=e(s,[["render",o]]);export{i as __pageData,m as default};
