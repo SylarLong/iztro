@@ -16,6 +16,8 @@ export interface IFunctionalPalace extends Palace {
   /**
    * 判断某个宫位内是否有传入的星耀，要所有星耀都不在宫位内才会返回true
    *
+   * @version v1.0.0
+   *
    * @param stars 星耀名称，可以包含主星、辅星、杂耀
    * @returnstrue | false
    */
