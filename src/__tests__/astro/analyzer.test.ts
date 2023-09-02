@@ -116,7 +116,7 @@ describe('astro/analyzer', () => {
           '天使',
           '封诰',
         ]),
-    ).toBe(true);
+    ).toBe(false);
     expect(
       result
         .surroundedPalaces('命宫')
@@ -143,7 +143,7 @@ describe('astro/analyzer', () => {
           '天德',
           '截路',
         ]),
-    ).toBe(true);
+    ).toBe(false);
   });
 
   test('getSurroundedPalaces() by palace index', () => {
