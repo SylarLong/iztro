@@ -1,8 +1,9 @@
 import { Star, SurroundedPalaces } from '../data/types';
-import { kot, PalaceKey, PalaceName, StarKey, StarName } from '../i18n';
+import { kot, Mutagen, MutagenKey, PalaceKey, PalaceName, StarKey, StarName } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
 import { IFunctionalPalace } from './FunctionalPalace';
+import { FunctionalSurpalaces, IFunctionalSurpalaces } from './FunctionalSurpalaces';
 
 const _concatStars = (...stars: Star[][]): StarKey[] =>
   Array.from(stars)
@@ -27,6 +28,12 @@ const _includeOneOf = (allStarsInPalace: StarKey[], targetStars: StarName[]) => 
   const starKeys = targetStars.map((item) => kot<StarKey>(item));
 
   return starKeys.some((star) => allStarsInPalace.includes(star));
+};
+
+const _includeMutagen = (stars: Star[], mutagen: Mutagen) => {
+  const mutagenKey = kot<MutagenKey>(mutagen);
+
+  return stars.some((star) => star.mutagen && kot<MutagenKey>(star.mutagen) === mutagenKey);
 };
 
 const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: SurroundedPalaces) =>
@@ -54,7 +61,10 @@ const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: S
  * @param indexOrName 宫位索引或者宫位名称
  * @returns 三方四正宫位
  */
-export const getSurroundedPalaces = ($: IFunctionalAstrolabe, indexOrName: number | PalaceName): SurroundedPalaces => {
+export const getSurroundedPalaces = (
+  $: IFunctionalAstrolabe,
+  indexOrName: number | PalaceName,
+): IFunctionalSurpalaces => {
   // 获取目标宫位
   const palace = getPalace($, indexOrName);
 
@@ -74,12 +84,12 @@ export const getSurroundedPalaces = ($: IFunctionalAstrolabe, indexOrName: numbe
     throw new Error('indexOrName is inccorrect.');
   }
 
-  return {
+  return new FunctionalSurpalaces({
     target: palace,
     wealth: palace8,
     opposite: palace6,
     career: palace4,
-  };
+  });
 };
 
 /**
@@ -131,6 +141,34 @@ export const hasStars = ($: IFunctionalPalace, stars: StarName[]): boolean => {
 };
 
 /**
+ * 判断指定宫位内是否有生年四化
+ *
+ * @version v1.2.0
+ *
+ * @param $ 宫位实例
+ * @param mutagen 四化名称【禄｜权｜科｜忌】
+ * @returns true | false
+ */
+export const hasMutagenInPlace = ($: IFunctionalPalace, mutagen: Mutagen): boolean => {
+  const allStarsInPalace = [...$.majorStars, ...$.minorStars];
+
+  return _includeMutagen(allStarsInPalace, mutagen);
+};
+
+/**
+ * 判断指定宫位内是否没有生年四化
+ *
+ * @version v1.2.0
+ *
+ * @param $ 宫位实例
+ * @param mutagen 四化名称【禄｜权｜科｜忌】
+ * @returns true | false
+ */
+export const notHaveMutagenInPalce = ($: IFunctionalPalace, mutagen: Mutagen): boolean => {
+  return !hasMutagenInPlace($, mutagen);
+};
+
+/**
  * 判断某个宫位内是否有传入的星耀，要所有星耀都不在宫位内才会返回true
  *
  * @version v1.0.0
@@ -163,18 +201,12 @@ export const hasOneOfStars = ($: IFunctionalPalace, stars: StarName[]): boolean 
 /**
  * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
  *
- * @param $ 星盘实例
- * @param indexOrName 宫位索引或者宫位名称
+ * @param $ 三方四正的实例
  * @param stars 星耀名称数组
  * @returns true | false
  */
-export const isSurroundedByStars = (
-  $: IFunctionalAstrolabe,
-  indexOrName: number | PalaceName,
-  stars: StarName[],
-): boolean => {
-  const surroundedPalaces = getSurroundedPalaces($, indexOrName);
-  const allStarsInPalace = _getAllStarsInSurroundedPalaces(surroundedPalaces);
+export const isSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[]): boolean => {
+  const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _includeAll(allStarsInPalace, stars);
 };
@@ -182,20 +214,12 @@ export const isSurroundedByStars = (
 /**
  * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
  *
- * @version v1.1.0
- *
- * @param $ 星盘实例
- * @param indexOrName 宫位索引或者宫位名称
+ * @param $ 三方四正的实例
  * @param stars 星耀名称数组
  * @returns true | false
  */
-export const isSurroundedByOneOfStars = (
-  $: IFunctionalAstrolabe,
-  indexOrName: number | PalaceName,
-  stars: StarName[],
-) => {
-  const surroundedPalaces = getSurroundedPalaces($, indexOrName);
-  const allStarsInPalace = _getAllStarsInSurroundedPalaces(surroundedPalaces);
+export const isSurroundedByOneOfStars = ($: IFunctionalSurpalaces, stars: StarName[]) => {
+  const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _includeOneOf(allStarsInPalace, stars);
 };
@@ -203,16 +227,12 @@ export const isSurroundedByOneOfStars = (
 /**
  * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
  *
- * @version v1.1.0
- *
- * @param $ 星盘实例
- * @param indexOrName 宫位索引或者宫位名称
+ * @param $ 三方四正的实例
  * @param stars 星耀名称数组
  * @returns true | false
  */
-export const notSurroundedByStars = ($: IFunctionalAstrolabe, indexOrName: number | PalaceName, stars: StarName[]) => {
-  const surroundedPalaces = getSurroundedPalaces($, indexOrName);
-  const allStarsInPalace = _getAllStarsInSurroundedPalaces(surroundedPalaces);
+export const notSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[]) => {
+  const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _excludeAll(allStarsInPalace, stars);
 };

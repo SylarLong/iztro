@@ -4,14 +4,9 @@ import { Astrolabe, Horoscope, SurroundedPalaces } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarName } from '../i18n';
 import { getHoroscopeStar } from '../star';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
-import {
-  getPalace,
-  getSurroundedPalaces,
-  isSurroundedByOneOfStars,
-  isSurroundedByStars,
-  notSurroundedByStars,
-} from './analyzer';
+import { getPalace, getSurroundedPalaces } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
+import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { getPalaceNames } from './palace';
 
 /**
@@ -184,6 +179,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   surroundedPalaces: (indexOrName: number | PalaceName) => SurroundedPalaces;
 
   /**
+   *
    * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
    *
    * @version v1.0.0
@@ -198,6 +194,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
    *
    * @version v1.1.0
+   * @deprecated v1.2.0
    *
    * @param indexOrName 宫位索引或者宫位名称
    * @param stars 星耀名称数组
@@ -209,6 +206,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
    *
    * @version v1.1.0
+   * @deprecated v1.2.0
    *
    * @param indexOrName 宫位索引或者宫位名称
    * @param stars 星耀名称数组
@@ -255,14 +253,45 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
 
   palace = (indexOrName: number | PalaceName): IFunctionalPalace | undefined => getPalace(this, indexOrName);
 
-  surroundedPalaces = (indexOrName: number | PalaceName): SurroundedPalaces => getSurroundedPalaces(this, indexOrName);
+  surroundedPalaces = (indexOrName: number | PalaceName): IFunctionalSurpalaces =>
+    getSurroundedPalaces(this, indexOrName);
 
+  /**
+   * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
+   *
+   * @example
+   *  // AS IS
+   *  astrolabe.isSurrounded(0, ["紫微"]);
+   *
+   *  // TO BE
+   *  astrolabe.surroundedPalaces(0).have(["紫微"]);
+   */
   isSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    isSurroundedByStars(this, indexOrName, stars);
+    this.surroundedPalaces(indexOrName).have(stars);
 
+  /**
+   * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
+   *
+   * @example
+   *  // AS IS
+   *  astrolabe.isSurroundedOneOf(0, ["紫微"]);
+   *
+   *  // TO BE
+   *  astrolabe.surroundedPalaces(0).haveOneOf(["紫微"]);
+   */
   isSurroundedOneOf = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    isSurroundedByOneOfStars(this, indexOrName, stars);
+    this.surroundedPalaces(indexOrName).haveOneOf(stars);
 
+  /**
+   * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
+   *
+   * @example
+   *  // AS IS
+   *  astrolabe.notSurrounded(0, ["紫微"]);
+   *
+   *  // TO BE
+   *  astrolabe.surroundedPalaces(0).notHave(["紫微"]);
+   */
   notSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    notSurroundedByStars(this, indexOrName, stars);
+    this.surroundedPalaces(indexOrName).notHave(stars);
 }

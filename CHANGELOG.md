@@ -1,5 +1,37 @@
 # 紫微斗数 @sylarlong/astro
 
+## v1.2.0
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 新增 `FunctionalSurpalaces` 类
+  - 废弃 `FunctionalAstrolabe` 类的下列方法
+
+    - `isSurrounded()`
+    - `isSurroundedOneOf()`
+    - `notSurrounded()`
+
+  🇺🇸
+
+  - add new class `FunctionalSurpalaces`
+  - deprecate those functions to `FunctionalAstrolabe` class
+
+    - `isSurrounded()`
+    - `isSurroundedOneOf()`
+    - `notSurrounded()`
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 实现 #24
+
+  🇺🇸
+
+  - implement #24
+
 ## v1.1.1
 
 - 🛠️ 修复（fix）
