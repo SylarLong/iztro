@@ -113,7 +113,7 @@
 
 ![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
-## Star趋势
+### Star趋势
 
 <a href="https://star-history.com/#sylarlong/iztro&Date">
   <picture>

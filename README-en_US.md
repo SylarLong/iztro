@@ -114,7 +114,7 @@ You can generate an astrolabe by using the returned data. Of course it's just an
 
 ![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
-## Star History
+### Star History
 
 <a href="https://star-history.com/#sylarlong/iztro&Date">
   <picture>
