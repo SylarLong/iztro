@@ -114,8 +114,20 @@ You can generate an astrolabe by using the returned data. Of course it's just an
 
 ![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
+## Star History
+
+<a href="https://star-history.com/#sylarlong/iztro&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date" />
+  </picture>
+</a>
+
 ### [LICENSE](https://github.com/SylarLong/iztro/blob/main/LICENSE)
 
 MIT License
 
 Copyright &copy; 2023 Sylar Long
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)

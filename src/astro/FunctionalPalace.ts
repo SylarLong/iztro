@@ -1,7 +1,12 @@
 import { Palace } from '../data/types';
-import { StarName } from '../i18n';
-import { hasOneOfStars, hasStars, notHaveStars } from './analyzer';
+import { Mutagen, StarName } from '../i18n';
+import { hasMutagenInPlace, hasOneOfStars, hasStars, notHaveMutagenInPalce, notHaveStars } from './analyzer';
 
+/**
+ * 宫位类的接口定义。
+ * 
+ * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
+ */
 export interface IFunctionalPalace extends Palace {
   /**
    * 判断某个宫位内是否有传入的星耀，要所有星耀都在宫位内才会返回true
@@ -32,8 +37,33 @@ export interface IFunctionalPalace extends Palace {
    * @returns true | false
    */
   hasOneOf: (stars: StarName[]) => boolean;
+
+  /**
+   * 判断宫位内是否有生年四化
+   *
+   * @version v1.2.0
+   *
+   * @param mutagen 四化名称【禄｜权｜科｜忌】
+   * @returns true | false
+   */
+  hasMutagen: (mutagen: Mutagen) => boolean;
+
+  /**
+   * 判断宫位内是否没有生年四化
+   *
+   * @version v1.2.0
+   *
+   * @param mutagen 四化名称【禄｜权｜科｜忌】
+   * @returns true | false
+   */
+  notHaveMutagen: (mutagen: Mutagen) => boolean;
 }
 
+/**
+ * 宫位类。
+ * 
+ * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
+ */
 export default class FunctionalPalace implements IFunctionalPalace {
   name;
   isBodyPalace;
@@ -72,4 +102,6 @@ export default class FunctionalPalace implements IFunctionalPalace {
   has = (stars: StarName[]): boolean => hasStars(this, stars);
   notHave = (stars: StarName[]): boolean => notHaveStars(this, stars);
   hasOneOf = (stars: StarName[]): boolean => hasOneOfStars(this, stars);
+  hasMutagen = (mutagen: Mutagen): boolean => hasMutagenInPlace(this, mutagen);
+  notHaveMutagen = (mutagen: Mutagen): boolean => notHaveMutagenInPalce(this, mutagen);
 }

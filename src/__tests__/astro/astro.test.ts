@@ -294,4 +294,70 @@ describe('Astrolabe', () => {
     expect(result.palaces[0].decadal).toStrictEqual({ range: [43, 52], heavenlyStem: '戊', earthlyBranch: '寅' });
     expect(result.palaces[11].decadal).toStrictEqual({ range: [53, 62], heavenlyStem: '己', earthlyBranch: '丑' });
   });
+
+  test('astrolabeBySolarDate() fix leap month', () => {
+    const result = astro.astrolabeBySolarDate('2023-4-10', 4, '女', true);
+
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '子');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '申');
+    expect(result).toHaveProperty('soul', '贪狼');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '金四局');
+    expect(result.star('紫微').palace()).toHaveProperty('name', '迁移');
+  });
+
+  test('astrolabeBySolarDate() use default fixLeap', () => {
+    const result = astro.astrolabeBySolarDate('2023-4-10', 4, '女');
+
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '子');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '申');
+    expect(result).toHaveProperty('soul', '贪狼');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '金四局');
+    expect(result.star('紫微').palace()).toHaveProperty('name', '迁移');
+  });
+
+  test('astrolabeBySolarDate() do not fix leap month', () => {
+    const result = astro.astrolabeBySolarDate('2023-4-10', 4, '女', false);
+
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '未');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '水二局');
+    expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
+  });
+
+  test('astrolabeByLunarDate() fix leap month', () => {
+    const result = astro.astrolabeByLunarDate('2023-2-20', 4, '女', true, true);
+
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '子');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '申');
+    expect(result).toHaveProperty('soul', '贪狼');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '金四局');
+    expect(result.star('紫微').palace()).toHaveProperty('name', '迁移');
+  });
+
+  test('astrolabeByLunarDate() use default isLeapMonth', () => {
+    const result = astro.astrolabeByLunarDate('2023-2-20', 4, '女');
+
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '未');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '水二局');
+    expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
+  });
+
+  test('astrolabeByLunarDate() do not fix leap month', () => {
+    const result = astro.astrolabeByLunarDate('2023-2-20', 4, '女', true, false);
+
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '未');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '水二局');
+    expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
+  });
 });

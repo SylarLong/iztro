@@ -1,17 +1,13 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES } from '../data';
-import { Astrolabe, Horoscope, SurroundedPalaces } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarName } from '../i18n';
+import { Astrolabe, Horoscope } from '../data/types';
+import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName } from '../i18n';
 import { getHoroscopeStar } from '../star';
+import { IFunctionalStar } from '../star/FunctionalStar';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
-import {
-  getPalace,
-  getSurroundedPalaces,
-  isSurroundedByOneOfStars,
-  isSurroundedByStars,
-  notSurroundedByStars,
-} from './analyzer';
+import { getPalace, getSurroundedPalaces } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
+import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { getPalaceNames } from './palace';
 
 /**
@@ -151,6 +147,11 @@ const _getHoroscopeBySolarDate = (
   return scope;
 };
 
+/**
+ * 星盘类接口定义。
+ *
+ * 文档地址：https://docs.iztro.com/posts/astrolabe.html#functionalastrolabe
+ */
 export interface IFunctionalAstrolabe extends Astrolabe {
   /**
    * 获取运限数据
@@ -162,6 +163,16 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @returns 运限数据
    */
   horoscope: (date?: string | Date, timeIndex?: number) => Horoscope;
+
+  /**
+   * 通过星耀名称获取到当前星耀的对象实例
+   *
+   * @version v1.2.0
+   *
+   * @param starName 星耀名称
+   * @returns 星耀实例
+   */
+  star: (starName: StarName) => IFunctionalStar;
 
   /**
    * 获取星盘的某一个宫位
@@ -181,9 +192,10 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @param indexOrName 宫位索引或者宫位名称
    * @returns 三方四正宫位
    */
-  surroundedPalaces: (indexOrName: number | PalaceName) => SurroundedPalaces;
+  surroundedPalaces: (indexOrName: number | PalaceName) => IFunctionalSurpalaces;
 
   /**
+   *
    * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
    *
    * @version v1.0.0
@@ -198,6 +210,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
    *
    * @version v1.1.0
+   * @deprecated v1.2.0
    *
    * @param indexOrName 宫位索引或者宫位名称
    * @param stars 星耀名称数组
@@ -209,6 +222,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
    *
    * @version v1.1.0
+   * @deprecated v1.2.0
    *
    * @param indexOrName 宫位索引或者宫位名称
    * @param stars 星耀名称数组
@@ -217,6 +231,11 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   notSurrounded: (indexOrName: number | PalaceName, stars: StarName[]) => boolean;
 }
 
+/**
+ * 星盘类。
+ *
+ * 文档地址：https://docs.iztro.com/posts/astrolabe.html#functionalastrolabe
+ */
 export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   solarDate;
   lunarDate;
@@ -248,21 +267,74 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.body = data.body;
     this.fiveElementsClass = data.fiveElementsClass;
     this.palaces = data.palaces;
+
+    return this;
   }
+
+  star = (starName: StarName): IFunctionalStar => {
+    let targetStar: IFunctionalStar | undefined;
+
+    this.palaces.some((p) => {
+      [...p.majorStars, ...p.minorStars, ...p.adjectiveStars].some((item) => {
+        if (kot<StarKey>(item.name) === kot<StarKey>(starName)) {
+          targetStar = item;
+          targetStar.setPalace(p);
+          targetStar.setAstrolabe(this);
+        }
+      });
+    });
+
+    if (!targetStar) {
+      throw new Error('invalid star name.');
+    }
+
+    return targetStar;
+  };
 
   horoscope = (targetDate: string | Date = new Date(), timeIndexOfTarget?: number) =>
     _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
 
   palace = (indexOrName: number | PalaceName): IFunctionalPalace | undefined => getPalace(this, indexOrName);
 
-  surroundedPalaces = (indexOrName: number | PalaceName): SurroundedPalaces => getSurroundedPalaces(this, indexOrName);
+  surroundedPalaces = (indexOrName: number | PalaceName): IFunctionalSurpalaces =>
+    getSurroundedPalaces(this, indexOrName);
 
+  /**
+   * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
+   *
+   * @example
+   *  // AS IS
+   *  astrolabe.isSurrounded(0, ["紫微"]);
+   *
+   *  // TO BE
+   *  astrolabe.surroundedPalaces(0).have(["紫微"]);
+   */
   isSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    isSurroundedByStars(this, indexOrName, stars);
+    this.surroundedPalaces(indexOrName).have(stars);
 
+  /**
+   * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
+   *
+   * @example
+   *  // AS IS
+   *  astrolabe.isSurroundedOneOf(0, ["紫微"]);
+   *
+   *  // TO BE
+   *  astrolabe.surroundedPalaces(0).haveOneOf(["紫微"]);
+   */
   isSurroundedOneOf = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    isSurroundedByOneOfStars(this, indexOrName, stars);
+    this.surroundedPalaces(indexOrName).haveOneOf(stars);
 
+  /**
+   * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
+   *
+   * @example
+   *  // AS IS
+   *  astrolabe.notSurrounded(0, ["紫微"]);
+   *
+   *  // TO BE
+   *  astrolabe.surroundedPalaces(0).notHave(["紫微"]);
+   */
   notSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    notSurroundedByStars(this, indexOrName, stars);
+    this.surroundedPalaces(indexOrName).notHave(stars);
 }
