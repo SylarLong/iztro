@@ -1,5 +1,12 @@
 # 紫微斗数 @sylarlong/astro
 
+[文档地址｜Docuemnt](http://docs.iztro.com)
+
+- ✨ 改进（enhancement）
+- 🪄 功能（feature）
+- 🛠️ 修复（fix）
+- 🧹 琐事（Chore）
+
 ## v1.2.0
 
 - ✨ 改进（enhancement）
@@ -7,6 +14,7 @@
   🇨🇳
 
   - 新增 `FunctionalSurpalaces` 类
+  - 新增 `FunctionalStar` 类
   - 废弃 `FunctionalAstrolabe` 类的下列方法
 
     - `isSurrounded()`
@@ -16,6 +24,7 @@
   🇺🇸
 
   - add new class `FunctionalSurpalaces`
+  - add new class `FunctionalStar`
   - deprecate those functions to `FunctionalAstrolabe` class
 
     - `isSurrounded()`
