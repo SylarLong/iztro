@@ -93,6 +93,7 @@ describe('astro/analyzer', () => {
     expect(
       result.surroundedPalaces('命宫').have(['武曲', '贪狼', '擎羊', '天相', '天魁', '天月', '地空', '地劫']),
     ).toBe(true);
+    expect(result.isSurrounded('命宫', ['武曲', '贪狼', '擎羊', '天相', '天魁', '天月', '地空', '地劫'])).toBe(true);
     expect(
       result.surroundedPalaces('命宫').have(['武曲', '擎羊', '天相', '天魁', '天月', '地空', '地劫', '太阴']),
     ).toBe(false);
@@ -172,6 +173,7 @@ describe('astro/analyzer', () => {
     const result = astro.astrolabeBySolarDate('2023-8-16', 2, '女', true);
 
     expect(result.surroundedPalaces('命宫').haveOneOf(['太阳', '文曲'])).toBe(true);
+    expect(result.isSurroundedOneOf('命宫', ['太阳', '文曲'])).toBe(true);
     expect(result.surroundedPalaces('命宫').haveOneOf(['天喜', '天钺'])).toBe(true);
     expect(result.surroundedPalaces('命宫').haveOneOf(['天梁', '禄存'])).toBe(true);
     expect(result.surroundedPalaces('命宫').haveOneOf(['左辅', '右弼'])).toBe(true);
@@ -186,6 +188,7 @@ describe('astro/analyzer', () => {
     const result = astro.astrolabeBySolarDate('2023-8-16', 2, '女', true);
 
     expect(result.surroundedPalaces('命宫').notHave(['太阳', '文曲'])).toBe(false);
+    expect(result.notSurrounded('命宫', ['太阳', '文曲'])).toBe(false);
     expect(result.surroundedPalaces('命宫').notHave(['天喜', '天钺'])).toBe(false);
     expect(result.surroundedPalaces('命宫').notHave(['天梁', '禄存'])).toBe(false);
     expect(result.surroundedPalaces('命宫').notHave(['左辅', '右弼'])).toBe(false);
@@ -236,5 +239,52 @@ describe('astro/analyzer', () => {
     expect(result.surroundedPalaces('疾厄').haveMutagen('权')).toBe(true);
     expect(result.surroundedPalaces('财帛').haveMutagen('科')).toBe(false);
     expect(result.surroundedPalaces('身宫').haveMutagen('忌')).toBe(false);
+  });
+
+  test('withMutagen() In FunctionalStar', () => {
+    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+
+    expect(result.star('紫微').withMutagen('禄')).toBe(false);
+    expect(result.star('破军').withMutagen('禄')).toBe(true);
+    expect(result.star('巨门').withMutagen('权')).toBe(true);
+    expect(result.star('太阴').withMutagen('科')).toBe(true);
+    expect(result.star('贪狼').withMutagen('忌')).toBe(true);
+    expect(result.star('贪狼').withMutagen(['忌', '权'])).toBe(true);
+    expect(result.star('贪狼').withMutagen(['科', '权'])).toBe(false);
+  });
+
+  test('withBrightness() In FunctionalStar', () => {
+    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+
+    expect(result.star('紫微').withBrightness('庙')).toBe(false);
+    expect(result.star('紫微').withBrightness(['庙', '得'])).toBe(true);
+    expect(result.star('巨门').withBrightness('庙')).toBe(true);
+    expect(result.star('太阴').withBrightness(['不', '陷'])).toBe(false);
+    expect(result.star('贪狼').withBrightness('平')).toBe(true);
+  });
+
+  test('oppositePalace() In FunctionalStar', () => {
+    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+
+    expect(result.star('紫微').oppositePalace()).toHaveProperty('name', '迁移');
+    expect(result.star('天同').oppositePalace()).toHaveProperty('name', '父母');
+    expect(result.star('巨门').oppositePalace()).toHaveProperty('name', '仆役');
+    expect(result.star('太阴').oppositePalace()).toHaveProperty('name', '田宅');
+    expect(result.star('贪狼').oppositePalace()).toHaveProperty('name', '官禄');
+    expect(result.star('廉贞').oppositePalace()?.hasMutagen('忌')).toBe(true);
+    expect(result.star('天相').oppositePalace()?.hasMutagen('禄')).toBe(true);
+    expect(result.star('火星').oppositePalace()?.hasMutagen('科')).toBe(true);
+    expect(result.star('天才').oppositePalace()?.hasMutagen('权')).toBe(true);
+    expect(result.star('文昌').oppositePalace()?.hasMutagen('禄')).toBe(false);
+  });
+
+  test('surroundedPalaces()  In FunctionalStar', () => {
+    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+
+    expect(result.star('咸池').surroundedPalaces()?.target).toHaveProperty('name', '福德');
+    expect(result.star('咸池').surroundedPalaces()?.target).toHaveProperty('earthlyBranch', '午');
+    expect(result.star('咸池').surroundedPalaces()?.haveMutagen('禄')).toBe(true);
+    expect(result.star('左辅').surroundedPalaces()?.haveMutagen('忌')).toBe(true);
+    expect(result.star('紫微').surroundedPalaces()?.haveMutagen('忌')).toBe(false);
   });
 });

@@ -112,6 +112,16 @@
 
 ![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
 
+## Star趋势
+
+<a href="https://star-history.com/#sylarlong/iztro&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date" />
+  </picture>
+</a>
+
 ### [版权](https://github.com/SylarLong/iztro/blob/main/LICENSE)
 
 MIT License

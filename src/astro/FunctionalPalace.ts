@@ -2,6 +2,11 @@ import { Palace } from '../data/types';
 import { Mutagen, StarName } from '../i18n';
 import { hasMutagenInPlace, hasOneOfStars, hasStars, notHaveMutagenInPalce, notHaveStars } from './analyzer';
 
+/**
+ * 宫位类的接口定义。
+ * 
+ * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
+ */
 export interface IFunctionalPalace extends Palace {
   /**
    * 判断某个宫位内是否有传入的星耀，要所有星耀都在宫位内才会返回true
@@ -54,6 +59,11 @@ export interface IFunctionalPalace extends Palace {
   notHaveMutagen: (mutagen: Mutagen) => boolean;
 }
 
+/**
+ * 宫位类。
+ * 
+ * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
+ */
 export default class FunctionalPalace implements IFunctionalPalace {
   name;
   isBodyPalace;

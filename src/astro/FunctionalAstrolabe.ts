@@ -1,8 +1,9 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES } from '../data';
-import { Astrolabe, Horoscope, SurroundedPalaces } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarName } from '../i18n';
+import { Astrolabe, Horoscope } from '../data/types';
+import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName } from '../i18n';
 import { getHoroscopeStar } from '../star';
+import { IFunctionalStar } from '../star/FunctionalStar';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
 import { getPalace, getSurroundedPalaces } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
@@ -146,6 +147,11 @@ const _getHoroscopeBySolarDate = (
   return scope;
 };
 
+/**
+ * 星盘类接口定义。
+ *
+ * 文档地址：https://docs.iztro.com/posts/astrolabe.html#functionalastrolabe
+ */
 export interface IFunctionalAstrolabe extends Astrolabe {
   /**
    * 获取运限数据
@@ -157,6 +163,16 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @returns 运限数据
    */
   horoscope: (date?: string | Date, timeIndex?: number) => Horoscope;
+
+  /**
+   * 通过星耀名称获取到当前星耀的对象实例
+   *
+   * @version v1.2.0
+   *
+   * @param starName 星耀名称
+   * @returns 星耀实例
+   */
+  star: (starName: StarName) => IFunctionalStar;
 
   /**
    * 获取星盘的某一个宫位
@@ -176,7 +192,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @param indexOrName 宫位索引或者宫位名称
    * @returns 三方四正宫位
    */
-  surroundedPalaces: (indexOrName: number | PalaceName) => SurroundedPalaces;
+  surroundedPalaces: (indexOrName: number | PalaceName) => IFunctionalSurpalaces;
 
   /**
    *
@@ -215,6 +231,11 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   notSurrounded: (indexOrName: number | PalaceName, stars: StarName[]) => boolean;
 }
 
+/**
+ * 星盘类。
+ *
+ * 文档地址：https://docs.iztro.com/posts/astrolabe.html#functionalastrolabe
+ */
 export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   solarDate;
   lunarDate;
@@ -246,7 +267,29 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.body = data.body;
     this.fiveElementsClass = data.fiveElementsClass;
     this.palaces = data.palaces;
+
+    return this;
   }
+
+  star = (starName: StarName): IFunctionalStar => {
+    let targetStar: IFunctionalStar | undefined;
+
+    this.palaces.some((p) => {
+      [...p.majorStars, ...p.minorStars, ...p.adjectiveStars].some((item) => {
+        if (kot<StarKey>(item.name) === kot<StarKey>(starName)) {
+          targetStar = item;
+          targetStar.setPalace(p);
+          targetStar.setAstrolabe(this);
+        }
+      });
+    });
+
+    if (!targetStar) {
+      throw new Error('invalid star name.');
+    }
+
+    return targetStar;
+  };
 
   horoscope = (targetDate: string | Date = new Date(), timeIndexOfTarget?: number) =>
     _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);

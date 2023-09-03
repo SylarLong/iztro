@@ -1,7 +1,7 @@
 import { IFunctionalPalace } from '../../astro/FunctionalPalace';
 import { EarthlyBranchName, HeavenlyStemName, PalaceName, StarName } from '../../i18n';
+import FunctionalStar from '../../star/FunctionalStar';
 import { Decadal } from './astro';
-import { Star } from './star';
 
 /**
  * 命宫、身宫对象
@@ -54,11 +54,11 @@ export type Palace = {
   /** 宫位地支 */
   earthlyBranch: EarthlyBranchName;
   /** 主星 */
-  majorStars: Star[];
+  majorStars: FunctionalStar[];
   /** 辅星 */
-  minorStars: Star[];
+  minorStars: FunctionalStar[];
   /** 杂耀 */
-  adjectiveStars: Star[];
+  adjectiveStars: FunctionalStar[];
   /** 长生12神 */
   changsheng12: StarName;
   /** 博士12神 */
