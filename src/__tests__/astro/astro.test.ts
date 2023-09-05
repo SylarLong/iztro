@@ -1,6 +1,17 @@
+import {
+  getMajorStarByLunarDate,
+  getMajorStarBySolarDate,
+  getSignByLunarDate,
+  getSignBySolarDate,
+  getZodiacByLunarYear,
+  getZodiacBySolarDate,
+} from '../../astro';
+import { setLanguage } from '../../i18n';
 import { astro } from '../../index';
 
 describe('Astrolabe', () => {
+  afterEach(() => setLanguage('zh-CN'));
+
   test('astrolabeBySolarDate()', () => {
     const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true);
 
@@ -359,5 +370,42 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('body', '天同');
     expect(result).toHaveProperty('fiveElementsClass', '水二局');
     expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
+  });
+
+  test('getZodiacBySolarDate()', () => {
+    expect(getZodiacBySolarDate('2023-2-20')).toEqual('兔');
+    expect(getZodiacBySolarDate('2023-2-20', 'en-US')).toEqual('rabbit');
+  });
+
+  test('getZodiacByLunarYear()', () => {
+    expect(getZodiacByLunarYear(2023)).toEqual('兔');
+    expect(getZodiacByLunarYear(2023, 'en-US')).toEqual('rabbit');
+  });
+
+  test('getSignBySolarDate()', () => {
+    expect(getSignBySolarDate('2023-9-5')).toEqual('处女座');
+    expect(getSignBySolarDate('2023-9-5', 'en-US')).toEqual('virgo');
+  });
+
+  test('getSignBySolarDate()', () => {
+    expect(getSignByLunarDate('2023-7-21')).toEqual('处女座');
+    expect(getSignByLunarDate('2023-7-21', false, 'en-US')).toEqual('virgo');
+  });
+
+  test('getSignBySolarDate() leap month', () => {
+    expect(getSignByLunarDate('2023-2-3')).toEqual('双鱼座');
+    expect(getSignByLunarDate('2023-2-3', true)).toEqual('白羊座');
+  });
+
+  test('getMajorStarBySolarDate() leap month', () => {
+    expect(getMajorStarBySolarDate('2023-4-7', 0)).toEqual('贪狼');
+    expect(getMajorStarBySolarDate('2023-4-7', 0, false)).toEqual('紫微,贪狼');
+    expect(getMajorStarBySolarDate('2023-4-7', 0, true, 'ko-KR')).toEqual('탐랑');
+  });
+
+  test('getMajorStarByLunarDate() leap month', () => {
+    expect(getMajorStarByLunarDate('2023-2-17', 0)).toEqual('紫微,贪狼');
+    expect(getMajorStarByLunarDate('2023-2-17', 0, true)).toEqual('贪狼');
+    expect(getMajorStarByLunarDate('2023-2-17', 0, true, false)).toEqual('紫微,贪狼');
   });
 });

@@ -9,7 +9,9 @@
 <div align="center">
 
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/SylarLong/iztro/Codecov.yaml)](https://github.com/SylarLong/iztro/actions) [![npm](https://img.shields.io/npm/v/iztro)](https://www.npmjs.com/package/iztro) [![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/iztro)](https://github.com/search?q=repo%3ASylarLong%2Fiztro++language%3ATypeScript&type=code) [![Codecov](https://img.shields.io/codecov/c/github/sylarlong/iztro)](https://app.codecov.io/gh/SylarLong/iztro/tree/main/src%2Fstar) [![npm](https://img.shields.io/npm/dw/iztro)](https://www.npmjs.com/package/iztro) [![Maintenance](https://img.shields.io/maintenance/yes/2023)](https://github.com/SylarLong/iztro)
-[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro) [![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro) [![GitHub issues](https://img.shields.io/github/issues/SylarLong/iztro)](https://github.com/SylarLong/iztro/issues) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield) [![Package Quality](https://packagequality.com/badge/iztro.png)](https://packagequality.com/#?package=iztro)
+[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro) [![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro) [![GitHub issues](https://img.shields.io/github/issues/SylarLong/iztro)](https://github.com/SylarLong/iztro/issues)
+[![GitHub package.json dynamic](https://img.shields.io/github/package-json/author/sylarlong/iztro)](https://github.com/SylarLong)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield) [![Socket Badge](https://socket.dev/api/badge/npm/package/iztro)](https://socket.dev/npm/package/iztro)
 
 </div>
 
@@ -27,17 +29,50 @@
 
 用于紫微斗数排盘的javascript开源库，有以下功能。
 
-- 根据出生日期（`农历`或`阳历`）以及出生时辰获取紫微斗数`星盘数据`，星盘数据包括
-  - 基础信息（出生日期，时辰，星座，生肖，身主，命主等信息）
-  - 宫位信息（宫位名称，干支，星耀等）
-  - 星耀信息（包括亮度【（庙、旺、得、利、平、不、陷）】，四化【禄，权，科，忌】和类型）
-  - 运限信息（大限，小限，流年，流月，流日，流时）
-  - 星耀四化
-- 根据天干获取四化
-- 查询指定宫位三方四正宫位
-- 查询指定星耀是否存在指定宫位内
-- 查询指定星耀是否存在于三方四正内
-- 多语言输入/输出结果
+- 输入
+
+  - 生日（阳历或农历皆可）
+  - 出生时间
+  - 性别
+
+- 可以实现下列功能
+
+  - 紫微斗数 12 宫的星盘数据
+  - 获取生肖
+  - 获取星座
+  - 获取四柱（干支纪年法的生辰）
+  - 获取运限（大限，小限，流年，流月，流日，流时）的数据
+  - 获取流耀（大限和流年的动态星耀）
+  - 判断指定宫位是否存在某些星耀
+  - 判断指定宫位三方四正是否存在某些星耀
+  - 判断指定宫位三方四正是否存在四化
+  - 判断指定星耀是否存在四化
+  - 判断指定星耀三方四正是否存在四化
+  - 判断指定星耀是否是某个亮度
+  - 判断指定星耀是否存在四化
+  - 根据天干获取四化
+  - 获取指定星耀所在宫位
+  - 获取指定宫位三方四正宫位
+  - 获取指定星耀三方四正宫位
+  - 获取指定星耀对宫
+
+- 其他
+
+  - 多语言输入/输出
+
+    输入的时候支持多个国家和地区语言混合输入，可以输出指定语言。目前支持 简体中文，繁体中文，英文，日文，韩文。英文的翻译目前还没有标准，所以我大多是意译的，但也正因为如此，可能英文版本的会更加易懂。如果有精通星象翻译的欢迎提 PR 。任何语言都可以。
+
+  - 链式调用
+
+    假如你想判断 紫微星 的 三方四正 有没有 化忌，你可以这样做
+
+    ```ts
+    import { astro } from 'iztro';
+
+    const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '男', true, 'zh-CN');
+
+    astrolabe.star('紫微').surroundedPalaces().haveMutagen('忌');
+    ```
 
 ### 快捷跳转
 
@@ -103,7 +138,8 @@
 - 如果你发现程序有BUG，请到[这里](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-)创建一个`BUG报告`。
 - 你也可以将本仓库`fork`到你自己的仓库进行编辑，然后提交PR到本仓库。
 - 假如你擅长外语，我们也欢迎你对国际化文件的翻译做出你的贡献，你可以`fork`本仓库，然后在[locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales)文件夹下创建一个国际化语言文件，然后复制其他语言文件目录里面的文件到你的目录下进行更改。
-- 当然，如果在我挑灯码字的时候能的到你赞助的咖啡，在下也是不胜感激👍 [Paypal Me](https://PayPal.Me/sylarlong)
+- 当然，如果在我挑灯码字的时候能的到你赞助的咖啡，在下也是不胜感激 [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)
+  ](https://PayPal.Me/sylarlong)
 
 ### 总结
 
@@ -128,6 +164,5 @@ MIT License
 Copyright &copy; 2023 Sylar Long
 
 请合理使用本开源代码，禁止用于非法目的。
-
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
