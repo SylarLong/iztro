@@ -106,7 +106,8 @@ If you're interested in `iztro` and wish to join us,it's very welcome. You can c
 - report a bug [here](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-) if you found any bugs.
 - you can also `fork` this code to your repository and create PRs for your changes.
 - also, you can contribute the `localization` files. please refer to [locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales) and create the localization files for your lanuage.
-- additionally, buy me a coffee is another great way to support me👍 [Paypal Me](https://PayPal.Me/sylarlong)
+- additionally, buy me a coffee is another great way to support me [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)
+  ](https://PayPal.Me/sylarlong)
 
 ### Summary
 
