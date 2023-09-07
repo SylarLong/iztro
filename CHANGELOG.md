@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.2.3
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 修复运限索引计算错误 #36
+
+  🇺🇸
+
+  - fix wrong horoscope indexes #36
+
 ## v1.2.2
 
 - ✨ 改进（enhancement）

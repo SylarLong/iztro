@@ -89,11 +89,11 @@ const _getHoroscopeBySolarDate = (
     yearlyIndex -
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.monthly[1])) +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
-      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(monthly[1])),
+      fixEarthlyBranchIndex(monthly[1]),
   );
 
   // 获取流日索引
-  dailyIndex = (monthlyIndex + _date.lunarDay - 1) % 12;
+  dailyIndex = fixIndex(monthlyIndex + _date.lunarDay - 1);
 
   // 获取流时索引
   hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1])));
