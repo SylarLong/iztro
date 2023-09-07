@@ -18,7 +18,7 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 <div align="center">
 
-简体中文 🔸 [English](./README-en_US.md)
+[简体中文](./README.md) 🔸 [繁體中文](./README-zh_TW.md) 🔸 English
 
 </div>
 

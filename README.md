@@ -19,7 +19,7 @@
 
 <div align="center">
 
-简体中文 🔸 [English](./README-en_US.md)
+简体中文 🔸 [繁體中文](./README-zh_TW.md) 🔸 [English](./README-en_US.md)
 
 </div>
 
