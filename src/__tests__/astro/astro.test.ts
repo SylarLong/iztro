@@ -1,6 +1,17 @@
+import {
+  getMajorStarByLunarDate,
+  getMajorStarBySolarDate,
+  getSignByLunarDate,
+  getSignBySolarDate,
+  getZodiacByLunarYear,
+  getZodiacBySolarDate,
+} from '../../astro';
+import { setLanguage } from '../../i18n';
 import { astro } from '../../index';
 
 describe('Astrolabe', () => {
+  afterEach(() => setLanguage('zh-CN'));
+
   test('astrolabeBySolarDate()', () => {
     const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true);
 
@@ -57,12 +68,10 @@ describe('Astrolabe', () => {
       '夫妻',
     ]);
     expect(horoscope.yearly).toHaveProperty('mutagen', ['破军', '巨门', '太阴', '贪狼']);
-    expect(horoscope.monthly).toHaveProperty('index', 3);
+    expect(horoscope.monthly).toHaveProperty('index', 1);
     expect(horoscope.monthly).toHaveProperty('heavenlyStem', '庚');
     expect(horoscope.monthly).toHaveProperty('earthlyBranch', '申');
     expect(horoscope.monthly).toHaveProperty('palaceNames', [
-      '子女',
-      '夫妻',
       '兄弟',
       '命宫',
       '父母',
@@ -73,14 +82,14 @@ describe('Astrolabe', () => {
       '迁移',
       '疾厄',
       '财帛',
+      '子女',
+      '夫妻',
     ]);
     expect(horoscope.monthly).toHaveProperty('mutagen', ['太阳', '武曲', '太阴', '天同']);
-    expect(horoscope.daily).toHaveProperty('index', 6);
+    expect(horoscope.daily).toHaveProperty('index', 4);
     expect(horoscope.daily).toHaveProperty('heavenlyStem', '己');
     expect(horoscope.daily).toHaveProperty('earthlyBranch', '酉');
     expect(horoscope.daily).toHaveProperty('palaceNames', [
-      '迁移',
-      '疾厄',
       '财帛',
       '子女',
       '夫妻',
@@ -91,14 +100,14 @@ describe('Astrolabe', () => {
       '田宅',
       '官禄',
       '仆役',
+      '迁移',
+      '疾厄',
     ]);
     expect(horoscope.daily).toHaveProperty('mutagen', ['武曲', '贪狼', '天梁', '文曲']);
-    expect(horoscope.hourly).toHaveProperty('index', 8);
+    expect(horoscope.hourly).toHaveProperty('index', 6);
     expect(horoscope.hourly).toHaveProperty('heavenlyStem', '丙');
     expect(horoscope.hourly).toHaveProperty('earthlyBranch', '寅');
     expect(horoscope.hourly).toHaveProperty('palaceNames', [
-      '官禄',
-      '仆役',
       '迁移',
       '疾厄',
       '财帛',
@@ -109,6 +118,8 @@ describe('Astrolabe', () => {
       '父母',
       '福德',
       '田宅',
+      '官禄',
+      '仆役',
     ]);
     expect(horoscope.hourly).toHaveProperty('mutagen', ['天同', '天机', '文昌', '廉贞']);
 
@@ -220,12 +231,10 @@ describe('Astrolabe', () => {
       '부처',
     ]);
     expect(horoscope.yearly).toHaveProperty('mutagen', ['파군', '거문', '태음', '탐랑']);
-    expect(horoscope.monthly).toHaveProperty('index', 3);
+    expect(horoscope.monthly).toHaveProperty('index', 1);
     expect(horoscope.monthly).toHaveProperty('heavenlyStem', '경');
     expect(horoscope.monthly).toHaveProperty('earthlyBranch', '신');
     expect(horoscope.monthly).toHaveProperty('palaceNames', [
-      '자녀',
-      '부처',
       '형제',
       '명궁',
       '부모',
@@ -236,14 +245,14 @@ describe('Astrolabe', () => {
       '천이',
       '질액',
       '재백',
+      '자녀',
+      '부처',
     ]);
     expect(horoscope.monthly).toHaveProperty('mutagen', ['태양', '무곡', '태음', '천동']);
-    expect(horoscope.daily).toHaveProperty('index', 6);
+    expect(horoscope.daily).toHaveProperty('index', 4);
     expect(horoscope.daily).toHaveProperty('heavenlyStem', '기');
     expect(horoscope.daily).toHaveProperty('earthlyBranch', '유');
     expect(horoscope.daily).toHaveProperty('palaceNames', [
-      '천이',
-      '질액',
       '재백',
       '자녀',
       '부처',
@@ -254,14 +263,14 @@ describe('Astrolabe', () => {
       '전택',
       '관록',
       '노복',
+      '천이',
+      '질액',
     ]);
     expect(horoscope.daily).toHaveProperty('mutagen', ['무곡', '탐랑', '천량', '문곡']);
-    expect(horoscope.hourly).toHaveProperty('index', 8);
+    expect(horoscope.hourly).toHaveProperty('index', 6);
     expect(horoscope.hourly).toHaveProperty('heavenlyStem', '병');
     expect(horoscope.hourly).toHaveProperty('earthlyBranch', '인');
     expect(horoscope.hourly).toHaveProperty('palaceNames', [
-      '관록',
-      '노복',
       '천이',
       '질액',
       '재백',
@@ -272,6 +281,8 @@ describe('Astrolabe', () => {
       '부모',
       '복덕',
       '전택',
+      '관록',
+      '노복',
     ]);
     expect(horoscope.hourly).toHaveProperty('mutagen', ['천동', '천기', '문창', '염정']);
   });
@@ -359,5 +370,42 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('body', '天同');
     expect(result).toHaveProperty('fiveElementsClass', '水二局');
     expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
+  });
+
+  test('getZodiacBySolarDate()', () => {
+    expect(getZodiacBySolarDate('2023-2-20')).toEqual('兔');
+    expect(getZodiacBySolarDate('2023-2-20', 'en-US')).toEqual('rabbit');
+  });
+
+  test('getZodiacByLunarYear()', () => {
+    expect(getZodiacByLunarYear(2023)).toEqual('兔');
+    expect(getZodiacByLunarYear(2023, 'en-US')).toEqual('rabbit');
+  });
+
+  test('getSignBySolarDate()', () => {
+    expect(getSignBySolarDate('2023-9-5')).toEqual('处女座');
+    expect(getSignBySolarDate('2023-9-5', 'en-US')).toEqual('virgo');
+  });
+
+  test('getSignBySolarDate()', () => {
+    expect(getSignByLunarDate('2023-7-21')).toEqual('处女座');
+    expect(getSignByLunarDate('2023-7-21', false, 'en-US')).toEqual('virgo');
+  });
+
+  test('getSignBySolarDate() leap month', () => {
+    expect(getSignByLunarDate('2023-2-3')).toEqual('双鱼座');
+    expect(getSignByLunarDate('2023-2-3', true)).toEqual('白羊座');
+  });
+
+  test('getMajorStarBySolarDate() leap month', () => {
+    expect(getMajorStarBySolarDate('2023-4-7', 0)).toEqual('贪狼');
+    expect(getMajorStarBySolarDate('2023-4-7', 0, false)).toEqual('紫微,贪狼');
+    expect(getMajorStarBySolarDate('2023-4-7', 0, true, 'ko-KR')).toEqual('탐랑');
+  });
+
+  test('getMajorStarByLunarDate() leap month', () => {
+    expect(getMajorStarByLunarDate('2023-2-17', 0)).toEqual('紫微,贪狼');
+    expect(getMajorStarByLunarDate('2023-2-17', 0, true)).toEqual('贪狼');
+    expect(getMajorStarByLunarDate('2023-2-17', 0, true, false)).toEqual('紫微,贪狼');
   });
 });

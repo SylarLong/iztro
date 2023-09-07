@@ -7,6 +7,68 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.2.3
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 修复运限索引计算错误 #36
+
+  🇺🇸
+
+  - fix wrong horoscope indexes #36
+
+## v1.2.2
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 给 Horoscope 添加 name 字段
+  - 给 name 字段添加国际化翻译
+
+  🇺🇸
+
+  - add `name` field to `Horoscope`
+  - add translation for `name`
+
+## v1.2.1
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 新增静态方法 #28
+
+    - 通过阳历获取生肖
+    - 通过农历获取生肖
+    - 通过阳历获取星座
+    - 通过农历获取星座
+    - 通过阳历获取主星
+    - 通过农历获取主星
+
+  🇺🇸
+
+  - add some static methods #28
+
+    - get zodiac by solar date
+    - get zodiac by lunar date
+    - get sign by solar date
+    - get sign by lunar date
+    - get major stars by solar date
+    - get major stars by lunar date
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 在特定情况下语言无法设置成功的问题
+
+  🇺🇸
+
+  - failed to set language in some scenarios
+
 ## v1.2.0
 
 - ✨ 改进（enhancement）

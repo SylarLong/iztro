@@ -1,4 +1,12 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from '../calendar';
+import { calendar } from '..';
+import {
+  getHeavenlyStemAndEarthlyBranchBySolarDate,
+  getSign,
+  getZodiac,
+  heavenlyStemAndEarthlyBranchOfYear,
+  lunar2solar,
+  solar2lunar,
+} from '../calendar';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Language, Star } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
@@ -20,6 +28,7 @@ const _toFunctionalStars = (stars: Star[]) => {
  * @param timeIndex 出生时辰序号【0~12】
  * @param gender 性别【男|女】
  * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @param language 输出语言
  * @returns 星盘信息
  */
 export const astrolabeBySolarDate = (
@@ -27,9 +36,9 @@ export const astrolabeBySolarDate = (
   timeIndex: number,
   gender: GenderName,
   fixLeap: boolean = true,
-  language: Language = 'zh-CN',
+  language?: Language,
 ) => {
-  setLanguage(language);
+  language && setLanguage(language);
 
   const palaces: IFunctionalPalace[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
@@ -112,6 +121,7 @@ export const astrolabeBySolarDate = (
  * @param gender 性别【男|女】
  * @param isLeapMonth 是否闰月【默认 false】，当实际月份没有闰月时该参数不生效
  * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @param language 输出语言
  * @returns 星盘数据
  */
 export const astrolabeByLunarDate = (
@@ -125,4 +135,130 @@ export const astrolabeByLunarDate = (
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
   return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap, language);
+};
+
+/**
+ * 通过公历获取十二生肖
+ *
+ * @version v1.2.1
+ *
+ * @param solarDateStr 阳历日期【YYYY-M-D】
+ * @param language 输出语言，默认为中文
+ * @returns 十二生肖
+ */
+export const getZodiacBySolarDate = (solarDateStr: string, language?: Language) => {
+  language && setLanguage(language);
+
+  const { lunarYear } = solar2lunar(solarDateStr);
+  const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
+
+  return t(calendar.getZodiac(yearly[1]));
+};
+
+/**
+ * 通过农历年份获取十二生肖
+ *
+ * @version v1.2.1
+ *
+ * @param year 农历年份
+ * @param language 输出语言，默认为中文
+ * @returns 十二生肖
+ */
+export const getZodiacByLunarYear = (year: number, language?: Language) => {
+  language && setLanguage(language);
+
+  const yearly = heavenlyStemAndEarthlyBranchOfYear(year);
+
+  return t(calendar.getZodiac(yearly[1]));
+};
+
+/**
+ * 通过阳历获取星座
+ *
+ * @version v1.2.1
+ *
+ * @param solarDateStr 阳历日期【YYYY-M-D】
+ * @param language 输出语言，默认为中文
+ * @returns 星座
+ */
+export const getSignBySolarDate = (solarDateStr: string, language?: Language) => {
+  language && setLanguage(language);
+
+  return t(getSign(solarDateStr));
+};
+
+/**
+ * 通过农历获取星座
+ *
+ * @version v1.2.1
+ *
+ * @param lunarDateStr 农历日期【YYYY-M-D】
+ * @param isLeapMonth 是否闰月，如果该月没有闰月则此字段不生效
+ * @param language 输出语言，默认为中文
+ * @returns 星座
+ */
+export const getSignByLunarDate = (lunarDateStr: string, isLeapMonth?: boolean, language?: Language) => {
+  language && setLanguage(language);
+
+  const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
+
+  return t(getSign(solarDate.toString()));
+};
+
+/**
+ * 通过阳历获取命宫主星
+ *
+ * @version v1.2.1
+ *
+ * @param solarDateStr 阳历日期【YYYY-M-D】
+ * @param timeIndex 出生时辰序号【0~12】
+ * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @param language 输出语言，默认为中文
+ * @returns 命宫主星
+ */
+export const getMajorStarBySolarDate = (
+  solarDateStr: string,
+  timeIndex: number,
+  fixLeap: boolean = true,
+  language?: Language,
+) => {
+  language && setLanguage(language);
+
+  const { bodyIndex } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+  const majorStars = getMajorStar(solarDateStr, timeIndex, fixLeap);
+  const stars = majorStars[bodyIndex].filter((star) => star.type === 'major');
+
+  if (stars.length) {
+    return stars.map((star) => t(star.name)).join(',');
+  }
+
+  // 如果命宫为空宫，则借对宫主星
+  return majorStars[fixIndex(bodyIndex + 6)]
+    .filter((star) => star.type === 'major')
+    .map((star) => t(star.name))
+    .join(',');
+};
+
+/**
+ * 通过农历获取命宫主星
+ *
+ * @version v1.2.1
+ *
+ * @param lunarDateStr 农历日期【YYYY-M-D】，例如2000年七月十七则传入 2000-7-17
+ * @param timeIndex 出生时辰序号【0~12】
+ * @param isLeapMonth 是否闰月，如果该月没有闰月则此字段不生效
+ * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @param language 输出语言，默认为中文
+ * @returns 命宫主星
+ */
+export const getMajorStarByLunarDate = (
+  lunarDateStr: string,
+  timeIndex: number,
+  isLeapMonth: boolean = false,
+  fixLeap: boolean = true,
+  language?: Language,
+) => {
+  const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
+
+  return getMajorStarBySolarDate(solarDate.toString(), timeIndex, fixLeap, language);
 };
