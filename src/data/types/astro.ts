@@ -16,6 +16,8 @@ import { Star } from './star';
 export type HoroscopeItem = {
   /** 所在宫位的索引 */
   index: number;
+  /** 运限名称 */
+  name: string;
   /** 该运限天干 */
   heavenlyStem: HeavenlyStemName;
   /** 该运限地支 */
@@ -76,6 +78,8 @@ export type Horoscope = {
     index: number;
     /** 虚岁 */
     nominalAge: number;
+    /** 名称 */
+    name: string;
   };
   /** 流年 */
   yearly: HoroscopeItem;

@@ -1,4 +1,10 @@
 {
+  "decadal": "大限",
+  "yearly": "流年",
+  "monthly": "流月",
+  "daily": "流日",
+  "hourly": "流时",
+  "turn": "小限",
   "rat": "鼠",
   "ox": "牛",
   "tiger": "虎",

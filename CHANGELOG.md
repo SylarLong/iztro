@@ -7,6 +7,20 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.2.2
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 给 Horoscope 添加 name 字段
+  - 给 name 字段添加国际化翻译
+
+  🇺🇸
+
+  - add `name` field to `Horoscope`
+  - add translation for `name`
+
 ## v1.2.1
 
 - 🪄 功能（feature）
