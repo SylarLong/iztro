@@ -1,4 +1,10 @@
 {
+  "decadal": "decadal",
+  "yearly": "yearly",
+  "monthly": "monthly",
+  "daily": "daily",
+  "hourly": "hourly",
+  "turn": "turn",
   "rat": "rat",
   "ox": "ox",
   "tiger": "tiger",

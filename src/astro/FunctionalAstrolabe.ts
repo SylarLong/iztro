@@ -1,7 +1,7 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES } from '../data';
 import { Astrolabe, Horoscope } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName } from '../i18n';
+import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName, t } from '../i18n';
 import { getHoroscopeStar } from '../star';
 import { IFunctionalStar } from '../star/FunctionalStar';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
@@ -89,11 +89,11 @@ const _getHoroscopeBySolarDate = (
     yearlyIndex -
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.monthly[1])) +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
-      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(monthly[1])),
+      fixEarthlyBranchIndex(monthly[1]),
   );
 
   // 获取流日索引
-  dailyIndex = (monthlyIndex + _date.lunarDay - 1) % 12;
+  dailyIndex = fixIndex(monthlyIndex + _date.lunarDay - 1);
 
   // 获取流时索引
   hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1])));
@@ -103,6 +103,7 @@ const _getHoroscopeBySolarDate = (
     lunarDate: _date.toString(true),
     decadal: {
       index: decadalIndex,
+      name: t('decadal'),
       heavenlyStem: heavenlyStemOfDecade,
       earthlyBranch: earthlyBranchOfDecade,
       palaceNames: getPalaceNames(decadalIndex),
@@ -112,9 +113,11 @@ const _getHoroscopeBySolarDate = (
     age: {
       index: ageIndex,
       nominalAge,
+      name: t('turn'),
     },
     yearly: {
       index: yearlyIndex,
+      name: t('yearly'),
       heavenlyStem: yearly[0],
       earthlyBranch: yearly[1],
       palaceNames: getPalaceNames(yearlyIndex),
@@ -123,6 +126,7 @@ const _getHoroscopeBySolarDate = (
     },
     monthly: {
       index: monthlyIndex,
+      name: t('monthly'),
       heavenlyStem: monthly[0],
       earthlyBranch: monthly[1],
       palaceNames: getPalaceNames(monthlyIndex),
@@ -130,6 +134,7 @@ const _getHoroscopeBySolarDate = (
     },
     daily: {
       index: dailyIndex,
+      name: t('daily'),
       heavenlyStem: daily[0],
       earthlyBranch: daily[1],
       palaceNames: getPalaceNames(dailyIndex),
@@ -137,6 +142,7 @@ const _getHoroscopeBySolarDate = (
     },
     hourly: {
       index: hourlyIndex,
+      name: t('hourly'),
       heavenlyStem: hourly[0],
       earthlyBranch: hourly[1],
       palaceNames: getPalaceNames(hourlyIndex),
