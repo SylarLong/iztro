@@ -8,18 +8,17 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 <div align="center">
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/b57f0e6e2e8875ce39ae/maintainability)](https://codeclimate.com/github/SylarLong/iztro/maintainability)
-[![Codecov](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml/badge.svg)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml)
-[![npm](https://img.shields.io/npm/v/iztro)](https://www.npmjs.com/package/iztro)
-[![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/iztro)](https://github.com/search?q=repo%3ASylarLong%2Fiztro++language%3ATypeScript&type=code)
-[![Codecov](https://img.shields.io/codecov/c/github/sylarlong/iztro)](https://app.codecov.io/gh/SylarLong/iztro/tree/main/src%2Fstar)
-[![npm](https://img.shields.io/npm/dw/iztro)](https://www.npmjs.com/package/iztro)
-[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro)
-[![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/iztro)](https://socket.dev/npm/package/iztro)
-[![Package Quality](https://packagequality.com/shield/iztro.svg)](https://packagequality.com/#?package=iztro)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b57f0e6e2e8875ce39ae/maintainability)](https://codeclimate.com/github/SylarLong/iztro/maintainability) 
+[![Codecov](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml/badge.svg)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml) 
+[![npm](https://img.shields.io/npm/v/iztro?logo=npm&logoColor=%23CB3837)](https://www.npmjs.com/package/iztro) 
+![Codecov](https://img.shields.io/codecov/c/github/SylarLong/iztro?logo=codecov&logoColor=%23F01F7A) 
+[![npm](https://img.shields.io/npm/dw/iztro?logo=npm&logoColor=%23CB3837)](https://www.npmjs.com/package/iztro) 
+[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro) 
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro) 
+[![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro) 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield) 
+[![Socket Badge](https://socket.dev/api/badge/npm/package/iztro)](https://socket.dev/npm/package/iztro) 
+[![Package Quality](https://packagequality.com/shield/iztro.svg)](https://packagequality.com/#?package=iztro) 
 
 </div>
 
