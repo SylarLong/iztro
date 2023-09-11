@@ -1,6 +1,6 @@
 export default {
-  sihuaLu: 'additional',
-  sihuaQuan: 'forceful',
-  sihuaKe: 'easygoing',
-  sihuaJi: 'focused',
+  sihuaLu: 'Lộc',
+  sihuaQuan: 'Quyền',
+  sihuaKe: 'Khoa',
+  sihuaJi: 'Kỵ',
 } as const;
