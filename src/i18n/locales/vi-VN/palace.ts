@@ -1,0 +1,16 @@
+export default {
+  soulPalace: 'Mệnh',
+  bodyPalace: 'Thân',
+  siblingsPalace: 'Huynh Đệ',
+  spousePalace: 'Phu Thê',
+  childrenPalace: 'Tử Nữ',
+  wealthPalace: 'Tài Bạch',
+  healthPalace: 'Tật Ách',
+  surfacePalace: 'Thiên Di',
+  friendsPalace: 'Nô Bộc',
+  careerPalace: 'Quan Lộc',
+  propertyPalace: 'Điền Trạch',
+  spiritPalace: 'Phúc Đức',
+  parentsPalace: 'Phụ Mẫu',
+  originalPalace: 'Lai Ân',
+} as const;
