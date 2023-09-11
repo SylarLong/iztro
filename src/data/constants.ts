@@ -1,5 +1,5 @@
 /** 支持的语言 */
-export const LANGUAGES = ['en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW'];
+export const LANGUAGES = ['en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW', 'vi-VN'];
 
 /** 十天干 */
 export const HEAVENLY_STEMS = [

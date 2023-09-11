@@ -12,5 +12,5 @@ export default {
   propertyPalace: 'Điền Trạch',
   spiritPalace: 'Phúc Đức',
   parentsPalace: 'Phụ Mẫu',
-  originalPalace: 'Lai Ân',
+  originalPalace: 'Lai Nhân',
 } as const;
