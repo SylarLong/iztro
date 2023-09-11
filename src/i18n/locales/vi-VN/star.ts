@@ -128,5 +128,5 @@ export default {
   liuyang: 'Lưu Dương',
   liutuo: 'Lưu Đà',
   liuma: 'Lưu Mã',
-  nianjie: 'Niên Giải',
+  nianjie: 'Niên Giải'
 } as const;

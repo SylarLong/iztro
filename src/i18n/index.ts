@@ -226,6 +226,8 @@ export type FiveElementsClassName =
   | FiveElementsClassZhCN
   | FiveElementsClassZhTW
   | FiveElementsClassViVN;
+
+  
 export type FiveElementsClassKey = keyof typeof fiveElementsClassZhCN;
 
 type GenderEnUS = (typeof genderEnUS)[keyof typeof genderEnUS];
