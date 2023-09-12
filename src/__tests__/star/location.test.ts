@@ -21,8 +21,8 @@ describe('star/location', () => {
   test('getLuYangTuoMaIndex()', () => {
     const data = [
       {
-        heavenlyStem: '癸',
-        earthlyBranch: '卯',
+        heavenlyStem: 'Quý',
+        earthlyBranch: 'Mão',
         result: {
           luIndex: 10,
           yangIndex: 11,
@@ -31,8 +31,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '庚',
-        earthlyBranch: '寅',
+        heavenlyStem: 'Canh',
+        earthlyBranch: 'Dần',
         result: {
           luIndex: 6,
           yangIndex: 7,
@@ -41,8 +41,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '辛',
-        earthlyBranch: '巳',
+        heavenlyStem: 'Tân',
+        earthlyBranch: 'Tỵ',
         result: {
           luIndex: 7,
           yangIndex: 8,
@@ -51,8 +51,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '壬',
-        earthlyBranch: '午',
+        heavenlyStem: 'Nhâm',
+        earthlyBranch: 'Ngọ',
         result: {
           luIndex: 9,
           yangIndex: 10,
@@ -61,8 +61,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '癸',
-        earthlyBranch: '未',
+        heavenlyStem: 'Quý',
+        earthlyBranch: 'Mùi',
         result: {
           luIndex: 10,
           yangIndex: 11,
@@ -71,8 +71,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '甲',
-        earthlyBranch: '申',
+        heavenlyStem: 'Giáp',
+        earthlyBranch: 'Thân',
         result: {
           luIndex: 0,
           yangIndex: 1,
@@ -81,8 +81,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '丁',
-        earthlyBranch: '亥',
+        heavenlyStem: 'Đinh',
+        earthlyBranch: 'Hợi',
         result: {
           luIndex: 4,
           maIndex: 3,
@@ -91,8 +91,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '乙',
-        earthlyBranch: '酉',
+        heavenlyStem: 'Ất',
+        earthlyBranch: 'Dậu',
         result: {
           luIndex: 1,
           maIndex: 9,
@@ -101,8 +101,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '戊',
-        earthlyBranch: '戌',
+        heavenlyStem: 'Mậu',
+        earthlyBranch: 'Tuất',
         result: {
           luIndex: 3,
           maIndex: 6,
@@ -111,8 +111,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '己',
-        earthlyBranch: '未',
+        heavenlyStem: 'Kỷ',
+        earthlyBranch: 'Mùi',
         result: {
           luIndex: 4,
           maIndex: 3,
@@ -121,8 +121,8 @@ describe('star/location', () => {
         },
       },
       {
-        heavenlyStem: '丙',
-        earthlyBranch: '午',
+        heavenlyStem: 'Bính',
+        earthlyBranch: 'Ngọ',
         result: {
           luIndex: 3,
           maIndex: 6,
