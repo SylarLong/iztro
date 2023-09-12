@@ -210,6 +210,7 @@ export type EarthlyBranchName =
   | EarthlyBranchZhCN
   | EarthlyBranchZhTW
   | EarthlyBranchViVN;
+  
 export type EarthlyBranchKey = keyof typeof earthlyBranchZhCN;
 
 type FiveElementsClassEnUS = (typeof fiveElementsClassEnUS)[keyof typeof fiveElementsClassEnUS];
