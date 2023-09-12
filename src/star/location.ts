@@ -112,22 +112,22 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
     case 'yinEarthly':
     case 'wuEarthly':
     case 'xuEarthly':
-      maIndex = fixEarthlyBranchIndex('shen');
+      maIndex = fixEarthlyBranchIndex('Thân');
       break;
     case 'shenEarthly':
     case 'ziEarthly':
     case 'chenEarthly':
-      maIndex = fixEarthlyBranchIndex('yin');
+      maIndex = fixEarthlyBranchIndex('Dần');
       break;
     case 'siEarthly':
     case 'youEarthly':
     case 'chouEarthly':
-      maIndex = fixEarthlyBranchIndex('hai');
+      maIndex = fixEarthlyBranchIndex('Hợi');
       break;
     case 'haiEarthly':
     case 'maoEarthly':
     case 'weiEarthly':
-      maIndex = fixEarthlyBranchIndex('si');
+      maIndex = fixEarthlyBranchIndex('Tỵ');
       break;
   }
 
