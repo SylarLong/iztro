@@ -12,7 +12,7 @@ export default {
   tianxiangMaj: 'Thiên Tướng',
   tianliangMaj: 'Thiên Lương',
   qishaMaj: 'Thất Sát',
-  pojunMaj: 'Phát Quân',
+  pojunMaj: 'Phá Quân',
   zuofuMin: 'Tả Phù',
   youbiMin: 'Hữu Bật',
   wenchangMin: 'Văn Xương',

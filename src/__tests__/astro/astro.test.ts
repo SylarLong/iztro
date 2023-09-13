@@ -10,7 +10,7 @@ import { setLanguage } from '../../i18n';
 import { astro } from '../../index';
 
 describe('Astrolabe', () => {
-  afterEach(() => setLanguage('zh-CN'));
+  afterEach(() => setLanguage('vi-VN'));
 
   test('astrolabeBySolarDate()', () => {
     const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true);
