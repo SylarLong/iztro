@@ -106,7 +106,7 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
   let maIndex = 0; // 天马索引
 
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
   // console.log('ten tieng viet',heavenlyStemName, earthlyBranchName , heavenlyStem,earthlyBranch  )
   switch (earthlyBranch) {
     case 'yinEarthly':

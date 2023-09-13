@@ -274,13 +274,20 @@ export const t = <T>(str: string) => {
  * @param value 翻译后的字符串
  * @returns 翻译文本的Key值
  */
-export const kot = <T>(value: string) => {
+export const kot = <T>(value: string, k?:string) => {
   for (const lng in resources) {
     const res = resources[lng].translation;
     for (const key in res) {
-      if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
+      if (k) {
+        if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value && key.includes(k!)) {
+          return key as T;
+        }
+      } else {
+          if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
         return key as T;
       }
+      }
+    
     }
   }
 
