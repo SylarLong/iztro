@@ -132,7 +132,7 @@ describe('star/location', () => {
       },
     ];
 
-    data.forEach((item) => {
+    data.forEach((item:any) => {
       expect(
         getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStemName, item.earthlyBranch as EarthlyBranchName),
       ).toStrictEqual(item.result);

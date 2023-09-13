@@ -127,7 +127,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   const { huoIndex, lingIndex } = getHuoLingIndex(yearly[1], timeIndex);
   const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
-
+  console.log('tim index',luIndex, yangIndex, tuoIndex, maIndex )
   stars[zuoIndex].push({
     name: t('zuofuMin'),
     type: 'soft',
