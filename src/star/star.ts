@@ -375,7 +375,7 @@ export const getchangsheng12 = (
   // 获取五行局，通过五行局获取起运年龄
   const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
   // 长生12神顺序
-  const stars: StarName[] = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
+  const stars: any[] = ['changsheng', 'muyu', 'guandai', 'linguan', 'diwang', 'shuai', 'bing', 'si', 'mu', 'jue', 'tai', 'yang'];
   const startIdx = getChangesheng12StartIndex(fiveElementClass);
 
   for (let i = 0; i < stars.length; i++) {
