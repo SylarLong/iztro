@@ -1,9 +1,9 @@
 export default {
-  miao: '[+3]',
-  wang: '[+2]',
-  de: '[+1]',
-  li: '[0]',
-  ping: '[-1]',
-  bu: '[-2]',
-  xian: '[-3]',
+  miao: '庙',
+  wang: '旺',
+  de: '得',
+  li: '利',
+  ping: '平',
+  bu: '不',
+  xian: '陷',
 } as const;
