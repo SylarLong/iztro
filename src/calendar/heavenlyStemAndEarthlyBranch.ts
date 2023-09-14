@@ -114,7 +114,12 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
     daily,
     hourly,
     toString() {
-      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      if(RegExp(/^\p{L}/,'u').test(yearly[0])) {
+        return `${yearly.join(' ')} ${monthly.join(' ')} ${daily.join(' ')} ${hourly.join(' ')}`;
+      } else {
+        return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      }
+     
     },
   };
 };
