@@ -13,6 +13,7 @@ import {
   FiveElementsClassName,
   GenderName,
   GenderKey,
+  StarKey,
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import {
@@ -127,7 +128,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   const { huoIndex, lingIndex } = getHuoLingIndex(yearly[1], timeIndex);
   const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
-  console.log('tim index',luIndex, yangIndex, tuoIndex, maIndex )
+
   stars[zuoIndex].push({
     name: t('zuofuMin'),
     type: 'soft',
@@ -375,7 +376,20 @@ export const getchangsheng12 = (
   // 获取五行局，通过五行局获取起运年龄
   const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
   // 长生12神顺序
-  const stars: any[] = ['changsheng', 'muyu', 'guandai', 'linguan', 'diwang', 'shuai', 'bing', 'si', 'mu', 'jue', 'tai', 'yang'];
+  const stars: StarKey[] = [
+    'changsheng',
+    'muyu',
+    'guandai',
+    'linguan',
+    'diwang',
+    'shuai',
+    'bing',
+    'si',
+    'mu',
+    'jue',
+    'tai',
+    'yang',
+  ];
   const startIdx = getChangesheng12StartIndex(fiveElementClass);
 
   for (let i = 0; i < stars.length; i++) {
@@ -408,7 +422,7 @@ export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[]
   const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
   // 博士12神的顺序
-  const stars: any[] = [
+  const stars: StarKey[] = [
     'boshi',
     'lishi',
     'qinglong',
@@ -486,7 +500,7 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
   const suiqian12: StarName[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
 
-  const ts12shen: any[] = [
+  const ts12shen: StarKey[] = [
     'suijian',
     'huiqi',
     'sangmen',
@@ -507,7 +521,7 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
     suiqian12[idx] = t(ts12shen[i]);
   }
 
-  const jq12shen: any[] = [
+  const jq12shen: StarKey[] = [
     'jiangxing',
     'panan',
     'suiyi',

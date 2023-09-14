@@ -112,22 +112,22 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
     case 'yinEarthly':
     case 'wuEarthly':
     case 'xuEarthly':
-      maIndex = fixEarthlyBranchIndex('shen');  
+      maIndex = fixEarthlyBranchIndex('shen');
       break;
     case 'shenEarthly':
     case 'ziEarthly':
     case 'chenEarthly':
-      maIndex = fixEarthlyBranchIndex('yin');   
+      maIndex = fixEarthlyBranchIndex('yin');
       break;
     case 'siEarthly':
     case 'youEarthly':
     case 'chouEarthly':
-      maIndex = fixEarthlyBranchIndex('hai');   
+      maIndex = fixEarthlyBranchIndex('hai');
       break;
     case 'haiEarthly':
     case 'maoEarthly':
     case 'weiEarthly':
-      maIndex = fixEarthlyBranchIndex('si');  
+      maIndex = fixEarthlyBranchIndex('si');
       break;
   }
   // console.log('Tim maIndex',heavenlyStemName, earthlyBranchName , heavenlyStem,earthlyBranch , maIndex)
@@ -168,10 +168,6 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
       break;
     }
   }
-  console.log('Full index ==> ', heavenlyStemName, earthlyBranchName, luIndex,
-  maIndex,
-   fixIndex(luIndex + 1),
-   fixIndex(luIndex - 1))
 
   return {
     luIndex,

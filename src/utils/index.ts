@@ -31,7 +31,7 @@ export const fixIndex = (index: number, max: number = 12): number => {
   if (index > max - 1) {
     return fixIndex(index - max, max);
   }
-  
+
   const res = 1 / index === -Infinity ? 0 : index;
   // console.log('dau ra', res)
   return res;

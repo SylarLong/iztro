@@ -21,6 +21,127 @@ describe('star/location', () => {
   test('getLuYangTuoMaIndex()', () => {
     const data = [
       {
+        heavenlyStem: '癸',
+        earthlyBranch: '卯',
+        result: {
+          luIndex: 10,
+          yangIndex: 11,
+          tuoIndex: 9,
+          maIndex: 3,
+        },
+      },
+      {
+        heavenlyStem: '庚',
+        earthlyBranch: '寅',
+        result: {
+          luIndex: 6,
+          yangIndex: 7,
+          tuoIndex: 5,
+          maIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: '辛',
+        earthlyBranch: '巳',
+        result: {
+          luIndex: 7,
+          yangIndex: 8,
+          tuoIndex: 6,
+          maIndex: 9,
+        },
+      },
+      {
+        heavenlyStem: '壬',
+        earthlyBranch: '午',
+        result: {
+          luIndex: 9,
+          yangIndex: 10,
+          tuoIndex: 8,
+          maIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: '癸',
+        earthlyBranch: '未',
+        result: {
+          luIndex: 10,
+          yangIndex: 11,
+          tuoIndex: 9,
+          maIndex: 3,
+        },
+      },
+      {
+        heavenlyStem: '甲',
+        earthlyBranch: '申',
+        result: {
+          luIndex: 0,
+          yangIndex: 1,
+          tuoIndex: 11,
+          maIndex: 0,
+        },
+      },
+      {
+        heavenlyStem: '丁',
+        earthlyBranch: '亥',
+        result: {
+          luIndex: 4,
+          maIndex: 3,
+          tuoIndex: 3,
+          yangIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '乙',
+        earthlyBranch: '酉',
+        result: {
+          luIndex: 1,
+          maIndex: 9,
+          tuoIndex: 0,
+          yangIndex: 2,
+        },
+      },
+      {
+        heavenlyStem: '戊',
+        earthlyBranch: '戌',
+        result: {
+          luIndex: 3,
+          maIndex: 6,
+          tuoIndex: 2,
+          yangIndex: 4,
+        },
+      },
+      {
+        heavenlyStem: '己',
+        earthlyBranch: '未',
+        result: {
+          luIndex: 4,
+          maIndex: 3,
+          tuoIndex: 3,
+          yangIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: '丙',
+        earthlyBranch: '午',
+        result: {
+          luIndex: 3,
+          maIndex: 6,
+          tuoIndex: 2,
+          yangIndex: 4,
+        },
+      },
+    ];
+
+    data.forEach((item) => {
+      expect(
+        getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStemName, item.earthlyBranch as EarthlyBranchName),
+      ).toStrictEqual(item.result);
+    });
+  });
+
+  test('getLuYangTuoMaIndex() vi-VN', () => {
+    const data = [
+      {
         heavenlyStem: 'Quý',
         earthlyBranch: 'Mão',
         result: {
@@ -132,7 +253,7 @@ describe('star/location', () => {
       },
     ];
 
-    data.forEach((item:any) => {
+    data.forEach((item) => {
       expect(
         getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStemName, item.earthlyBranch as EarthlyBranchName),
       ).toStrictEqual(item.result);

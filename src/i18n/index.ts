@@ -156,7 +156,6 @@ type MutagenZhCN = (typeof mutagenZhCN)[keyof typeof mutagenZhCN];
 type MutagenZhTW = (typeof mutagenZhTW)[keyof typeof mutagenZhTW];
 type MutagenViVN = (typeof mutagenViVN)[keyof typeof mutagenViVN];
 
-
 export type Mutagen = MutagenEnUS | MutagenJaJP | MutagenKoKR | MutagenZhCN | MutagenZhTW | MutagenViVN;
 export type MutagenKey = keyof typeof mutagenZhCN;
 
@@ -167,7 +166,14 @@ type BrightnessZhCN = (typeof brightnessZhCN)[keyof typeof brightnessZhCN];
 type BrightnessZhTW = (typeof brightnessZhTW)[keyof typeof brightnessZhTW];
 type BrightnessViVN = (typeof brightnessViVN)[keyof typeof brightnessViVN];
 
-export type Brightness = '' | BrightnessEnUS | BrightnessJaJP | BrightnessKoKR | BrightnessZhCN | BrightnessZhTW | BrightnessViVN;
+export type Brightness =
+  | ''
+  | BrightnessEnUS
+  | BrightnessJaJP
+  | BrightnessKoKR
+  | BrightnessZhCN
+  | BrightnessZhTW
+  | BrightnessViVN;
 export type BrightnessKey = keyof typeof brightnessZhCN;
 
 type PalaceEnUS = (typeof palaceEnUS)[keyof typeof palaceEnUS];
@@ -210,7 +216,7 @@ export type EarthlyBranchName =
   | EarthlyBranchZhCN
   | EarthlyBranchZhTW
   | EarthlyBranchViVN;
-  
+
 export type EarthlyBranchKey = keyof typeof earthlyBranchZhCN;
 
 type FiveElementsClassEnUS = (typeof fiveElementsClassEnUS)[keyof typeof fiveElementsClassEnUS];
@@ -228,7 +234,6 @@ export type FiveElementsClassName =
   | FiveElementsClassZhTW
   | FiveElementsClassViVN;
 
-  
 export type FiveElementsClassKey = keyof typeof fiveElementsClassZhCN;
 
 type GenderEnUS = (typeof genderEnUS)[keyof typeof genderEnUS];
@@ -274,7 +279,7 @@ export const t = <T>(str: string) => {
  * @param value 翻译后的字符串
  * @returns 翻译文本的Key值
  */
-export const kot = <T>(value: string, k?:string) => {
+export const kot = <T>(value: string, k?: string) => {
   for (const lng in resources) {
     const res = resources[lng].translation;
     for (const key in res) {
@@ -283,11 +288,10 @@ export const kot = <T>(value: string, k?:string) => {
           return key as T;
         }
       } else {
-          if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
-        return key as T;
+        if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
+          return key as T;
+        }
       }
-      }
-    
     }
   }
 
