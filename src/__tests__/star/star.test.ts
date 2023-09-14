@@ -11,9 +11,11 @@ import {
 } from '../../star';
 import { mergeStars } from '../../utils';
 import { star } from '../../index';
-import { EarthlyBranchName, FiveElementsClassName } from '../../i18n';
+import { EarthlyBranchName, FiveElementsClassName, setLanguage } from '../../i18n';
 
 describe('star/index', () => {
+  afterEach(() => setLanguage('zh-CN'));
+
   test('getStartIndex()', () => {
     const data = [
       {
@@ -158,6 +160,31 @@ describe('star/index', () => {
     ]);
   });
 
+  test('getMajorStar() vi-VN', () => {
+    setLanguage('vi-VN');
+
+    expect(getMajorStar('2023-03-06', 4, true)).toStrictEqual([
+      [{ name: 'Thất Sát', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: '' }],
+      [{ name: 'Thiên Đồng', type: 'major', brightness: 'Bình', scope: 'origin', mutagen: '' }],
+      [{ name: 'Vũ Khúc', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: '' }],
+      [{ name: 'Thái Dương', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: '' }],
+      [{ name: 'Phá Quân', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: 'Lộc' }],
+      [{ name: 'Thiên Cơ', type: 'major', brightness: 'Hạn', scope: 'origin', mutagen: '' }],
+      [
+        { name: 'Tử Vi', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: '' },
+        { name: 'Thiên Phủ', type: 'major', brightness: 'Đắc', scope: 'origin', mutagen: '' },
+      ],
+      [{ name: 'Thái Âm', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: 'Khoa' }],
+      [{ name: 'Tham Lang', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: 'Kỵ' }],
+      [{ name: 'Cự Môn', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: 'Quyền' }],
+      [
+        { name: 'Liêm Trinh', type: 'major', brightness: 'Bình', scope: 'origin', mutagen: '' },
+        { name: 'Thiên Tướng', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: '' },
+      ],
+      [{ name: 'Thiên Lương', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: '' }],
+    ]);
+  });
+
   test('getMinorStar()', () => {
     const primaryStars = getMajorStar('2023-03-06', 2, true);
     const secondaryStars = getMinorStar('2023-03-06', 2, true);
@@ -186,6 +213,25 @@ describe('star/index', () => {
       '绝',
       '胎',
       '养',
+    ]);
+  });
+
+  test('getchangsheng12() vi-VN', () => {
+    setLanguage('vi-VN');
+
+    expect(getchangsheng12('2023-8-15', 0, '女', true)).toStrictEqual([
+      'Trường Sinh',
+      'Mục Dục',
+      'Quan Đới',
+      'Lâm Quan',
+      'Đế Vượng',
+      'Suy',
+      'Bệnh',
+      'Tử',
+      'Mộ',
+      'Tuyệt',
+      'Thai',
+      'Dưỡng',
     ]);
   });
 

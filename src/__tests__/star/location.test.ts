@@ -139,6 +139,127 @@ describe('star/location', () => {
     });
   });
 
+  test('getLuYangTuoMaIndex() vi-VN', () => {
+    const data = [
+      {
+        heavenlyStem: 'Quý',
+        earthlyBranch: 'Mão',
+        result: {
+          luIndex: 10,
+          yangIndex: 11,
+          tuoIndex: 9,
+          maIndex: 3,
+        },
+      },
+      {
+        heavenlyStem: 'Canh',
+        earthlyBranch: 'Dần',
+        result: {
+          luIndex: 6,
+          yangIndex: 7,
+          tuoIndex: 5,
+          maIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: 'Tân',
+        earthlyBranch: 'Tỵ',
+        result: {
+          luIndex: 7,
+          yangIndex: 8,
+          tuoIndex: 6,
+          maIndex: 9,
+        },
+      },
+      {
+        heavenlyStem: 'Nhâm',
+        earthlyBranch: 'Ngọ',
+        result: {
+          luIndex: 9,
+          yangIndex: 10,
+          tuoIndex: 8,
+          maIndex: 6,
+        },
+      },
+      {
+        heavenlyStem: 'Quý',
+        earthlyBranch: 'Mùi',
+        result: {
+          luIndex: 10,
+          yangIndex: 11,
+          tuoIndex: 9,
+          maIndex: 3,
+        },
+      },
+      {
+        heavenlyStem: 'Giáp',
+        earthlyBranch: 'Thân',
+        result: {
+          luIndex: 0,
+          yangIndex: 1,
+          tuoIndex: 11,
+          maIndex: 0,
+        },
+      },
+      {
+        heavenlyStem: 'Đinh',
+        earthlyBranch: 'Hợi',
+        result: {
+          luIndex: 4,
+          maIndex: 3,
+          tuoIndex: 3,
+          yangIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: 'Ất',
+        earthlyBranch: 'Dậu',
+        result: {
+          luIndex: 1,
+          maIndex: 9,
+          tuoIndex: 0,
+          yangIndex: 2,
+        },
+      },
+      {
+        heavenlyStem: 'Mậu',
+        earthlyBranch: 'Tuất',
+        result: {
+          luIndex: 3,
+          maIndex: 6,
+          tuoIndex: 2,
+          yangIndex: 4,
+        },
+      },
+      {
+        heavenlyStem: 'Kỷ',
+        earthlyBranch: 'Mùi',
+        result: {
+          luIndex: 4,
+          maIndex: 3,
+          tuoIndex: 3,
+          yangIndex: 5,
+        },
+      },
+      {
+        heavenlyStem: 'Bính',
+        earthlyBranch: 'Ngọ',
+        result: {
+          luIndex: 3,
+          maIndex: 6,
+          tuoIndex: 2,
+          yangIndex: 4,
+        },
+      },
+    ];
+
+    data.forEach((item) => {
+      expect(
+        getLuYangTuoMaIndex(item.heavenlyStem as HeavenlyStemName, item.earthlyBranch as EarthlyBranchName),
+      ).toStrictEqual(item.result);
+    });
+  });
+
   test('getKuiYueIndex()', () => {
     const data = [
       {

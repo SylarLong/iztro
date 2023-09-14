@@ -13,6 +13,7 @@ import {
   FiveElementsClassName,
   GenderName,
   GenderKey,
+  StarKey,
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import {
@@ -375,7 +376,20 @@ export const getchangsheng12 = (
   // 获取五行局，通过五行局获取起运年龄
   const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
   // 长生12神顺序
-  const stars: StarName[] = ['长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓', '绝', '胎', '养'];
+  const stars: StarKey[] = [
+    'changsheng',
+    'muyu',
+    'guandai',
+    'linguan',
+    'diwang',
+    'shuai',
+    'bing',
+    'si',
+    'mu',
+    'jue',
+    'tai',
+    'yang',
+  ];
   const startIdx = getChangesheng12StartIndex(fiveElementClass);
 
   for (let i = 0; i < stars.length; i++) {
@@ -408,19 +422,19 @@ export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[]
   const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
   // 博士12神的顺序
-  const stars: StarName[] = [
-    '博士',
-    '力士',
-    '青龙',
-    '小耗',
-    '将军',
-    '奏书',
-    '飞廉',
-    '喜神',
-    '病符',
-    '大耗',
-    '伏兵',
-    '官府',
+  const stars: StarKey[] = [
+    'boshi',
+    'lishi',
+    'qinglong',
+    'xiaohao',
+    'jiangjun',
+    'zhoushu',
+    'faylian',
+    'xishen',
+    'bingfu',
+    'dahao',
+    'fubing',
+    'guanfu',
   ];
   const { luIndex } = getLuYangTuoMaIndex(heavenlyStemNameOfYear, earthlyBranchNameOfYear);
   const boshi12: StarName[] = [];
@@ -486,19 +500,19 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
   const suiqian12: StarName[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
 
-  const ts12shen: StarName[] = [
-    '岁建',
-    '晦气',
-    '丧门',
-    '贯索',
-    '官符',
-    '小耗',
-    '大耗',
-    '龙德',
-    '白虎',
-    '天德',
-    '吊客',
-    '病符',
+  const ts12shen: StarKey[] = [
+    'suijian',
+    'huiqi',
+    'sangmen',
+    'guansuo',
+    'gwanfu',
+    'xiaohao',
+    'dahao',
+    'longde',
+    'baihu',
+    'tiande',
+    'diaoke',
+    'bingfu',
   ];
 
   for (let i = 0; i < ts12shen.length; i++) {
@@ -507,19 +521,19 @@ export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jian
     suiqian12[idx] = t(ts12shen[i]);
   }
 
-  const jq12shen: StarName[] = [
-    '将星',
-    '攀鞍',
-    '岁驿',
-    '息神',
-    '华盖',
-    '劫煞',
-    '灾煞',
-    '天煞',
-    '指背',
-    '咸池',
-    '月煞',
-    '亡神',
+  const jq12shen: StarKey[] = [
+    'jiangxing',
+    'panan',
+    'suiyi',
+    'xiishen',
+    'huagai',
+    'jiesha',
+    'zhaisha',
+    'tiansha',
+    'zhibei',
+    'xianchi',
+    'yuesha',
+    'wangshen',
   ];
 
   const jiangqian12StartIndex = getJiangqian12StartIndex(yearly[1]);

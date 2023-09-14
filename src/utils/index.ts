@@ -23,6 +23,7 @@ import { Star } from '../data/types';
  * @returns 处理后的索引
  */
 export const fixIndex = (index: number, max: number = 12): number => {
+  // console.log('dau vao', index, max)
   if (index < 0) {
     return fixIndex(index + max, max);
   }
@@ -31,7 +32,9 @@ export const fixIndex = (index: number, max: number = 12): number => {
     return fixIndex(index - max, max);
   }
 
-  return 1 / index === -Infinity ? 0 : index;
+  const res = 1 / index === -Infinity ? 0 : index;
+  // console.log('dau ra', res)
+  return res;
 };
 
 /**

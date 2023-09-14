@@ -4,7 +4,7 @@ import { hasMutagenInPlace, hasOneOfStars, hasStars, notHaveMutagenInPalce, notH
 
 /**
  * 宫位类的接口定义。
- * 
+ *
  * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
  */
 export interface IFunctionalPalace extends Palace {
@@ -61,7 +61,7 @@ export interface IFunctionalPalace extends Palace {
 
 /**
  * 宫位类。
- * 
+ *
  * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
  */
 export default class FunctionalPalace implements IFunctionalPalace {
