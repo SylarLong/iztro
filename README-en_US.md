@@ -1,7 +1,5 @@
 <div align="center">
 
-# 📦 IZTRO
-
 ![banner2](https://github.com/SylarLong/iztro/assets/6510425/e8457a88-e52e-435e-8f93-e3f375486d70)
 
 A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
