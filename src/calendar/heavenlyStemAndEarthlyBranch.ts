@@ -114,8 +114,8 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
     daily,
     hourly,
     toString() {
-      if(RegExp(/^\p{L}/,'u').test(yearly[0])) {
-        return `${yearly.join(' ')} ${monthly.join(' ')} ${daily.join(' ')} ${hourly.join(' ')}`;
+      if(yearly[0].length>1) {
+        return `${yearly.join(' ')} - ${monthly.join(' ')} - ${daily.join(' ')} - ${hourly.join(' ')}`;
       } else {
         return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
       }
@@ -149,7 +149,12 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
     daily,
     hourly,
     toString() {
-      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      // return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      if(yearly[0].length>1) {
+        return `${yearly.join(' ')} - ${monthly.join(' ')} - ${daily.join(' ')} - ${hourly.join(' ')}`;
+      } else {
+        return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      }
     },
   };
 };
