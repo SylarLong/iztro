@@ -50,7 +50,7 @@ It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
   - get birth time by Chinese date
   - get `horoscope`(`decadal`, `turnly`, `yearly`, `monthly`, `daily`, `timely`)
   - get horoscope `stars` (`dacadal` and `yearly`)
-  - check if one palace includes specific stars
+  - check if one `palace` includes specific `stars`
   - check if `surrounded palaces` of specific `palace` include specific `stars`
   - check if `surrounded palaces` of specific `palace` include specific `mutagen`
   - check if spedific star is `mutaged`
