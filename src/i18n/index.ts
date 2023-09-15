@@ -65,22 +65,18 @@ export const t = <T>(str: string) => {
  * @returns 翻译文本的Key值
  */
 export const kot = <T>(value: string, k?: string) => {
-  for (const lng in resources) {
-    const res = resources[lng].translation;
-    for (const key in res) {
-      if (k) {
-        if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value && key.includes(k!)) {
-          return key as T;
-        }
-      } else {
-        if (Object.prototype.hasOwnProperty.call(res, key) && res[key] === value) {
-          return key as T;
-        }
+  let res = value;
+
+  for (const [, item] of Object.entries(resources)) {
+    for (const [transKey, trans] of Object.entries(item.translation)) {
+      if (((k && transKey.includes(k)) || !k) && trans === value) {
+        res = transKey;
+        return res as T;
       }
     }
   }
 
-  return value as T;
+  return res as T;
 };
 
 export * from './types';
