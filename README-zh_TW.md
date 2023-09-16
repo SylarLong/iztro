@@ -152,7 +152,7 @@
 
 使用本程序返回的數據，妳可以生成這樣壹張星盤，當然這隻是壹個例子，妳可以把註意力集中在星盤的設計上，也可以把重心放在數據的分析上，本程序為妳解決了最繁冗的工作，讓妳可以把精力更多的放在妳所需要關註的事情上面。
 
-![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
+<img width="966" alt="image" src="https://github.com/SylarLong/react-iztro/assets/6510425/f4335997-fdd8-42e2-bb1a-600942f9b0ba">
 
 ### Star趨勢
 
