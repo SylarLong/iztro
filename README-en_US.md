@@ -151,7 +151,7 @@ If you're interested in `iztro` and wish to join us,it's very welcome. You can c
 
 You can generate an astrolabe by using the returned data. Of course it's just an example. You can focus on astrolabe design or data analyzation. This program solves the most tedious work for you, so that you can put more energy on the things you need to pay attention to.
 
-![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
+<img width="966" alt="image" src="https://github.com/SylarLong/react-iztro/assets/6510425/f4335997-fdd8-42e2-bb1a-600942f9b0ba">
 
 ### Star History
 
