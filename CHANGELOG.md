@@ -7,6 +7,28 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.2.4
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 新增越南语支持
+
+  🇺🇸
+
+  - support Vietnamese
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 修复代码风格检查发现的额问题 #42 #43
+
+  🇺🇸
+
+  - fix codestyle issues #42 #43
+
 ## v1.2.3
 
 - 🛠️ 修复（fix）

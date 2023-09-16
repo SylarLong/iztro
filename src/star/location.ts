@@ -103,11 +103,11 @@ export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?:
  */
 export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyBranchName: EarthlyBranchName) => {
   let luIndex = -1; // 禄存索引
-  let maIndex = -1; // 天马索引
+  let maIndex = 0; // 天马索引
 
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
-
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+  // console.log('ten tieng viet',heavenlyStemName, earthlyBranchName , heavenlyStem,earthlyBranch  )
   switch (earthlyBranch) {
     case 'yinEarthly':
     case 'wuEarthly':
@@ -130,6 +130,7 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
       maIndex = fixEarthlyBranchIndex('si');
       break;
   }
+  // console.log('Tim maIndex',heavenlyStemName, earthlyBranchName , heavenlyStem,earthlyBranch , maIndex)
 
   switch (heavenlyStem) {
     case 'jiaHeavenly': {

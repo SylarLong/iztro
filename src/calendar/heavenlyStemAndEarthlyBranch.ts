@@ -114,7 +114,11 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
     daily,
     hourly,
     toString() {
-      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      if (yearly[0].length > 1) {
+        return `${yearly.join(' ')} - ${monthly.join(' ')} - ${daily.join(' ')} - ${hourly.join(' ')}`;
+      } else {
+        return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
+      }
     },
   };
 };
@@ -130,21 +134,7 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
   dateStr: string,
   timeIndex: number,
 ): HeavenlyStemAndEarthlyBranchDate => {
-  const solarDate = new Date(dateStr);
-  const { lunarYear } = solar2lunar(dateStr);
+  const lunarDate = solar2lunar(dateStr);
 
-  const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
-  const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);
-  const daily = heavenlyStemAndEarthlyBranchOfDay(solarDate, timeIndex);
-  const hourly = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
-
-  return {
-    yearly,
-    monthly,
-    daily,
-    hourly,
-    toString() {
-      return `${yearly.join('')} ${monthly.join('')} ${daily.join('')} ${hourly.join('')}`;
-    },
-  };
+  return getHeavenlyStemAndEarthlyBranchByLunarDate(lunarDate.toString(), timeIndex, lunarDate.isLeap);
 };

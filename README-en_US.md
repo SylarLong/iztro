@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📦 IZTRO
+![banner2](https://github.com/SylarLong/iztro/assets/6510425/e8457a88-e52e-435e-8f93-e3f375486d70)
 
 A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
@@ -8,18 +8,17 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 <div align="center">
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/b57f0e6e2e8875ce39ae/maintainability)](https://codeclimate.com/github/SylarLong/iztro/maintainability)
-[![Codecov](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml/badge.svg)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml)
-[![npm](https://img.shields.io/npm/v/iztro)](https://www.npmjs.com/package/iztro)
-[![GitHub top language](https://img.shields.io/github/languages/top/SylarLong/iztro)](https://github.com/search?q=repo%3ASylarLong%2Fiztro++language%3ATypeScript&type=code)
-[![Codecov](https://img.shields.io/codecov/c/github/sylarlong/iztro)](https://app.codecov.io/gh/SylarLong/iztro/tree/main/src%2Fstar)
-[![npm](https://img.shields.io/npm/dw/iztro)](https://www.npmjs.com/package/iztro)
-[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro)
-[![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/iztro)](https://socket.dev/npm/package/iztro)
-[![Package Quality](https://packagequality.com/shield/iztro.svg)](https://packagequality.com/#?package=iztro)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b57f0e6e2e8875ce39ae/maintainability)](https://codeclimate.com/github/SylarLong/iztro/maintainability) 
+[![Codecov](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml/badge.svg)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml) 
+[![npm](https://img.shields.io/npm/v/iztro?logo=npm&logoColor=%23CB3837)](https://www.npmjs.com/package/iztro) 
+![Codecov](https://img.shields.io/codecov/c/github/SylarLong/iztro?logo=codecov&logoColor=%23F01F7A) 
+[![npm](https://img.shields.io/npm/dw/iztro?logo=npm&logoColor=%23CB3837)](https://www.npmjs.com/package/iztro) 
+[![GitHub](https://img.shields.io/github/license/sylarlong/iztro)](https://www.npmjs.com/package/iztro) 
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro)](https://www.npmjs.com/package/iztro) 
+[![npm bundle size](https://img.shields.io/bundlephobia/min/%40sylarlong%2Fastro)](https://www.npmjs.com/package/iztro) 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield) 
+[![Socket Badge](https://socket.dev/api/badge/npm/package/iztro)](https://socket.dev/npm/package/iztro) 
+[![Package Quality](https://packagequality.com/shield/iztro.svg)](https://packagequality.com/#?package=iztro) 
 
 </div>
 
@@ -37,19 +36,49 @@ A lightweight astrolabe generator of The Purple Star Astrology(Zi Wei Dou Shu).
 
 It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
 
-Feature list
+- Input
 
-- To obtain the astrology data by birthday (`Solar calendar` or `Lunar calendar`) and birth time (`Chinese hour`).
-  - basic information(`birthday`, `Chinese hour`, `sign`, `Chinese zodiac`, `body lord`, `soul lord` etc.)
-  - palace information(`name`, `heavenly stem` and `earthly branch`, `stars` etc.)
-  - star information(`brightness`, `mutagen` and `type`)
-  - horoscope information(`decadal`, `nominal age`, `yearly`, `monthly`, `daily`, `hourly`)
-  - mutagen
-- get `mutagen` by `heavenly stem`
-- get `surrounded palaces` by palace `index` or `name`
-- check whether specific `stars` in a specific `palace`
-- check whether specific `stars` in `surrounded palaces`
-- multilingual input/output results
+  - birthday（support solar date and lunar date）
+  - birth time
+  - gender
+
+- Feature list
+
+  - get `12 palaces` data of Zi Wei Dou Shu.
+  - get Chinese `zodiac`
+  - get `sign`
+  - get birth time by Chinese date
+  - get `horoscope`(`decadal`, `turnly`, `yearly`, `monthly`, `daily`, `timely`)
+  - get horoscope `stars` (`dacadal` and `yearly`)
+  - check if one `palace` includes specific `stars`
+  - check if `surrounded palaces` of specific `palace` include specific `stars`
+  - check if `surrounded palaces` of specific `palace` include specific `mutagen`
+  - check if spedific star is `mutaged`
+  - check if `surrounded palaces` of specific `star` include specific `mutagen`
+  - check star `brightness`
+  - get `mutagen` by `heavenly stem`
+  - get `palace` by `star`
+  - get `surrounded palaces` by `palace`
+  - get `surrounded palaces` by `star`
+  - get `opposite` palace by `star`
+
+- Other
+
+  - multilingual input/output
+
+    you can mix multiple languages when passing parameters and specify output language. we support Simplified Chinese, Traditional Chinese, English, Japanese, Korean and Vietnamese. however, English translation is not stardand. so I just translate them by meaning. if you're good at English and well known about Zi Wei Dou Shu, welcome to PR. any language is welcome.
+
+  - chain invoking
+
+    if you want to check if the `surrounded palaces` of  `emperor` is `focused`, you can do it like this:
+
+    ```ts
+    import { astro } from 'iztro';
+
+    const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, 'male', true, 'en-US');
+
+    astrolabe.star('emperor').surroundedPalaces().haveMutagen('focused');
+    ```
 
 ### Quick link
 
