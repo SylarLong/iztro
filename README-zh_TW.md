@@ -145,7 +145,7 @@
 - 如果妳發現程序有BUG，請到[這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-)創建壹個`BUG報告`。
 - 妳也可以將本倉庫`fork`到妳自己的倉庫進行編輯，然後提交PR到本倉庫。
 - 假如妳擅長外語，我們也歡迎妳對國際化文件的翻譯做出妳的貢獻，妳可以`fork`本倉庫，然後在[locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales)文件夾下創建壹個國際化語言文件，然後復制其他語言文件目錄裏面的文件到妳的目錄下進行更改。
-- 當然，如果在我挑燈碼字的時候能的到妳贊助的咖啡，在下也是不勝感激 [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)
+- 當然，如果你覺得本程序對你有用，請給我買杯咖啡☕️ [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)
   ](https://PayPal.Me/sylarlong)
 
 ### 總結
