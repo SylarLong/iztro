@@ -153,7 +153,7 @@
 
 使用本程序返回的数据，你可以生成这样一张星盘，当然这只是一个例子，你可以把注意力集中在星盘的设计上，也可以把重心放在数据的分析上，本程序为你解决了最繁冗的工作，让你可以把精力更多的放在你所需要关注的事情上面。
 
-![demo](https://github.com/SylarLong/iztro/assets/6510425/d2108ed7-6794-418a-b0e5-872c71ba6e1d)
+<img width="966" alt="image" src="https://github.com/SylarLong/react-iztro/assets/6510425/f4335997-fdd8-42e2-bb1a-600942f9b0ba">
 
 ### Star趋势
 
