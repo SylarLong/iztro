@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.2.6
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 流月索引错误 #54
+
+  🇺🇸
+
+  - monthly index is incorrect #54
+
 ## v1.2.5
 
 - 🛠️ 修复（fix）
