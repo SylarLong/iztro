@@ -203,7 +203,7 @@ export const getJiangqian12StartIndex = (earthlyBranchName: EarthlyBranchName) =
  * @param solarDateStr 阳历日期字符串
  * @returns 流年诸星从寅宫开始的顺序
  */
-export const getYearly12 = (solarDateStr: string): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
+export const getYearly12 = (solarDateStr: string | Date): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
   const jiangqian12: StarName[] = [];
   const suiqian12: StarName[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
