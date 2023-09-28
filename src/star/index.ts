@@ -6,5 +6,5 @@ export * from './location';
 export * from './majorStar';
 export * from './minorStar';
 export * from './adjectiveStar';
-export * from './decorationStar';
+export * from './decorativeStar';
 export * from './horoscopeStar';

@@ -131,7 +131,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
  * @returns HeavenlyStemAndEarthlyBranchResult
  */
 export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
-  dateStr: string,
+  dateStr: string | Date,
   timeIndex: number,
 ): HeavenlyStemAndEarthlyBranchDate => {
   const lunarDate = solar2lunar(dateStr);
