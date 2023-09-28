@@ -2,7 +2,7 @@ import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, sola
 import { EARTHLY_BRANCHES } from '../data';
 import { Astrolabe, Horoscope } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName, t } from '../i18n';
-import { getHoroscopeStar } from '../star';
+import { getHoroscopeStar, getYearly12 } from '../star';
 import { IFunctionalStar } from '../star/FunctionalStar';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
 import { getPalace, getSurroundedPalaces } from './analyzer';
@@ -87,7 +87,7 @@ const _getHoroscopeBySolarDate = (
   // 获取流月索引, 流年地支逆数到生月所在宫位，再从该宫位顺数到生时，为正月所在宫位，之后每月一宫
   monthlyIndex = fixIndex(
     yearlyIndex -
-      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.monthly[1])) +
+      fixEarthlyBranchIndex($.rawDates.chineseDate.monthly[1]) +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
       fixEarthlyBranchIndex(monthly[1]),
   );
@@ -123,6 +123,7 @@ const _getHoroscopeBySolarDate = (
       palaceNames: getPalaceNames(yearlyIndex),
       mutagen: getMutagensByHeavenlyStem(yearly[0]),
       stars: getHoroscopeStar(yearly[0], yearly[1], 'yearly'),
+      yearlyDecStar: getYearly12(targetDate),
     },
     monthly: {
       index: monthlyIndex,

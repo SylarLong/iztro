@@ -82,7 +82,7 @@ export type Horoscope = {
     name: string;
   };
   /** 流年 */
-  yearly: HoroscopeItem;
+  yearly: HoroscopeItem & { yearlyDecStar: { jiangqian12: StarName[]; suiqian12: StarName[] } };
   /** 流月 */
   monthly: HoroscopeItem;
   /** 流日 */

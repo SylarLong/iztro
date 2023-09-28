@@ -107,7 +107,7 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
 
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
-  // console.log('ten tieng viet',heavenlyStemName, earthlyBranchName , heavenlyStem,earthlyBranch  )
+
   switch (earthlyBranch) {
     case 'yinEarthly':
     case 'wuEarthly':
@@ -130,7 +130,6 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
       maIndex = fixEarthlyBranchIndex('si');
       break;
   }
-  // console.log('Tim maIndex',heavenlyStemName, earthlyBranchName , heavenlyStem,earthlyBranch , maIndex)
 
   switch (heavenlyStem) {
     case 'jiaHeavenly': {
