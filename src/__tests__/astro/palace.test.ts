@@ -29,10 +29,10 @@ describe('astro/palace', () => {
         date: '2023-2-19',
         timeIndex: 12,
         result: {
-          soulIndex: 1,
-          bodyIndex: 1,
-          heavenlyStemOfSoul: '乙',
-          earthlyBranchOfSoul: '卯',
+          soulIndex: 0,
+          bodyIndex: 0,
+          heavenlyStemOfSoul: '甲',
+          earthlyBranchOfSoul: '寅',
         },
       },
     ];

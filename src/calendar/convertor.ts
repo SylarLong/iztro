@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { LunarDate, SolarDate } from '../data/types';
 import { getTotalDaysOfLunarMonth, getTotalDaysOfLunarYear } from './days';
 import { getLeapDays, getLeapMonth } from './leap';
@@ -22,13 +23,13 @@ export const normalizeLunarDateStr = (dateStr: string) => dateStr.split('-').map
  * normalizeSolarDateStr('2023-07-31'); // [2023, 7, 31]
  */
 export const normalizeSolarDateStr = (dateStr: string | Date) => {
-  const date = new Date(dateStr);
+  const date = dayjs(dateStr);
 
-  if (date.toString() === 'Invalid Date') {
+  if (!date.isValid()) {
     throw new Error('invalid date.');
   }
 
-  return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
+  return [date.year(), date.month() + 1, date.date()];
 };
 
 /**

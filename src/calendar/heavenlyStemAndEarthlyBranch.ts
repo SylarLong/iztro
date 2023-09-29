@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { EARTHLY_BRANCHES, HEAVENLY_STEMS, RAT_RULE } from '../data';
 import { HeavenlyStemAndEarthlyBranch, HeavenlyStemAndEarthlyBranchDate } from '../data/types';
 import { HeavenlyStemKey, HeavenlyStemName, kot, t } from '../i18n';
@@ -101,7 +102,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
 ): HeavenlyStemAndEarthlyBranchDate => {
   const [lunarYear] = normalizeLunarDateStr(dateStr);
   const solar = lunar2solar(dateStr, isLeap);
-  const solarDate = new Date(solar.toString());
+  const solarDate = new Date(dayjs(solar.toString()).format());
 
   const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
   const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);

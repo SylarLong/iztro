@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, solar2lunar } from '../calendar';
 import { EARTHLY_BRANCHES } from '../data';
 import { Astrolabe, Horoscope } from '../data/types';
@@ -29,7 +30,7 @@ const _getHoroscopeBySolarDate = (
 ): Horoscope => {
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
-  const convertTimeIndex = timeToIndex(new Date(targetDate).getHours());
+  const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
   const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
     targetDate.toString(),
     timeIndex || convertTimeIndex,

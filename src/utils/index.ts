@@ -14,6 +14,7 @@ import {
   StarKey,
 } from '../i18n';
 import { Star } from '../data/types';
+import dayjs from 'dayjs';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -100,10 +101,10 @@ export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
 
   if (timeIndex >= 12 && lunarDate.lunarDay >= totalDaysOfLunarMonth) {
     // 假如是晚子时并且日期是农历月的最后一天时，月份需要加1
-    const dt = new Date(solarDateStr);
+    const dt = dayjs(solarDateStr);
 
-    dt.setDate(dt.getDate() + 1);
-    lunarDate = solar2lunar(dt);
+    dt.add(1, 'day');
+    lunarDate = solar2lunar(new Date(dt.format()));
   }
 
   return lunarDate;
