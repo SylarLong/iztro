@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.2.7-alpha
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 使用dayjs提高产品兼容性 #59
+
+  🇺🇸
+
+  - use dayjs to improve compatibility #56
+
 ## v1.2.6
 
 - 🪄 功能（features）
