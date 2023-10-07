@@ -1,6 +1,6 @@
 export default {
-  soulPalace: 'Cung Mệnh',
-  bodyPalace: 'Cung Thân',
+  soulPalace: 'Mệnh',
+  bodyPalace: 'Thân',
   siblingsPalace: 'Huynh Đệ',
   spousePalace: 'Phu Thê',
   childrenPalace: 'Tử Nữ',
