@@ -15,8 +15,8 @@ export type ChineseTime = (typeof CHINESE_TIME)[number];
 /** 时辰对应的时间段 */
 export type TimeRange = (typeof TIME_RANGE)[number];
 
-/** 范围：本命｜大限｜流年 */
-export type Scope = 'origin' | 'decadal' | 'yearly';
+/** 范围：本命｜大限｜流年|流月|流日|流时 */
+export type Scope = 'origin' | 'decadal' | 'yearly' | 'monthly' | 'daily' | 'hourly';
 
 /** 星耀类型 */
 export type StarType = 'major' | 'soft' | 'tough' | 'adjective' | 'flower' | 'helper' | 'lucun' | 'tianma';

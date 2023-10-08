@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.3.0
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 创建FunctionalHoroscope类 #31
+
+  🇺🇸
+
+  - create FunctionalHoroscope class #31
+
 ## v1.2.7-alpha
 
 - ✨ 改进（enhancement）

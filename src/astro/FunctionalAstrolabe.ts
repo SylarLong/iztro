@@ -10,6 +10,7 @@ import { getPalace, getSurroundedPalaces } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { getPalaceNames } from './palace';
+import FunctionalHoroscope from './FunctionalHoroscope';
 
 /**
  * 获取运限数据
@@ -24,10 +25,10 @@ import { getPalaceNames } from './palace';
  * @returns 运限数据
  */
 const _getHoroscopeBySolarDate = (
-  $: Astrolabe,
+  $: FunctionalAstrolabe,
   targetDate: string | Date = new Date(),
   timeIndex?: number,
-): Horoscope => {
+): FunctionalHoroscope => {
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
@@ -152,7 +153,7 @@ const _getHoroscopeBySolarDate = (
     },
   };
 
-  return scope;
+  return new FunctionalHoroscope(scope, $);
 };
 
 /**
