@@ -149,6 +149,9 @@
 - 当然，如果你觉得本程序对你有用，请给我买杯咖啡☕️ [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)
   ](https://PayPal.Me/sylarlong)
 
+> [!IMPORTANT]
+> 如果你觉得代码对你有用，请点⭐支持，你的⭐是我持续更新的动力
+
 ### 总结
 
 使用本程序返回的数据，你可以生成这样一张星盘，当然这只是一个例子，你可以把注意力集中在星盘的设计上，也可以把重心放在数据的分析上，本程序为你解决了最繁冗的工作，让你可以把精力更多的放在你所需要关注的事情上面。
@@ -171,6 +174,7 @@ MIT License
 
 Copyright &copy; 2023 Sylar Long
 
-请合理使用本开源代码，禁止用于非法目的。
+> [!NOTE]
+> 请合理使用本开源代码，禁止用于非法目的。
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
