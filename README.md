@@ -86,7 +86,7 @@
 > [!IMPORTANT]
 > 如果你在开发中遇到任何问题，可以添加作者微信咨询  
 > 你也可以任意魔改代码，但如果你是在商业项目中使用
-> 请联系作者获取技术支持和商业授权
+> 请联系作者获取技术支持
 > <img src="https://github.com/SylarLong/SylarLong/assets/6510425/a2af4876-7d26-4900-a0fc-f5a2030f6205" alt="WeChat" width="350" />
 
 ### 快捷跳转
