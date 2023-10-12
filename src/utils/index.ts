@@ -21,7 +21,7 @@ import dayjs from 'dayjs';
  *
  * @param index 当前索引
  * @param max 最大循环数，默认为12【因为12用得最多，宫位数量以及十二地支数量都为12，所以将12作为默认值】
- * @returns 处理后的索引
+ * @returns {number} 处理后的索引
  */
 export const fixIndex = (index: number, max: number = 12): number => {
   if (index < 0) {
@@ -40,8 +40,8 @@ export const fixIndex = (index: number, max: number = 12): number => {
 /**
  * 因为宫位是从寅宫开始的排列的，所以需要将目标地支的序号减去寅的序号才能得到宫位的序号
  *
- * @param earthlyBranch 地支
- * @returns 该地支对应的宫位索引序号
+ * @param {EarthlyBranchName} earthlyBranch 地支
+ * @returns {number} 该地支对应的宫位索引序号
  */
 export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranchName): number => {
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
@@ -53,8 +53,8 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranch
 /**
  * 配置星耀亮度
  *
- * @param starName 星耀名字
- * @param index 所在宫位索引
+ * @param {StarName} starName 星耀名字
+ * @param {number} index 所在宫位索引
  */
 export const getBrightness = (starName: StarName, index: number): Brightness => {
   const star = kot<keyof typeof STARS_INFO>(starName);
@@ -78,8 +78,8 @@ export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): S
 /**
  * 处理地支相对于十二宫的索引，因为十二宫是以寅宫开始，所以下标需要减去地支寅的索引
  *
- * @param earthlyBranch 地支
- * @returns Number(0~11)
+ * @param {EarthlyBranchName} earthlyBranch 地支
+ * @returns {number} Number(0~11)
  */
 export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): number => {
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
@@ -90,9 +90,9 @@ export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): num
 /**
  * 处理晚子时日期
  *
- * @param solarDateStr 阳历日期
- * @param timeIndex 时辰序号【0～12】，12代表晚子时
- * @returns LunarDate
+ * @param {string} solarDateStr 阳历日期
+ * @param {number} numbertimeIndex 时辰序号【0～12】，12代表晚子时
+ * @returns {LunarDate} LunarDate
  */
 export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
   let lunarDate = solar2lunar(solarDateStr);
@@ -118,9 +118,9 @@ export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
  * 比如 闰二月 时，fixLeap 为 true 时 闰二月十五(含)前
  * 的月份按二月算，之后的按三月算
  *
- * @param solarDateStr 阳历日期
- * @param timeIndex 时辰序号
- * @param fixLeap 是否调整闰月
+ * @param {string} solarDateStr 阳历日期
+ * @param {number} timeIndex 时辰序号
+ * @param {vboolean} fixLeap 是否调整闰月
  * @returns {number} 月份索引
  */
 export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
@@ -137,8 +137,8 @@ export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) => (timeIn
 /**
  * 将多个星耀数组合并到一起
  *
- * @param stars 星耀数组
- * @returns 合并后的星耀
+ * @param {Star[][][]} stars 星耀数组
+ * @returns {Star[][]} 合并后的星耀
  */
 export const mergeStars = (...stars: Star[][][]) => {
   const finalStars = initStars();
@@ -155,8 +155,8 @@ export const mergeStars = (...stars: Star[][][]) => {
 /**
  * 将时间的小时转化为时辰的索引
  *
- * @param hour 当前时间的小时数
- * @returns 时辰的索引
+ * @param {number} hour 当前时间的小时数
+ * @returns {number} 时辰的索引
  */
 export const timeToIndex = (hour: number) => {
   if (hour === 0) {
@@ -179,8 +179,8 @@ export const timeToIndex = (hour: number) => {
  * - 寅午戍人辰上起，申子辰人自戍宫，
  * - 巳酉丑人未宫始，亥卯未人起丑宫。
  *
- * @param earthlyBranchName 地支
- * @returns 小限开始的宫位索引
+ * @param {EarthlyBranchName} earthlyBranchName 地支
+ * @returns {number} 小限开始的宫位索引
  */
 export const getAgeIndex = (earthlyBranchName: EarthlyBranchName) => {
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
