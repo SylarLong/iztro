@@ -43,8 +43,8 @@ import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
  */
 export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
   const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
-  const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1]);
-  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0]);
+  const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1], 'Earthly');
+  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
 
   // 紫微斗数以`寅`宫为第一个宫位
   const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
@@ -128,8 +128,8 @@ export const getFiveElementsClass = (
   earthlyBranchName: EarthlyBranchName,
 ): FiveElementsClassName => {
   const fiveElementsTable: FiveElementsClassKey[] = ['wood3rd', 'metal4th', 'water2nd', 'fire6th', 'earth5th'];
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   const heavenlyStemNumber = Math.floor(HEAVENLY_STEMS.indexOf(heavenlyStem) / 2) + 1;
   const earthlyBranchNumber = Math.floor(fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch), 6) / 2) + 1;
@@ -181,8 +181,8 @@ export const getHoroscope = (
   const decadals: Decadal[] = [];
   const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
-  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0]);
-  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1]);
+  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
+  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
   const fiveElementsClass = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
 

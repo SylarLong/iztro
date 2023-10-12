@@ -105,7 +105,7 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
   let luIndex = -1; // 禄存索引
   let maIndex = 0; // 天马索引
 
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   switch (earthlyBranch) {
@@ -191,7 +191,7 @@ export const getLuYangTuoMaIndex = (heavenlyStemName: HeavenlyStemName, earthlyB
 export const getKuiYueIndex = (heavenlyStemName: HeavenlyStemName) => {
   let kuiIndex = -1;
   let yueIndex = -1;
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
 
   switch (heavenlyStem) {
     case 'jiaHeavenly':
@@ -357,7 +357,7 @@ export const getHuoLingIndex = (earthlyBranchName: EarthlyBranchName, timeIndex:
   let huoIndex = -1;
   let lingIndex = -1;
   const fixedTimeIndex = fixIndex(timeIndex);
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   switch (earthlyBranch) {
     case 'yinEarthly':
@@ -408,7 +408,7 @@ export const getHuoLingIndex = (earthlyBranchName: EarthlyBranchName, timeIndex:
  * @returns 红鸾、天喜索引
  */
 export const getLuanXiIndex = (earthlyBranchName: EarthlyBranchName) => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
   const hongluanIndex = fixIndex(fixEarthlyBranchIndex('mao') - EARTHLY_BRANCHES.indexOf(earthlyBranch));
   const tianxiIndex = fixIndex(hongluanIndex + 6);
 
@@ -430,7 +430,7 @@ export const getLuanXiIndex = (earthlyBranchName: EarthlyBranchName) => {
 export const getHuagaiXianchiIndex = (earthlyBranchName: EarthlyBranchName) => {
   let hgIdx = -1;
   let xcIdx = -1;
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   switch (earthlyBranch) {
     case 'yinEarthly':
@@ -482,7 +482,7 @@ export const getHuagaiXianchiIndex = (earthlyBranchName: EarthlyBranchName) => {
 export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
   let guIdx = -1;
   let guaIdx = -1;
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   switch (earthlyBranch) {
     case 'yinEarthly':
@@ -562,8 +562,8 @@ export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
 export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap?: boolean) => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
   const { soulIndex, bodyIndex } = getSoulAndBody(solarDate, timeIndex, fixLeap);
-  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0]);
-  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1]);
+  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
+  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
 
   const { huagaiIndex, xianchiIndex } = getHuagaiXianchiIndex(yearly[1]);
   const { guchenIndex, guasuIndex } = getGuGuaIndex(yearly[1]);
@@ -660,7 +660,7 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
  * @returns 年解索引
  */
 export const getNianjieIndex = (earthlyBranchName: EarthlyBranchName) => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   return fixIndex(
     fixEarthlyBranchIndex(
@@ -740,7 +740,7 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
 export const getChangQuIndexByHeavenlyStem = (heavenlyStemName: HeavenlyStemName) => {
   let changIndex = -1;
   let quIndex = -1;
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
 
   switch (heavenlyStem) {
     case 'jiaHeavenly':

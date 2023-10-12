@@ -154,7 +154,7 @@ export const getSign = (solarDateStr: string) => {
  * const zodiac = calendar.getZodiac("卯") ;// zodiac='兔'
  */
 export const getZodiac = (earthlyBranchOfYear: EarthlyBranchName) => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchOfYear);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchOfYear, 'Earthly');
 
   return t<string>(ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranch)]);
 };

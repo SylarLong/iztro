@@ -98,7 +98,7 @@ const _getHoroscopeBySolarDate = (
   dailyIndex = fixIndex(monthlyIndex + _date.lunarDay - 1);
 
   // 获取流时索引
-  hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1])));
+  hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1], 'Earthly')));
 
   const scope: Horoscope = {
     solarDate: normalizeSolarDateStr(targetDate).join('-'),

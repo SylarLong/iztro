@@ -42,7 +42,7 @@ export const astrolabeBySolarDate = (
 
   const palaces: IFunctionalPalace[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1]);
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
     solarDateStr,
     timeIndex,
@@ -59,7 +59,9 @@ export const astrolabeBySolarDate = (
 
   for (let i = 0; i < 12; i++) {
     const heavenlyStemOfPalace =
-      HEAVENLY_STEMS[fixIndex(HEAVENLY_STEMS.indexOf(kot<HeavenlyStemKey>(heavenlyStemOfSoul)) - soulIndex + i, 10)];
+      HEAVENLY_STEMS[
+        fixIndex(HEAVENLY_STEMS.indexOf(kot<HeavenlyStemKey>(heavenlyStemOfSoul, 'Heavenly')) - soulIndex + i, 10)
+      ];
     const earthlyBranchOfPalace = EARTHLY_BRANCHES[fixIndex(2 + i)];
 
     palaces.push(

@@ -79,7 +79,7 @@ export const heavenlyStemAndEarthlyBranchOfTime = (
   timeIndex: number,
   heavenlyStemNameOfDay: HeavenlyStemName,
 ): HeavenlyStemAndEarthlyBranch => {
-  const heavenlyStemOfDay = kot<HeavenlyStemKey>(heavenlyStemNameOfDay);
+  const heavenlyStemOfDay = kot<HeavenlyStemKey>(heavenlyStemNameOfDay, 'Heavenly');
   const startHeavenlyStem = RAT_RULE[heavenlyStemOfDay];
   const heavenlyStem = HEAVENLY_STEMS[fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + fixIndex(timeIndex), 10)];
   const earthlyBranch = EARTHLY_BRANCHES[fixIndex(timeIndex)];
