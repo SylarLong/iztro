@@ -78,7 +78,7 @@ export const getchangsheng12 = (
   const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [, earthlyBranchNameOfYear] = yearly;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear, 'Earthly');
   // 获取命宫干支，需要通过命宫干支计算五行局
   const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
   // 获取五行局，通过五行局获取起运年龄
@@ -128,7 +128,7 @@ export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[]
   const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
   const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear);
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear, 'Earthly');
   // 博士12神的顺序
   const stars: StarKey[] = [
     'boshi',
@@ -171,7 +171,7 @@ export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[]
  */
 export const getJiangqian12StartIndex = (earthlyBranchName: EarthlyBranchName) => {
   let jqStartIdx = -1;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranchOfYear)) {
     jqStartIdx = fixEarthlyBranchIndex('woo');

@@ -44,8 +44,8 @@ export const fixIndex = (index: number, max: number = 12): number => {
  * @returns 该地支对应的宫位索引序号
  */
 export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranchName): number => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
-  const yin = kot<EarthlyBranchKey>('yinEarthly');
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+  const yin = kot<EarthlyBranchKey>('yinEarthly', 'Earthly');
 
   return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin));
 };
@@ -63,14 +63,14 @@ export const getBrightness = (starName: StarName, index: number): Brightness => 
 };
 
 export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
   const starKey = kot<StarKey>(starName);
 
   return t<Mutagen>(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starKey as never)]);
 };
 
 export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): StarName[] => {
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName);
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
 
   return heavenlyStems[heavenlyStem].mutagen.map((star) => t<StarName>(star));
 };
@@ -82,7 +82,7 @@ export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): S
  * @returns Number(0~11)
  */
 export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): number => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
 
   return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('yinEarthly'));
 };
@@ -183,7 +183,7 @@ export const timeToIndex = (hour: number) => {
  * @returns 小限开始的宫位索引
  */
 export const getAgeIndex = (earthlyBranchName: EarthlyBranchName) => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName);
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
   let ageIdx = -1;
 
   if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranch)) {
