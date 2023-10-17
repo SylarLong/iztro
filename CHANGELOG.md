@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v1.3.2
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 判断指定运限宫位内是否不包含指定流耀 #67
+
+  🇺🇸
+
+  - check if horoscope stars are not in specific palace #67
+
 ## v1.3.1
 
 - 🛠️ 修复（fix）
@@ -17,7 +29,7 @@
 
   🇺🇸
 
-  - heavenly stem and earthly branch translation issue #31
+  - heavenly stem and earthly branch translation issue #64
 
 ## v1.3.0
 

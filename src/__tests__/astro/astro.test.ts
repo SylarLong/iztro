@@ -127,6 +127,9 @@ describe('Astrolabe', () => {
     expect(horoscope.hasHoroscopeStars('财帛', 'yearly', ['流陀', '流曲', '运昌'])).toBe(true);
     expect(horoscope.hasHoroscopeStars('迁移', 'monthly', ['流陀', '流曲', '运昌'])).toBe(true);
     expect(horoscope.hasHoroscopeStars('田宅', 'daily', ['流陀', '流曲', '运昌'])).toBe(true);
+    expect(horoscope.notHaveHoroscopeStars('疾厄', 'decadal', ['流陀', '流曲', '运昌'])).toBe(false);
+    expect(horoscope.notHaveHoroscopeStars('疾厄', 'decadal', ['流陀', '流鸾', '运昌'])).toBe(false);
+    expect(horoscope.notHaveHoroscopeStars('疾厄', 'decadal', ['流喜', '流鸾', '流魁'])).toBe(true);
 
     const agePalace = horoscope.agePalace();
 

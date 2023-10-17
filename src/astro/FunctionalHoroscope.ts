@@ -5,6 +5,26 @@ import { FunctionalSurpalaces } from './FunctionalSurpalaces';
 import FunctionalPalace from './FunctionalPalace';
 import { mergeStars } from '../utils';
 
+const _getHoroscopePalaceIndex = ($: FunctionalHoroscope, scope: Scope, palaceName: PalaceName) => {
+  let palaceIndex = -1;
+
+  if (scope === 'origin') {
+    $.astrolabe.palaces.some((p, idx) => {
+      if (p.name === palaceName) {
+        palaceIndex = idx;
+
+        return true;
+      }
+
+      return false;
+    });
+  } else {
+    palaceIndex = $[scope].palaceNames.indexOf(palaceName);
+  }
+
+  return palaceIndex;
+};
+
 export interface IFunctionalHoroscope extends Horoscope {
   /**
    * 获取小限宫位
@@ -44,10 +64,22 @@ export interface IFunctionalHoroscope extends Horoscope {
    *
    * @param palaceName 宫位名称
    * @param scope 指定获取哪个运限的宫位
-   * @param horoscopeStar
+   * @param horoscopeStar 流耀
    * @returns {boolean} 是否包含指定流耀
    */
   hasHoroscopeStars: (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => boolean;
+
+  /**
+   * 判断指定运限宫位内是否不含流耀，需要全部不包含才返回true
+   *
+   * @version v1.3.2
+   *
+   * @param palaceName 宫位名称
+   * @param scope 指定获取哪个运限的宫位
+   * @param horoscope 流耀
+   * @returns {boolean} 是否不含指定流耀
+   */
+  notHaveHoroscopeStars: (palaceName: PalaceName, scope: Scope, horoscope: StarName[]) => boolean;
 }
 
 export default class FunctionalHoroscope implements IFunctionalHoroscope {
@@ -100,30 +132,28 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
   };
 
   hasHoroscopeStars = (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => {
-    let palaceIndex = -1;
-
     if (!this.decadal.stars || !this.yearly.stars) {
       return false;
     }
 
-    if (scope === 'origin') {
-      this.astrolabe.palaces.some((p, idx) => {
-        if (p.name === palaceName) {
-          palaceIndex = idx;
-
-          return true;
-        }
-
-        return false;
-      });
-    } else {
-      palaceIndex = this[scope].palaceNames.indexOf(palaceName);
-    }
-
+    const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[palaceIndex];
     const starKeys = stars.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
 
     return horoscopeStarKeys.every((star) => starKeys.includes(star));
+  };
+
+  notHaveHoroscopeStars = (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => {
+    if (!this.decadal.stars || !this.yearly.stars) {
+      return false;
+    }
+
+    const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+    const stars = mergeStars(this.decadal.stars, this.yearly.stars)[palaceIndex];
+    const starKeys = stars.map((item) => kot<StarKey>(item.name));
+    const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
+
+    return horoscopeStarKeys.every((star) => !starKeys.includes(star));
   };
 }
