@@ -80,6 +80,18 @@ export interface IFunctionalHoroscope extends Horoscope {
    * @returns {boolean} 是否不含指定流耀
    */
   notHaveHoroscopeStars: (palaceName: PalaceName, scope: Scope, horoscope: StarName[]) => boolean;
+
+  /**
+   * 判断指定运限宫位内是否含有指定流耀，只要包含其中一颗就返回true
+   *
+   * @version v1.3.3
+   *
+   * @param palaceName 宫位名称
+   * @param scope 指定获取哪个运限的宫位
+   * @param horoscope 流耀
+   * @returns {boolean} 是否含有（部分）指定流耀中
+   */
+  hasOneOfHoroscopeStars: (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => boolean;
 }
 
 export default class FunctionalHoroscope implements IFunctionalHoroscope {
@@ -155,5 +167,18 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
 
     return horoscopeStarKeys.every((star) => !starKeys.includes(star));
+  };
+
+  hasOneOfHoroscopeStars = (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => {
+    if (!this.decadal.stars || !this.yearly.stars) {
+      return false;
+    }
+
+    const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+    const stars = mergeStars(this.decadal.stars, this.yearly.stars)[palaceIndex];
+    const starKeys = stars.map((item) => kot<StarKey>(item.name));
+    const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
+
+    return horoscopeStarKeys.some((star) => starKeys.includes(star));
   };
 }
