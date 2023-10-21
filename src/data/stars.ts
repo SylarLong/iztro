@@ -97,7 +97,7 @@ export const STARS_INFO = {
   wenchangMin: {
     brightness: ['xian', 'li', 'de', 'miao', 'xian', 'li', 'de', 'miao', 'xian', 'li', 'de', 'miao'],
   },
-  wenjuMin: {
+  wenquMin: {
     brightness: ['ping', 'wang', 'de', 'miao', 'xian', 'wang', 'de', 'miao', 'xian', 'wang', 'de', 'miao'],
   },
   huoxingMin: {
