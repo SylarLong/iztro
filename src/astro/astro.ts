@@ -8,18 +8,13 @@ import {
   solar2lunar,
 } from '../calendar';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
-import { Language, Star } from '../data/types';
+import { Language } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
-import FunctionalStar from '../star/FunctionalStar';
 import { fixIndex } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
 import FunctionalPalace, { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
-
-const _toFunctionalStars = (stars: Star[]) => {
-  return stars.map((star) => new FunctionalStar(star));
-};
 
 /**
  * 通过阳历获取星盘信息
@@ -73,11 +68,9 @@ export const astrolabeBySolarDate = (
           earthlyBranchOfPalace === earthlyBranchOfYear,
         heavenlyStem: t(heavenlyStemOfPalace),
         earthlyBranch: t(earthlyBranchOfPalace),
-        majorStars: _toFunctionalStars(
-          majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),
-        ),
-        minorStars: _toFunctionalStars(minorStars[i].filter((star) => !['lucun', 'tianma'].includes(star.type))),
-        adjectiveStars: _toFunctionalStars(adjectiveStars[i]),
+        majorStars: majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),
+        minorStars: minorStars[i].filter((star) => !['lucun', 'tianma'].includes(star.type)),
+        adjectiveStars: adjectiveStars[i],
         changsheng12: changsheng12[i],
         boshi12: boshi12[i],
         jiangqian12: jiangqian12[i],

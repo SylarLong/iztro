@@ -1,6 +1,6 @@
-import { Star } from '../data/types';
+import FunctionalStar from './FunctionalStar';
 
-export const initStars = (): Star[][] => [[], [], [], [], [], [], [], [], [], [], [], []];
+export const initStars = (): FunctionalStar[][] => [[], [], [], [], [], [], [], [], [], [], [], []];
 
 export * from './location';
 export * from './majorStar';

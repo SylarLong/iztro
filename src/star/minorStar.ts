@@ -2,6 +2,7 @@ import { initStars } from '.';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { t } from '../i18n';
 import { fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
+import FunctionalStar from './FunctionalStar';
 import {
   getChangQuIndex,
   getHuoLingIndex,
@@ -32,94 +33,122 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
 
-  stars[zuoIndex].push({
-    name: t('zuofuMin'),
-    type: 'soft',
-    scope: 'origin',
-    brightness: getBrightness('左辅', zuoIndex),
-    mutagen: getMutagen('左辅', yearly[0]),
-  });
-  stars[youIndex].push({
-    name: t('youbiMin'),
-    type: 'soft',
-    scope: 'origin',
-    brightness: getBrightness('右弼', youIndex),
-    mutagen: getMutagen('右弼', yearly[0]),
-  });
-  stars[changIndex].push({
-    name: t('wenchangMin'),
-    type: 'soft',
-    scope: 'origin',
-    brightness: getBrightness('文昌', changIndex),
-    mutagen: getMutagen('文昌', yearly[0]),
-  });
-  stars[quIndex].push({
-    name: t('wenquMin'),
-    type: 'soft',
-    scope: 'origin',
-    brightness: getBrightness('文曲', quIndex),
-    mutagen: getMutagen('文曲', yearly[0]),
-  });
-  stars[kuiIndex].push({
-    name: t('tiankuiMin'),
-    type: 'soft',
-    scope: 'origin',
-    brightness: getBrightness('天魁', kuiIndex),
-  });
-  stars[yueIndex].push({
-    name: t('tianyueMin'),
-    type: 'soft',
-    scope: 'origin',
-    brightness: getBrightness('天钺', yueIndex),
-  });
-  stars[luIndex].push({
-    name: t('lucunMin'),
-    type: 'lucun',
-    scope: 'origin',
-    brightness: getBrightness('禄存', luIndex),
-  });
-  stars[maIndex].push({
-    name: t('tianmaMin'),
-    type: 'tianma',
-    scope: 'origin',
-    brightness: getBrightness('天马', maIndex),
-  });
-  stars[kongIndex].push({
-    name: t('dikongMin'),
-    type: 'tough',
-    scope: 'origin',
-    brightness: getBrightness('地空', kongIndex),
-  });
-  stars[jieIndex].push({
-    name: t('dijieMin'),
-    type: 'tough',
-    scope: 'origin',
-    brightness: getBrightness('地劫', jieIndex),
-  });
-  stars[huoIndex].push({
-    name: t('huoxingMin'),
-    type: 'tough',
-    scope: 'origin',
-    brightness: getBrightness('火星', huoIndex),
-  });
-  stars[lingIndex].push({
-    name: t('lingxingMin'),
-    type: 'tough',
-    scope: 'origin',
-    brightness: getBrightness('铃星', lingIndex),
-  });
-  stars[yangIndex].push({
-    name: t('qingyangMin'),
-    type: 'tough',
-    scope: 'origin',
-    brightness: getBrightness('擎羊', yangIndex),
-  });
-  stars[tuoIndex].push({
-    name: t('tuoluoMin'),
-    type: 'tough',
-    scope: 'origin',
-    brightness: getBrightness('陀罗', tuoIndex),
-  });
+  stars[zuoIndex].push(
+    new FunctionalStar({
+      name: t('zuofuMin'),
+      type: 'soft',
+      scope: 'origin',
+      brightness: getBrightness('左辅', zuoIndex),
+      mutagen: getMutagen('左辅', yearly[0]),
+    }),
+  );
+  stars[youIndex].push(
+    new FunctionalStar({
+      name: t('youbiMin'),
+      type: 'soft',
+      scope: 'origin',
+      brightness: getBrightness('右弼', youIndex),
+      mutagen: getMutagen('右弼', yearly[0]),
+    }),
+  );
+  stars[changIndex].push(
+    new FunctionalStar({
+      name: t('wenchangMin'),
+      type: 'soft',
+      scope: 'origin',
+      brightness: getBrightness('文昌', changIndex),
+      mutagen: getMutagen('文昌', yearly[0]),
+    }),
+  );
+  stars[quIndex].push(
+    new FunctionalStar({
+      name: t('wenquMin'),
+      type: 'soft',
+      scope: 'origin',
+      brightness: getBrightness('文曲', quIndex),
+      mutagen: getMutagen('文曲', yearly[0]),
+    }),
+  );
+  stars[kuiIndex].push(
+    new FunctionalStar({
+      name: t('tiankuiMin'),
+      type: 'soft',
+      scope: 'origin',
+      brightness: getBrightness('天魁', kuiIndex),
+    }),
+  );
+  stars[yueIndex].push(
+    new FunctionalStar({
+      name: t('tianyueMin'),
+      type: 'soft',
+      scope: 'origin',
+      brightness: getBrightness('天钺', yueIndex),
+    }),
+  );
+  stars[luIndex].push(
+    new FunctionalStar({
+      name: t('lucunMin'),
+      type: 'lucun',
+      scope: 'origin',
+      brightness: getBrightness('禄存', luIndex),
+    }),
+  );
+  stars[maIndex].push(
+    new FunctionalStar({
+      name: t('tianmaMin'),
+      type: 'tianma',
+      scope: 'origin',
+      brightness: getBrightness('天马', maIndex),
+    }),
+  );
+  stars[kongIndex].push(
+    new FunctionalStar({
+      name: t('dikongMin'),
+      type: 'tough',
+      scope: 'origin',
+      brightness: getBrightness('地空', kongIndex),
+    }),
+  );
+  stars[jieIndex].push(
+    new FunctionalStar({
+      name: t('dijieMin'),
+      type: 'tough',
+      scope: 'origin',
+      brightness: getBrightness('地劫', jieIndex),
+    }),
+  );
+  stars[huoIndex].push(
+    new FunctionalStar({
+      name: t('huoxingMin'),
+      type: 'tough',
+      scope: 'origin',
+      brightness: getBrightness('火星', huoIndex),
+    }),
+  );
+  stars[lingIndex].push(
+    new FunctionalStar({
+      name: t('lingxingMin'),
+      type: 'tough',
+      scope: 'origin',
+      brightness: getBrightness('铃星', lingIndex),
+    }),
+  );
+  stars[yangIndex].push(
+    new FunctionalStar({
+      name: t('qingyangMin'),
+      type: 'tough',
+      scope: 'origin',
+      brightness: getBrightness('擎羊', yangIndex),
+    }),
+  );
+  stars[tuoIndex].push(
+    new FunctionalStar({
+      name: t('tuoluoMin'),
+      type: 'tough',
+      scope: 'origin',
+      brightness: getBrightness('陀罗', tuoIndex),
+    }),
+  );
 
   return stars;
 };

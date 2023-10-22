@@ -138,7 +138,17 @@ describe('star/index', () => {
   });
 
   test('getMajorStar()', () => {
-    expect(getMajorStar('2023-03-06', 4, true)).toStrictEqual([
+    expect(
+      getMajorStar('2023-03-06', 4, true)?.map((stars) =>
+        stars.map((star) => ({
+          name: star.name,
+          type: star.type,
+          scope: star.scope,
+          brightness: star.brightness,
+          mutagen: star.mutagen,
+        })),
+      ),
+    ).toStrictEqual([
       [{ name: '七杀', type: 'major', brightness: '庙', scope: 'origin', mutagen: '' }],
       [{ name: '天同', type: 'major', brightness: '平', scope: 'origin', mutagen: '' }],
       [{ name: '武曲', type: 'major', brightness: '庙', scope: 'origin', mutagen: '' }],
@@ -163,7 +173,17 @@ describe('star/index', () => {
   test('getMajorStar() vi-VN', () => {
     setLanguage('vi-VN');
 
-    expect(getMajorStar('2023-03-06', 4, true)).toStrictEqual([
+    expect(
+      getMajorStar('2023-03-06', 4, true)?.map((stars) =>
+        stars.map((star) => ({
+          name: star.name,
+          type: star.type,
+          scope: star.scope,
+          brightness: star.brightness,
+          mutagen: star.mutagen,
+        })),
+      ),
+    ).toStrictEqual([
       [{ name: 'Thất Sát', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: '' }],
       [{ name: 'Thiên Đồng', type: 'major', brightness: 'Bình', scope: 'origin', mutagen: '' }],
       [{ name: 'Vũ Khúc', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: '' }],
@@ -260,7 +280,11 @@ describe('star/index', () => {
   });
 
   test('getHoroscopeStar() scope="decadal"', () => {
-    expect(star.getHoroscopeStar('庚', '辰', 'decadal')).toStrictEqual([
+    expect(
+      star
+        .getHoroscopeStar('庚', '辰', 'decadal')
+        ?.map((stars) => stars.map((star) => ({ name: star.name, type: star.type, scope: star.scope }))),
+    ).toStrictEqual([
       [{ name: '运马', type: 'tianma', scope: 'decadal' }],
       [{ name: '运曲', type: 'soft', scope: 'decadal' }],
       [],
@@ -283,7 +307,11 @@ describe('star/index', () => {
   });
 
   test('getHoroscopeStar() scope="yearly"', () => {
-    expect(star.getHoroscopeStar('癸', '卯', 'yearly')).toStrictEqual([
+    expect(
+      star
+        .getHoroscopeStar('癸', '卯', 'yearly')
+        ?.map((stars) => stars.map((star) => ({ name: star.name, type: star.type, scope: star.scope }))),
+    ).toStrictEqual([
       [],
       [
         { name: '流魁', type: 'soft', scope: 'yearly' },

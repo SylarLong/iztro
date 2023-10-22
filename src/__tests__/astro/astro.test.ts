@@ -238,7 +238,11 @@ describe('Astrolabe', () => {
     expect(horoscope.decadal).toHaveProperty('index', 2);
     expect(horoscope.decadal).toHaveProperty('heavenlyStem', '경');
     expect(horoscope.decadal).toHaveProperty('earthlyBranch', '진');
-    expect(horoscope.decadal.stars).toStrictEqual([
+    expect(
+      horoscope.decadal?.stars?.map((stars) =>
+        stars.map((star) => ({ name: star.name, type: star.type, scope: star.scope })),
+      ),
+    ).toStrictEqual([
       [{ name: '천마(십년)', type: 'tianma', scope: 'decadal' }],
       [{ name: '문곡(십년)', type: 'soft', scope: 'decadal' }],
       [],
@@ -278,7 +282,11 @@ describe('Astrolabe', () => {
     expect(horoscope.yearly).toHaveProperty('index', 1);
     expect(horoscope.yearly).toHaveProperty('heavenlyStem', '계');
     expect(horoscope.yearly).toHaveProperty('earthlyBranch', '묘');
-    expect(horoscope.yearly.stars).toStrictEqual([
+    expect(
+      horoscope.yearly?.stars?.map((stars) =>
+        stars.map((star) => ({ name: star.name, type: star.type, scope: star.scope })),
+      ),
+    ).toStrictEqual([
       [],
       [
         { name: '천괴(년)', type: 'soft', scope: 'yearly' },
