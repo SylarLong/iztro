@@ -1,9 +1,10 @@
 import { Horoscope, Scope } from '../data/types';
-import { PalaceName, StarKey, StarName, kot } from '../i18n';
+import { Mutagen, MutagenKey, PalaceName, StarKey, StarName, kot } from '../i18n';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
 import { FunctionalSurpalaces } from './FunctionalSurpalaces';
 import FunctionalPalace from './FunctionalPalace';
 import { mergeStars } from '../utils';
+import { MUTAGEN } from '../data';
 
 const _getHoroscopePalaceIndex = ($: FunctionalHoroscope, scope: Scope, palaceName: PalaceName) => {
   let palaceIndex = -1;
@@ -92,6 +93,18 @@ export interface IFunctionalHoroscope extends Horoscope {
    * @returns {boolean} 是否含有（部分）指定流耀中
    */
   hasOneOfHoroscopeStars: (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => boolean;
+
+  /**
+   * 判断指定运限宫位内是否存在运限四化
+   *
+   * @version v1.3.4
+   *
+   * @param palaceName 宫位名称
+   * @param scope 指定获取哪个运限的宫位
+   * @param horoscopeMutagen 运限四化
+   * @returns {boolean} 是否含有运限四化
+   */
+  hasHoroscopeMutagen: (palaceName: PalaceName, scope: Scope, horoscopeMutagen: Mutagen) => boolean;
 }
 
 export default class FunctionalHoroscope implements IFunctionalHoroscope {
@@ -180,5 +193,19 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
 
     return horoscopeStarKeys.some((star) => starKeys.includes(star));
+  };
+
+  hasHoroscopeMutagen = (palaceName: PalaceName, scope: Scope, horoscopeMutagen: Mutagen) => {
+    if (scope === 'origin') {
+      return false;
+    }
+
+    const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+    const majorStars = this.astrolabe.palace(palaceIndex)?.majorStars ?? [];
+    const minorStars = this.astrolabe.palace(palaceIndex)?.minorStars ?? [];
+    const stars = mergeStars([majorStars], [minorStars])[0].map((star) => kot<StarKey>(star.name));
+    const mutagenIndex = MUTAGEN.indexOf(kot<MutagenKey>(horoscopeMutagen));
+
+    return stars.includes(kot<StarKey>(this[scope].mutagen[mutagenIndex]));
   };
 }
