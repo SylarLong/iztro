@@ -13,8 +13,8 @@ import {
   t,
   StarKey,
 } from '../i18n';
-import { Star } from '../data/types';
 import dayjs from 'dayjs';
+import FunctionalStar from '../star/FunctionalStar';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -137,10 +137,10 @@ export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) => (timeIn
 /**
  * 将多个星耀数组合并到一起
  *
- * @param {Star[][][]} stars 星耀数组
- * @returns {Star[][]} 合并后的星耀
+ * @param {FunctionalStar[][][]} stars 星耀数组
+ * @returns {FunctionalStar[][]} 合并后的星耀
  */
-export const mergeStars = (...stars: Star[][][]) => {
+export const mergeStars = (...stars: FunctionalStar[][][]) => {
   const finalStars = initStars();
 
   stars.forEach((item) => {

@@ -1,7 +1,7 @@
 import { IFunctionalPalace } from '../../astro/FunctionalPalace';
 import { EarthlyBranchName, FiveElementsClassName, HeavenlyStemName, PalaceName, StarName } from '../../i18n';
+import FunctionalStar from '../../star/FunctionalStar';
 import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from './calendar';
-import { Star } from './star';
 
 /**
  * 运限对象
@@ -27,7 +27,7 @@ export type HoroscopeItem = {
   /** 四化星 */
   mutagen: StarName[];
   /** 流耀 */
-  stars?: Star[][];
+  stars?: FunctionalStar[][];
 };
 
 /**
