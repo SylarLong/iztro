@@ -10,6 +10,7 @@ describe('calendar/days', () => {
 
     expect(getTotalDaysOfLunarMonth(2023, 6)).toEqual(29);
     expect(getTotalDaysOfLunarMonth(2023, 7)).toEqual(30);
+    expect(getTotalDaysOfLunarMonth(1996, 5)).toEqual(30);
   });
 
   test('getTotalDaysOfSolarMonth()', () => {

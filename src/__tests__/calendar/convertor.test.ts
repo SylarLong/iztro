@@ -13,6 +13,8 @@ describe('calendar/convertor', () => {
       '1921-08-01': { date: '一九二一年六月廿八', date2: '1921-6-28', isLeap: false },
       '2020-01-24': { date: '二〇一九年腊月三十', date2: '2019-12-30', isLeap: false },
       '2020-01-25': { date: '二〇二〇年正月初一', date2: '2020-1-1', isLeap: false },
+      '1996-07-15': { date: '一九九六年五月三十', date2: '1996-5-30', isLeap: false },
+      '1996-07-16': { date: '一九九六年六月初一', date2: '1996-6-1', isLeap: false },
     };
 
     Object.entries(dates).map(([key, value]) => {
