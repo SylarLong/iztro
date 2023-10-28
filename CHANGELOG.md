@@ -1,4 +1,4 @@
-# 紫微斗数 @sylarlong/astro
+# 紫微斗数
 
 [文档地址｜Docuemnt](http://docs.iztro.com)
 
