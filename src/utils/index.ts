@@ -134,7 +134,7 @@ export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixL
 };
 
 /**
- * 晚子时将加一天
+ * 获取农历日期【天】的索引，晚子时将加一天，所以如果是晚子时下标不需要减一
  *
  * @param lunarDay 农历日期【天】
  * @param timeIndex 时辰索引
