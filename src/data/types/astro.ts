@@ -1,7 +1,7 @@
 import { IFunctionalPalace } from '../../astro/FunctionalPalace';
 import { EarthlyBranchName, FiveElementsClassName, HeavenlyStemName, PalaceName, StarName } from '../../i18n';
 import FunctionalStar from '../../star/FunctionalStar';
-import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from './calendar';
+import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from 'lunar-lite/lib/types';
 
 /**
  * 运限对象

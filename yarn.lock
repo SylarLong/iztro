@@ -2675,6 +2675,11 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+lunar-lite@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/lunar-lite/-/lunar-lite-0.0.2.tgz#a2d9d5a573b15cbafd083d7345aa2946bfad1185"
+  integrity sha512-Q53kqeZ8ZJils3yvwj8UhT5eS1MY4MpW+KBEZFsgTU8yO6ROF27ske3AGg9IYyyGDCBA0smy60jFKjYwxPlhKw==
+
 make-dir@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/make-dir/-/make-dir-4.0.0.tgz"

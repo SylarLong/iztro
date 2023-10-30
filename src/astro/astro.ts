@@ -1,4 +1,3 @@
-import { calendar } from '..';
 import {
   getHeavenlyStemAndEarthlyBranchBySolarDate,
   getSign,
@@ -6,12 +5,12 @@ import {
   heavenlyStemAndEarthlyBranchOfYear,
   lunar2solar,
   solar2lunar,
-} from '../calendar';
+} from 'lunar-lite';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Language } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
-import { fixIndex } from '../utils';
+import { fixIndex, translateChineseDate } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
 import FunctionalPalace, { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
@@ -91,12 +90,12 @@ export const astrolabeBySolarDate = (
   const result = new FunctionalAstrolabe({
     solarDate: solarDateStr,
     lunarDate: lunarDate.toString(true),
-    chineseDate: chineseDate.toString(),
+    chineseDate: translateChineseDate(chineseDate),
     rawDates: { lunarDate, chineseDate },
     time: t(CHINESE_TIME[timeIndex]),
     timeRange: TIME_RANGE[timeIndex],
-    sign: getSign(solarDateStr),
-    zodiac: getZodiac(yearly[1]),
+    sign: getSignBySolarDate(solarDateStr, language),
+    zodiac: getZodiacBySolarDate(solarDateStr, language),
     earthlyBranchOfSoulPalace: t<EarthlyBranchName>(earthlyBranchOfSoulPalace),
     earthlyBranchOfBodyPalace,
     soul: t(earthlyBranches[earthlyBranchOfSoulPalace].soul),
@@ -141,13 +140,13 @@ export const astrolabeByLunarDate = (
  * @param language 输出语言，默认为中文
  * @returns 十二生肖
  */
-export const getZodiacBySolarDate = (solarDateStr: string, language?: Language) => {
+export const getZodiacBySolarDate = (solarDateStr: string, language?: Language): string => {
   language && setLanguage(language);
 
   const { lunarYear } = solar2lunar(solarDateStr);
   const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
 
-  return t(calendar.getZodiac(yearly[1]));
+  return t(kot(getZodiac(yearly[1])));
 };
 
 /**
@@ -164,7 +163,7 @@ export const getZodiacByLunarYear = (year: number, language?: Language) => {
 
   const yearly = heavenlyStemAndEarthlyBranchOfYear(year);
 
-  return t(calendar.getZodiac(yearly[1]));
+  return t(kot(getZodiac(yearly[1])));
 };
 
 /**
@@ -176,10 +175,10 @@ export const getZodiacByLunarYear = (year: number, language?: Language) => {
  * @param language 输出语言，默认为中文
  * @returns 星座
  */
-export const getSignBySolarDate = (solarDateStr: string, language?: Language) => {
+export const getSignBySolarDate = (solarDateStr: string, language?: Language): string => {
   language && setLanguage(language);
 
-  return t(getSign(solarDateStr));
+  return t(kot(getSign(solarDateStr)));
 };
 
 /**
@@ -192,12 +191,12 @@ export const getSignBySolarDate = (solarDateStr: string, language?: Language) =>
  * @param language 输出语言，默认为中文
  * @returns 星座
  */
-export const getSignByLunarDate = (lunarDateStr: string, isLeapMonth?: boolean, language?: Language) => {
+export const getSignByLunarDate = (lunarDateStr: string, isLeapMonth?: boolean, language?: Language): string => {
   language && setLanguage(language);
 
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
-  return t(getSign(solarDate.toString()));
+  return getSignBySolarDate(solarDate.toString(), language);
 };
 
 /**
