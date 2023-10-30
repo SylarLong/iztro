@@ -33,7 +33,7 @@ const _getHoroscopeBySolarDate = (
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
   const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
-    targetDate.toString(),
+    targetDate,
     timeIndex || convertTimeIndex,
   );
   // 虚岁
