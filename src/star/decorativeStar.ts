@@ -1,5 +1,5 @@
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
 import { getFiveElementsClass, getSoulAndBody } from '../astro';
-import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { GENDER, earthlyBranches, FiveElementsClass } from '../data';
 import {
   StarName,

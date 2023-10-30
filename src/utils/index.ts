@@ -1,4 +1,4 @@
-import { getTotalDaysOfLunarMonth, solar2lunar } from '../calendar';
+import { solar2lunar, getTotalDaysOfLunarMonth } from 'lunar-lite';
 import { EARTHLY_BRANCHES, heavenlyStems, MUTAGEN, STARS_INFO } from '../data';
 import { initStars } from '../star';
 import {
@@ -15,6 +15,7 @@ import {
 } from '../i18n';
 import dayjs from 'dayjs';
 import FunctionalStar from '../star/FunctionalStar';
+import { HeavenlyStemAndEarthlyBranchDate } from 'lunar-lite/lib/types';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -132,6 +133,13 @@ export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixL
   return fixIndex(lunarMonth + 1 - firstIndex + (isLeap && fixLeap && lunarDay > 15 ? 1 : 0));
 };
 
+/**
+ * 晚子时将加一天
+ *
+ * @param lunarDay 农历日期【天】
+ * @param timeIndex 时辰索引
+ * @returns {number} 农历日期【天】
+ */
 export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) => (timeIndex >= 12 ? lunarDay : lunarDay - 1);
 
 /**
@@ -197,4 +205,29 @@ export const getAgeIndex = (earthlyBranchName: EarthlyBranchName) => {
   }
 
   return ageIdx;
+};
+
+/**
+ * 返回翻译后的干支纪年字符串
+ *
+ * @param chineseDate 干支纪年日期对象
+ * @returns 干支纪年字符串
+ */
+export const translateChineseDate = (chineseDate: HeavenlyStemAndEarthlyBranchDate): string => {
+  const { yearly, monthly, daily, hourly } = chineseDate;
+
+  if (
+    yearly.some((item) => (t(kot(item)) as string).length > 1) ||
+    monthly.some((item) => (t(kot(item)) as string).length > 1) ||
+    daily.some((item) => (t(kot(item)) as string).length > 1) ||
+    hourly.some((item) => (t(kot(item)) as string).length > 1)
+  ) {
+    return `${yearly.map((item) => t(kot(item))).join(' ')} - ${monthly.map((item) => t(kot(item))).join(' ')} - ${daily
+      .map((item) => t(kot(item)))
+      .join(' ')} - ${hourly.map((item) => t(kot(item))).join(' ')}`;
+  }
+
+  return `${yearly.map((item) => t(kot(item))).join('')} ${monthly.map((item) => t(kot(item))).join('')} ${daily
+    .map((item) => t(kot(item)))
+    .join('')} ${hourly.map((item) => t(kot(item))).join('')}`;
 };

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeSolarDateStr, solar2lunar } from '../calendar';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeDateStr, solar2lunar } from 'lunar-lite';
 import { EARTHLY_BRANCHES } from '../data';
 import { Astrolabe, Horoscope } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName, t } from '../i18n';
@@ -101,13 +101,13 @@ const _getHoroscopeBySolarDate = (
   hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1], 'Earthly')));
 
   const scope: Horoscope = {
-    solarDate: normalizeSolarDateStr(targetDate).join('-'),
+    solarDate: normalizeDateStr(targetDate).slice(0, 3).join('-'),
     lunarDate: _date.toString(true),
     decadal: {
       index: decadalIndex,
       name: t('decadal'),
-      heavenlyStem: heavenlyStemOfDecade,
-      earthlyBranch: earthlyBranchOfDecade,
+      heavenlyStem: t(kot(heavenlyStemOfDecade, 'Heavnly')),
+      earthlyBranch: t(kot(earthlyBranchOfDecade, 'Earthly')),
       palaceNames: getPalaceNames(decadalIndex),
       mutagen: getMutagensByHeavenlyStem(heavenlyStemOfDecade),
       stars: getHoroscopeStar(heavenlyStemOfDecade, earthlyBranchOfDecade, 'decadal'),
@@ -120,8 +120,8 @@ const _getHoroscopeBySolarDate = (
     yearly: {
       index: yearlyIndex,
       name: t('yearly'),
-      heavenlyStem: yearly[0],
-      earthlyBranch: yearly[1],
+      heavenlyStem: t(kot(yearly[0], 'Heavenly')),
+      earthlyBranch: t(kot(yearly[1], 'Earthly')),
       palaceNames: getPalaceNames(yearlyIndex),
       mutagen: getMutagensByHeavenlyStem(yearly[0]),
       stars: getHoroscopeStar(yearly[0], yearly[1], 'yearly'),
@@ -130,24 +130,24 @@ const _getHoroscopeBySolarDate = (
     monthly: {
       index: monthlyIndex,
       name: t('monthly'),
-      heavenlyStem: monthly[0],
-      earthlyBranch: monthly[1],
+      heavenlyStem: t(kot(monthly[0], 'Heavenly')),
+      earthlyBranch: t(kot(monthly[1], 'Earthly')),
       palaceNames: getPalaceNames(monthlyIndex),
       mutagen: getMutagensByHeavenlyStem(monthly[0]),
     },
     daily: {
       index: dailyIndex,
       name: t('daily'),
-      heavenlyStem: daily[0],
-      earthlyBranch: daily[1],
+      heavenlyStem: t(kot(daily[0], 'Heavenly')),
+      earthlyBranch: t(kot(daily[1], 'Earthly')),
       palaceNames: getPalaceNames(dailyIndex),
       mutagen: getMutagensByHeavenlyStem(daily[0]),
     },
     hourly: {
       index: hourlyIndex,
       name: t('hourly'),
-      heavenlyStem: hourly[0],
-      earthlyBranch: hourly[1],
+      heavenlyStem: t(kot(hourly[0], 'Heavenly')),
+      earthlyBranch: t(kot(hourly[1], 'Earthly')),
       palaceNames: getPalaceNames(hourlyIndex),
       mutagen: getMutagensByHeavenlyStem(hourly[0]),
     },

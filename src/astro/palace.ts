@@ -1,4 +1,4 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
 import {
   EARTHLY_BRANCHES,
   GENDER,

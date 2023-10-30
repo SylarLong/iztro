@@ -1,5 +1,5 @@
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
 import { initStars } from '.';
-import { getHeavenlyStemAndEarthlyBranchBySolarDate } from '../calendar';
 import { t } from '../i18n';
 import { fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import FunctionalStar from './FunctionalStar';
