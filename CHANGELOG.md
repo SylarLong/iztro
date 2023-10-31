@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.0.2
+
+- 🛠️ 修复（fix）
+  
+  🇨🇳
+
+  - 农历月底晚子时不对 #82
+
+  🇺🇸
+
+  - fix late rat hour issue #82
+
 ## v2.0.0
 
 - 🪄 功能（feature）
