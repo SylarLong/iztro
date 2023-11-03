@@ -113,6 +113,8 @@ export type Horoscope = {
  * - palace() 获取宫位数据
  */
 export type Astrolabe = {
+  /** 性别 */
+  gender: string;
   /** 阳历日期 */
   solarDate: string;
   /** 农历日期 */

@@ -88,6 +88,7 @@ export const astrolabeBySolarDate = (
   const lunarDate = solar2lunar(solarDateStr);
 
   const result = new FunctionalAstrolabe({
+    gender: t(kot<GenderName>(gender)),
     solarDate: solarDateStr,
     lunarDate: lunarDate.toString(true),
     chineseDate: translateChineseDate(chineseDate),

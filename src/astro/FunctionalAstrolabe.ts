@@ -246,6 +246,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
  * 文档地址：https://docs.iztro.com/posts/astrolabe.html#functionalastrolabe
  */
 export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
+  gender;
   solarDate;
   lunarDate;
   chineseDate;
@@ -262,6 +263,7 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   palaces;
 
   constructor(data: Astrolabe) {
+    this.gender = data.gender;
     this.solarDate = data.solarDate;
     this.lunarDate = data.lunarDate;
     this.chineseDate = data.chineseDate;
