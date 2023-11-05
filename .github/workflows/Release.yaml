@@ -25,7 +25,8 @@ jobs:
         run: npm run build:umd
 
       - name: Save output variable to file
-        run: echo "FILES=${{ steps.getFiles.outputs.files }}" >> env.txt
+        id: getFiles
+        run: echo "FILES=$(ls dist/*)" >> $GITHUB_ENV
 
       - name: Upload files to Release
         uses: actions/upload-release-asset@v1
@@ -34,5 +35,3 @@ jobs:
           asset_path: dist/*
           asset_name: ${{ env.FILES }}
           asset_content_type: application/javascript
-        env:
-          FILES: ${{ env.FILE }}
