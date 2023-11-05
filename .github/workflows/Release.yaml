@@ -34,3 +34,5 @@ jobs:
           asset_path: iztro-min-js.tar.gz
           asset_name: iztro-min-js.tar.gz
           asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_AUTH_TOKEN }}
