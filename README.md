@@ -61,8 +61,12 @@
   - 获取指定宫位三方四正宫位
   - 获取指定星耀三方四正宫位
   - 获取指定星耀对宫
- 
-
+  - 获取指定运限宫位
+  - 获取指定运限宫位的三方四正
+  - 判断指定运限宫位内是否存在某些星耀
+  - 判断指定运限宫位内是否存在四化
+  - 判断指定运限三方四正内是否存在某些星耀
+  - 判断指定运限三方四正内是否存在四化
 
 - 其他
 
@@ -113,6 +117,35 @@
   ```
   pnpm install iztro -S
   ```
+
+### 独立js库
+
+假如你使用的是静态 `html` 文件，可以下载 [release](https://github.com/SylarLong/iztro/releases) 资源文件中的 `iztro-min-js.tar.gz` 压缩包，里面包含了一个 `iztro` 压缩混淆过的`js`文件和对应的`sourcemap`文件。
+
+> `v2.0.4+` 版本才提供独立js库。
+
+将 `iztro-{version}.min.js` 用script标签引入html文件使用。
+
+```html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>iztro-紫微斗数开源库</title>
+  </head>
+  <body>
+    <script src="./iztro-2.0.4.min.js"></script>
+    <script>
+      // 获取一张星盘数据
+      var astrolabe = iztro.asto.astrolabeBySolarDate('2000-8-16', 2, '男', true, 'zh-CN');
+    </script>
+  </body>
+</html>
+
+```
+
+详细使用方法见 [iztro开发文档](https://docs.iztro.com/quick-start.html)
 
 ### 例子
 
