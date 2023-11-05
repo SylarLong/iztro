@@ -3,3 +3,4 @@ lib
 coverage
 .vscode
 .github
+webpack.config.js
