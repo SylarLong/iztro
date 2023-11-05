@@ -37,7 +37,7 @@ const _getHoroscopeBySolarDate = (
     timeIndex || convertTimeIndex,
   );
   // 虚岁
-  let nominalAge = _date.lunarYear - _birthday.lunarYear;
+  let nominalAge = Math.max(_date.lunarYear - _birthday.lunarYear, 1);
 
   // 假如目标日期已经过了生日，则需要加1岁
   // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
