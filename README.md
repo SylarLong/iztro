@@ -124,7 +124,7 @@
 
 > `v2.0.4+` 版本才提供独立js库。
 
-将 `iztro-{version}.min.js` 用script标签引入html文件使用。
+将 `iztro.min.js` 用script标签引入html文件使用。
 
 ```html
 
@@ -135,7 +135,7 @@
     <title>iztro-紫微斗数开源库</title>
   </head>
   <body>
-    <script src="./iztro-2.0.4.min.js"></script>
+    <script src="./iztro.min.js"></script>
     <script>
       // 获取一张星盘数据
       var astrolabe = iztro.asto.astrolabeBySolarDate('2000-8-16', 2, '男', true, 'zh-CN');
@@ -157,10 +157,10 @@
   import { astro } from 'iztro';
 
   // 通过阳历获取星盘信息
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
+  const astrolabe = astro.bySolar('2000-8-16', 2, '女', true, 'zh-CN');
 
   // 通过农历获取星盘信息
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
+  const astrolabe = astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 - CommonJS
@@ -169,10 +169,10 @@
   var iztro = require('iztro');
 
   // 通过阳历获取星盘信息
-  var astrolabe = iztro.astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
+  var astrolabe = iztro.astro.bySolar('2000-8-16', 2, '女', true, 'zh-CN');
 
   // 通过农历获取星盘信息
-  var astrolabe = iztro.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
+  var astrolabe = iztro.astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 ### [贡献指南](https://github.com/SylarLong/iztro/blob/main/CONTRIBUTING.md)

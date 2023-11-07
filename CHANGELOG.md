@@ -7,6 +7,20 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.0.5
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 废弃 `astrolabeByLunarDate` 和 `astrolabeBySolarDate` 方法
+  - 增加umd编译以便支持纯js库CDN调用 #87
+
+  🇺🇸
+
+  - deprecate `astrolabeByLunarDate` and `astrolabeBySolarDate` function
+  - add UMD lib to support pure js invoking #87
+
 ## v2.0.4
 
 - 🛠️ 修复（fix）

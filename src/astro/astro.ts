@@ -18,6 +18,8 @@ import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } fr
 /**
  * 通过阳历获取星盘信息
  *
+ * @deprecated 此方法已在`v2.0.5`废弃，请用 `bySolar` 方法替换，参数不变
+ *
  * @param solarDateStr 阳历日期【YYYY-M-D】
  * @param timeIndex 出生时辰序号【0~12】
  * @param gender 性别【男|女】
@@ -26,6 +28,26 @@ import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } fr
  * @returns 星盘信息
  */
 export const astrolabeBySolarDate = (
+  solarDateStr: string,
+  timeIndex: number,
+  gender: GenderName,
+  fixLeap: boolean = true,
+  language?: Language,
+) => {
+  return bySolar(solarDateStr, timeIndex, gender, fixLeap, language);
+};
+
+/**
+ * 通过阳历获取星盘信息
+ *
+ * @param solarDateStr 阳历日期【YYYY-M-D】
+ * @param timeIndex 出生时辰序号【0~12】
+ * @param gender 性别【男|女】
+ * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @param language 输出语言
+ * @returns 星盘信息
+ */
+export const bySolar = (
   solarDateStr: string,
   timeIndex: number,
   gender: GenderName,
@@ -111,6 +133,8 @@ export const astrolabeBySolarDate = (
 /**
  * 通过农历获取星盘信息
  *
+ * @deprecated 此方法已在`v2.0.5`废弃，请用 `byLunar` 方法替换，参数不变
+ *
  * @param lunarDateStr 农历日期【YYYY-M-D】，例如2000年七月十七则传入 2000-7-17
  * @param timeIndex 出生时辰序号【0~12】
  * @param gender 性别【男|女】
@@ -127,9 +151,31 @@ export const astrolabeByLunarDate = (
   fixLeap: boolean = true,
   language?: Language,
 ) => {
+  return byLunar(lunarDateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
+};
+
+/**
+ * 通过农历获取星盘信息
+ *
+ * @param lunarDateStr 农历日期【YYYY-M-D】，例如2000年七月十七则传入 2000-7-17
+ * @param timeIndex 出生时辰序号【0~12】
+ * @param gender 性别【男|女】
+ * @param isLeapMonth 是否闰月【默认 false】，当实际月份没有闰月时该参数不生效
+ * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
+ * @param language 输出语言
+ * @returns 星盘数据
+ */
+export const byLunar = (
+  lunarDateStr: string,
+  timeIndex: number,
+  gender: GenderName,
+  isLeapMonth: boolean = false,
+  fixLeap: boolean = true,
+  language?: Language,
+) => {
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
-  return astrolabeBySolarDate(solarDate.toString(), timeIndex, gender, fixLeap, language);
+  return bySolar(solarDate.toString(), timeIndex, gender, fixLeap, language);
 };
 
 /**

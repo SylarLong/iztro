@@ -118,10 +118,10 @@
   import { astro } from 'iztro';
 
   // 通過陽歷獲取星盤信息
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
+  const astrolabe = astro.bySolar('2000-8-16', 2, '女', true, 'zh-CN');
 
   // 通過農歷獲取星盤信息
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
+  const astrolabe = astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 - CommonJS
@@ -130,10 +130,10 @@
   var iztro = require('iztro');
 
   // 通過陽歷獲取星盤信息
-  var astrolabe = iztro.astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'zh-CN');
+  var astrolabe = iztro.astro.bySolar('2000-8-16', 2, '女', true, 'zh-CN');
 
   // 通過農歷獲取星盤信息
-  var astrolabe = iztro.astro.astrolabeByLunarDate('2000-7-17', 2, '女', false, true, 'zh-CN');
+  var astrolabe = iztro.astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
 ### [貢獻指南](https://github.com/SylarLong/iztro/blob/main/CONTRIBUTING.md)

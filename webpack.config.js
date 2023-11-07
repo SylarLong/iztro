@@ -1,6 +1,5 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
-const package = require('./package.json');
 
 module.exports = {
   mode: 'none',
@@ -8,7 +7,7 @@ module.exports = {
   entry: './src/index.ts', // 指定入口文件
   output: {
     path: path.resolve(__dirname, 'dist'), // 指定打包文件的目录
-    filename: `iztro-${package.version}.min.js`, // 打包后文件的名称
+    filename: `iztro.min.js`, // 打包后文件的名称
     library: 'iztro', // 将打包后的代码作为一个全局变量可直接调用
     libraryTarget: 'umd', // 将代码打包为通用模块定义
     umdNamedDefine: true, // 为UMD模块命名

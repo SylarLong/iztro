@@ -1,6 +1,6 @@
 {
   "name": "iztro",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "轻量级紫微斗数星盘生成库。可以通过出生年月日获取到紫微斗数星盘信息、生肖、星座等信息。A lightweight kit to astrolabe generator of The Purple Star Astrology (Zi Wei Dou Shu). The Purple Star Astrology(Zi Wei Dou Shu) is a Chinese ancient astrology. You're able to get your horoscope and personality from the astrolabe",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -11,14 +11,16 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
     "test": "jest --config jestconfig.json --coverage",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "prepare": "yarn build",
+    "prepublishOnly": "npm test && yarn lint",
+    "preversion": "yarn lint",
+    "version": "yarn format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "pub": "yarn build:umd && yarn publish"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "dist/**/*"
   ],
   "publishConfig": {
     "access": "public"

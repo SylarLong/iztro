@@ -117,10 +117,10 @@ This is a very simple example to show how to use `iztro` to get the astrolabe da
   import { astro } from 'iztro';
 
   // get astrolabe data by solar date
-  const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, 'male', true, 'en-US');
+  const astrolabe = astro.bySolar('2000-8-16', 2, 'male', true, 'en-US');
 
   // get astrolabe data by lunar date
-  const astrolabe = astro.astrolabeByLunarDate('2000-7-17', 2, 'male', false, true, 'en-US');
+  const astrolabe = astro.byLunar('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
 - CommonJS
@@ -129,10 +129,10 @@ This is a very simple example to show how to use `iztro` to get the astrolabe da
   var iztro = require('iztro');
 
   // get astrolabe data by solar date
-  var astrolabe = iztro.astro.astrolabeBySolarDate('2000-8-16', 2, 'male', true, 'en-US');
+  var astrolabe = iztro.astro.bySolar('2000-8-16', 2, 'male', true, 'en-US');
 
   // get astrolabe data by lunar date
-  var astrolabe = iztro.astro.astrolabeByLunarDate('2000-7-17', 2, 'male', false, true, 'en-US');
+  var astrolabe = iztro.astro.byLunar('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
 ### [CONTRIBUTING](https://github.com/SylarLong/iztro/blob/main/CONTRIBUTING.md)

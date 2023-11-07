@@ -12,8 +12,8 @@ import { astro } from '../../index';
 describe('Astrolabe', () => {
   afterEach(() => setLanguage('zh-CN'));
 
-  test('astrolabeBySolarDate()', () => {
-    const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true);
+  test('bySolar()', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true);
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
@@ -233,8 +233,8 @@ describe('Astrolabe', () => {
     expect(agePalace2).toHaveProperty('earthlyBranch', '亥');
   });
 
-  test('astrolabeBySolarDate() Korean', () => {
-    const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'ko-KR');
+  test('bySolar() Korean', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true, 'ko-KR');
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
@@ -399,8 +399,8 @@ describe('Astrolabe', () => {
     expect(horoscope.hourly).toHaveProperty('mutagen', ['천동', '천기', '문창', '염정']);
   });
 
-  test('astrolabeBySolarDate() Vietnamese', () => {
-    const result = astro.astrolabeBySolarDate('2000-8-16', 2, '女', true, 'vi-VN');
+  test('bySolar() Vietnamese', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true, 'vi-VN');
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
@@ -565,8 +565,8 @@ describe('Astrolabe', () => {
     expect(horoscope.hourly).toHaveProperty('mutagen', ['Thiên Đồng', 'Thiên Cơ', 'Văn Xương', 'Liêm Trinh']);
   });
 
-  test('astrolabeByLunarDate()', () => {
-    const result = astro.astrolabeByLunarDate('2000-7-17', 2, '女', true, true);
+  test('byLunar()', () => {
+    const result = astro.byLunar('2000-7-17', 2, '女', true, true);
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
     expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
@@ -584,8 +584,8 @@ describe('Astrolabe', () => {
     expect(result.palaces[11].decadal).toStrictEqual({ range: [53, 62], heavenlyStem: '己', earthlyBranch: '丑' });
   });
 
-  test('astrolabeBySolarDate() fix leap month', () => {
-    const result = astro.astrolabeBySolarDate('2023-4-10', 4, '女', true);
+  test('bySolar() fix leap month', () => {
+    const result = astro.bySolar('2023-4-10', 4, '女', true);
 
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '子');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '申');
@@ -595,8 +595,8 @@ describe('Astrolabe', () => {
     expect(result.star('紫微').palace()).toHaveProperty('name', '迁移');
   });
 
-  test('astrolabeBySolarDate() use default fixLeap', () => {
-    const result = astro.astrolabeBySolarDate('2023-4-10', 4, '女');
+  test('bySolar() use default fixLeap', () => {
+    const result = astro.bySolar('2023-4-10', 4, '女');
 
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '子');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '申');
@@ -606,8 +606,8 @@ describe('Astrolabe', () => {
     expect(result.star('紫微').palace()).toHaveProperty('name', '迁移');
   });
 
-  test('astrolabeBySolarDate() do not fix leap month', () => {
-    const result = astro.astrolabeBySolarDate('2023-4-10', 4, '女', false);
+  test('bySolar() do not fix leap month', () => {
+    const result = astro.bySolar('2023-4-10', 4, '女', false);
 
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '未');
@@ -617,8 +617,8 @@ describe('Astrolabe', () => {
     expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
   });
 
-  test('astrolabeByLunarDate() fix leap month', () => {
-    const result = astro.astrolabeByLunarDate('2023-2-20', 4, '女', true, true);
+  test('byLunar() fix leap month', () => {
+    const result = astro.byLunar('2023-2-20', 4, '女', true, true);
 
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '子');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '申');
@@ -628,8 +628,8 @@ describe('Astrolabe', () => {
     expect(result.star('紫微').palace()).toHaveProperty('name', '迁移');
   });
 
-  test('astrolabeByLunarDate() use default isLeapMonth', () => {
-    const result = astro.astrolabeByLunarDate('2023-2-20', 4, '女');
+  test('byLunar() use default isLeapMonth', () => {
+    const result = astro.byLunar('2023-2-20', 4, '女');
 
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '未');
@@ -639,8 +639,8 @@ describe('Astrolabe', () => {
     expect(result.star('紫微').palace()).toHaveProperty('name', '命宫');
   });
 
-  test('astrolabeByLunarDate() do not fix leap month', () => {
-    const result = astro.astrolabeByLunarDate('2023-2-20', 4, '女', true, false);
+  test('byLunar() do not fix leap month', () => {
+    const result = astro.byLunar('2023-2-20', 4, '女', true, false);
 
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
     expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '未');
