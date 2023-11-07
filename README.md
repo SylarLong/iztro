@@ -163,7 +163,7 @@
 - `iztro@^2.0.5`
 - `iztro@2.0.5`
 
-详细使用方法见 [iztro开发文档](https://docs.iztro.com/quick-start.html)
+应为纯JS库没有代码提示和注释，所以在集成的时候请参阅 [iztro开发文档](https://docs.iztro.com/quick-start.html)
 
 ### 例子
 
