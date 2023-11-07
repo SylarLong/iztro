@@ -138,10 +138,28 @@
     <script src="./iztro.min.js"></script>
     <script>
       // 获取一张星盘数据
-      var astrolabe = iztro.asto.astrolabeBySolarDate('2000-8-16', 2, '男', true, 'zh-CN');
+      var astrolabe = iztro.asto.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
     </script>
   </body>
 </html>
+
+当然，我们更推荐你直接使用 `CDN` 加速链接，你可以在下面列表中选择一个，在没有指定版本号的时候，会自动指向最新版本的代码库
+
+- jsdelivr
+
+  - https://cdn.jsdelivr.net/npm/iztro/dist/iztro.min.js
+  - https://cdn.jsdelivr.net/npm/iztro@2.0.5/dist/iztro.min.js
+
+- unpkg
+
+  - https://unpkg.com/iztro/dist/iztro.min.js
+  - https://unpkg.com/iztro@2.0.5/dist/iztro.min.js
+
+你也可以使用如下规则来指定版本：
+
+- `iztro@2`
+- `iztro@^2.0.5`
+- `iztro@2.0.5`
 
 ```
 
