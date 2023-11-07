@@ -3,7 +3,7 @@ import { PalaceName } from '../../i18n';
 
 describe('astro/analyzer', () => {
   test('getPalace()', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     const palaceNames: PalaceName[] = [
       '疾厄',
@@ -41,7 +41,7 @@ describe('astro/analyzer', () => {
   });
 
   test('hasStars()', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     expect(result.palace(1)?.has(['太阳'])).toBe(false);
     expect(result.palace(1)?.has(['天相'])).toBe(true);
@@ -58,7 +58,7 @@ describe('astro/analyzer', () => {
   });
 
   test('notHaveStars()', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     expect(result.palace(1)?.notHave(['太阳'])).toBe(true);
     expect(result.palace(1)?.notHave(['天相'])).toBe(false);
@@ -75,7 +75,7 @@ describe('astro/analyzer', () => {
   });
 
   test('hasOneOfStars()', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     expect(result.palace(1)?.hasOneOf(['太阳', '天相'])).toBe(true);
     expect(result.palace(2)?.hasOneOf(['天机', '天梁'])).toBe(true);
@@ -88,7 +88,7 @@ describe('astro/analyzer', () => {
   });
 
   test('have() in surrounded palaces', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     expect(
       result.surroundedPalaces('命宫').have(['武曲', '贪狼', '擎羊', '天相', '天魁', '天月', '地空', '地劫']),
@@ -148,7 +148,7 @@ describe('astro/analyzer', () => {
   });
 
   test('getSurroundedPalaces() by palace index', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     const { target, opposite, wealth, career } = result.surroundedPalaces(0);
 
@@ -159,7 +159,7 @@ describe('astro/analyzer', () => {
   });
 
   test('getSurroundedPalaces() by palace name', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-15', 0, '女', true);
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
 
     const { target, opposite, wealth, career } = result.surroundedPalaces('命宫');
 
@@ -170,7 +170,7 @@ describe('astro/analyzer', () => {
   });
 
   test('haveOneOf() in surrounded palaces', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-16', 2, '女', true);
+    const result = astro.bySolar('2023-8-16', 2, '女', true);
 
     expect(result.surroundedPalaces('命宫').haveOneOf(['太阳', '文曲'])).toBe(true);
     expect(result.isSurroundedOneOf('命宫', ['太阳', '文曲'])).toBe(true);
@@ -185,7 +185,7 @@ describe('astro/analyzer', () => {
   });
 
   test('notHave() in surrounded palaces', () => {
-    const result = astro.astrolabeBySolarDate('2023-8-16', 2, '女', true);
+    const result = astro.bySolar('2023-8-16', 2, '女', true);
 
     expect(result.surroundedPalaces('命宫').notHave(['太阳', '文曲'])).toBe(false);
     expect(result.notSurrounded('命宫', ['太阳', '文曲'])).toBe(false);
@@ -200,7 +200,7 @@ describe('astro/analyzer', () => {
   });
 
   test('hasMutagenInPlace()', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.palace('迁移')?.hasMutagen('禄')).toBe(true);
     expect(result.palace('兄弟')?.hasMutagen('权')).toBe(true);
@@ -210,7 +210,7 @@ describe('astro/analyzer', () => {
   });
 
   test('notHaveMutagenInPlace()', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.palace('迁移')?.notHaveMutagen('禄')).toBe(false);
     expect(result.palace('兄弟')?.notHaveMutagen('权')).toBe(false);
@@ -220,7 +220,7 @@ describe('astro/analyzer', () => {
   });
 
   test('hasMutagen() In Opposite Palace', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.surroundedPalaces('命宫').opposite.hasMutagen('禄')).toBe(true);
     expect(result.surroundedPalaces('官禄').opposite.hasMutagen('忌')).toBe(true);
@@ -230,7 +230,7 @@ describe('astro/analyzer', () => {
   });
 
   test('haveMutagen() In Surrounded Palace', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.surroundedPalaces('福德').haveMutagen('禄')).toBe(true);
     expect(result.surroundedPalaces('福德').haveMutagen('忌')).toBe(true);
@@ -242,7 +242,7 @@ describe('astro/analyzer', () => {
   });
 
   test('withMutagen() In FunctionalStar', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.star('紫微').withMutagen('禄')).toBe(false);
     expect(result.star('破军').withMutagen('禄')).toBe(true);
@@ -254,7 +254,7 @@ describe('astro/analyzer', () => {
   });
 
   test('withBrightness() In FunctionalStar', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.star('紫微').withBrightness('庙')).toBe(false);
     expect(result.star('紫微').withBrightness(['庙', '得'])).toBe(true);
@@ -264,7 +264,7 @@ describe('astro/analyzer', () => {
   });
 
   test('oppositePalace() In FunctionalStar', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.star('紫微').oppositePalace()).toHaveProperty('name', '迁移');
     expect(result.star('天同').oppositePalace()).toHaveProperty('name', '父母');
@@ -279,7 +279,7 @@ describe('astro/analyzer', () => {
   });
 
   test('surroundedPalaces()  In FunctionalStar', () => {
-    const result = astro.astrolabeBySolarDate('2013-8-21', 4, '女', true);
+    const result = astro.bySolar('2013-8-21', 4, '女', true);
 
     expect(result.star('咸池').surroundedPalaces()?.target).toHaveProperty('name', '福德');
     expect(result.star('咸池').surroundedPalaces()?.target).toHaveProperty('earthlyBranch', '午');

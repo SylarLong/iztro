@@ -74,7 +74,7 @@ It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
     ```ts
     import { astro } from 'iztro';
 
-    const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, 'male', true, 'en-US');
+    const astrolabe = astro.bySolar('2000-8-16', 2, 'male', true, 'en-US');
 
     astrolabe.star('emperor').surroundedPalaces().haveMutagen('focused');
     ```

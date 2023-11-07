@@ -75,7 +75,7 @@
     ```ts
     import { astro } from 'iztro';
 
-    const astrolabe = astro.astrolabeBySolarDate('2000-8-16', 2, '男', true, 'zh-CN');
+    const astrolabe = astro.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
 
     astrolabe.star('紫微').surroundedPalaces().haveMutagen('忌');
     ```
