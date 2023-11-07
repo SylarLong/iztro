@@ -143,6 +143,8 @@
   </body>
 </html>
 
+```
+
 当然，我们更推荐你直接使用 `CDN` 加速链接，你可以在下面列表中选择一个，在没有指定版本号的时候，会自动指向最新版本的代码库
 
 - jsdelivr
@@ -160,8 +162,6 @@
 - `iztro@2`
 - `iztro@^2.0.5`
 - `iztro@2.0.5`
-
-```
 
 详细使用方法见 [iztro开发文档](https://docs.iztro.com/quick-start.html)
 
