@@ -13,8 +13,8 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
     "test": "jest --config jestconfig.json --coverage",
-    "prepare": "yarn build && yarn build:umd",
-    "prepublishOnly": "npm test && yarn lint",
+    "prepare": "yarn build",
+    "prepublishOnly": "npm test && yarn lint && yarn build:umd",
     "preversion": "yarn lint",
     "version": "yarn format && git add -A src",
     "postversion": "git push && git push --tags"
