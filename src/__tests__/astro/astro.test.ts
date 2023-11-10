@@ -27,6 +27,11 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('body', '文昌');
     expect(result).toHaveProperty('fiveElementsClass', '木三局');
 
+    expect(result.palace('父母')?.isEmpty()).toBeTruthy();
+    expect(result.palace('父母')?.isEmpty(['陀罗'])).toBeFalsy();
+    expect(result.palace('命宫')?.isEmpty()).toBeFalsy();
+    expect(result.palace('父母')?.isEmpty(['文昌', '文曲'])).toBeTruthy();
+
     const horoscope = result.horoscope('2023-8-19 3:12');
 
     expect(horoscope).toHaveProperty('solarDate', '2023-8-19');

@@ -57,6 +57,20 @@ export interface IFunctionalPalace extends Palace {
    * @returns true | false
    */
   notHaveMutagen: (mutagen: Mutagen) => boolean;
+
+  /**
+   * 判断一个宫位是否为空宫（没有主星），
+   * 有些派别在宫位内有某些星耀的情况下，
+   * 是不会将该宫位判断为空宫的。
+   * 所以加入一个参数来传入星耀。
+   *
+   * @version v2.0.6
+   *
+   * @param excludeStars 星耀名称数组
+   *
+   * @returns {boolean}  true | false
+   */
+  isEmpty: (excludeStars?: StarName[]) => boolean;
 }
 
 /**
@@ -104,4 +118,15 @@ export default class FunctionalPalace implements IFunctionalPalace {
   hasOneOf = (stars: StarName[]): boolean => hasOneOfStars(this, stars);
   hasMutagen = (mutagen: Mutagen): boolean => hasMutagenInPlace(this, mutagen);
   notHaveMutagen = (mutagen: Mutagen): boolean => notHaveMutagenInPalce(this, mutagen);
+  isEmpty = (excludeStars?: StarName[]) => {
+    if (this.majorStars?.filter((star) => star.type === 'major').length) {
+      return false;
+    }
+
+    if (excludeStars?.length && this.hasOneOf(excludeStars)) {
+      return false;
+    }
+
+    return true;
+  };
 }
