@@ -213,7 +213,7 @@ export const getHoroscope = (
       age.push(12 * j + i + 1);
     }
 
-    const idx = gender === '男' ? fixIndex(ageIdx + i) : fixIndex(ageIdx - i);
+    const idx = kot<GenderKey>(gender) === 'male' ? fixIndex(ageIdx + i) : fixIndex(ageIdx - i);
 
     ages[idx] = age;
   }
