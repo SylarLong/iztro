@@ -1,4 +1,4 @@
-import { getFiveElementsClass, getSoulAndBody, getPalaceNames } from '../../astro';
+import { getFiveElementsClass, getSoulAndBody, getPalaceNames, getHoroscope } from '../../astro';
 import { FiveElementsClass } from '../../data';
 import { t } from '../../i18n';
 
@@ -62,5 +62,43 @@ describe('astro/palace', () => {
     expect(getPalaceNames(1)).toStrictEqual(targetList);
     expect(getPalaceNames(13)).toStrictEqual(targetList);
     expect(getPalaceNames(-11)).toStrictEqual(targetList);
+  });
+
+  test('getHoroscope() for female', () => {
+    const result = getHoroscope('2023-11-15', 3, '女');
+
+    expect(result.ages).toStrictEqual([
+      [12, 24, 36, 48, 60, 72, 84],
+      [11, 23, 35, 47, 59, 71, 83],
+      [10, 22, 34, 46, 58, 70, 82],
+      [9, 21, 33, 45, 57, 69, 81],
+      [8, 20, 32, 44, 56, 68, 80],
+      [7, 19, 31, 43, 55, 67, 79],
+      [6, 18, 30, 42, 54, 66, 78],
+      [5, 17, 29, 41, 53, 65, 77],
+      [4, 16, 28, 40, 52, 64, 76],
+      [3, 15, 27, 39, 51, 63, 75],
+      [2, 14, 26, 38, 50, 62, 74],
+      [1, 13, 25, 37, 49, 61, 73],
+    ]);
+  });
+
+  test('getHoroscope() for male', () => {
+    const result = getHoroscope('2023-11-15', 3, '男');
+
+    expect(result.ages).toStrictEqual([
+      [2, 14, 26, 38, 50, 62, 74],
+      [3, 15, 27, 39, 51, 63, 75],
+      [4, 16, 28, 40, 52, 64, 76],
+      [5, 17, 29, 41, 53, 65, 77],
+      [6, 18, 30, 42, 54, 66, 78],
+      [7, 19, 31, 43, 55, 67, 79],
+      [8, 20, 32, 44, 56, 68, 80],
+      [9, 21, 33, 45, 57, 69, 81],
+      [10, 22, 34, 46, 58, 70, 82],
+      [11, 23, 35, 47, 59, 71, 83],
+      [12, 24, 36, 48, 60, 72, 84],
+      [1, 13, 25, 37, 49, 61, 73],
+    ]);
   });
 });
