@@ -18,6 +18,7 @@
 [![npm bundle size](https://img.shields.io/bundlephobia/min/iztro)](https://www.npmjs.com/package/iztro) 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield) 
 [![Package Quality](https://packagequality.com/shield/iztro.svg)](https://packagequality.com/#?package=iztro) 
+[![](https://data.jsdelivr.com/v1/package/npm/iztro/badge)](https://www.jsdelivr.com/package/npm/iztro) 
 
 </div>
 
@@ -55,12 +56,18 @@
   - 判斷指定星耀是否存在四化
   - 判斷指定星耀三方四正是否存在四化
   - 判斷指定星耀是否是某個亮度
-  - 判斷指定星耀是否存在四化
   - 根據天幹獲取四化
   - 獲取指定星耀所在宮位
   - 獲取指定宮位三方四正宮位
   - 獲取指定星耀三方四正宮位
   - 獲取指定星耀對宮
+  - 獲取指定運限宮位
+  - 獲取指定運限宮位的三方四正
+  - 判斷指定運限宮位內是否存在某些星耀
+  - 判斷指定運限宮位內是否存在四化
+  - 判斷指定運限三方四正內是否存在某些星耀
+  - 判斷指定運限三方四正內是否存在四化
+  - 判斷指定宮位是否是空宮
 
 - 其他
 
@@ -70,7 +77,7 @@
 
   - 鏈式調用
 
-    假如妳想判斷 紫微星 的 三方四正 有沒有 化忌，妳可以這樣做
+    假如你想判斷 紫微星 的 三方四正 有沒有 化忌，你可以這樣做
 
     ```ts
     import { astro } from 'iztro';
@@ -79,6 +86,10 @@
 
     astrolabe.star('紫微').surroundedPalaces().haveMutagen('忌');
     ```
+> [!IMPORTANT]
+> 如果你在開發中遇到任何問題，可以添加作者微信咨詢  
+> 你也可以任意魔改代碼，或聯系作者獲取技術支持  
+> <img src="https://github.com/SylarLong/SylarLong/assets/6510425/a2af4876-7d26-4900-a0fc-f5a2030f6205" alt="WeChat" width="350" />
 
 ### 快捷跳轉
 
@@ -88,7 +99,7 @@
 
 ### 安裝依賴
 
-妳可以使用任何妳熟悉的包管理庫來安裝`iztro`
+你可以使用任何你熟悉的包管理庫來安裝`iztro`
 
 - NPM
 
@@ -108,9 +119,56 @@
   pnpm install iztro -S
   ```
 
+### 獨立js庫
+
+假如你使用的是靜態 `html` 文件，可以下載 [release](https://github.com/SylarLong/iztro/releases) 資源文件中的 `iztro-min-js.tar.gz` 壓縮包，裏面包含了一個 `iztro` 壓縮混淆過的`js`文件和對應的`sourcemap`文件。
+
+> `v2.0.4+` 版本才提供獨立js庫。
+
+將 `iztro.min.js` 用script標簽引入html文件使用。
+
+```html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>iztro-紫微鬥數開源庫</title>
+  </head>
+  <body>
+    <script src="./iztro.min.js"></script>
+    <script>
+      // 獲取一張星盤數據
+      var astrolabe = iztro.asto.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
+    </script>
+  </body>
+</html>
+
+```
+
+當然，我們更推薦你直接使用 `CDN` 加速鏈接，你可以在下面列表中選擇一個，在沒有指定版本號的時候，會自動指向最新版本的代碼庫
+
+- jsdelivr
+
+  - https://cdn.jsdelivr.net/npm/iztro/dist/iztro.min.js
+  - https://cdn.jsdelivr.net/npm/iztro@2.0.5/dist/iztro.min.js
+
+- unpkg
+
+  - https://unpkg.com/iztro/dist/iztro.min.js
+  - https://unpkg.com/iztro@2.0.5/dist/iztro.min.js
+
+你也可以使用如下規則來指定版本：
+
+- `iztro@2`
+- `iztro@^2.0.5`
+- `iztro@2.0.5`
+
+應為純JS庫沒有代碼提示和註釋，所以在集成的時候請參閱 [iztro開發文檔](https://docs.iztro.com/quick-start.html)
+
 ### 例子
 
-這裏是壹個簡單的例子顯示如何調用`iztro`獲取到紫微鬥數星盤數據，詳細文檔請移步[開發文檔](https://docs.iztro.com)
+這裏是一個簡單的例子顯示如何調用`iztro`獲取到紫微鬥數星盤數據，詳細文檔請移步[開發文檔](https://docs.iztro.com)
 
 - ES6 Module
 
@@ -138,18 +196,21 @@
 
 ### [貢獻指南](https://github.com/SylarLong/iztro/blob/main/CONTRIBUTING.md)
 
-如果妳對`iztro`有興趣，也想加入貢獻隊伍，我們非常歡迎，妳可以用以下方式進行：
+如果你對`iztro`有興趣，也想加入貢獻隊伍，我們非常歡迎，你可以用以下方式進行：
 
-- 如果妳對程序功能有什麽建議，請到[這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E5%8A%9F%E8%83%BD%EF%BD%9Cfeature&projects=&template=new-feature.md&title=%7B%E6%A0%87%E9%A2%98%7D%EF%BD%9C%7Btitle%7D)創建壹個`功能需求`。
-- 如果妳發現程序有BUG，請到[這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-)創建壹個`BUG報告`。
-- 妳也可以將本倉庫`fork`到妳自己的倉庫進行編輯，然後提交PR到本倉庫。
-- 假如妳擅長外語，我們也歡迎妳對國際化文件的翻譯做出妳的貢獻，妳可以`fork`本倉庫，然後在[locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales)文件夾下創建壹個國際化語言文件，然後復制其他語言文件目錄裏面的文件到妳的目錄下進行更改。
+- 如果你對程序功能有什麽建議，請到[這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E5%8A%9F%E8%83%BD%EF%BD%9Cfeature&projects=&template=new-feature.md&title=%7B%E6%A0%87%E9%A2%98%7D%EF%BD%9C%7Btitle%7D)創建一個`功能需求`。
+- 如果你發現程序有BUG，請到[這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-)創建一個`BUG報告`。
+- 你也可以將本倉庫`fork`到你自己的倉庫進行編輯，然後提交PR到本倉庫。
+- 假如你擅長外語，我們也歡迎你對國際化文件的翻譯做出你的貢獻，你可以`fork`本倉庫，然後在[locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales)文件夾下創建一個國際化語言文件，然後復製其他語言文件目錄裏面的文件到你的目錄下進行更改。
 - 當然，如果你覺得本程序對你有用，請給我買杯咖啡☕️ [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)
   ](https://PayPal.Me/sylarlong)
 
+> [!IMPORTANT]
+> 如果你覺得代碼對你有用，請點⭐支持，你的⭐是我持續更新的動力
+
 ### 總結
 
-使用本程序返回的數據，妳可以生成這樣壹張星盤，當然這隻是壹個例子，妳可以把註意力集中在星盤的設計上，也可以把重心放在數據的分析上，本程序為妳解決了最繁冗的工作，讓妳可以把精力更多的放在妳所需要關註的事情上面。
+使用本程序返回的數據，你可以生成這樣一張星盤，當然這只是一個例子，你可以把註意力集中在星盤的設計上，也可以把重心放在數據的分析上，本程序為你解決了最繁冗的工作，讓你可以把精力更多的放在你所需要關註的事情上面。
 
 <img width="966" alt="image" src="https://github.com/SylarLong/react-iztro/assets/6510425/f4335997-fdd8-42e2-bb1a-600942f9b0ba">
 
@@ -169,6 +230,7 @@ MIT License
 
 Copyright &copy; 2023 Sylar Long
 
-請合理使用本開源代碼，禁止用於非法目的。
+> [!NOTE]
+> 請合理使用本開源代碼，禁止用於非法目的。
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
