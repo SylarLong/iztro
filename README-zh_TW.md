@@ -228,7 +228,7 @@
 
 MIT License
 
-Copyright &copy; 2023 Sylar Long
+Copyright &copy; 2023 All Contributors
 
 > [!NOTE]
 > 請合理使用本開源代碼，禁止用於非法目的。
