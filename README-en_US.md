@@ -167,6 +167,6 @@ You can generate an astrolabe by using the returned data. Of course it's just an
 
 MIT License
 
-Copyright &copy; 2023 Sylar Long
+Copyright &copy; 2023 All Contributors
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
