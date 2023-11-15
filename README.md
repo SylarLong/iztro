@@ -229,7 +229,7 @@
 
 MIT License
 
-Copyright &copy; 2023 Sylar Long
+Copyright &copy; 2023 All Contributors
 
 > [!NOTE]
 > 请合理使用本开源代码，禁止用于非法目的。
