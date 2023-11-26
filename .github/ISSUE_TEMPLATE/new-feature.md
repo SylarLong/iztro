@@ -1,6 +1,7 @@
 ---
 name: New Feature
-about: If you have a nice idea or requriement. Please feel free to create an issue with this template. Any great idea is welcome.
+about: If you have a nice idea or requriement. Please feel free to create an issue
+  with this template. Any great idea is welcome.
 title: "{标题}｜{title}"
 labels: 功能｜feature
 assignees: SylarLong
