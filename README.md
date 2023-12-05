@@ -140,7 +140,7 @@
     <script src="./iztro.min.js"></script>
     <script>
       // 获取一张星盘数据
-      var astrolabe = iztro.asto.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
+      var astrolabe = iztro.astro.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
     </script>
   </body>
 </html>
