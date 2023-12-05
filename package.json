@@ -8,7 +8,6 @@
   "jsdelivr": "dist/iztro.min.js",
   "scripts": {
     "build": "tsc",
-    "rollup": "rollup -c --bundleConfigAsCjs",
     "build:umd": "webpack",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
