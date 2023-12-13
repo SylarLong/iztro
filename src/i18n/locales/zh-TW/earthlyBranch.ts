@@ -1,6 +1,6 @@
 export default {
   ziEarthly: '子',
-  chouEarthly: '醜',
+  chouEarthly: '丑',
   yinEarthly: '寅',
   maoEarthly: '卯',
   chenEarthly: '辰',

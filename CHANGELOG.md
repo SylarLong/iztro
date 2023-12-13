@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.0.8
+
+- 🛠️ 修复（fix）
+ 
+  🇨🇳
+
+  - 地支`丑`繁体错误
+
+  🇺🇸
+
+  - fix typo of Earthly Branch of Chou
+
 ## v2.0.7
 
 - 🛠️ 修复（fix）
