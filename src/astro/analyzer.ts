@@ -1,6 +1,7 @@
+import { MUTAGEN } from '../data';
 import { Star, SurroundedPalaces } from '../data/types';
-import { kot, Mutagen, MutagenKey, PalaceKey, PalaceName, StarKey, StarName } from '../i18n';
-import { fixEarthlyBranchIndex, fixIndex } from '../utils';
+import { HeavenlyStemName, kot, Mutagen, MutagenKey, PalaceKey, PalaceName, StarKey, StarName } from '../i18n';
+import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem } from '../utils';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { FunctionalSurpalaces, IFunctionalSurpalaces } from './FunctionalSurpalaces';
@@ -102,27 +103,33 @@ export const getSurroundedPalaces = (
  * @returns 宫位实例
  */
 export const getPalace = ($: IFunctionalAstrolabe, indexOrName: number | PalaceName): IFunctionalPalace | undefined => {
+  let palace: IFunctionalPalace | undefined;
+
   if (typeof indexOrName === 'number') {
     if (indexOrName < 0 || indexOrName > 11) {
       throw new Error('invalid palace index.');
     }
 
-    return $.palaces[indexOrName];
+    palace = $.palaces[indexOrName];
+  } else {
+    palace = $.palaces.find((item) => {
+      if (kot<PalaceKey>(indexOrName) === 'originalPalace' && item.isOriginalPalace) {
+        return item;
+      }
+
+      if (kot<PalaceKey>(indexOrName) === 'bodyPalace' && item.isBodyPalace) {
+        return item;
+      }
+
+      if (kot<PalaceName>(item.name) === kot<PalaceName>(indexOrName)) {
+        return item;
+      }
+    });
   }
 
-  return $.palaces.find((item) => {
-    if (kot<PalaceKey>(indexOrName) === 'originalPalace' && item.isOriginalPalace) {
-      return item;
-    }
+  palace?.setAstrolabe($);
 
-    if (kot<PalaceKey>(indexOrName) === 'bodyPalace' && item.isBodyPalace) {
-      return item;
-    }
-
-    if (kot<PalaceName>(item.name) === kot<PalaceName>(indexOrName)) {
-      return item;
-    }
-  });
+  return palace;
 };
 
 /**
@@ -235,4 +242,22 @@ export const notSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[]
   const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _excludeAll(allStarsInPalace, stars);
+};
+
+export const mutagensToStars = (heavenlyStem: HeavenlyStemName, mutagens: Mutagen | Mutagen[]) => {
+  const muts = Array.isArray(mutagens) ? mutagens : [mutagens];
+  const stars: StarName[] = [];
+  const mutagenStars = getMutagensByHeavenlyStem(heavenlyStem);
+
+  muts.forEach((withMutagen) => {
+    const mutagenIndex = MUTAGEN.indexOf(kot<MutagenKey>(withMutagen));
+
+    if (!mutagenStars[mutagenIndex]) {
+      return;
+    }
+
+    stars.push(mutagenStars[mutagenIndex]);
+  });
+
+  return stars;
 };

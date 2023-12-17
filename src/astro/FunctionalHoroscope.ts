@@ -1,12 +1,12 @@
 import { Horoscope, Scope } from '../data/types';
 import { Mutagen, MutagenKey, PalaceName, StarKey, StarName, kot } from '../i18n';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
-import { FunctionalSurpalaces } from './FunctionalSurpalaces';
-import FunctionalPalace from './FunctionalPalace';
+import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
+import { IFunctionalPalace } from './FunctionalPalace';
 import { mergeStars } from '../utils';
 import { MUTAGEN } from '../data';
 
-const _getHoroscopePalaceIndex = ($: FunctionalHoroscope, scope: Scope, palaceName: PalaceName) => {
+const _getHoroscopePalaceIndex = ($: IFunctionalHoroscope, scope: Scope, palaceName: PalaceName) => {
   let palaceIndex = -1;
 
   if (scope === 'origin') {
@@ -27,14 +27,15 @@ const _getHoroscopePalaceIndex = ($: FunctionalHoroscope, scope: Scope, palaceNa
 };
 
 export interface IFunctionalHoroscope extends Horoscope {
+  astrolabe: IFunctionalAstrolabe;
   /**
    * 获取小限宫位
    *
    * @version v1.3.0
    *
-   * @returns {FunctionalPalace | undefined} 小限宫位
+   * @returns {IFunctionalPalace | undefined} 小限宫位
    */
-  agePalace: () => FunctionalPalace | undefined;
+  agePalace: () => IFunctionalPalace | undefined;
 
   /**
    * 获取运限宫位
@@ -43,9 +44,9 @@ export interface IFunctionalHoroscope extends Horoscope {
    *
    * @param palaceName 宫位名称
    * @param scope 指定获取哪个运限的宫位
-   * @returns {FunctionalPalace | undefined} 指定宫位
+   * @returns {IFunctionalPalace | undefined} 指定宫位
    */
-  palace: (palaceName: PalaceName, scope: Scope) => FunctionalPalace | undefined;
+  palace: (palaceName: PalaceName, scope: Scope) => IFunctionalPalace | undefined;
 
   /**
    * 获取运限指定宫位的三方四正宫位
@@ -54,9 +55,9 @@ export interface IFunctionalHoroscope extends Horoscope {
    *
    * @param palaceName 宫位名称
    * @param scope 指定获取哪个运限的宫位
-   * @returns {FunctionalSurpalaces | undefined} 指定宫位的三方四正
+   * @returns {IFunctionalSurpalaces | undefined} 指定宫位的三方四正
    */
-  surroundPalaces: (palaceName: PalaceName, scope: Scope) => FunctionalSurpalaces | undefined;
+  surroundPalaces: (palaceName: PalaceName, scope: Scope) => IFunctionalSurpalaces | undefined;
 
   /**
    * 判断在指定运限的宫位内是否包含流耀，需要全部包含才返回true
