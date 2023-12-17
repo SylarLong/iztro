@@ -10,7 +10,7 @@ import { getPalace, getSurroundedPalaces } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { getPalaceNames } from './palace';
-import FunctionalHoroscope from './FunctionalHoroscope';
+import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope';
 
 /**
  * 获取运限数据
@@ -28,7 +28,7 @@ const _getHoroscopeBySolarDate = (
   $: FunctionalAstrolabe,
   targetDate: string | Date = new Date(),
   timeIndex?: number,
-): FunctionalHoroscope => {
+): IFunctionalHoroscope => {
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
@@ -171,7 +171,7 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @param timeIndex 时辰索引【可选】，默认会自动读取当前时间的时辰
    * @returns 运限数据
    */
-  horoscope: (date?: string | Date, timeIndex?: number) => Horoscope;
+  horoscope: (date?: string | Date, timeIndex?: number) => IFunctionalHoroscope;
 
   /**
    * 通过星耀名称获取到当前星耀的对象实例
