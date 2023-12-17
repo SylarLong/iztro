@@ -1,3 +1,4 @@
+import { astro } from '../..';
 import { getFiveElementsClass, getSoulAndBody, getPalaceNames, getHoroscope } from '../../astro';
 import { FiveElementsClass } from '../../data';
 import { t } from '../../i18n';
@@ -100,5 +101,34 @@ describe('astro/palace', () => {
       [12, 24, 36, 48, 60, 72, 84],
       [1, 13, 25, 37, 49, 61, 73],
     ]);
+  });
+
+  test('fliesTo() & notFlyTo() & fliesOneOfTo()', () => {
+    const astrolabe = astro.bySolar('2017-12-4', 12, 'male');
+
+    expect(astrolabe.palace('命宫')?.fliesTo('兄弟', '忌')).toBeTruthy();
+    expect(astrolabe.palace('命宫')?.notFlyTo('兄弟', '科')).toBeTruthy();
+    expect(astrolabe.palace('田宅')?.fliesTo('福德', ['禄', '科'])).toBeTruthy();
+    expect(astrolabe.palace('田宅')?.notFlyTo('福德', ['禄', '科'])).toBeFalsy();
+    expect(astrolabe.palace('兄弟')?.fliesTo('夫妻', ['权', '科'])).toBeFalsy();
+    expect(astrolabe.palace('兄弟')?.fliesOneOfTo('夫妻', ['权', '科'])).toBeTruthy();
+    expect(astrolabe.palace('兄弟')?.fliesOneOfTo('夫妻', ['权', '禄'])).toBeFalsy();
+    expect(astrolabe.palace('兄弟')?.notFlyTo('夫妻', ['权', '科'])).toBeFalsy();
+    expect(astrolabe.palace('仆役')?.selfMutaged('科')).toBeTruthy();
+    expect(astrolabe.palace('仆役')?.selfMutaged(['科', '权'])).toBeFalsy();
+    expect(astrolabe.palace('仆役')?.selfMutagedOneOf(['科', '权'])).toBeTruthy();
+    expect(astrolabe.palace('仆役')?.selfMutagedOneOf()).toBeTruthy();
+    expect(astrolabe.palace('仆役')?.selfMutaged('权')).toBeFalsy();
+    expect(astrolabe.palace('仆役')?.notSelfMutaged()).toBeFalsy();
+    expect(astrolabe.palace('仆役')?.notSelfMutaged('权')).toBeTruthy();
+    expect(astrolabe.palace('仆役')?.notSelfMutaged(['权', '科'])).toBeFalsy();
+
+    const palaces = astrolabe.palace('命宫')?.mutagedPlaces() ?? [];
+
+    expect(palaces).toHaveLength(4);
+    expect(palaces[0]).toHaveProperty('name', '命宫');
+    expect(palaces[1]).toHaveProperty('name', '迁移');
+    expect(palaces[2]).toHaveProperty('name', '仆役');
+    expect(palaces[3]).toHaveProperty('name', '兄弟');
   });
 });

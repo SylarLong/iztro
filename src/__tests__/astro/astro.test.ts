@@ -174,33 +174,33 @@ describe('Astrolabe', () => {
 
     const decadalSurpalaces = horoscope.surroundPalaces('命宫', 'decadal');
 
-    expect(decadalSurpalaces.target).toHaveProperty('name', '夫妻');
-    expect(decadalSurpalaces.target).toHaveProperty('heavenlyStem', '庚');
-    expect(decadalSurpalaces.target).toHaveProperty('earthlyBranch', '辰');
-    expect(decadalSurpalaces.opposite).toHaveProperty('name', '官禄');
-    expect(decadalSurpalaces.opposite).toHaveProperty('heavenlyStem', '丙');
-    expect(decadalSurpalaces.opposite).toHaveProperty('earthlyBranch', '戌');
-    expect(decadalSurpalaces.career).toHaveProperty('name', '福德');
-    expect(decadalSurpalaces.career).toHaveProperty('heavenlyStem', '甲');
-    expect(decadalSurpalaces.career).toHaveProperty('earthlyBranch', '申');
-    expect(decadalSurpalaces.wealth).toHaveProperty('name', '迁移');
-    expect(decadalSurpalaces.wealth).toHaveProperty('heavenlyStem', '戊');
-    expect(decadalSurpalaces.wealth).toHaveProperty('earthlyBranch', '子');
+    expect(decadalSurpalaces?.target).toHaveProperty('name', '夫妻');
+    expect(decadalSurpalaces?.target).toHaveProperty('heavenlyStem', '庚');
+    expect(decadalSurpalaces?.target).toHaveProperty('earthlyBranch', '辰');
+    expect(decadalSurpalaces?.opposite).toHaveProperty('name', '官禄');
+    expect(decadalSurpalaces?.opposite).toHaveProperty('heavenlyStem', '丙');
+    expect(decadalSurpalaces?.opposite).toHaveProperty('earthlyBranch', '戌');
+    expect(decadalSurpalaces?.career).toHaveProperty('name', '福德');
+    expect(decadalSurpalaces?.career).toHaveProperty('heavenlyStem', '甲');
+    expect(decadalSurpalaces?.career).toHaveProperty('earthlyBranch', '申');
+    expect(decadalSurpalaces?.wealth).toHaveProperty('name', '迁移');
+    expect(decadalSurpalaces?.wealth).toHaveProperty('heavenlyStem', '戊');
+    expect(decadalSurpalaces?.wealth).toHaveProperty('earthlyBranch', '子');
 
     const originalSurpalaces = horoscope.surroundPalaces('夫妻', 'origin');
 
-    expect(originalSurpalaces.target).toHaveProperty('name', '夫妻');
-    expect(originalSurpalaces.target).toHaveProperty('heavenlyStem', '庚');
-    expect(originalSurpalaces.target).toHaveProperty('earthlyBranch', '辰');
-    expect(originalSurpalaces.opposite).toHaveProperty('name', '官禄');
-    expect(originalSurpalaces.opposite).toHaveProperty('heavenlyStem', '丙');
-    expect(originalSurpalaces.opposite).toHaveProperty('earthlyBranch', '戌');
-    expect(originalSurpalaces.career).toHaveProperty('name', '福德');
-    expect(originalSurpalaces.career).toHaveProperty('heavenlyStem', '甲');
-    expect(originalSurpalaces.career).toHaveProperty('earthlyBranch', '申');
-    expect(originalSurpalaces.wealth).toHaveProperty('name', '迁移');
-    expect(originalSurpalaces.wealth).toHaveProperty('heavenlyStem', '戊');
-    expect(originalSurpalaces.wealth).toHaveProperty('earthlyBranch', '子');
+    expect(originalSurpalaces?.target).toHaveProperty('name', '夫妻');
+    expect(originalSurpalaces?.target).toHaveProperty('heavenlyStem', '庚');
+    expect(originalSurpalaces?.target).toHaveProperty('earthlyBranch', '辰');
+    expect(originalSurpalaces?.opposite).toHaveProperty('name', '官禄');
+    expect(originalSurpalaces?.opposite).toHaveProperty('heavenlyStem', '丙');
+    expect(originalSurpalaces?.opposite).toHaveProperty('earthlyBranch', '戌');
+    expect(originalSurpalaces?.career).toHaveProperty('name', '福德');
+    expect(originalSurpalaces?.career).toHaveProperty('heavenlyStem', '甲');
+    expect(originalSurpalaces?.career).toHaveProperty('earthlyBranch', '申');
+    expect(originalSurpalaces?.wealth).toHaveProperty('name', '迁移');
+    expect(originalSurpalaces?.wealth).toHaveProperty('heavenlyStem', '戊');
+    expect(originalSurpalaces?.wealth).toHaveProperty('earthlyBranch', '子');
 
     const yearlyPalace = horoscope.palace('命宫', 'yearly');
 
