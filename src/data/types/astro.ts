@@ -70,16 +70,11 @@ export type Horoscope = {
    * 小限
    *
    * @property
-   * - index 小限所在宫位索引
    * - nominalAge 虚岁
    */
-  age: {
-    /** 小限所在宫位索引 */
-    index: number;
+  age: HoroscopeItem & {
     /** 虚岁 */
     nominalAge: number;
-    /** 名称 */
-    name: string;
   };
   /** 流年 */
   yearly: HoroscopeItem & { yearlyDecStar: { jiangqian12: StarName[]; suiqian12: StarName[] } };

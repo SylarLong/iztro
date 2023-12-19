@@ -68,6 +68,10 @@ const _getHoroscopeBySolarDate = (
   let dailyIndex = -1;
   // 流时索引
   let hourlyIndex = -1;
+  // 小限天干
+  let heavenlyStemOfAge: HeavenlyStemName = 'jia';
+  // 小限地支
+  let earthlyBranchOfAge: EarthlyBranchName = 'zi';
 
   // 查询大限索引
   $.palaces.some(({ decadal }, index) => {
@@ -98,9 +102,11 @@ const _getHoroscopeBySolarDate = (
   }
 
   // 查询小限索引
-  $.palaces.some(({ ages }, index) => {
+  $.palaces.some(({ ages, heavenlyStem, earthlyBranch }, index) => {
     if (ages.includes(nominalAge)) {
       ageIndex = index;
+      heavenlyStemOfAge = heavenlyStem;
+      earthlyBranchOfAge = earthlyBranch;
 
       return true;
     }
@@ -136,6 +142,10 @@ const _getHoroscopeBySolarDate = (
       index: ageIndex,
       nominalAge,
       name: t('turn'),
+      heavenlyStem: heavenlyStemOfAge,
+      earthlyBranch: earthlyBranchOfAge,
+      palaceNames: getPalaceNames(ageIndex),
+      mutagen: getMutagensByHeavenlyStem(heavenlyStemOfAge),
     },
     yearly: {
       index: yearlyIndex,
