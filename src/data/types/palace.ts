@@ -43,6 +43,8 @@ export type SoulAndBody = {
  * - ages 小限
  */
 export type Palace = {
+  /** 宫位索引 */
+  index: number;
   /** 宫位名称 */
   name: PalaceName;
   /** 是否身宫 */

@@ -180,6 +180,7 @@ export interface IFunctionalPalace extends Palace {
  */
 export default class FunctionalPalace implements IFunctionalPalace {
   private _astrolabe?: IFunctionalAstrolabe;
+  index;
   name;
   isBodyPalace;
   isOriginalPalace;
@@ -196,6 +197,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
   ages;
 
   constructor(data: Palace) {
+    this.index = data.index;
     this.name = data.name;
     this.isBodyPalace = data.isBodyPalace;
     this.isOriginalPalace = data.isOriginalPalace;

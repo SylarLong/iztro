@@ -37,13 +37,16 @@ const _getHoroscopeBySolarDate = (
     timeIndex || convertTimeIndex,
   );
   // 虚岁
-  let nominalAge = Math.max(_date.lunarYear - _birthday.lunarYear, 1);
+  let nominalAge = _date.lunarYear - _birthday.lunarYear;
+  // 是否童限
+  let isChildhood = false;
 
   // 假如目标日期已经过了生日，则需要加1岁
   // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
   // 但在 2023年九月初二 以后，虚岁则为 2 岁
   if (
-    (_date.lunarMonth === _birthday.lunarMonth && _date.lunarDay > _birthday.lunarDay) ||
+    ((_date.lunarYear === _birthday.lunarYear && _date.lunarMonth) === _birthday.lunarMonth &&
+      _date.lunarDay > _birthday.lunarDay) ||
     _date.lunarMonth > _birthday.lunarMonth
   ) {
     nominalAge += 1;
@@ -77,6 +80,23 @@ const _getHoroscopeBySolarDate = (
     }
   });
 
+  if (decadalIndex < 0) {
+    // 如果大限索引小于0则证明还没有开始起运
+    // 此时应该取小限运
+    // 一命二财三疾厄	四岁夫妻五福德
+    // 六岁事业为童限	专就宫垣视吉凶
+    const palaces: PalaceName[] = ['命宫', '财帛', '疾厄', '夫妻', '福德', '官禄'];
+    const targetIndex = palaces[nominalAge - 1];
+    const targetPalace = $.palace(targetIndex);
+
+    if (targetPalace) {
+      isChildhood = true;
+      decadalIndex = targetPalace.index;
+      heavenlyStemOfDecade = targetPalace.heavenlyStem;
+      earthlyBranchOfDecade = targetPalace.earthlyBranch;
+    }
+  }
+
   // 查询小限索引
   $.palaces.some(({ ages }, index) => {
     if (ages.includes(nominalAge)) {
@@ -105,7 +125,7 @@ const _getHoroscopeBySolarDate = (
     lunarDate: _date.toString(true),
     decadal: {
       index: decadalIndex,
-      name: t('decadal'),
+      name: isChildhood ? t('childhood') : t('decadal'),
       heavenlyStem: t(kot(heavenlyStemOfDecade, 'Heavnly')),
       earthlyBranch: t(kot(earthlyBranchOfDecade, 'Earthly')),
       palaceNames: getPalaceNames(decadalIndex),

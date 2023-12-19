@@ -82,6 +82,7 @@ export const bySolar = (
 
     palaces.push(
       new FunctionalPalace({
+        index: i,
         name: palaceNames[i],
         isBodyPalace: bodyIndex === i,
         isOriginalPalace:
