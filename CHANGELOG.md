@@ -14,10 +14,12 @@
   🇨🇳
 
   - 新增童限指示 #154
+  - 新增小限12宫 #157
 
   🇺🇸
 
   - add childhood scope indicator #154
+  - add 12 palaces for age #157
 
 ## v2.1.0
 
