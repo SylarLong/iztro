@@ -691,4 +691,22 @@ describe('Astrolabe', () => {
     expect(getMajorStarByLunarDate('2023-2-17', 0, true)).toEqual('贪狼');
     expect(getMajorStarByLunarDate('2023-2-17', 0, true, false)).toEqual('紫微,贪狼');
   });
+
+  test('childhood', () => {
+    const astrolabe = astro.bySolar('2023-10-18', 4, 'female');
+    const horo1 = astrolabe.horoscope('2023-12-19');
+
+    expect(horo1.decadal.name).toEqual('童限');
+    expect(horo1.decadal.index).toEqual(astrolabe.palace('命宫')?.index);
+
+    const horo2 = astrolabe.horoscope('2024-12-29');
+
+    expect(horo2.decadal.name).toEqual('童限');
+    expect(horo2.decadal.index).toEqual(astrolabe.palace('财帛')?.index);
+
+    const horo3 = astrolabe.horoscope('2025-12-29');
+
+    expect(horo3.decadal.name).toEqual('童限');
+    expect(horo3.decadal.index).toEqual(astrolabe.palace('疾厄')?.index);
+  });
 });
