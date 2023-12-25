@@ -7,6 +7,17 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.2.1
+
+- 🛠️ 修复（fix）
+  🇨🇳
+
+  - 小限数据错误 #160
+
+  🇺🇸
+
+  - fix incorrect age scope data #160
+
 ## v2.2.0
 
 -  🪄 功能（feature）

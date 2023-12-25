@@ -209,7 +209,7 @@ export const getHoroscope = (
   for (let i = 0; i < 12; i++) {
     const age = [];
 
-    for (let j = 0; j < 7; j++) {
+    for (let j = 0; j < 10; j++) {
       age.push(12 * j + i + 1);
     }
 
