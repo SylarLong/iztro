@@ -548,7 +548,7 @@ export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
  *   - 甲喜羊鸡乙龙猴，丙年蛇鼠一窝谋。丁虎擒猪戊玉兔，
  *   - 己鸡居然与虎俦。庚猪马辛鸡蛇走，壬犬马癸马蛇游。
  *
- * -安截路空亡
+ * - 安截路空亡
  *   - 甲己之年申酉，乙庚之年午未，
  *   - 丙辛之年辰巳，丁壬之年寅卯，
  *   - 戊癸之年子丑。
