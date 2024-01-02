@@ -12,7 +12,7 @@ describe('astro/palace', () => {
         result: {
           soulIndex: 7,
           bodyIndex: 5,
-          heavenlyStemOfSoul: '辛',
+          heavenlyStemOfSoul: '己',
           earthlyBranchOfSoul: '酉',
         },
       },
@@ -22,7 +22,7 @@ describe('astro/palace', () => {
         result: {
           soulIndex: 6,
           bodyIndex: 6,
-          heavenlyStemOfSoul: '庚',
+          heavenlyStemOfSoul: '戊',
           earthlyBranchOfSoul: '申',
         },
       },

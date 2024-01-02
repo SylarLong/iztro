@@ -7,9 +7,32 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.2.2
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 来因宫错误 #161
+
+  🇺🇸
+
+  - fix incorrect original palace data #161
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 更新lunar-lite依赖，以支持更宽的日期参数
+
+  🇺🇸
+
+  - upgrade lunar-lite dependency in order to support wilder date parameter
+
 ## v2.2.1
 
 - 🛠️ 修复（fix）
+
   🇨🇳
 
   - 小限数据错误 #160

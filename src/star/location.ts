@@ -31,14 +31,14 @@ import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex }
  */
 export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
-  const { lunarYear, lunarMonth, lunarDay } = solar2lunar(solarDateStr);
+  const { lunarDay } = solar2lunar(solarDateStr);
   const fiveElements = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
   let remainder = -1; // 余数
   let quotient; // 商
   let offset = -1; // 循环次数
 
   // 获取当月最大天数
-  const maxDays = getTotalDaysOfLunarMonth(lunarYear, lunarMonth);
+  const maxDays = getTotalDaysOfLunarMonth(solarDateStr);
 
   // 如果timeIndex等于12说明是晚子时，需要加一天
   let _day = timeIndex === 12 ? lunarDay + 1 : lunarDay;
