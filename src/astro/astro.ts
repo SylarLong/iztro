@@ -1,11 +1,4 @@
-import {
-  getHeavenlyStemAndEarthlyBranchBySolarDate,
-  getSign,
-  getZodiac,
-  heavenlyStemAndEarthlyBranchOfYear,
-  lunar2solar,
-  solar2lunar,
-} from 'lunar-lite';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Language } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
@@ -191,25 +184,7 @@ export const byLunar = (
 export const getZodiacBySolarDate = (solarDateStr: string, language?: Language): string => {
   language && setLanguage(language);
 
-  const { lunarYear } = solar2lunar(solarDateStr);
-  const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
-
-  return t(kot(getZodiac(yearly[1])));
-};
-
-/**
- * 通过农历年份获取十二生肖
- *
- * @version v1.2.1
- *
- * @param year 农历年份
- * @param language 输出语言，默认为中文
- * @returns 十二生肖
- */
-export const getZodiacByLunarYear = (year: number, language?: Language) => {
-  language && setLanguage(language);
-
-  const yearly = heavenlyStemAndEarthlyBranchOfYear(year);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
 
   return t(kot(getZodiac(yearly[1])));
 };

@@ -1,4 +1,3 @@
-import { solar2lunar, getTotalDaysOfLunarMonth } from 'lunar-lite';
 import { EARTHLY_BRANCHES, heavenlyStems, MUTAGEN, STARS_INFO } from '../data';
 import { initStars } from '../star';
 import {
@@ -13,9 +12,9 @@ import {
   t,
   StarKey,
 } from '../i18n';
-import dayjs from 'dayjs';
 import FunctionalStar from '../star/FunctionalStar';
 import { HeavenlyStemAndEarthlyBranchDate } from 'lunar-lite/lib/types';
+import { solar2lunar } from 'lunar-lite';
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -89,29 +88,6 @@ export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): num
 };
 
 /**
- * 处理晚子时日期
- *
- * @param {string} solarDateStr 阳历日期
- * @param {number} numbertimeIndex 时辰序号【0～12】，12代表晚子时
- * @returns {LunarDate} LunarDate
- */
-export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
-  let lunarDate = solar2lunar(solarDateStr);
-  // 获取当月的天数
-  const totalDaysOfLunarMonth = getTotalDaysOfLunarMonth(lunarDate.lunarYear, lunarDate.lunarMonth);
-
-  if (timeIndex >= 12 && lunarDate.lunarDay >= totalDaysOfLunarMonth) {
-    // 假如是晚子时并且日期是农历月的最后一天时，月份需要加1
-    const dt = dayjs(solarDateStr);
-
-    dt.add(1, 'day');
-    lunarDate = solar2lunar(new Date(dt.format()));
-  }
-
-  return lunarDate;
-};
-
-/**
  * 调整农历月份的索引
  *
  * 正月建寅（正月地支为寅），fixLeap为是否调整闰月情况
@@ -125,12 +101,12 @@ export const fixLunarDate = (solarDateStr: string, timeIndex: number) => {
  * @returns {number} 月份索引
  */
 export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
-  const lunarDate = fixLunarDate(solarDateStr, timeIndex);
-  const { lunarMonth, lunarDay, isLeap } = lunarDate;
+  const { lunarMonth, lunarDay, isLeap } = solar2lunar(solarDateStr);
   // 紫微斗数以`寅`宫为第一个宫位
   const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
+  const needToAdd = isLeap && fixLeap && lunarDay > 15 && timeIndex !== 12;
 
-  return fixIndex(lunarMonth + 1 - firstIndex + (isLeap && fixLeap && lunarDay > 15 ? 1 : 0));
+  return fixIndex(lunarMonth + 1 - firstIndex + (needToAdd ? 1 : 0));
 };
 
 /**

@@ -3,7 +3,6 @@ import {
   getMajorStarBySolarDate,
   getSignByLunarDate,
   getSignBySolarDate,
-  getZodiacByLunarYear,
   getZodiacBySolarDate,
 } from '../../astro';
 import { setLanguage } from '../../i18n';
@@ -658,11 +657,6 @@ describe('Astrolabe', () => {
   test('getZodiacBySolarDate()', () => {
     expect(getZodiacBySolarDate('2023-2-20')).toEqual('兔');
     expect(getZodiacBySolarDate('2023-2-20', 'en-US')).toEqual('rabbit');
-  });
-
-  test('getZodiacByLunarYear()', () => {
-    expect(getZodiacByLunarYear(2023)).toEqual('兔');
-    expect(getZodiacByLunarYear(2023, 'en-US')).toEqual('rabbit');
   });
 
   test('getSignBySolarDate()', () => {
