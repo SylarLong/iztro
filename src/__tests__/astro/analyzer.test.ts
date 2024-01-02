@@ -24,7 +24,7 @@ describe('astro/analyzer', () => {
       expect(result.palace(item)).toHaveProperty('name', item);
     });
 
-    expect(result.palace('来因')).toHaveProperty('name', '财帛');
+    expect(result.palace('来因')).toHaveProperty('name', '官禄');
     expect(result.palace('身宫')).toHaveProperty('name', '命宫');
 
     try {

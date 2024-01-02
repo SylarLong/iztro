@@ -52,6 +52,7 @@ export const bySolar = (
   const palaces: IFunctionalPalace[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
+  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
     solarDateStr,
     timeIndex,
@@ -79,8 +80,7 @@ export const bySolar = (
         name: palaceNames[i],
         isBodyPalace: bodyIndex === i,
         isOriginalPalace:
-          !['ziEarthly', 'chouEarthly'].includes(earthlyBranchOfPalace) &&
-          earthlyBranchOfPalace === earthlyBranchOfYear,
+          !['ziEarthly', 'chouEarthly'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === heavenlyStemOfYear,
         heavenlyStem: t(heavenlyStemOfPalace),
         earthlyBranch: t(earthlyBranchOfPalace),
         majorStars: majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),
