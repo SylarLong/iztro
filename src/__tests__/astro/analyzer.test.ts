@@ -142,7 +142,7 @@ describe('astro/analyzer', () => {
           '咸池',
           '天伤',
           '天德',
-          '截路',
+          '截空',
         ]),
     ).toBe(false);
   });

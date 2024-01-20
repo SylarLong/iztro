@@ -159,7 +159,7 @@ describe('star/index', () => {
         { name: '紫微', type: 'major', brightness: '旺', scope: 'origin', mutagen: '' },
         { name: '天府', type: 'major', brightness: '得', scope: 'origin', mutagen: '' },
       ],
-      [{ name: '太阴', type: 'major', brightness: '旺', scope: 'origin', mutagen: '科' }],
+      [{ name: '太阴', type: 'major', brightness: '不', scope: 'origin', mutagen: '科' }],
       [{ name: '贪狼', type: 'major', brightness: '庙', scope: 'origin', mutagen: '忌' }],
       [{ name: '巨门', type: 'major', brightness: '旺', scope: 'origin', mutagen: '权' }],
       [
@@ -194,7 +194,7 @@ describe('star/index', () => {
         { name: 'Tử Vi', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: '' },
         { name: 'Thiên Phủ', type: 'major', brightness: 'Đắc', scope: 'origin', mutagen: '' },
       ],
-      [{ name: 'Thái Âm', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: 'Khoa' }],
+      [{ name: 'Thái Âm', type: 'major', brightness: 'Bất', scope: 'origin', mutagen: 'Khoa' }],
       [{ name: 'Tham Lang', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: 'Kỵ' }],
       [{ name: 'Cự Môn', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: 'Quyền' }],
       [
