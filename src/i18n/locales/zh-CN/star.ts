@@ -58,7 +58,7 @@ export default {
   xunzhong: '旬中',
   xunkong: '旬空',
   kongwang: '空亡',
-  jielu: '截路',
+  jielu: '截空',
   yuede: '月德',
   tianshang: '天伤',
   tianshi: '天使',
