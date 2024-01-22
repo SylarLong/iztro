@@ -104,7 +104,6 @@ export interface IFunctionalPalace extends Palace {
    *
    * @version v2.1.0
    *
-   * @param from 源宫位
    * @param  to 目标宫位
    * @param withMutagens 四化（禄、权、科、忌）
    * @returns {boolean}
