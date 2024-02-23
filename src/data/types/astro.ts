@@ -150,3 +150,6 @@ export type Astrolabe = {
   /** 十二宫数据 */
   palaces: IFunctionalPalace[];
 };
+
+// 定义一个接口，表示插件函数的类型
+export type Plugin = () => void;

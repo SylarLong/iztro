@@ -1,12 +1,18 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
-import { Language } from '../data/types';
+import { Language, Plugin } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex, translateChineseDate } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
 import FunctionalPalace, { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
+
+const _plugins = [] as Plugin[];
+
+export const loadPlugins = (plugins: Plugin[]) => {
+  Array.prototype.push.apply(_plugins, plugins);
+};
 
 /**
  * 通过阳历获取星盘信息
@@ -40,13 +46,13 @@ export const astrolabeBySolarDate = (
  * @param language 输出语言
  * @returns 星盘信息
  */
-export const bySolar = (
+export function bySolar<T extends FunctionalAstrolabe>(
   solarDateStr: string,
   timeIndex: number,
   gender: GenderName,
   fixLeap: boolean = true,
   language?: Language,
-) => {
+): T {
   language && setLanguage(language);
 
   const palaces: IFunctionalPalace[] = [];
@@ -121,8 +127,10 @@ export const bySolar = (
     palaces,
   });
 
-  return result;
-};
+  _plugins.map((plugin) => result.use(plugin));
+
+  return result as T;
+}
 
 /**
  * 通过农历获取星盘信息

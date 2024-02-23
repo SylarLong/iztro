@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.3.0
+
+- 🪄 功能（feature）
+
+  🇨🇳
+
+  - 支持全局插件 #165
+
+  🇺🇸
+
+  - support global plugin #165
+  
 ## v2.2.3
 
 - 🛠️ 修复（fix）
