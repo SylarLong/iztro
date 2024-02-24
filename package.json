@@ -12,7 +12,6 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
     "test": "jest --config jestconfig.json --coverage",
-    "t": "jest --testPathPattern=\"src/__tests__/astro/plugin.test.ts\"",
     "prepare": "yarn build",
     "prepublishOnly": "npm test && yarn lint && yarn build:umd",
     "preversion": "yarn lint",
