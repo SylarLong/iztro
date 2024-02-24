@@ -15,6 +15,20 @@ import {
 import FunctionalStar from '../star/FunctionalStar';
 import { HeavenlyStemAndEarthlyBranchDate } from 'lunar-lite/lib/types';
 import { solar2lunar } from 'lunar-lite';
+import { getConfig } from '../astro';
+
+const getTargetMutagens = (heavenlyStem: HeavenlyStemKey) => {
+  const { mutagens } = getConfig();
+  let result;
+
+  if (mutagens && mutagens[heavenlyStem]) {
+    result = mutagens[heavenlyStem] ?? [];
+  } else {
+    result = heavenlyStems[heavenlyStem].mutagen ?? [];
+  }
+
+  return result;
+};
 
 /**
  * 用于处理索引，将索引锁定在 0~max 范围内
@@ -65,14 +79,16 @@ export const getBrightness = (starName: StarName, index: number): Brightness => 
 export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
   const starKey = kot<StarKey>(starName);
+  const target = getTargetMutagens(heavenlyStem);
 
-  return t<Mutagen>(MUTAGEN[heavenlyStems[heavenlyStem].mutagen.indexOf(starKey as never)]);
+  return t<Mutagen>(MUTAGEN[target.indexOf(starKey as never)]);
 };
 
 export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): StarName[] => {
   const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
+  const target = getTargetMutagens(heavenlyStem);
 
-  return heavenlyStems[heavenlyStem].mutagen.map((star) => t<StarName>(star));
+  return target.map((star) => t<StarName>(star));
 };
 
 /**

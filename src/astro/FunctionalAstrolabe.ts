@@ -195,6 +195,8 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   /**
    * 插件注入方法
    *
+   * @version v2.3.0
+   *
    * @param plugin 插件函数
    */
   use(plugin: Plugin): void;

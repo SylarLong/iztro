@@ -153,3 +153,9 @@ export type Astrolabe = {
 
 // 定义一个接口，表示插件函数的类型
 export type Plugin = () => void;
+
+export type ConfigMutagens = Partial<Record<HeavenlyStemName, StarName[]>>;
+
+export type Config = {
+  mutagens?: ConfigMutagens;
+};

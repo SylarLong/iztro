@@ -1,7 +1,18 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
-import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
-import { Language, Plugin } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
+import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, heavenlyStems } from '../data';
+import { Config, Language, Plugin } from '../data/types';
+import {
+  EarthlyBranchKey,
+  EarthlyBranchName,
+  GenderName,
+  HeavenlyStemKey,
+  HeavenlyStemName,
+  StarKey,
+  StarName,
+  kot,
+  setLanguage,
+  t,
+} from '../i18n';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex, translateChineseDate } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
@@ -9,14 +20,45 @@ import FunctionalPalace, { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
 
 const _plugins = [] as Plugin[];
+const _mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>> = {};
 
+/**
+ * 批量加载插件
+ *
+ * @version v2.3.0
+ *
+ * @param plugins 插件方法数组
+ */
 export const loadPlugins = (plugins: Plugin[]) => {
   Array.prototype.push.apply(_plugins, plugins);
 };
 
+/**
+ * 加载单个插件
+ *
+ * @version v2.3.0
+ *
+ * @param plugin 插件方法
+ */
 export const loadPlugin = (plugin: Plugin) => {
   _plugins.push(plugin);
 };
+
+export const config = ({ mutagens }: Config) => {
+  if (mutagens) {
+    // 由于key和value都有可能是不同语言传进来的
+    // 所以需要将key和value转化为对应的i18n key
+    const result = {} as Record<keyof typeof heavenlyStems, string[]>;
+
+    for (const key in mutagens) {
+      result[kot<HeavenlyStemKey>(key)] = mutagens[key as HeavenlyStemName]?.map((item) => kot<StarName>(item)) ?? [];
+    }
+
+    Object.assign(_mutagens, result);
+  }
+};
+
+export const getConfig = () => ({ mutagens: _mutagens });
 
 /**
  * 通过阳历获取星盘信息

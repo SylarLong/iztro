@@ -37,11 +37,31 @@ export function myTestPlugin2(this: IAstrolabe): void {
 astro.loadPlugins([myTestPlugin]);
 astro.loadPlugin(myTestPlugin2);
 
+astro.config({ mutagens: { 庚: ['太阳', '武曲', '天同', '天相'] } });
+
 describe('plugin test', () => {
   test('plugin', () => {
     const astrolabe = astro.bySolar<IAstrolabe>('2023-10-18', 4, 'female');
 
     expect(astrolabe.myNewFunc()).toEqual('火六局');
     expect(astrolabe.majorStar()).toEqual('七杀');
+  });
+
+  test('changed configuration', () => {
+    const astrolabe = astro.bySolar<IAstrolabe>('2010-10-18', 4, 'female');
+
+    expect(astrolabe.palace('命宫')?.hasMutagen('忌')).toBeFalsy();
+    expect(astrolabe.palace('夫妻')?.hasMutagen('忌')).toBeTruthy();
+  });
+
+  test('not changed configuration', () => {
+    const astrolabe = astro.bySolar<IAstrolabe>('2011-10-18', 4, 'female');
+
+    expect(astrolabe.palace('命宫')?.hasMutagen('权')).toBeTruthy();
+    expect(astrolabe.palace('命宫')?.hasMutagen('忌')).toBeTruthy();
+    expect(astrolabe.palace('福德')?.hasMutagen('科')).toBeTruthy();
+    expect(astrolabe.palace('田宅')?.hasMutagen('禄')).toBeFalsy();
+    expect(astrolabe.palace('财帛')?.fliesTo('夫妻', '科')).toBeTruthy();
+    expect(astrolabe.palace('财帛')?.fliesTo('仆役', '忌')).toBeTruthy();
   });
 });
