@@ -14,10 +14,12 @@
   🇨🇳
 
   - 支持全局插件 #165
+  - 支持全局配置 #165
 
   🇺🇸
 
   - support global plugin #165
+  - support global configuration #165
   
 ## v2.2.3
 
