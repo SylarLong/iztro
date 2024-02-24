@@ -14,6 +14,10 @@ export const loadPlugins = (plugins: Plugin[]) => {
   Array.prototype.push.apply(_plugins, plugins);
 };
 
+export const loadPlugin = (plugin: Plugin) => {
+  _plugins.push(plugin);
+};
+
 /**
  * 通过阳历获取星盘信息
  *
