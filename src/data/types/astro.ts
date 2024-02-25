@@ -1,5 +1,12 @@
 import { IFunctionalPalace } from '../../astro/FunctionalPalace';
-import { EarthlyBranchName, FiveElementsClassName, HeavenlyStemName, PalaceName, StarName } from '../../i18n';
+import {
+  Brightness,
+  EarthlyBranchName,
+  FiveElementsClassName,
+  HeavenlyStemName,
+  PalaceName,
+  StarName,
+} from '../../i18n';
 import FunctionalStar from '../../star/FunctionalStar';
 import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from 'lunar-lite/lib/types';
 
@@ -149,4 +156,17 @@ export type Astrolabe = {
   fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
   palaces: IFunctionalPalace[];
+};
+
+/**
+ * 定义一个接口，表示插件函数的类型
+ * */
+export type Plugin = () => void;
+
+export type ConfigMutagens = Partial<Record<HeavenlyStemName, StarName[]>>;
+export type ConfigBrightness = Partial<Record<StarName, Brightness[]>>;
+
+export type Config = {
+  mutagens?: ConfigMutagens;
+  brightness?: ConfigBrightness;
 };
