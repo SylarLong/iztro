@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
-import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, heavenlyStems } from '../data';
+import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Config, Language, Plugin } from '../data/types';
 import {
   BrightnessKey,
@@ -7,9 +7,7 @@ import {
   EarthlyBranchName,
   GenderName,
   HeavenlyStemKey,
-  HeavenlyStemName,
   StarKey,
-  StarName,
   kot,
   setLanguage,
   t,
@@ -47,30 +45,26 @@ export const loadPlugin = (plugin: Plugin) => {
 };
 
 /**
+ * 全局配置四化和亮度
+ *
+ * 由于key和value都有可能是不同语言传进来的，
+ * 所以需会将key和value转化为对应的i18n key。
+ *
+ * @version 2.3.0
  *
  * @param {Config} param0 自定义配置
  */
 export const config = ({ mutagens, brightness }: Config) => {
-  // 由于key和value都有可能是不同语言传进来的
-  // 所以需要将key和value转化为对应的i18n key
   if (mutagens) {
-    const result = {} as Record<keyof typeof heavenlyStems, string[]>;
-
-    for (const key in mutagens) {
-      result[kot<HeavenlyStemKey>(key)] = mutagens[key as HeavenlyStemName]?.map((item) => kot<StarName>(item)) ?? [];
-    }
-
-    Object.assign(_mutagens, result);
+    Object.entries(mutagens).forEach(([key, value]) => {
+      _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
+    });
   }
 
   if (brightness) {
-    const result = {} as Record<StarKey, string[]>;
-
-    for (const key in brightness) {
-      result[kot<StarKey>(key)] = brightness[key as StarName]?.map((item) => kot<BrightnessKey>(item)) ?? [];
-    }
-
-    Object.assign(_brightness, result);
+    Object.entries(brightness).forEach(([key, value]) => {
+      _brightness[kot<StarKey>(key)] = value.map((item) => kot<BrightnessKey>(item)) ?? [];
+    });
   }
 };
 
