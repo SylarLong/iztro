@@ -2,6 +2,7 @@ import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2s
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches, heavenlyStems } from '../data';
 import { Config, Language, Plugin } from '../data/types';
 import {
+  BrightnessKey,
   EarthlyBranchKey,
   EarthlyBranchName,
   GenderName,
@@ -21,6 +22,7 @@ import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } fr
 
 const _plugins = [] as Plugin[];
 const _mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>> = {};
+const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
 
 /**
  * 批量加载插件
@@ -44,10 +46,14 @@ export const loadPlugin = (plugin: Plugin) => {
   _plugins.push(plugin);
 };
 
-export const config = ({ mutagens }: Config) => {
+/**
+ *
+ * @param {Config} param0 自定义配置
+ */
+export const config = ({ mutagens, brightness }: Config) => {
+  // 由于key和value都有可能是不同语言传进来的
+  // 所以需要将key和value转化为对应的i18n key
   if (mutagens) {
-    // 由于key和value都有可能是不同语言传进来的
-    // 所以需要将key和value转化为对应的i18n key
     const result = {} as Record<keyof typeof heavenlyStems, string[]>;
 
     for (const key in mutagens) {
@@ -56,9 +62,19 @@ export const config = ({ mutagens }: Config) => {
 
     Object.assign(_mutagens, result);
   }
+
+  if (brightness) {
+    const result = {} as Record<StarKey, string[]>;
+
+    for (const key in brightness) {
+      result[kot<StarKey>(key)] = brightness[key as StarName]?.map((item) => kot<BrightnessKey>(item)) ?? [];
+    }
+
+    Object.assign(_brightness, result);
+  }
 };
 
-export const getConfig = () => ({ mutagens: _mutagens });
+export const getConfig = () => ({ mutagens: _mutagens, brightness: _brightness });
 
 /**
  * 通过阳历获取星盘信息

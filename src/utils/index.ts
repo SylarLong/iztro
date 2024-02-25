@@ -72,8 +72,14 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranch
  */
 export const getBrightness = (starName: StarName, index: number): Brightness => {
   const star = kot<keyof typeof STARS_INFO>(starName);
+  const { brightness } = getConfig();
+  const targetBrightness = brightness[star] ? brightness[star] : STARS_INFO[star]?.brightness;
 
-  return t<Brightness>(STARS_INFO[star]?.brightness[fixIndex(index)]);
+  if (!targetBrightness) {
+    return '';
+  }
+
+  return t<Brightness>(targetBrightness[fixIndex(index)]);
 };
 
 export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
