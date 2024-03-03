@@ -40,7 +40,7 @@ import{_ as F,K as t,o as r,c as D,O as n,w as p,k as s,a,X as o}from"./chunks/f
 <span class="line"><span style="color:#F07178;">      isBodyPalace</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#FF9CAC;">false</span><span style="color:#89DDFF;">,</span></span>
 <span class="line"><span style="color:#89DDFF;">      </span><span style="color:#676E95;font-style:italic;">// 是否來因宮</span></span>
 <span class="line"><span style="color:#F07178;">      isOriginalPalace</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#FF9CAC;">false</span><span style="color:#89DDFF;">,</span></span>
-<span class="line"><span style="color:#89DDFF;">      </span><span style="color:#676E95;font-style:italic;">// 宮位天幹</span></span>
+<span class="line"><span style="color:#89DDFF;">      </span><span style="color:#676E95;font-style:italic;">// 宮位天干</span></span>
 <span class="line"><span style="color:#F07178;">      heavenlyStem</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#89DDFF;">&#39;</span><span style="color:#C3E88D;">戊</span><span style="color:#89DDFF;">&#39;</span><span style="color:#89DDFF;">,</span></span>
 <span class="line"><span style="color:#89DDFF;">      </span><span style="color:#676E95;font-style:italic;">// 宮位地支</span></span>
 <span class="line"><span style="color:#F07178;">      earthlyBranch</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> </span><span style="color:#89DDFF;">&#39;</span><span style="color:#C3E88D;">寅</span><span style="color:#89DDFF;">&#39;</span><span style="color:#89DDFF;">,</span></span>
