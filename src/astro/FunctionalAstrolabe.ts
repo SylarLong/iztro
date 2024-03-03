@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeDateStr, solar2lunar } from 'lunar-lite';
 import { EARTHLY_BRANCHES } from '../data';
-import { Astrolabe, Horoscope } from '../data/types';
+import { Astrolabe, Horoscope, Plugin } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName, t } from '../i18n';
 import { getHoroscopeStar, getYearly12 } from '../star';
 import { IFunctionalStar } from '../star/FunctionalStar';
@@ -193,6 +193,14 @@ const _getHoroscopeBySolarDate = (
  */
 export interface IFunctionalAstrolabe extends Astrolabe {
   /**
+   * 插件注入方法
+   *
+   * @version v2.3.0
+   *
+   * @param plugin 插件函数
+   */
+  use(plugin: Plugin): void;
+  /**
    * 获取运限数据
    *
    * @version v0.2.0
@@ -292,6 +300,9 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   fiveElementsClass;
   palaces;
 
+  // 保存插件列表
+  private plugins: Plugin[] = [];
+
   constructor(data: Astrolabe) {
     this.gender = data.gender;
     this.solarDate = data.solarDate;
@@ -310,6 +321,11 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.palaces = data.palaces;
 
     return this;
+  }
+
+  use(plugin: Plugin): void {
+    this.plugins.push(plugin);
+    plugin.apply(this);
   }
 
   star = (starName: StarName): IFunctionalStar => {

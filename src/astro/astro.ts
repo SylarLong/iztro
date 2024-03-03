@@ -1,12 +1,74 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
-import { Language } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, GenderName, HeavenlyStemKey, kot, setLanguage, t } from '../i18n';
+import { Config, Language, Plugin } from '../data/types';
+import {
+  BrightnessKey,
+  EarthlyBranchKey,
+  EarthlyBranchName,
+  GenderName,
+  HeavenlyStemKey,
+  StarKey,
+  kot,
+  setLanguage,
+  t,
+} from '../i18n';
 import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
 import { fixIndex, translateChineseDate } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
 import FunctionalPalace, { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
+
+const _plugins = [] as Plugin[];
+const _mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>> = {};
+const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
+
+/**
+ * 批量加载插件
+ *
+ * @version v2.3.0
+ *
+ * @param plugins 插件方法数组
+ */
+export const loadPlugins = (plugins: Plugin[]) => {
+  Array.prototype.push.apply(_plugins, plugins);
+};
+
+/**
+ * 加载单个插件
+ *
+ * @version v2.3.0
+ *
+ * @param plugin 插件方法
+ */
+export const loadPlugin = (plugin: Plugin) => {
+  _plugins.push(plugin);
+};
+
+/**
+ * 全局配置四化和亮度
+ *
+ * 由于key和value都有可能是不同语言传进来的，
+ * 所以需会将key和value转化为对应的i18n key。
+ *
+ * @version 2.3.0
+ *
+ * @param {Config} param0 自定义配置
+ */
+export const config = ({ mutagens, brightness }: Config) => {
+  if (mutagens) {
+    Object.entries(mutagens).forEach(([key, value]) => {
+      _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
+    });
+  }
+
+  if (brightness) {
+    Object.entries(brightness).forEach(([key, value]) => {
+      _brightness[kot<StarKey>(key)] = value.map((item) => kot<BrightnessKey>(item)) ?? [];
+    });
+  }
+};
+
+export const getConfig = () => ({ mutagens: _mutagens, brightness: _brightness });
 
 /**
  * 通过阳历获取星盘信息
@@ -40,13 +102,13 @@ export const astrolabeBySolarDate = (
  * @param language 输出语言
  * @returns 星盘信息
  */
-export const bySolar = (
+export function bySolar<T extends FunctionalAstrolabe>(
   solarDateStr: string,
   timeIndex: number,
   gender: GenderName,
   fixLeap: boolean = true,
   language?: Language,
-) => {
+): T {
   language && setLanguage(language);
 
   const palaces: IFunctionalPalace[] = [];
@@ -121,8 +183,10 @@ export const bySolar = (
     palaces,
   });
 
-  return result;
-};
+  _plugins.map((plugin) => result.use(plugin));
+
+  return result as T;
+}
 
 /**
  * 通过农历获取星盘信息
