@@ -48,7 +48,7 @@ const _getHoroscopeBySolarDate = (
     (_date.lunarYear === _birthday.lunarYear &&
       _date.lunarMonth === _birthday.lunarMonth &&
       _date.lunarDay > _birthday.lunarDay) ||
-    (_date.lunarYear === _birthday.lunarYear && _date.lunarMonth > _birthday.lunarMonth)
+    _date.lunarMonth > _birthday.lunarMonth
   ) {
     nominalAge += 1;
   }
