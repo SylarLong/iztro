@@ -1,6 +1,6 @@
 export default {
-  sihuaLu: 'additional',
-  sihuaQuan: 'forceful',
-  sihuaKe: 'easygoing',
-  sihuaJi: 'focused',
+  sihuaLu: 'A',
+  sihuaQuan: 'B',
+  sihuaKe: 'C',
+  sihuaJi: 'D',
 } as const;

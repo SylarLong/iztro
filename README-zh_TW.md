@@ -88,6 +88,11 @@
 
     astrolabe.star('紫微').surroundedPalaces().haveMutagen('忌');
     ```
+
+  - 配置和插件
+
+     紫微鬥數流派眾多，不同的流派的四化以及星耀亮度都會有些許差異，為了滿足不同流派的需求和功能的擴展，iztro在 v2.3.0 版本加入了全局配置和第三方插件功能。 詳見[配置文檔](https://ziwei.pro/zh_TW/posts/config-n-plugin.html)
+
 > [!IMPORTANT]
 > 如果你在開發中遇到任何問題，可以添加作者微信咨詢  
 > 你也可以任意魔改代碼，或聯系作者獲取技術支持  

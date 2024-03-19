@@ -80,6 +80,10 @@ It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
     astrolabe.star('emperor').surroundedPalaces().haveMutagen('focused');
     ```
 
+  - Configuration and plugins
+
+     There are many Ziwei Dou Shu genres, and the mutagens and star brightness of different genres will be slightly different. In order to meet the needs of different genres and function expansion, iztro has added global configuration and third-party plug-in functions in version v2.3.0. For details, see [Configuration Document](https://ziwei.pro/posts/config-n-plugin.html)
+
 ### Quick link
 
 - [Document](https://docs.iztro.com)

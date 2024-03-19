@@ -156,6 +156,8 @@ export type Astrolabe = {
   fiveElementsClass: FiveElementsClassName;
   /** 十二宫数据 */
   palaces: IFunctionalPalace[];
+  /** 版权 */
+  copyright: string;
 };
 
 /**

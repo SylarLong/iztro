@@ -300,6 +300,7 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   body;
   fiveElementsClass;
   palaces;
+  copyright;
 
   // 保存插件列表
   private plugins: Plugin[] = [];
@@ -320,6 +321,7 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.body = data.body;
     this.fiveElementsClass = data.fiveElementsClass;
     this.palaces = data.palaces;
+    this.copyright = data.copyright;
 
     return this;
   }

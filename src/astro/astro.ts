@@ -181,6 +181,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
     body: t(earthlyBranches[earthlyBranchOfYear].body),
     fiveElementsClass: getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul),
     palaces,
+    copyright: `copyright © 2023-${new Date().getFullYear()} iztro (https://github.com/SylarLong/iztro)`,
   });
 
   _plugins.map((plugin) => result.use(plugin));
