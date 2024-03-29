@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: If you found any bugs. Please use this template to create an issue.
-title: "{version}:{function}-"
+title: "[version]:"
 labels: 漏洞｜bug
 assignees: SylarLong
 
@@ -14,10 +14,6 @@ assignees: SylarLong
 ### 版本（Version）
 
 - {version number}
-
-### 环境（Environment）
-
-<!-- describe your development environment here. like the node version, tech stack -->
 
 ### 重现（Reproduce）
 
