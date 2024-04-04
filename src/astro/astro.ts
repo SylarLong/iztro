@@ -23,6 +23,16 @@ const _mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>> = {};
 const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
 
 /**
+ * 年分界点参数，默认为立春分界。
+ *
+ * @version v2.4.0
+ *
+ * normal：正月初一分界
+ * exact：立春分界
+ */
+let _yearDivide: 'normal' | 'exact' = 'exact';
+
+/**
  * 批量加载插件
  *
  * @version v2.3.0
@@ -54,7 +64,7 @@ export const loadPlugin = (plugin: Plugin) => {
  *
  * @param {Config} param0 自定义配置
  */
-export const config = ({ mutagens, brightness }: Config) => {
+export const config = ({ mutagens, brightness, yearDivide }: Config) => {
   if (mutagens) {
     Object.entries(mutagens).forEach(([key, value]) => {
       _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
@@ -66,9 +76,17 @@ export const config = ({ mutagens, brightness }: Config) => {
       _brightness[kot<StarKey>(key)] = value.map((item) => kot<BrightnessKey>(item)) ?? [];
     });
   }
+
+  if (yearDivide) {
+    _yearDivide = yearDivide;
+  }
 };
 
-export const getConfig = () => ({ mutagens: _mutagens, brightness: _brightness });
+export const getConfig = () => ({
+  mutagens: _mutagens,
+  brightness: _brightness,
+  yearDivide: _yearDivide,
+});
 
 /**
  * 通过阳历获取星盘信息
@@ -112,7 +130,9 @@ export function bySolar<T extends FunctionalAstrolabe>(
   language && setLanguage(language);
 
   const palaces: IFunctionalPalace[] = [];
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+    year: getConfig().yearDivide,
+  });
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
@@ -162,7 +182,9 @@ export function bySolar<T extends FunctionalAstrolabe>(
   const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
   const earthlyBranchOfBodyPalace = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]);
 
-  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+    year: getConfig().yearDivide,
+  });
   const lunarDate = solar2lunar(solarDateStr);
 
   const result = new FunctionalAstrolabe({
@@ -249,7 +271,9 @@ export const byLunar = (
 export const getZodiacBySolarDate = (solarDateStr: string, language?: Language): string => {
   language && setLanguage(language);
 
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0, {
+    year: getConfig().yearDivide,
+  });
 
   return t(kot(getZodiac(yearly[1])));
 };

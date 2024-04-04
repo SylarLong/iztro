@@ -11,6 +11,7 @@ import {
   getLuYangTuoMaIndex,
   getZuoYouIndex,
 } from './location';
+import { getConfig } from '../astro';
 
 /**
  * 安14辅星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -22,7 +23,9 @@ import {
  */
 export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const stars = initStars();
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+    year: getConfig().yearDivide,
+  });
   const monthIndex = fixLunarMonthIndex(solarDateStr, timeIndex, fixLeap);
 
   // 此处获取到的是索引，下标是从0开始的，所以需要加1

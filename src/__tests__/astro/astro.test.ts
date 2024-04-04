@@ -9,7 +9,10 @@ import { setLanguage } from '../../i18n';
 import { astro } from '../../index';
 
 describe('Astrolabe', () => {
-  afterEach(() => setLanguage('zh-CN'));
+  afterEach(() => {
+    setLanguage('zh-CN');
+    astro.config({ yearDivide: 'exact' });
+  });
 
   test('bySolar()', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true);
@@ -586,6 +589,40 @@ describe('Astrolabe', () => {
     expect(result.palaces).toHaveLength(12);
     expect(result.palaces[0].decadal).toStrictEqual({ range: [43, 52], heavenlyStem: '戊', earthlyBranch: '寅' });
     expect(result.palaces[11].decadal).toStrictEqual({ range: [53, 62], heavenlyStem: '己', earthlyBranch: '丑' });
+  });
+
+  test('byLunar() with `exact` year divider', () => {
+    astro.config({ yearDivide: 'exact' });
+
+    const result = astro.byLunar('1999-12-29', 2, '女', true, true);
+
+    expect(result).toHaveProperty('solarDate', '2000-2-4');
+    expect(result).toHaveProperty('lunarDate', '一九九九年腊月廿九');
+    expect(result).toHaveProperty('chineseDate', '庚辰 丁丑 壬辰 壬寅');
+    expect(result).toHaveProperty('time', '寅时');
+    expect(result).toHaveProperty('zodiac', '龙');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '卯');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '文昌');
+    expect(result).toHaveProperty('fiveElementsClass', '土五局');
+  });
+
+  test('byLunar() with `normal` year divider', () => {
+    astro.config({ yearDivide: 'normal' });
+
+    const result = astro.byLunar('1999-12-29', 2, '女', true, true);
+
+    expect(result).toHaveProperty('solarDate', '2000-2-4');
+    expect(result).toHaveProperty('lunarDate', '一九九九年腊月廿九');
+    expect(result).toHaveProperty('chineseDate', '己卯 丁丑 壬辰 壬寅');
+    expect(result).toHaveProperty('time', '寅时');
+    expect(result).toHaveProperty('zodiac', '兔');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '卯');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '火六局');
   });
 
   test('bySolar() fix leap month', () => {

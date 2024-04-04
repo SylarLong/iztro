@@ -9,6 +9,7 @@ import {
   getTimelyStarIndex,
   getYearlyStarIndex,
 } from './location';
+import { getConfig } from '../astro';
 
 /**
  * 安杂耀
@@ -20,7 +21,9 @@ import {
  */
 export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const stars = initStars();
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+    year: getConfig().yearDivide,
+  });
 
   const yearlyIndex = getYearlyStarIndex(solarDateStr, timeIndex, fixLeap);
   const monthlyIndex = getMonthlyStarIndex(solarDateStr, timeIndex, fixLeap);

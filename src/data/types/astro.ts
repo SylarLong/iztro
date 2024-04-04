@@ -171,4 +171,5 @@ export type ConfigBrightness = Partial<Record<StarName, Brightness[]>>;
 export type Config = {
   mutagens?: ConfigMutagens;
   brightness?: ConfigBrightness;
+  yearDivide?: 'normal' | 'exact';
 };

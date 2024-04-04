@@ -560,7 +560,10 @@ export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  */
 export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap?: boolean) => {
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
+    // 流耀应该用立春为界
+    year: 'exact',
+  });
   const { soulIndex, bodyIndex } = getSoulAndBody(solarDate, timeIndex, fixLeap);
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
