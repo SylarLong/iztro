@@ -35,6 +35,10 @@ const _getHoroscopeBySolarDate = (
   const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
     targetDate,
     timeIndex || convertTimeIndex,
+    {
+      // 运限是以立春为界
+      year: 'exact',
+    },
   );
   // 虚岁
   let nominalAge = _date.lunarYear - _birthday.lunarYear;

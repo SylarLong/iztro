@@ -4,6 +4,7 @@ import { t } from '../i18n';
 import { fixIndex, getBrightness, getMutagen } from '../utils';
 import FunctionalStar from './FunctionalStar';
 import { getStartIndex } from './location';
+import { getConfig } from '../astro';
 
 /**
  * 安主星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -23,7 +24,9 @@ import { getStartIndex } from './location';
  */
 export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
   const { ziweiIndex, tianfuIndex } = getStartIndex(solarDateStr, timeIndex, fixLeap);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+    year: getConfig().yearDivide,
+  });
   const stars = initStars();
   const ziweiGroup = [
     'ziweiMaj',

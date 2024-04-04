@@ -23,6 +23,7 @@ import {
   GenderKey,
 } from '../i18n';
 import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
+import { getConfig } from './astro';
 
 /**
  * 获取命宫以及身宫数据
@@ -42,7 +43,9 @@ import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
  * @returns SoulAndBody
  */
 export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
-  const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex);
+  const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
+    year: getConfig().yearDivide,
+  });
   const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
 
@@ -180,7 +183,10 @@ export const getHoroscope = (
 ): { decadals: Decadal[]; ages: number[][] } => {
   const decadals: Decadal[] = [];
   const genderKey = kot<GenderKey>(gender);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+    // 运限是以立春为界
+    year: 'exact',
+  });
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);

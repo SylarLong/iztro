@@ -3870,10 +3870,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-lunar-lite@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npmjs.org/lunar-lite/-/lunar-lite-0.1.2.tgz#a66b08cbc6c8df3a31d4e166052593662f489144"
-  integrity sha512-3SKo8zTDdbS1Ynn4qHUPNOW9oviqL8d2qdHSMS9jfNbmIdh6DbYKaY9dnXpMS5I1dzG9ztAuwVJ8MBAupv89aA==
+lunar-lite@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/lunar-lite/-/lunar-lite-0.2.0.tgz#12214860bb753b0840aaf553ae3754b4c4998af1"
+  integrity sha512-Dskql5YCpd6xjtXj3Rl61A1qxT0zaPdold/tM/n6m0r7bfZ6FfEFom7zzKPJMuD0XUNji5C/ItuaMR+LAjqAVQ==
   dependencies:
     lunar-typescript "^1.7.3"
 
