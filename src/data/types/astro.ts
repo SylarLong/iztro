@@ -3,12 +3,14 @@ import {
   Brightness,
   EarthlyBranchName,
   FiveElementsClassName,
+  GenderName,
   HeavenlyStemName,
   PalaceName,
   StarName,
 } from '../../i18n';
 import FunctionalStar from '../../star/FunctionalStar';
 import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from 'lunar-lite/lib/types';
+import { Language } from './general';
 
 /**
  * 运限对象
@@ -172,4 +174,15 @@ export type Config = {
   mutagens?: ConfigMutagens;
   brightness?: ConfigBrightness;
   yearDivide?: 'normal' | 'exact';
+};
+ 
+export type Option = {
+  type: 'solar' | 'lunar';
+  dateStr: string;
+  timeIndex: number;
+  gender: GenderName;
+  isLeapMonth?: boolean;
+  fixLeap?: boolean;
+  language?: Language;
+  config?: Config;
 };

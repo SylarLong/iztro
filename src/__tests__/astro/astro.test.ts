@@ -625,6 +625,58 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('fiveElementsClass', '火六局');
   });
 
+  test('withOptions()', () => {
+    const result = astro.withOptions({
+      type: 'lunar',
+      dateStr: '1999-12-29',
+      timeIndex: 2,
+      gender: 'female',
+      isLeapMonth: false,
+      fixLeap: true,
+      language: 'zh-CN',
+      config: {
+        yearDivide: 'normal',
+      },
+    });
+
+    expect(result).toHaveProperty('solarDate', '2000-2-4');
+    expect(result).toHaveProperty('lunarDate', '一九九九年腊月廿九');
+    expect(result).toHaveProperty('chineseDate', '己卯 丁丑 壬辰 壬寅');
+    expect(result).toHaveProperty('time', '寅时');
+    expect(result).toHaveProperty('zodiac', '兔');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '卯');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '火六局');
+  });
+
+  test('withOptions() 2', () => {
+    const result = astro.withOptions({
+      type: 'lunar',
+      dateStr: '1999-12-29',
+      timeIndex: 2,
+      gender: 'female',
+      isLeapMonth: false,
+      fixLeap: true,
+      language: 'zh-CN',
+      config: {
+        yearDivide: 'exact',
+      },
+    });
+
+    expect(result).toHaveProperty('solarDate', '2000-2-4');
+    expect(result).toHaveProperty('lunarDate', '一九九九年腊月廿九');
+    expect(result).toHaveProperty('chineseDate', '庚辰 丁丑 壬辰 壬寅');
+    expect(result).toHaveProperty('time', '寅时');
+    expect(result).toHaveProperty('zodiac', '龙');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '卯');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '文昌');
+    expect(result).toHaveProperty('fiveElementsClass', '土五局');
+  });
+
   test('bySolar() fix leap month', () => {
     const result = astro.bySolar('2023-4-10', 4, '女', true);
 

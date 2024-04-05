@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
-import { Config, Language, Plugin } from '../data/types';
+import { Config, Language, Option, Plugin } from '../data/types';
 import {
   BrightnessKey,
   EarthlyBranchKey,
@@ -257,6 +257,33 @@ export const byLunar = (
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
   return bySolar(solarDate.toString(), timeIndex, gender, fixLeap, language);
+};
+
+/**
+ * 获取排盘信息。
+ *
+ * @param param0 排盘参数
+ * @returns 星盘信息
+ */
+export const withOptions = ({
+  type = 'solar',
+  dateStr,
+  timeIndex,
+  gender,
+  isLeapMonth,
+  fixLeap,
+  language,
+  config: cfg,
+}: Option) => {
+  if (cfg) {
+    config(cfg);
+  }
+
+  if (type === 'solar') {
+    return bySolar(dateStr, timeIndex, gender, fixLeap, language);
+  }
+
+  return byLunar(dateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
 };
 
 /**
