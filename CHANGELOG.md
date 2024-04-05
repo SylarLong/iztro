@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.4.1
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 增加 `withOptions` 方法
+
+  🇺🇸
+
+  - add `withOptions` function
+
 ## v2.4.0
 
 - ✨ 改进（enhancement）
