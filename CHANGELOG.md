@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.4.2
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 更新起大限的规则，使它与全局配置同步
+
+  🇺🇸
+
+  - upgrade `decadal` setup rule to make it consistent with configuration.
+
 ## v2.4.1
 
 - ✨ 改进（enhancement）

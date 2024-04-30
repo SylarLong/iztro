@@ -625,6 +625,29 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('fiveElementsClass', '火六局');
   });
 
+  test('bySolar() with `normal` year divider', () => {
+    astro.config({ yearDivide: 'normal' });
+
+    const result = astro.bySolar('1980-2-14', 0, 'male', true);
+
+    expect(result).toHaveProperty('solarDate', '1980-2-14');
+    expect(result).toHaveProperty('lunarDate', '一九七九年腊月廿八');
+    expect(result).toHaveProperty('chineseDate', '己未 戊寅 丁巳 庚子');
+    expect(result).toHaveProperty('time', '早子时');
+    expect(result).toHaveProperty('zodiac', '羊');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '丑');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '丑');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天相');
+    expect(result).toHaveProperty('fiveElementsClass', '水二局');
+
+    expect(result.palaces[0].decadal).toHaveProperty('range', [112, 121]);
+    const horoscope = result.horoscope('1980-2-14');
+
+    expect(horoscope.yearly).toHaveProperty('earthlyBranch', '申');
+    expect(horoscope.yearly).toHaveProperty('heavenlyStem', '庚');
+  });
+
   test('withOptions()', () => {
     const result = astro.withOptions({
       type: 'lunar',

@@ -184,8 +184,8 @@ export const getHoroscope = (
   const decadals: Decadal[] = [];
   const genderKey = kot<GenderKey>(gender);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
-    // 运限是以立春为界
-    year: 'exact',
+    // 起大限应该与配置同步
+    year: getConfig().yearDivide,
   });
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
