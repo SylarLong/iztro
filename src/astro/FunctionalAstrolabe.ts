@@ -11,6 +11,7 @@ import { IFunctionalPalace } from './FunctionalPalace';
 import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { getPalaceNames } from './palace';
 import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope';
+import { getConfig } from './astro';
 
 /**
  * 获取运限数据
@@ -36,8 +37,8 @@ const _getHoroscopeBySolarDate = (
     targetDate,
     timeIndex || convertTimeIndex,
     {
-      // 运限是以立春为界
-      year: 'exact',
+      // 运限是以立春为界，但为了满足部分流派允许配置
+      year: getConfig().horoscopeDivide,
     },
   );
   // 虚岁
