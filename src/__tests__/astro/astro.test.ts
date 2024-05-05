@@ -648,6 +648,20 @@ describe('Astrolabe', () => {
     expect(horoscope.yearly).toHaveProperty('heavenlyStem', '庚');
   });
 
+  test('check special date `1995-3-30`', () => {
+    astro.config({ yearDivide: 'normal' });
+
+    const result = astro.bySolar('1995-03-30', 0, 'male', true);
+
+    expect(result).toHaveProperty('solarDate', '1995-03-30');
+    expect(result).toHaveProperty('lunarDate', '一九九五年二月三十');
+
+    const result2 = astro.byLunar('1995-2-30', 0, 'male', true);
+
+    expect(result2).toHaveProperty('solarDate', '1995-3-30');
+    expect(result2).toHaveProperty('lunarDate', '一九九五年二月三十');
+  });
+
   test('withOptions()', () => {
     const result = astro.withOptions({
       type: 'lunar',
@@ -698,6 +712,55 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('soul', '巨门');
     expect(result).toHaveProperty('body', '文昌');
     expect(result).toHaveProperty('fiveElementsClass', '土五局');
+  });
+
+  test('withOptions() 3', () => {
+    const result = astro.withOptions({
+      type: 'lunar',
+      dateStr: '1979-12-28',
+      timeIndex: 0,
+      gender: 'female',
+      isLeapMonth: false,
+      fixLeap: true,
+      language: 'zh-CN',
+      config: {
+        yearDivide: 'normal',
+        horoscopeDivide: 'normal',
+      },
+    });
+
+    expect(result).toHaveProperty('solarDate', '1980-2-14');
+    expect(result).toHaveProperty('lunarDate', '一九七九年腊月廿八');
+    expect(result).toHaveProperty('chineseDate', '己未 戊寅 丁巳 庚子');
+    expect(result).toHaveProperty('time', '早子时');
+    expect(result).toHaveProperty('zodiac', '羊');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '丑');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '丑');
+    expect(result).toHaveProperty('soul', '巨门');
+    expect(result).toHaveProperty('body', '天相');
+    expect(result).toHaveProperty('fiveElementsClass', '水二局');
+
+    const horoscope = result.horoscope('1980-2-14');
+
+    expect(horoscope.yearly.earthlyBranch).toBe('未');
+
+    const result2 = astro.withOptions({
+      type: 'lunar',
+      dateStr: '1979-12-28',
+      timeIndex: 0,
+      gender: 'female',
+      isLeapMonth: false,
+      fixLeap: true,
+      language: 'zh-CN',
+      config: {
+        yearDivide: 'normal',
+        horoscopeDivide: 'exact',
+      },
+    });
+
+    const horoscope2 = result2.horoscope('1980-2-14');
+
+    expect(horoscope2.yearly.earthlyBranch).toBe('申');
   });
 
   test('bySolar() fix leap month', () => {

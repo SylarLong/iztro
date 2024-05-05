@@ -211,8 +211,8 @@ export const getYearly12 = (solarDateStr: string | Date): { suiqian12: StarName[
   const jiangqian12: StarName[] = [];
   const suiqian12: StarName[] = [];
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0, {
-    // 流年神煞应该用立春为界
-    year: 'exact',
+    // 流年神煞应该用立春为界，但为了满足不同流派的需求允许配置
+    year: getConfig().horoscopeDivide,
   });
 
   const ts12shen: StarKey[] = [

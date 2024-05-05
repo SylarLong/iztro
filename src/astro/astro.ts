@@ -31,6 +31,7 @@ const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
  * exact：立春分界
  */
 let _yearDivide: 'normal' | 'exact' = 'exact';
+let _horoscopeDivide: 'normal' | 'exact' = 'exact';
 
 /**
  * 批量加载插件
@@ -64,7 +65,7 @@ export const loadPlugin = (plugin: Plugin) => {
  *
  * @param {Config} param0 自定义配置
  */
-export const config = ({ mutagens, brightness, yearDivide }: Config) => {
+export const config = ({ mutagens, brightness, yearDivide, horoscopeDivide }: Config) => {
   if (mutagens) {
     Object.entries(mutagens).forEach(([key, value]) => {
       _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
@@ -80,12 +81,17 @@ export const config = ({ mutagens, brightness, yearDivide }: Config) => {
   if (yearDivide) {
     _yearDivide = yearDivide;
   }
+
+  if (horoscopeDivide) {
+    _horoscopeDivide = horoscopeDivide;
+  }
 };
 
 export const getConfig = () => ({
   mutagens: _mutagens,
   brightness: _brightness,
   yearDivide: _yearDivide,
+  horoscopeDivide: _horoscopeDivide,
 });
 
 /**

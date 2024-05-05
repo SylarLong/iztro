@@ -174,8 +174,9 @@ export type Config = {
   mutagens?: ConfigMutagens;
   brightness?: ConfigBrightness;
   yearDivide?: 'normal' | 'exact';
+  horoscopeDivide?: 'normal' | 'exact';
 };
- 
+
 export type Option = {
   type: 'solar' | 'lunar';
   dateStr: string;

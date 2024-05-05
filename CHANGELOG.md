@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.4.3
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 新增运限分界点参数以满足不同需求 #190
+
+  🇺🇸
+
+  - Wrong results using the parameter yearDivide to 'normal'. #190
+  
 ## v2.4.2
 
 - 🛠️ 修复（fix）

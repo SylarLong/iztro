@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getTotalDaysOfLunarMonth, solar2lunar } from 'lunar-lite';
-import { getFiveElementsClass, getSoulAndBody } from '../astro';
+import { getConfig, getFiveElementsClass, getSoulAndBody } from '../astro';
 import { EARTHLY_BRANCHES, FiveElementsClass, HEAVENLY_STEMS, PALACES } from '../data';
 import {
   EarthlyBranchKey,
@@ -561,8 +561,8 @@ export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
  */
 export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap?: boolean) => {
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
-    // 流耀应该用立春为界
-    year: 'exact',
+    // 流耀应该用立春为界，但为了满足不同流派的需求允许配置
+    year: getConfig().horoscopeDivide,
   });
   const { soulIndex, bodyIndex } = getSoulAndBody(solarDate, timeIndex, fixLeap);
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
