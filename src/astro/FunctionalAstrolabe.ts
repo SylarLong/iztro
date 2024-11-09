@@ -170,6 +170,7 @@ const _getHoroscopeBySolarDate = (
       earthlyBranch: t(kot(monthly[1], 'Earthly')),
       palaceNames: getPalaceNames(monthlyIndex),
       mutagen: getMutagensByHeavenlyStem(monthly[0]),
+      stars: getHoroscopeStar(monthly[0], monthly[1], 'monthly'),
     },
     daily: {
       index: dailyIndex,
@@ -178,6 +179,7 @@ const _getHoroscopeBySolarDate = (
       earthlyBranch: t(kot(daily[1], 'Earthly')),
       palaceNames: getPalaceNames(dailyIndex),
       mutagen: getMutagensByHeavenlyStem(daily[0]),
+      stars: getHoroscopeStar(daily[0], daily[1], 'daily'),
     },
     hourly: {
       index: hourlyIndex,
@@ -186,6 +188,7 @@ const _getHoroscopeBySolarDate = (
       earthlyBranch: t(kot(hourly[1], 'Earthly')),
       palaceNames: getPalaceNames(hourlyIndex),
       mutagen: getMutagensByHeavenlyStem(hourly[0]),
+      stars: getHoroscopeStar(hourly[0], hourly[1], 'hourly'),
     },
   };
 
