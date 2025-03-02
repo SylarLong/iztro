@@ -55,8 +55,8 @@ describe('Astrolabe', () => {
       '子女',
     ]);
     expect(horoscope.decadal).toHaveProperty('mutagen', ['太阳', '武曲', '太阴', '天同']);
-    expect(horoscope.age).toHaveProperty('index', 10);
-    expect(horoscope.age).toHaveProperty('nominalAge', 23);
+    expect(horoscope.age).toHaveProperty('index', 9);
+    expect(horoscope.age).toHaveProperty('nominalAge', 24);
     expect(horoscope.yearly).toHaveProperty('index', 1);
     expect(horoscope.yearly).toHaveProperty('heavenlyStem', '癸');
     expect(horoscope.yearly).toHaveProperty('earthlyBranch', '卯');
@@ -158,9 +158,9 @@ describe('Astrolabe', () => {
 
     const agePalace = horoscope.agePalace();
 
-    expect(agePalace).toHaveProperty('name', '迁移');
-    expect(agePalace).toHaveProperty('heavenlyStem', '戊');
-    expect(agePalace).toHaveProperty('earthlyBranch', '子');
+    expect(agePalace).toHaveProperty('name', '仆役');
+    expect(agePalace).toHaveProperty('heavenlyStem', '丁');
+    expect(agePalace).toHaveProperty('earthlyBranch', '亥');
 
     const originalPalace = horoscope.palace('命宫', 'origin');
 
@@ -300,8 +300,8 @@ describe('Astrolabe', () => {
       '자녀',
     ]);
     expect(horoscope.decadal).toHaveProperty('mutagen', ['태양', '무곡', '태음', '천동']);
-    expect(horoscope.age).toHaveProperty('index', 10);
-    expect(horoscope.age).toHaveProperty('nominalAge', 23);
+    expect(horoscope.age).toHaveProperty('index', 9);
+    expect(horoscope.age).toHaveProperty('nominalAge', 24);
     expect(horoscope.yearly).toHaveProperty('index', 1);
     expect(horoscope.yearly).toHaveProperty('heavenlyStem', '계');
     expect(horoscope.yearly).toHaveProperty('earthlyBranch', '묘');
@@ -466,8 +466,8 @@ describe('Astrolabe', () => {
       'Tử Nữ',
     ]);
     expect(horoscope.decadal).toHaveProperty('mutagen', ['Thái Dương', 'Vũ Khúc', 'Thái Âm', 'Thiên Đồng']);
-    expect(horoscope.age).toHaveProperty('index', 10);
-    expect(horoscope.age).toHaveProperty('nominalAge', 23);
+    expect(horoscope.age).toHaveProperty('index', 9);
+    expect(horoscope.age).toHaveProperty('nominalAge', 24);
     expect(horoscope.yearly).toHaveProperty('index', 1);
     expect(horoscope.yearly).toHaveProperty('heavenlyStem', 'Quý');
     expect(horoscope.yearly).toHaveProperty('earthlyBranch', 'Mão');
@@ -877,5 +877,39 @@ describe('Astrolabe', () => {
 
     expect(horo3.decadal.name).toEqual('童限');
     expect(horo3.decadal.index).toEqual(astrolabe.palace('疾厄')?.index);
+  });
+
+  test('nominalAge: nomal', () => {
+    const astrolabe = astro.withOptions({
+      type: 'solar',
+      dateStr: '2000-8-16',
+      timeIndex: 2,
+      gender: 'female',
+      config: {
+        ageDivide: 'normal',
+      },
+    });
+
+    const horo1 = astrolabe.horoscope('2023-8-19 3:12');
+
+    expect(horo1.age.index).toEqual(9);
+    expect(horo1.age.nominalAge).toEqual(24);
+  });
+
+  test('nominalAge: birthday', () => {
+    const astrolabe = astro.withOptions({
+      type: 'solar',
+      dateStr: '2000-8-16',
+      timeIndex: 2,
+      gender: 'female',
+      config: {
+        ageDivide: 'birthday',
+      },
+    });
+
+    const horo1 = astrolabe.horoscope('2023-8-19 3:12');
+
+    expect(horo1.age.index).toEqual(10);
+    expect(horo1.age.nominalAge).toEqual(23);
   });
 });

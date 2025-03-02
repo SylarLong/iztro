@@ -46,15 +46,20 @@ const _getHoroscopeBySolarDate = (
   // 是否童限
   let isChildhood = false;
 
-  // 假如目标日期已经过了生日，则需要加1岁
-  // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
-  // 但在 2023年九月初二 以后，虚岁则为 2 岁
-  if (
-    (_date.lunarYear === _birthday.lunarYear &&
-      _date.lunarMonth === _birthday.lunarMonth &&
-      _date.lunarDay > _birthday.lunarDay) ||
-    _date.lunarMonth > _birthday.lunarMonth
-  ) {
+  if (getConfig().ageDivide === 'birthday') {
+    // 假如目标日期已经过了生日，则需要加1岁
+    // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
+    // 但在 2023年九月初二 以后，虚岁则为 2 岁
+    if (
+      (_date.lunarYear === _birthday.lunarYear &&
+        _date.lunarMonth === _birthday.lunarMonth &&
+        _date.lunarDay > _birthday.lunarDay) ||
+      _date.lunarMonth > _birthday.lunarMonth
+    ) {
+      nominalAge += 1;
+    }
+  } else {
+    // 以自然年为界，直接加1岁
     nominalAge += 1;
   }
 

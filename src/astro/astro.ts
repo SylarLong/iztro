@@ -34,6 +34,15 @@ let _yearDivide: 'normal' | 'exact' = 'exact';
 let _horoscopeDivide: 'normal' | 'exact' = 'exact';
 
 /**
+ * 小限分割点，默认为生日。
+ *
+ * @version v2.4.5
+ *
+ * normal: 只考虑年份，不考虑
+ */
+let _ageDivide: 'normal' | 'birthday' = 'normal';
+
+/**
  * 批量加载插件
  *
  * @version v2.3.0
@@ -65,7 +74,7 @@ export const loadPlugin = (plugin: Plugin) => {
  *
  * @param {Config} param0 自定义配置
  */
-export const config = ({ mutagens, brightness, yearDivide, horoscopeDivide }: Config) => {
+export const config = ({ mutagens, brightness, yearDivide, ageDivide, horoscopeDivide }: Config) => {
   if (mutagens) {
     Object.entries(mutagens).forEach(([key, value]) => {
       _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
@@ -85,12 +94,17 @@ export const config = ({ mutagens, brightness, yearDivide, horoscopeDivide }: Co
   if (horoscopeDivide) {
     _horoscopeDivide = horoscopeDivide;
   }
+
+  if (ageDivide) {
+    _ageDivide = ageDivide;
+  }
 };
 
 export const getConfig = () => ({
   mutagens: _mutagens,
   brightness: _brightness,
   yearDivide: _yearDivide,
+  ageDivide: _ageDivide,
   horoscopeDivide: _horoscopeDivide,
 });
 

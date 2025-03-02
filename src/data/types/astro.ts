@@ -171,10 +171,16 @@ export type ConfigMutagens = Partial<Record<HeavenlyStemName, StarName[]>>;
 export type ConfigBrightness = Partial<Record<StarName, Brightness[]>>;
 
 export type Config = {
+  /** 四化配置 */
   mutagens?: ConfigMutagens;
+  /** 星耀亮度配置 */
   brightness?: ConfigBrightness;
+  /** 年分割点配置，normal为正月初一分界，exact为立春分割 */
   yearDivide?: 'normal' | 'exact';
+  /** 运限分割点配置，normal为正月初一分界，exact为立春分割 */
   horoscopeDivide?: 'normal' | 'exact';
+  /** 小限分割点配置，normal为以自然年分界，birthday为生日分界 */
+  ageDivide?: 'normal' | 'birthday';
 };
 
 export type Option = {
