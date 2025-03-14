@@ -1,7 +1,7 @@
 {
   "name": "iztro",
   "version": "2.4.6",
-  "description": "轻量级紫微斗数星盘生成库。可以通过出生年月日获取到紫微斗数星盘信息、生肖、星座等信息。A lightweight kit to astrolabe generator of The Purple Star Astrology (Zi Wei Dou Shu). The Purple Star Astrology(Zi Wei Dou Shu) is a Chinese ancient astrology. You're able to get your horoscope and personality from the astrolabe",
+  "description": "轻量级紫微斗数星盘生成库。可以通过出生年月日获取到紫微斗数星盘信息、生肖、星座等信息。This is a lightweight kit for generating astrolabes for Zi Wei Dou Shu (The Purple Star Astrology), an ancient Chinese astrology. It allows you to obtain your horoscope and personality analysis.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "unpkg": "dist/iztro.min.js",
