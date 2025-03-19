@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.4.7
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 修复插件开发时编译器报错问题。
+
+  🇺🇸
+
+  - fix compiler error during plugin development.
+
 ## v2.4.6
 
 - 🛠️ 修复（fix）

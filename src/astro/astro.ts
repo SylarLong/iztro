@@ -120,15 +120,15 @@ export const getConfig = () => ({
  * @param language 输出语言
  * @returns 星盘信息
  */
-export const astrolabeBySolarDate = (
+export function astrolabeBySolarDate<T extends FunctionalAstrolabe>(
   solarDateStr: string,
   timeIndex: number,
   gender: GenderName,
   fixLeap: boolean = true,
   language?: Language,
-) => {
-  return bySolar(solarDateStr, timeIndex, gender, fixLeap, language);
-};
+): T {
+  return bySolar<T>(solarDateStr, timeIndex, gender, fixLeap, language);
+}
 
 /**
  * 通过阳历获取星盘信息
@@ -244,16 +244,16 @@ export function bySolar<T extends FunctionalAstrolabe>(
  * @param language 输出语言
  * @returns 星盘数据
  */
-export const astrolabeByLunarDate = (
+export function astrolabeByLunarDate<T extends FunctionalAstrolabe>(
   lunarDateStr: string,
   timeIndex: number,
   gender: GenderName,
   isLeapMonth: boolean = false,
   fixLeap: boolean = true,
   language?: Language,
-) => {
-  return byLunar(lunarDateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
-};
+): T {
+  return byLunar<T>(lunarDateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
+}
 
 /**
  * 通过农历获取星盘信息
@@ -266,18 +266,18 @@ export const astrolabeByLunarDate = (
  * @param language 输出语言
  * @returns 星盘数据
  */
-export const byLunar = (
+export function byLunar<T extends FunctionalAstrolabe>(
   lunarDateStr: string,
   timeIndex: number,
   gender: GenderName,
   isLeapMonth: boolean = false,
   fixLeap: boolean = true,
   language?: Language,
-) => {
+) {
   const solarDate = lunar2solar(lunarDateStr, isLeapMonth);
 
-  return bySolar(solarDate.toString(), timeIndex, gender, fixLeap, language);
-};
+  return bySolar<T>(solarDate.toString(), timeIndex, gender, fixLeap, language);
+}
 
 /**
  * 获取排盘信息。
@@ -285,7 +285,7 @@ export const byLunar = (
  * @param param0 排盘参数
  * @returns 星盘信息
  */
-export const withOptions = ({
+export function withOptions<T extends FunctionalAstrolabe>({
   type = 'solar',
   dateStr,
   timeIndex,
@@ -294,17 +294,17 @@ export const withOptions = ({
   fixLeap,
   language,
   config: cfg,
-}: Option) => {
+}: Option): T {
   if (cfg) {
     config(cfg);
   }
 
   if (type === 'solar') {
-    return bySolar(dateStr, timeIndex, gender, fixLeap, language);
+    return bySolar<T>(dateStr, timeIndex, gender, fixLeap, language);
   }
 
-  return byLunar(dateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
-};
+  return byLunar<T>(dateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
+}
 
 /**
  * 通过公历获取十二生肖

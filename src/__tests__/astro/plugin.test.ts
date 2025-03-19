@@ -45,11 +45,30 @@ astro.config({
 });
 
 describe('plugin test', () => {
-  test('plugin', () => {
+  test('plugin::bySolar', () => {
     const astrolabe = astro.bySolar<IAstrolabe>('2023-10-18', 4, 'female');
 
     expect(astrolabe.myNewFunc()).toEqual('火六局');
     expect(astrolabe.majorStar()).toEqual('七杀');
+  });
+
+  test('plugin::byLunar', () => {
+    const astrolabe = astro.byLunar<IAstrolabe>('2023-10-18', 4, 'female');
+
+    expect(astrolabe.myNewFunc()).toEqual('火六局');
+    expect(astrolabe.majorStar()).toEqual('太阳,太阴');
+  });
+
+  test('plugin::withOptions', () => {
+    const astrolabe = astro.withOptions<IAstrolabe>({
+      dateStr: '2023-10-18',
+      timeIndex: 4,
+      gender: 'female',
+      type: 'lunar',
+    });
+
+    expect(astrolabe.myNewFunc()).toEqual('火六局');
+    expect(astrolabe.majorStar()).toEqual('太阳,太阴');
   });
 
   test('changed configuration', () => {
