@@ -7,6 +7,28 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.4.9
+
+- ✨ 改进（enhancement）
+
+  🇨🇳
+
+  - 新增杂耀龙德星(中州派)。
+
+  🇺🇸
+
+  - add longde as an adjective star.
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 修复旬空位置错误。
+
+  🇺🇸
+
+  - fix location error for xunkong.
+
 ## v2.4.8
 
 - 🛠️ 修复（fix）

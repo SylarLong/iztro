@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
-import { initStars } from '.';
-import { t } from '../i18n';
+import { getYearly12, initStars } from '.';
+import { kot, t } from '../i18n';
 import FunctionalStar from './FunctionalStar';
 import {
   getDailyStarIndex,
@@ -30,6 +30,7 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   const dailyIndex = getDailyStarIndex(solarDateStr, timeIndex, fixLeap);
   const timelyIndex = getTimelyStarIndex(timeIndex);
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(yearly[1]);
+  const { suiqian12 } = getYearly12(solarDateStr);
 
   stars[hongluanIndex].push(new FunctionalStar({ name: t('hongluan'), type: 'flower', scope: 'origin' }));
   stars[tianxiIndex].push(new FunctionalStar({ name: t('tianxi'), type: 'flower', scope: 'origin' }));
@@ -79,6 +80,9 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   stars[yearlyIndex.tianshiIndex].push(new FunctionalStar({ name: t('tianshi'), type: 'adjective', scope: 'origin' }));
   stars[yearlyIndex.tianshangIndex].push(
     new FunctionalStar({ name: t('tianshang'), type: 'adjective', scope: 'origin' }),
+  );
+  stars[suiqian12.indexOf(t(kot('longde')))].push(
+    new FunctionalStar({ name: t('longde'), type: 'adjective', scope: 'origin' }),
   );
 
   return stars;

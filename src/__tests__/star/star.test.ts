@@ -216,7 +216,7 @@ describe('star/index', () => {
     }, 0);
 
     expect(stars).toHaveLength(12);
-    expect(total).toEqual(65);
+    expect(total).toEqual(66);
   });
 
   test('getchangsheng12()', () => {

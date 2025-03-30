@@ -35,6 +35,34 @@ describe('star/location', () => {
     expect(bazuoIndex).toBe(10);
   });
 
+  test('xunkong for yin year', () => {
+    const result = astro.withOptions({
+      type: 'solar',
+      dateStr: '1979-08-21',
+      timeIndex: 6,
+      gender: 'male',
+      language: 'zh-CN',
+    });
+
+    const xunkongIndex = result.star('旬空').palace()!.index;
+
+    expect(xunkongIndex).toBe(11);
+  });
+
+  test('xunkong for yang year', () => {
+    const result = astro.withOptions({
+      type: 'solar',
+      dateStr: '1980-08-21',
+      timeIndex: 6,
+      gender: 'male',
+      language: 'zh-CN',
+    });
+
+    const xunkongIndex = result.star('旬空').palace()!.index;
+
+    expect(xunkongIndex).toBe(10);
+  });
+
   test('getLuYangTuoMaIndex()', () => {
     const data = [
       {

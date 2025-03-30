@@ -633,9 +633,18 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
       ['you', 'wei', 'si', 'mao', 'chou'][HEAVENLY_STEMS.indexOf(heavenlyStem) % 5] as EarthlyBranchName,
     ),
   );
-  const xunkongIndex = fixIndex(
-    fixEarthlyBranchIndex(yearly[1]) + HEAVENLY_STEMS.indexOf('guiHeavenly') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 2,
+  let xunkongIndex = fixIndex(
+    fixEarthlyBranchIndex(yearly[1]) + HEAVENLY_STEMS.indexOf('guiHeavenly') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 1,
   );
+
+  // 判断命主出生年年支阴阳属性，如果结果为 0 则为阳，否则为阴
+  const yinyang = EARTHLY_BRANCHES.indexOf(earthlyBranch) % 2;
+
+  if (yinyang !== xunkongIndex % 2) {
+    // 若命主出生年支阴阳属性与初始旬空宫位的阴阳属性不同，则+1
+    xunkongIndex = fixIndex(xunkongIndex + 1);
+  }
+
   const tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
   const tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
 
