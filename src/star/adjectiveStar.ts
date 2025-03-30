@@ -27,7 +27,7 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
 
   const yearlyIndex = getYearlyStarIndex(solarDateStr, timeIndex, fixLeap);
   const monthlyIndex = getMonthlyStarIndex(solarDateStr, timeIndex, fixLeap);
-  const dailyIndex = getDailyStarIndex(solarDateStr, timeIndex);
+  const dailyIndex = getDailyStarIndex(solarDateStr, timeIndex, fixLeap);
   const timelyIndex = getTimelyStarIndex(timeIndex);
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(yearly[1]);
 

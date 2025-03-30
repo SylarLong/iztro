@@ -1,3 +1,4 @@
+import { astro } from '../..';
 import { EarthlyBranchName, HeavenlyStemName } from '../../i18n';
 import {
   getLuYangTuoMaIndex,
@@ -18,6 +19,22 @@ import {
 } from '../../star';
 
 describe('star/location', () => {
+  test('santai bazuo for lunar month', () => {
+    const result = astro.withOptions({
+      type: 'solar',
+      dateStr: '1979-08-21',
+      timeIndex: 6,
+      gender: 'male',
+      language: 'zh-CN',
+    });
+
+    const santaiIndex = result.star('三台').palace()!.index;
+    const bazuoIndex = result.star('八座').palace()!.index;
+
+    expect(santaiIndex).toBe(0);
+    expect(bazuoIndex).toBe(10);
+  });
+
   test('getLuYangTuoMaIndex()', () => {
     const data = [
       {
@@ -691,7 +708,7 @@ describe('star/location', () => {
       tianfuIndex: 3,
       jieluIndex: 10,
       kongwangIndex: 11,
-      xunkongIndex: 2,
+      xunkongIndex: 3,
       tiankongIndex: 2,
       tiandeIndex: 10,
       yuedeIndex: 6,
@@ -716,7 +733,7 @@ describe('star/location', () => {
       tianfuIndex: 3,
       jieluIndex: 2,
       kongwangIndex: 3,
-      xunkongIndex: 6,
+      xunkongIndex: 7,
       tiankongIndex: 4,
       tiandeIndex: 0,
       yuedeIndex: 8,

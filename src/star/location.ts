@@ -10,6 +10,7 @@ import {
   kot,
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex } from '../utils';
+import { LunarYear } from 'lunar-typescript';
 
 /**
  * 起紫微星诀算法
@@ -285,14 +286,26 @@ export const getChangQuIndex = (timeIndex: number) => {
  * @param timeIndex 时辰索引【0～12】
  * @returns 三台，八座索引
  */
-export const getDailyStarIndex = (solarDateStr: string, timeIndex: number) => {
-  const { lunarMonth, lunarDay } = solar2lunar(solarDateStr);
+export const getDailyStarIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+  const { lunarYear, lunarMonth, lunarDay } = solar2lunar(solarDateStr);
   const { zuoIndex, youIndex } = getZuoYouIndex(lunarMonth);
   const { changIndex, quIndex } = getChangQuIndex(timeIndex);
   const dayIndex = fixLunarDayIndex(lunarDay, timeIndex);
 
-  const santaiIndex = fixIndex((zuoIndex + dayIndex) % 12);
-  const bazuoIndex = fixIndex((youIndex - dayIndex) % 12);
+  let extra = 0;
+
+  if (fixLeap) {
+    // 当lunarMonth为闰月月份并且是后半月时，需要额外加一
+    const year = LunarYear.fromYear(lunarYear);
+    const leapMonth = year.getLeapMonth();
+
+    if (leapMonth > 0 && lunarMonth === leapMonth && lunarDay > 15) {
+      extra = 1;
+    }
+  }
+
+  const santaiIndex = fixIndex(((zuoIndex + dayIndex) % 12) + extra);
+  const bazuoIndex = fixIndex(((youIndex - dayIndex) % 12) - extra);
   const enguangIndex = fixIndex(((changIndex + dayIndex) % 12) - 1);
   const tianguiIndex = fixIndex(((quIndex + dayIndex) % 12) - 1);
 
@@ -621,7 +634,7 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
     ),
   );
   const xunkongIndex = fixIndex(
-    fixEarthlyBranchIndex(yearly[1]) + HEAVENLY_STEMS.indexOf('guiHeavenly') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 1,
+    fixEarthlyBranchIndex(yearly[1]) + HEAVENLY_STEMS.indexOf('guiHeavenly') - HEAVENLY_STEMS.indexOf(heavenlyStem) + 2,
   );
   const tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
   const tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);

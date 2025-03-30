@@ -7,6 +7,18 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.4.8
+
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - 修复三台、八座位置错误。#227
+
+  🇺🇸
+
+  - fix location error for santai and bazuo stars. #227
+
 ## v2.4.7
 
 - 🛠️ 修复（fix）

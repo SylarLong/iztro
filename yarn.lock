@@ -3857,6 +3857,11 @@ lunar-typescript@^1.7.5:
   resolved "https://registry.npmjs.org/lunar-typescript/-/lunar-typescript-1.7.5.tgz#8a407f9db10aaf896f1477564dbfef741463e245"
   integrity sha512-AlOwYrxHRCR9Plba5TlZY0NVv6aFobmR1gxfiAE1KxjDzBXoDtT2KrsBYCVaErGokiL8qLMS1FNwGPiPRX2a4g==
 
+lunar-typescript@^1.7.8:
+  version "1.7.8"
+  resolved "https://registry.npmjs.org/lunar-typescript/-/lunar-typescript-1.7.8.tgz#f051ea5a3a5f731581ed37fe4638df8b42ce3b52"
+  integrity sha512-i1rjc1eDHUF4k8NfpYxar3ZKtxyVHOGnR+yVTMS8jMy74ugq7KeHI+8T1XIvB3uojpBq6asywe7z25PmI3VLPw==
+
 make-dir@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/make-dir/-/make-dir-4.0.0.tgz"
