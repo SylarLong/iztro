@@ -152,7 +152,7 @@ export function astrolabeBySolarDate<T extends FunctionalAstrolabe>(
 /**
  * 通过阳历获取星盘信息
  *
- * @param solarDateStr 阳历日期【YYYY-M-D】
+ * @param solarDate 阳历日期【YYYY-M-D】
  * @param timeIndex 出生时辰序号【0~12】
  * @param gender 性别【男|女】
  * @param fixLeap 是否调整闰月情况【默认 true】，假入调整闰月，则闰月的前半个月算上个月，后半个月算下个月
@@ -160,7 +160,7 @@ export function astrolabeBySolarDate<T extends FunctionalAstrolabe>(
  * @returns 星盘信息
  */
 export function bySolar<T extends FunctionalAstrolabe>(
-  solarDateStr: string,
+  solarDate: string,
   timeIndex: number,
   gender: GenderName,
   fixLeap: boolean = true,
@@ -169,34 +169,34 @@ export function bySolar<T extends FunctionalAstrolabe>(
   language && setLanguage(language);
 
   const palaces: IFunctionalPalace[] = [];
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({
-    solarDate: solarDateStr,
+    solarDate,
     timeIndex,
     fixLeap,
   });
   const palaceNames = getPalaceNames(soulIndex);
-  const majorStars = getMajorStar({ solarDate: solarDateStr, timeIndex, fixLeap });
-  const minorStars = getMinorStar(solarDateStr, timeIndex, fixLeap);
+  const majorStars = getMajorStar({ solarDate, timeIndex, fixLeap });
+  const minorStars = getMinorStar(solarDate, timeIndex, fixLeap);
   const adjectiveStars = getAdjectiveStar({
-    solarDateStr,
+    solarDate,
     timeIndex,
     gender,
     fixLeap,
   });
   const changsheng12 = getchangsheng12({
-    solarDate: solarDateStr,
+    solarDate,
     timeIndex,
     gender,
     fixLeap,
   });
-  const boshi12 = getBoShi12(solarDateStr, gender);
-  const { jiangqian12, suiqian12 } = getYearly12(solarDateStr);
-  const { decadals, ages } = getHoroscope({ solarDate: solarDateStr, timeIndex, gender, fixLeap });
+  const boshi12 = getBoShi12(solarDate, gender);
+  const { jiangqian12, suiqian12 } = getYearly12(solarDate);
+  const { decadals, ages } = getHoroscope({ solarDate, timeIndex, gender, fixLeap });
 
   for (let i = 0; i < 12; i++) {
     const heavenlyStemOfPalace =
@@ -231,21 +231,21 @@ export function bySolar<T extends FunctionalAstrolabe>(
   const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
   const earthlyBranchOfBodyPalace = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]);
 
-  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });
-  const lunarDate = solar2lunar(solarDateStr);
+  const lunarDate = solar2lunar(solarDate);
 
   const result = new FunctionalAstrolabe({
     gender: t(kot<GenderName>(gender)),
-    solarDate: solarDateStr,
+    solarDate,
     lunarDate: lunarDate.toString(true),
     chineseDate: translateChineseDate(chineseDate),
     rawDates: { lunarDate, chineseDate },
     time: t(CHINESE_TIME[timeIndex]),
     timeRange: TIME_RANGE[timeIndex],
-    sign: getSignBySolarDate(solarDateStr, language),
-    zodiac: getZodiacBySolarDate(solarDateStr, language),
+    sign: getSignBySolarDate(solarDate, language),
+    zodiac: getZodiacBySolarDate(solarDate, language),
     earthlyBranchOfSoulPalace: t<EarthlyBranchName>(earthlyBranchOfSoulPalace),
     earthlyBranchOfBodyPalace,
     soul: t(earthlyBranches[earthlyBranchOfSoulPalace].soul),

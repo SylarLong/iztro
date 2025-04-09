@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
 import { getYearly12, initStars } from '.';
-import { GenderName, kot, t } from '../i18n';
+import { kot, t } from '../i18n';
 import FunctionalStar from './FunctionalStar';
 import {
   getDailyStarIndex,
@@ -19,19 +19,14 @@ import { AstrolabeParam } from '../data/types';
  * @returns 38杂耀
  */
 export const getAdjectiveStar = (param: AstrolabeParam) => {
-  const { solarDate, timeIndex, gender, fixLeap } = param;
+  const { solarDate, timeIndex, fixLeap } = param;
   const { algorithm } = getConfig();
   const stars = initStars();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });
 
-  const yearlyIndex = getYearlyStarIndex({
-    solarDate,
-    timeIndex,
-    fixLeap,
-    gender: gender!,
-  });
+  const yearlyIndex = getYearlyStarIndex(param);
   const monthlyIndex = getMonthlyStarIndex(solarDate, timeIndex, fixLeap);
   const dailyIndex = getDailyStarIndex(solarDate, timeIndex, fixLeap);
   const timelyIndex = getTimelyStarIndex(timeIndex);

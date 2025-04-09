@@ -212,7 +212,7 @@ describe('star/index', () => {
     const primaryStars = getMajorStar({ solarDate: '2023-03-06', timeIndex: 2, fixLeap: true });
     const secondaryStars = getMinorStar('2023-03-06', 2, true);
     const otherStars = getAdjectiveStar({
-      solarDateStr: '2023-03-06',
+      solarDate: '2023-03-06',
       timeIndex: 2,
       fixLeap: true,
       gender: '女',
@@ -378,7 +378,7 @@ describe('star/index', () => {
 
   test('getAdjectiveStar()', () => {
     const data = getAdjectiveStar({
-      solarDateStr: '2001-08-16',
+      solarDate: '2001-08-16',
       timeIndex: 2,
       gender: '男',
     });
@@ -416,7 +416,7 @@ describe('star/index', () => {
     astro.config({ algorithm: 'zhongzhou' });
 
     const data = getAdjectiveStar({
-      solarDateStr: '2001-08-16',
+      solarDate: '2001-08-16',
       timeIndex: 2,
       gender: '男',
     });

@@ -5,12 +5,12 @@ import {
   EarthlyBranchKey,
   EarthlyBranchName,
   FiveElementsClassKey,
-  GenderName,
   HeavenlyStemKey,
   HeavenlyStemName,
   kot,
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex } from '../utils';
+import { AstrolabeParam } from '../data/types';
 
 /**
  * 起紫微星诀算法
@@ -641,17 +641,8 @@ export const getDahaoIndex = (earthlyBranchKey: EarthlyBranchKey) => {
  * @param gender 性别
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  */
-export const getYearlyStarIndex = ({
-  solarDate,
-  timeIndex,
-  gender,
-  fixLeap,
-}: {
-  solarDate: string;
-  timeIndex: number;
-  gender: GenderName;
-  fixLeap?: boolean;
-}) => {
+export const getYearlyStarIndex = (param: AstrolabeParam) => {
+  const { solarDate, timeIndex, gender, fixLeap } = param;
   const { horoscopeDivide, algorithm } = getConfig();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     // 流耀应该用立春为界，但为了满足不同流派的需求允许配置
@@ -734,7 +725,7 @@ export const getYearlyStarIndex = ({
   const dahaoAdjIndex = getDahaoIndex(earthlyBranch);
 
   const genderYinyang = ['male', 'female'];
-  const sameYinyang = yinyang === genderYinyang.indexOf(kot(gender));
+  const sameYinyang = yinyang === genderYinyang.indexOf(kot(gender!));
 
   let tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
   let tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
