@@ -5,12 +5,12 @@ import {
   EarthlyBranchKey,
   EarthlyBranchName,
   FiveElementsClassKey,
+  GenderName,
   HeavenlyStemKey,
   HeavenlyStemName,
   kot,
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex } from '../utils';
-import { LunarYear } from 'lunar-typescript';
 
 /**
  * 起紫微星诀算法
@@ -28,18 +28,35 @@ import { LunarYear } from 'lunar-typescript';
  * @param solarDateStr 公历日期 YYYY-MM-DD
  * @param timeIndex 时辰索引【0～12】
  * @param fixLeap 是否调整农历闰月（若该月不是闰月则不会生效）
+ * @param from 根据传入的干支起五行局来计算紫微星和天府星位置
  * @returns 紫微和天府星所在宫位索引
  */
-export const getStartIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
-  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
-  const { lunarDay } = solar2lunar(solarDateStr);
-  const fiveElements = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
+export const getStartIndex = ({
+  solarDate,
+  timeIndex,
+  fixLeap,
+  from,
+}: {
+  solarDate: string;
+  timeIndex: number;
+  fixLeap?: boolean;
+  from?: { heavenlyStem: HeavenlyStemName; earthlyBranch: EarthlyBranchName };
+}) => {
+  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({ solarDate: solarDate, timeIndex, fixLeap });
+  const { lunarDay } = solar2lunar(solarDate);
+
+  // 如果已传入干支，则用传入干支起五行局
+  const fiveElements =
+    from?.heavenlyStem && from?.earthlyBranch
+      ? kot<FiveElementsClassKey>(getFiveElementsClass(from.heavenlyStem, from.earthlyBranch))
+      : kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
+
   let remainder = -1; // 余数
   let quotient; // 商
   let offset = -1; // 循环次数
 
   // 获取当月最大天数
-  const maxDays = getTotalDaysOfLunarMonth(solarDateStr);
+  const maxDays = getTotalDaysOfLunarMonth(solarDate);
 
   // 如果timeIndex等于12说明是晚子时，需要加一天
   let _day = timeIndex === 12 ? lunarDay + 1 : lunarDay;
@@ -287,25 +304,15 @@ export const getChangQuIndex = (timeIndex: number) => {
  * @returns 三台，八座索引
  */
 export const getDailyStarIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
-  const { lunarYear, lunarMonth, lunarDay } = solar2lunar(solarDateStr);
-  const { zuoIndex, youIndex } = getZuoYouIndex(lunarMonth);
+  const { lunarDay } = solar2lunar(solarDateStr);
+  const monthIndex = fixLunarMonthIndex(solarDateStr, timeIndex, fixLeap);
+
+  // 此处获取到的是索引，下标是从0开始的，所以需要加1
+  const { zuoIndex, youIndex } = getZuoYouIndex(monthIndex + 1);
   const { changIndex, quIndex } = getChangQuIndex(timeIndex);
   const dayIndex = fixLunarDayIndex(lunarDay, timeIndex);
-
-  let extra = 0;
-
-  if (fixLeap) {
-    // 当lunarMonth为闰月月份并且是后半月时，需要额外加一
-    const year = LunarYear.fromYear(lunarYear);
-    const leapMonth = year.getLeapMonth();
-
-    if (leapMonth > 0 && lunarMonth === leapMonth && lunarDay > 15) {
-      extra = 1;
-    }
-  }
-
-  const santaiIndex = fixIndex(((zuoIndex + dayIndex) % 12) + extra);
-  const bazuoIndex = fixIndex(((youIndex - dayIndex) % 12) - extra);
+  const santaiIndex = fixIndex((zuoIndex + dayIndex) % 12);
+  const bazuoIndex = fixIndex((youIndex - dayIndex) % 12);
   const enguangIndex = fixIndex(((changIndex + dayIndex) % 12) - 1);
   const tianguiIndex = fixIndex(((quIndex + dayIndex) % 12) - 1);
 
@@ -535,6 +542,67 @@ export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
 };
 
 /**
+ * 安劫杀诀（年支）
+ * 申子辰人蛇开口、亥卯未人猴速走
+ * 寅午戌人猪面黑、巳酉丑人虎咆哮
+ *
+ * @version v2.5.0
+ *
+ * @param earthlyBranchKey 生年地支
+ * @returns {number} 劫杀索引
+ */
+export const getJieshaAdjIndex = (earthlyBranchKey: EarthlyBranchKey) => {
+  switch (earthlyBranchKey) {
+    case 'shenEarthly':
+    case 'ziEarthly':
+    case 'chenEarthly':
+      return 3;
+    case 'haiEarthly':
+    case 'maoEarthly':
+    case 'weiEarthly':
+      return 6;
+    case 'yinEarthly':
+    case 'wuEarthly':
+    case 'xuEarthly':
+      return 9;
+    case 'siEarthly':
+    case 'youEarthly':
+    case 'chouEarthly':
+      return 0;
+  }
+};
+
+/**
+ * 安大耗诀（年支）
+ * 但用年支去对冲、阴阳移位过一宫
+ * 阳顺阴逆移其位、大耗原来不可逢
+ *
+ * 大耗安法，是在年支之对宫，前一位或后一位安星。阳支顺行前一位，阴支逆行后一位。
+ *
+ * @param earthlyBranchKey 生年地支
+ * @returns {number} 大耗索引
+ */
+export const getDahaoIndex = (earthlyBranchKey: EarthlyBranchKey) => {
+  const matched = [
+    'weiEarthly',
+    'wuEarthly',
+    'youEarthly',
+    'shenEarthly',
+    'haiEarthly',
+    'xuEarthly',
+    'chouEarthly',
+    'ziEarthly',
+    'maoEarthly',
+    'yinEarthly',
+    'siEarthly',
+    'chenEarthly',
+  ][EARTHLY_BRANCHES.indexOf(earthlyBranchKey)] as EarthlyBranchKey;
+
+  // 因为宫位是以寅宫开始排的，所以需要 -2 来对齐
+  return fixIndex(EARTHLY_BRANCHES.indexOf(matched) - 2);
+};
+
+/**
  * 获取年系星的索引，包括
  * 咸池，华盖，孤辰，寡宿, 天厨，破碎，天才，天寿，蜚蠊, 龙池，凤阁，天哭，天虚，
  * 天官，天福
@@ -570,14 +638,26 @@ export const getGuGuaIndex = (earthlyBranchName: EarthlyBranchName) => {
  *   - 生年支顺数的前一位就是。
  * @param solarDate 阳历日期
  * @param timeIndex 时辰序号
+ * @param gender 性别
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  */
-export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap?: boolean) => {
+export const getYearlyStarIndex = ({
+  solarDate,
+  timeIndex,
+  gender,
+  fixLeap,
+}: {
+  solarDate: string;
+  timeIndex: number;
+  gender: GenderName;
+  fixLeap?: boolean;
+}) => {
+  const { horoscopeDivide, algorithm } = getConfig();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     // 流耀应该用立春为界，但为了满足不同流派的需求允许配置
-    year: getConfig().horoscopeDivide,
+    year: horoscopeDivide,
   });
-  const { soulIndex, bodyIndex } = getSoulAndBody(solarDate, timeIndex, fixLeap);
+  const { soulIndex, bodyIndex } = getSoulAndBody({ solarDate, timeIndex, fixLeap });
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
 
@@ -645,8 +725,26 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
     xunkongIndex = fixIndex(xunkongIndex + 1);
   }
 
-  const tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
-  const tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
+  // 中州派没有截路空亡，只有一颗截空星
+  // 生年阳干在阳宫，阴干在阴宫
+  const jiekongIndex = yinyang === 0 ? jieluIndex : kongwangIndex;
+
+  const jieshaAdjIndex = getJieshaAdjIndex(earthlyBranch);
+  const nianjieIndex = getNianjieIndex(yearly[1]);
+  const dahaoAdjIndex = getDahaoIndex(earthlyBranch);
+
+  const genderYinyang = ['male', 'female'];
+  const sameYinyang = yinyang === genderYinyang.indexOf(kot(gender));
+
+  let tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
+  let tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
+
+  if (algorithm === 'zhongzhou' && !sameYinyang) {
+    // 中州派的天使天伤与通行版本不一样
+    // 天伤奴仆、天使疾厄、夹迁移宫最易寻得
+    // 凡阳男阴女，皆依此诀，但若为阴男阳女，则改为天伤居疾厄、天使居奴仆。
+    [tianshiIndex, tianshangIndex] = [tianshangIndex, tianshiIndex];
+  }
 
   return {
     xianchiIndex,
@@ -672,6 +770,10 @@ export const getYearlyStarIndex = (solarDate: string, timeIndex: number, fixLeap
     xunkongIndex,
     tianshangIndex,
     tianshiIndex,
+    jiekongIndex,
+    jieshaAdjIndex,
+    nianjieIndex,
+    dahaoAdjIndex,
   };
 };
 

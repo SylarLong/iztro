@@ -10,11 +10,14 @@ import {
   getJiangqian12StartIndex,
 } from '../../star';
 import { mergeStars } from '../../utils';
-import { star } from '../../index';
+import { astro, star } from '../../index';
 import { EarthlyBranchName, FiveElementsClassName, setLanguage } from '../../i18n';
 
 describe('star/index', () => {
-  afterEach(() => setLanguage('zh-CN'));
+  afterEach(() => {
+    setLanguage('zh-CN');
+    astro.config({ algorithm: 'default' });
+  });
 
   test('getStartIndex()', () => {
     const data = [
@@ -133,13 +136,13 @@ describe('star/index', () => {
     ];
 
     data.forEach(({ solarDate, timeIndex, result }) => {
-      expect(getStartIndex(solarDate, timeIndex, true)).toStrictEqual(result);
+      expect(getStartIndex({ solarDate, timeIndex, fixLeap: true })).toStrictEqual(result);
     });
   });
 
   test('getMajorStar()', () => {
     expect(
-      getMajorStar('2023-03-06', 4, true)?.map((stars) =>
+      getMajorStar({ solarDate: '2023-03-06', timeIndex: 4, fixLeap: true })?.map((stars) =>
         stars.map((star) => ({
           name: star.name,
           type: star.type,
@@ -174,7 +177,7 @@ describe('star/index', () => {
     setLanguage('vi-VN');
 
     expect(
-      getMajorStar('2023-03-06', 4, true)?.map((stars) =>
+      getMajorStar({ solarDate: '2023-03-06', timeIndex: 4, fixLeap: true })?.map((stars) =>
         stars.map((star) => ({
           name: star.name,
           type: star.type,
@@ -206,9 +209,14 @@ describe('star/index', () => {
   });
 
   test('getMinorStar()', () => {
-    const primaryStars = getMajorStar('2023-03-06', 2, true);
+    const primaryStars = getMajorStar({ solarDate: '2023-03-06', timeIndex: 2, fixLeap: true });
     const secondaryStars = getMinorStar('2023-03-06', 2, true);
-    const otherStars = getAdjectiveStar('2023-03-06', 2, true);
+    const otherStars = getAdjectiveStar({
+      solarDateStr: '2023-03-06',
+      timeIndex: 2,
+      fixLeap: true,
+      gender: '女',
+    });
 
     const stars = mergeStars(primaryStars, otherStars, secondaryStars);
     const total = stars.reduce((prev, next) => {
@@ -220,7 +228,7 @@ describe('star/index', () => {
   });
 
   test('getchangsheng12()', () => {
-    expect(getchangsheng12('2023-8-15', 0, '女', true)).toStrictEqual([
+    expect(getchangsheng12({ solarDate: '2023-8-15', timeIndex: 0, gender: '女', fixLeap: true })).toStrictEqual([
       '长生',
       '沐浴',
       '冠带',
@@ -239,7 +247,7 @@ describe('star/index', () => {
   test('getchangsheng12() vi-VN', () => {
     setLanguage('vi-VN');
 
-    expect(getchangsheng12('2023-8-15', 0, '女', true)).toStrictEqual([
+    expect(getchangsheng12({ solarDate: '2023-8-15', timeIndex: 0, gender: '女', fixLeap: true })).toStrictEqual([
       'Trường Sinh',
       'Mục Dục',
       'Quan Đới',
@@ -366,5 +374,79 @@ describe('star/index', () => {
     Object.entries(data).forEach(([key, value]) => {
       expect(getJiangqian12StartIndex(key as EarthlyBranchName)).toEqual(value);
     });
+  });
+
+  test('getAdjectiveStar()', () => {
+    const data = getAdjectiveStar({
+      solarDateStr: '2001-08-16',
+      timeIndex: 2,
+      gender: '男',
+    });
+
+    const jiekongStar = data.find((item) => item.find((star) => star.name === '截空'));
+    const jieshaStar = data.find((item) => item.find((star) => star.name === '劫杀'));
+    const jieluStar = data.find((item) => item.find((star) => star.name === '截路'));
+    const nianjieStar = data.find((item) => item.find((star) => star.name === '年解'));
+    const dahaoStar = data.find((item) => item.find((star) => star.name === '大耗'));
+
+    data.forEach((item, index) =>
+      item.find((star) => {
+        if (star.name === '天使') {
+          expect(index).toEqual(10);
+
+          return;
+        }
+
+        if (star.name === '天伤') {
+          expect(index).toEqual(8);
+
+          return;
+        }
+      }),
+    );
+
+    expect(jiekongStar).toBeUndefined();
+    expect(jieshaStar).toBeUndefined();
+    expect(dahaoStar).toBeUndefined();
+    expect(jieluStar).not.toBeUndefined();
+    expect(nianjieStar).not.toBeUndefined();
+  });
+
+  test('getAdjectiveStar() zhongzhou', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const data = getAdjectiveStar({
+      solarDateStr: '2001-08-16',
+      timeIndex: 2,
+      gender: '男',
+    });
+
+    const jiekongStar = data.find((item) => item.find((star) => star.name === '截空'));
+    const jieshaStar = data.find((item) => item.find((star) => star.name === '劫杀'));
+    const jieluStar = data.find((item) => item.find((star) => star.name === '截路'));
+    const nianjieStar = data.find((item) => item.find((star) => star.name === '年解'));
+    const dahaoStar = data.find((item) => item.find((star) => star.name === '大耗'));
+
+    data.forEach((item, index) =>
+      item.find((star) => {
+        if (star.name === '天使') {
+          expect(index).toEqual(8);
+
+          return;
+        }
+
+        if (star.name === '天伤') {
+          expect(index).toEqual(10);
+
+          return;
+        }
+      }),
+    );
+
+    expect(jiekongStar).not.toBeUndefined();
+    expect(jieshaStar).not.toBeUndefined();
+    expect(jieluStar).toBeUndefined();
+    expect(nianjieStar).not.toBeUndefined();
+    expect(dahaoStar).not.toBeUndefined();
   });
 });

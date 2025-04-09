@@ -7,6 +7,7 @@ import {
   EarthlyBranchName,
   GenderName,
   HeavenlyStemKey,
+  HeavenlyStemName,
   StarKey,
   kot,
   setLanguage,
@@ -37,10 +38,23 @@ let _horoscopeDivide: 'normal' | 'exact' = 'exact';
  * 小限分割点，默认为生日。
  *
  * @version v2.4.5
+ * @default 'normal'
  *
- * normal: 只考虑年份，不考虑
+ * normal: 只考虑年份，不考虑生日
+ * birthday: 以生日为分界点
  */
 let _ageDivide: 'normal' | 'birthday' = 'normal';
+
+/**
+ * 排盘派别设置。
+ *
+ * @version v2.5.0
+ * @default 'default'
+ *
+ * default: 以《紫微斗数全书》为基础安星
+ * zhongzhou: 以中州派安星法为基础安星
+ */
+let _algorithm: 'default' | 'zhongzhou' = 'default';
 
 /**
  * 批量加载插件
@@ -74,7 +88,7 @@ export const loadPlugin = (plugin: Plugin) => {
  *
  * @param {Config} param0 自定义配置
  */
-export const config = ({ mutagens, brightness, yearDivide, ageDivide, horoscopeDivide }: Config) => {
+export const config = ({ mutagens, brightness, yearDivide, ageDivide, horoscopeDivide, algorithm }: Config) => {
   if (mutagens) {
     Object.entries(mutagens).forEach(([key, value]) => {
       _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
@@ -98,6 +112,10 @@ export const config = ({ mutagens, brightness, yearDivide, ageDivide, horoscopeD
   if (ageDivide) {
     _ageDivide = ageDivide;
   }
+
+  if (algorithm) {
+    _algorithm = algorithm;
+  }
 };
 
 export const getConfig = () => ({
@@ -106,6 +124,7 @@ export const getConfig = () => ({
   yearDivide: _yearDivide,
   ageDivide: _ageDivide,
   horoscopeDivide: _horoscopeDivide,
+  algorithm: _algorithm,
 });
 
 /**
@@ -155,19 +174,29 @@ export function bySolar<T extends FunctionalAstrolabe>(
   });
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
-  const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(
-    solarDateStr,
+  const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({
+    solarDate: solarDateStr,
     timeIndex,
     fixLeap,
-  );
+  });
   const palaceNames = getPalaceNames(soulIndex);
-  const majorStars = getMajorStar(solarDateStr, timeIndex, fixLeap);
+  const majorStars = getMajorStar({ solarDate: solarDateStr, timeIndex, fixLeap });
   const minorStars = getMinorStar(solarDateStr, timeIndex, fixLeap);
-  const adjectiveStars = getAdjectiveStar(solarDateStr, timeIndex, fixLeap);
-  const changsheng12 = getchangsheng12(solarDateStr, timeIndex, gender, fixLeap);
+  const adjectiveStars = getAdjectiveStar({
+    solarDateStr,
+    timeIndex,
+    gender,
+    fixLeap,
+  });
+  const changsheng12 = getchangsheng12({
+    solarDate: solarDateStr,
+    timeIndex,
+    gender,
+    fixLeap,
+  });
   const boshi12 = getBoShi12(solarDateStr, gender);
   const { jiangqian12, suiqian12 } = getYearly12(solarDateStr);
-  const { decadals, ages } = getHoroscope(solarDateStr, timeIndex, gender, fixLeap);
+  const { decadals, ages } = getHoroscope({ solarDate: solarDateStr, timeIndex, gender, fixLeap });
 
   for (let i = 0; i < 12; i++) {
     const heavenlyStemOfPalace =
@@ -185,8 +214,8 @@ export function bySolar<T extends FunctionalAstrolabe>(
           !['ziEarthly', 'chouEarthly'].includes(earthlyBranchOfPalace) && heavenlyStemOfPalace === heavenlyStemOfYear,
         heavenlyStem: t(heavenlyStemOfPalace),
         earthlyBranch: t(earthlyBranchOfPalace),
-        majorStars: majorStars[i].concat(minorStars[i].filter((star) => ['lucun', 'tianma'].includes(star.type))),
-        minorStars: minorStars[i].filter((star) => !['lucun', 'tianma'].includes(star.type)),
+        majorStars: majorStars[i],
+        minorStars: minorStars[i],
         adjectiveStars: adjectiveStars[i],
         changsheng12: changsheng12[i],
         boshi12: boshi12[i],
@@ -279,31 +308,89 @@ export function byLunar<T extends FunctionalAstrolabe>(
   return bySolar<T>(solarDate.toString(), timeIndex, gender, fixLeap, language);
 }
 
+export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
+  from,
+  astrolable,
+  option,
+}: {
+  from: { heavenlyStem: HeavenlyStemName; earthlyBranch: EarthlyBranchName };
+  astrolable: T;
+  option: Option;
+}) {
+  const { timeIndex, fixLeap } = option;
+  // 以传入地支为命宫
+  const { soulIndex, bodyIndex } = getSoulAndBody({
+    solarDate: astrolable.solarDate,
+    timeIndex,
+    fixLeap,
+    from,
+  });
+  const fiveElementsClass = getFiveElementsClass(from.heavenlyStem, from.earthlyBranch);
+  const palaceNames = getPalaceNames(soulIndex);
+  const majorStars = getMajorStar({ solarDate: astrolable.solarDate, timeIndex, fixLeap, from });
+  const changsheng12 = getchangsheng12({ solarDate: astrolable.solarDate, timeIndex, fixLeap, from });
+  const { decadals, ages } = getHoroscope({
+    solarDate: astrolable.solarDate,
+    timeIndex,
+    gender: astrolable.gender as GenderName,
+    fixLeap,
+    from,
+  });
+
+  astrolable.fiveElementsClass = fiveElementsClass;
+  astrolable.palaces.forEach((palace, i) => {
+    palace.name = palaceNames[i];
+    palace.majorStars = majorStars[i];
+    palace.changsheng12 = changsheng12[i];
+    palace.decadal = decadals[i];
+    palace.ages = ages[i];
+    palace.isBodyPalace = bodyIndex === i;
+  });
+
+  return astrolable;
+}
+
 /**
  * 获取排盘信息。
  *
  * @param param0 排盘参数
  * @returns 星盘信息
  */
-export function withOptions<T extends FunctionalAstrolabe>({
-  type = 'solar',
-  dateStr,
-  timeIndex,
-  gender,
-  isLeapMonth,
-  fixLeap,
-  language,
-  config: cfg,
-}: Option): T {
+export function withOptions<T extends FunctionalAstrolabe>(option: Option): T {
+  const { type = 'solar', dateStr, timeIndex, gender, isLeapMonth, fixLeap, language, astroType, config: cfg } = option;
+
   if (cfg) {
     config(cfg);
   }
 
+  let result: T;
+
   if (type === 'solar') {
-    return bySolar<T>(dateStr, timeIndex, gender, fixLeap, language);
+    result = bySolar<T>(dateStr, timeIndex, gender, fixLeap, language);
+  } else {
+    result = byLunar<T>(dateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
   }
 
-  return byLunar<T>(dateStr, timeIndex, gender, isLeapMonth, fixLeap, language);
+  switch (astroType) {
+    case 'earth': {
+      // 以身宫干支起五行局重排，身宫为命宫
+      const bodyPalace = result.palace('身宫');
+      const { heavenlyStem, earthlyBranch } = bodyPalace!;
+
+      return rearrangeAstrolable({ from: { heavenlyStem, earthlyBranch }, astrolable: result, option });
+    }
+    case 'human': {
+      // 以福德宫干支起五行局重排，福德宫为命宫
+      const bodyPalace = result.palace('福德');
+      const { heavenlyStem, earthlyBranch } = bodyPalace!;
+
+      return rearrangeAstrolable({ from: { heavenlyStem, earthlyBranch }, astrolable: result, option });
+    }
+    default: {
+      // 直接返回天盘
+      return result;
+    }
+  }
 }
 
 /**
@@ -377,8 +464,8 @@ export const getMajorStarBySolarDate = (
 ) => {
   language && setLanguage(language);
 
-  const { bodyIndex } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
-  const majorStars = getMajorStar(solarDateStr, timeIndex, fixLeap);
+  const { bodyIndex } = getSoulAndBody({ solarDate: solarDateStr, timeIndex, fixLeap });
+  const majorStars = getMajorStar({ solarDate: solarDateStr, timeIndex, fixLeap });
   const stars = majorStars[bodyIndex].filter((star) => star.type === 'major');
 
   if (stars.length) {

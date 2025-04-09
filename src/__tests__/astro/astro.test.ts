@@ -4,6 +4,7 @@ import {
   getSignByLunarDate,
   getSignBySolarDate,
   getZodiacBySolarDate,
+  withOptions,
 } from '../../astro';
 import { setLanguage } from '../../i18n';
 import { astro } from '../../index';
@@ -11,7 +12,7 @@ import { astro } from '../../index';
 describe('Astrolabe', () => {
   afterEach(() => {
     setLanguage('zh-CN');
-    astro.config({ yearDivide: 'exact' });
+    astro.config({ yearDivide: 'exact', algorithm: 'default' });
   });
 
   test('bySolar()', () => {
@@ -911,5 +912,49 @@ describe('Astrolabe', () => {
 
     expect(horo1.age.index).toEqual(10);
     expect(horo1.age.nominalAge).toEqual(23);
+  });
+
+  test('withOptions() with earth type', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const result = withOptions({
+      dateStr: '1979-08-21',
+      type: 'solar',
+      timeIndex: 7,
+      gender: 'male',
+      astroType: 'earth',
+    });
+
+    const soulPalace = result.palace('命宫');
+
+    expect(soulPalace).toHaveProperty('index', 1);
+    expect(soulPalace).toHaveProperty('heavenlyStem', '丁');
+    expect(soulPalace).toHaveProperty('earthlyBranch', '卯');
+    expect(soulPalace?.majorStars[0]).toHaveProperty('name', '天相');
+    expect(soulPalace?.minorStars[0]).toHaveProperty('name', '文昌');
+    expect(result).toHaveProperty('fiveElementsClass', '火六局');
+    expect(soulPalace?.decadal).toStrictEqual({ range: [6, 15], heavenlyStem: '丁', earthlyBranch: '卯' });
+  });
+
+  test('withOptions() with human type', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const result = withOptions({
+      dateStr: '1979-08-21',
+      type: 'solar',
+      timeIndex: 8,
+      gender: 'male',
+      astroType: 'human',
+    });
+
+    const soulPalace = result.palace('命宫');
+
+    expect(soulPalace).toHaveProperty('index', 0);
+    expect(soulPalace).toHaveProperty('heavenlyStem', '丙');
+    expect(soulPalace).toHaveProperty('earthlyBranch', '寅');
+    expect(soulPalace?.majorStars[0]).toHaveProperty('name', '太阳');
+    expect(soulPalace?.minorStars[0]).toHaveProperty('name', '文昌');
+    expect(result).toHaveProperty('fiveElementsClass', '火六局');
+    expect(soulPalace?.decadal).toStrictEqual({ range: [6, 15], heavenlyStem: '丙', earthlyBranch: '寅' });
   });
 });

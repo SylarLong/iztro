@@ -16,9 +16,16 @@ import {
   getChangQuIndexByHeavenlyStem,
   getHuagaiXianchiIndex,
   getGuGuaIndex,
+  getDahaoIndex,
 } from '../../star';
 
 describe('star/location', () => {
+  test('getDahaoIndex()', () => {
+    const index = getDahaoIndex('siEarthly');
+
+    expect(index).toBe(8);
+  });
+
   test('santai bazuo for lunar month', () => {
     const result = astro.withOptions({
       type: 'solar',
@@ -718,7 +725,14 @@ describe('star/location', () => {
   });
 
   test('getYearlyStarIndex()', () => {
-    expect(getYearlyStarIndex('2023-03-06', 2, true)).toStrictEqual({
+    expect(
+      getYearlyStarIndex({
+        solarDate: '2023-03-06',
+        timeIndex: 2,
+        fixLeap: true,
+        gender: '女',
+      }),
+    ).toStrictEqual({
       xianchiIndex: 10,
       huagaiIndex: 5,
       guchenIndex: 3,
@@ -742,8 +756,19 @@ describe('star/location', () => {
       yuedeIndex: 6,
       tianshangIndex: 4,
       tianshiIndex: 6,
+      dahaoAdjIndex: 6,
+      jiekongIndex: 11,
+      jieshaAdjIndex: 6,
+      nianjieIndex: 5,
     });
-    expect(getYearlyStarIndex('2001-08-16', 2, true)).toStrictEqual({
+    expect(
+      getYearlyStarIndex({
+        solarDate: '2001-08-16',
+        timeIndex: 2,
+        fixLeap: true,
+        gender: '女',
+      }),
+    ).toStrictEqual({
       xianchiIndex: 4,
       huagaiIndex: 11,
       guchenIndex: 6,
@@ -767,6 +792,10 @@ describe('star/location', () => {
       yuedeIndex: 8,
       tianshangIndex: 8,
       tianshiIndex: 10,
+      dahaoAdjIndex: 8,
+      jiekongIndex: 3,
+      jieshaAdjIndex: 0,
+      nianjieIndex: 3,
     });
   });
 

@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
 import { getYearly12, initStars } from '.';
-import { kot, t } from '../i18n';
+import { GenderName, kot, t } from '../i18n';
 import FunctionalStar from './FunctionalStar';
 import {
   getDailyStarIndex,
@@ -10,27 +10,33 @@ import {
   getYearlyStarIndex,
 } from './location';
 import { getConfig } from '../astro';
+import { AstrolabeParam } from '../data/types';
 
 /**
  * 安杂耀
  *
- * @param solarDateStr 阳历日期字符串
- * @param timeIndex 时辰索引【0～12】
- * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
+ * @param {AstrolabeParam} param - 通用排盘参数参数
  * @returns 38杂耀
  */
-export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+export const getAdjectiveStar = (param: AstrolabeParam) => {
+  const { solarDate, timeIndex, gender, fixLeap } = param;
+  const { algorithm } = getConfig();
   const stars = initStars();
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });
 
-  const yearlyIndex = getYearlyStarIndex(solarDateStr, timeIndex, fixLeap);
-  const monthlyIndex = getMonthlyStarIndex(solarDateStr, timeIndex, fixLeap);
-  const dailyIndex = getDailyStarIndex(solarDateStr, timeIndex, fixLeap);
+  const yearlyIndex = getYearlyStarIndex({
+    solarDate,
+    timeIndex,
+    fixLeap,
+    gender: gender!,
+  });
+  const monthlyIndex = getMonthlyStarIndex(solarDate, timeIndex, fixLeap);
+  const dailyIndex = getDailyStarIndex(solarDate, timeIndex, fixLeap);
   const timelyIndex = getTimelyStarIndex(timeIndex);
   const { hongluanIndex, tianxiIndex } = getLuanXiIndex(yearly[1]);
-  const { suiqian12 } = getYearly12(solarDateStr);
+  const { suiqian12 } = getYearly12(solarDate);
 
   stars[hongluanIndex].push(new FunctionalStar({ name: t('hongluan'), type: 'flower', scope: 'origin' }));
   stars[tianxiIndex].push(new FunctionalStar({ name: t('tianxi'), type: 'flower', scope: 'origin' }));
@@ -63,10 +69,27 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
     new FunctionalStar({ name: t('tiankong'), type: 'adjective', scope: 'origin' }),
   );
   stars[yearlyIndex.xunkongIndex].push(new FunctionalStar({ name: t('xunkong'), type: 'adjective', scope: 'origin' }));
-  stars[yearlyIndex.jieluIndex].push(new FunctionalStar({ name: t('jielu'), type: 'adjective', scope: 'origin' }));
-  stars[yearlyIndex.kongwangIndex].push(
-    new FunctionalStar({ name: t('kongwang'), type: 'adjective', scope: 'origin' }),
-  );
+
+  if (algorithm !== 'zhongzhou') {
+    // 中州派没有的星耀
+    stars[yearlyIndex.jieluIndex].push(new FunctionalStar({ name: t('jielu'), type: 'adjective', scope: 'origin' }));
+    stars[yearlyIndex.kongwangIndex].push(
+      new FunctionalStar({ name: t('kongwang'), type: 'adjective', scope: 'origin' }),
+    );
+  } else {
+    // 中州派特有的星耀
+    stars[suiqian12.indexOf(t(kot('longde')))].push(
+      new FunctionalStar({ name: t('longde'), type: 'adjective', scope: 'origin' }),
+    );
+    stars[yearlyIndex.jiekongIndex].push(
+      new FunctionalStar({ name: t('jiekong'), type: 'adjective', scope: 'origin' }),
+    );
+    stars[yearlyIndex.jieshaAdjIndex].push(
+      new FunctionalStar({ name: t('jieshaAdj'), type: 'adjective', scope: 'origin' }),
+    );
+    stars[yearlyIndex.dahaoAdjIndex].push(new FunctionalStar({ name: t('dahao'), type: 'adjective', scope: 'origin' }));
+  }
+
   stars[yearlyIndex.guchenIndex].push(new FunctionalStar({ name: t('guchen'), type: 'adjective', scope: 'origin' }));
   stars[yearlyIndex.guasuIndex].push(new FunctionalStar({ name: t('guasu'), type: 'adjective', scope: 'origin' }));
   stars[yearlyIndex.feilianIndex].push(new FunctionalStar({ name: t('feilian'), type: 'adjective', scope: 'origin' }));
@@ -81,9 +104,9 @@ export const getAdjectiveStar = (solarDateStr: string, timeIndex: number, fixLea
   stars[yearlyIndex.tianshangIndex].push(
     new FunctionalStar({ name: t('tianshang'), type: 'adjective', scope: 'origin' }),
   );
-  stars[suiqian12.indexOf(t(kot('longde')))].push(
-    new FunctionalStar({ name: t('longde'), type: 'adjective', scope: 'origin' }),
-  );
+
+  // 生年年解
+  stars[yearlyIndex.nianjieIndex].push(new FunctionalStar({ name: t('nianjie'), type: 'helper', scope: 'origin' }));
 
   return stars;
 };

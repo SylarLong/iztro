@@ -5,6 +5,7 @@ import { fixIndex, getBrightness, getMutagen } from '../utils';
 import FunctionalStar from './FunctionalStar';
 import { getStartIndex } from './location';
 import { getConfig } from '../astro';
+import { AstrolabeParam } from '../data/types';
 
 /**
  * 安主星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -17,14 +18,13 @@ import { getConfig } from '../astro';
  * - 天府顺行有太阴，贪狼而后巨门临，
  * - 随来天相天梁继，七杀空三是破军。
  *
- * @param solarDateStr 公历日期 YYYY-MM-DD
- * @param timeIndex 时辰索引【0～12】
- * @param fixLeap 是否调整农历闰月（若该月不是闰月则不会生效）
+ * @param {AstrolabeParam} param 通用排盘参数
  * @returns {Array<Star[]>} 从寅宫开始每一个宫的星耀
  */
-export const getMajorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
-  const { ziweiIndex, tianfuIndex } = getStartIndex(solarDateStr, timeIndex, fixLeap);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+export const getMajorStar = (param: AstrolabeParam) => {
+  const { solarDate, timeIndex } = param;
+  const { ziweiIndex, tianfuIndex } = getStartIndex(param);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });
   const stars = initStars();

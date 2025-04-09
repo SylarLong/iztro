@@ -39,7 +39,7 @@ describe('astro/palace', () => {
     ];
 
     data.forEach((item) => {
-      expect(getSoulAndBody(item.date, item.timeIndex)).toStrictEqual(item.result);
+      expect(getSoulAndBody({ solarDate: item.date, timeIndex: item.timeIndex })).toStrictEqual(item.result);
     });
   });
 
@@ -66,7 +66,11 @@ describe('astro/palace', () => {
   });
 
   test('getHoroscope() for female', () => {
-    const result = getHoroscope('2023-11-15', 3, '女');
+    const result = getHoroscope({
+      solarDate: '2023-11-15',
+      timeIndex: 3,
+      gender: '女',
+    });
 
     expect(result.ages).toStrictEqual([
       [12, 24, 36, 48, 60, 72, 84, 96, 108, 120],
@@ -85,7 +89,11 @@ describe('astro/palace', () => {
   });
 
   test('getHoroscope() for male', () => {
-    const result = getHoroscope('2023-11-15', 3, '男');
+    const result = getHoroscope({
+      solarDate: '2023-11-15',
+      timeIndex: 3,
+      gender: '男',
+    });
 
     expect(result.ages).toStrictEqual([
       [2, 14, 26, 38, 50, 62, 74, 86, 98, 110],

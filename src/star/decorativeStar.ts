@@ -15,6 +15,7 @@ import {
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 import { getLuYangTuoMaIndex } from './location';
+import { AstrolabeParam } from '../data/types';
 
 /**
  * 获取长生12神开始的宫位索引
@@ -62,27 +63,20 @@ export const getChangesheng12StartIndex = (fiveElementClassName: FiveElementsCla
  *
  * 阳男阴女顺行，阴男阳女逆行，安长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝 、胎、养。
  *
- * @param solarDateStr 阳历日期字符串
- * @param timeIndex 时辰索引【0～12】
- * @param gender 性别【男｜女】
- * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
+ * @param {AstrolabeParam} param 通用排盘参数
  * @returns 长生12神从寅宫开始的顺序
  */
-export const getchangsheng12 = (
-  solarDateStr: string,
-  timeIndex: number,
-  gender: GenderName,
-  fixLeap?: boolean,
-): StarName[] => {
+export const getchangsheng12 = (param: AstrolabeParam): StarName[] => {
+  const { solarDate, gender } = param;
   const changsheng12: StarName[] = [];
-  const genderKey = kot<GenderKey>(gender);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0, {
+  const genderKey = kot<GenderKey>(gender!);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, 0, {
     year: getConfig().yearDivide,
   });
   const [, earthlyBranchNameOfYear] = yearly;
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear, 'Earthly');
   // 获取命宫干支，需要通过命宫干支计算五行局
-  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
+  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(param);
   // 获取五行局，通过五行局获取起运年龄
   const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
   // 长生12神顺序
@@ -210,25 +204,43 @@ export const getJiangqian12StartIndex = (earthlyBranchName: EarthlyBranchName) =
 export const getYearly12 = (solarDateStr: string | Date): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
   const jiangqian12: StarName[] = [];
   const suiqian12: StarName[] = [];
+  const { algorithm } = getConfig();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0, {
     // 流年神煞应该用立春为界，但为了满足不同流派的需求允许配置
     year: getConfig().horoscopeDivide,
   });
 
-  const ts12shen: StarKey[] = [
-    'suijian',
-    'huiqi',
-    'sangmen',
-    'guansuo',
-    'gwanfu',
-    'xiaohao',
-    'dahao',
-    'longde',
-    'baihu',
-    'tiande',
-    'diaoke',
-    'bingfu',
-  ];
+  // 中州派的大耗叫岁破
+  const ts12shen: StarKey[] =
+    algorithm === 'zhongzhou'
+      ? [
+          'suijian',
+          'huiqi',
+          'sangmen',
+          'guansuo',
+          'gwanfu',
+          'xiaohao',
+          'suipo',
+          'longde',
+          'baihu',
+          'tiande',
+          'diaoke',
+          'bingfu',
+        ]
+      : [
+          'suijian',
+          'huiqi',
+          'sangmen',
+          'guansuo',
+          'gwanfu',
+          'xiaohao',
+          'dahao',
+          'longde',
+          'baihu',
+          'tiande',
+          'diaoke',
+          'bingfu',
+        ];
 
   for (let i = 0; i < ts12shen.length; i++) {
     const idx = fixIndex(fixEarthlyBranchIndex(yearly[1]) + i);
