@@ -31,25 +31,19 @@ import { AstrolabeParam } from '../data/types';
  * @param from 根据传入的干支起五行局来计算紫微星和天府星位置
  * @returns 紫微和天府星所在宫位索引
  */
-export const getStartIndex = ({
-  solarDate,
-  timeIndex,
-  fixLeap,
-  from,
-}: {
-  solarDate: string;
-  timeIndex: number;
-  fixLeap?: boolean;
-  from?: { heavenlyStem: HeavenlyStemName; earthlyBranch: EarthlyBranchName };
-}) => {
-  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({ solarDate: solarDate, timeIndex, fixLeap });
+export const getStartIndex = (param: AstrolabeParam) => {
+  const { solarDate, timeIndex, fixLeap, from } = param;
+  const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({ solarDate, timeIndex, fixLeap });
   const { lunarDay } = solar2lunar(solarDate);
 
   // 如果已传入干支，则用传入干支起五行局
-  const fiveElements =
-    from?.heavenlyStem && from?.earthlyBranch
-      ? kot<FiveElementsClassKey>(getFiveElementsClass(from.heavenlyStem, from.earthlyBranch))
-      : kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
+  // 确定用于起五行局的地盘干支
+  const baseHeavenlyStem = from?.heavenlyStem ?? heavenlyStemOfSoul;
+  const baseEarthlyBranch = from?.earthlyBranch ?? earthlyBranchOfSoul;
+
+  // 获取五行局
+  const fiveElements = kot<FiveElementsClassKey>(getFiveElementsClass(baseHeavenlyStem, baseEarthlyBranch));
+  const fiveElementsValue = FiveElementsClass[fiveElements];
 
   let remainder = -1; // 余数
   let quotient; // 商
@@ -73,8 +67,8 @@ export const getStartIndex = ({
 
     const divisor = _day + offset;
 
-    quotient = Math.floor(divisor / FiveElementsClass[fiveElements]);
-    remainder = divisor % FiveElementsClass[fiveElements];
+    quotient = Math.floor(divisor / fiveElementsValue);
+    remainder = divisor % fiveElementsValue;
   } while (remainder !== 0);
 
   // 将商除以12取余数

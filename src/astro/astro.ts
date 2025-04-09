@@ -88,7 +88,14 @@ export const loadPlugin = (plugin: Plugin) => {
  *
  * @param {Config} param0 自定义配置
  */
-export const config = ({ mutagens, brightness, yearDivide, ageDivide, horoscopeDivide, algorithm }: Config) => {
+export const config = ({
+  mutagens,
+  brightness,
+  yearDivide = _yearDivide,
+  ageDivide = _ageDivide,
+  horoscopeDivide = _horoscopeDivide,
+  algorithm = _algorithm,
+}: Config) => {
   if (mutagens) {
     Object.entries(mutagens).forEach(([key, value]) => {
       _mutagens[kot<HeavenlyStemKey>(key)] = value.map((item) => kot<StarKey>(item)) ?? [];
@@ -101,21 +108,10 @@ export const config = ({ mutagens, brightness, yearDivide, ageDivide, horoscopeD
     });
   }
 
-  if (yearDivide) {
-    _yearDivide = yearDivide;
-  }
-
-  if (horoscopeDivide) {
-    _horoscopeDivide = horoscopeDivide;
-  }
-
-  if (ageDivide) {
-    _ageDivide = ageDivide;
-  }
-
-  if (algorithm) {
-    _algorithm = algorithm;
-  }
+  _yearDivide = yearDivide;
+  _horoscopeDivide = horoscopeDivide;
+  _ageDivide = ageDivide;
+  _algorithm = algorithm;
 };
 
 export const getConfig = () => ({
