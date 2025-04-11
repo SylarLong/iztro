@@ -169,6 +169,7 @@ export type Plugin = () => void;
 
 export type ConfigMutagens = Partial<Record<HeavenlyStemName, StarName[]>>;
 export type ConfigBrightness = Partial<Record<StarName, Brightness[]>>;
+export type AstroType = 'heaven' | 'earth' | 'human';
 
 export type Config = {
   /** 四化配置 */
@@ -181,15 +182,55 @@ export type Config = {
   horoscopeDivide?: 'normal' | 'exact';
   /** 小限分割点配置，normal为以自然年分界，birthday为生日分界 */
   ageDivide?: 'normal' | 'birthday';
+  /** 安星方法，default为通行版本，zhongzhou为中州派版本 */
+  algorithm?: 'default' | 'zhongzhou';
 };
 
+/**
+ * 排盘参数，该对象用于获取紫微斗数星盘数据。
+ */
 export type Option = {
+  /** 日期类型。
+   * - 阳历：'solar'
+   * - 阴历：'lunar'
+   */
   type: 'solar' | 'lunar';
+  /** 阳历日期，格式为YYYY-MM-DD */
   dateStr: string;
+  /** 时辰索引。0为早子时，1为丑时，以此类推，12为晚子时 */
   timeIndex: number;
+  /** 性别。支持多语言输入，比如可以输入 `男` 或 `女`，也可以输入 `male` 或 `femal` */
   gender: GenderName;
+  /** 是否为闰月。仅阴历类型是可用，当月没有闰月时不生效。 */
   isLeapMonth?: boolean;
+  /** 是否修正闰月。当修正闰月时，以农历15日为界，15日（含）之前算当月，之后算下月。 */
   fixLeap?: boolean;
+  /** 输出语言。支持 'en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW', 'vi-VN' */
   language?: Language;
+  /** 配置项。 */
   config?: Config;
+  /**
+   * 星盘类型（中州派特有）。默认为天盘。
+   * - 天盘：'heaven'
+   * - 地盘：'earth'
+   * - 人盘：'human'
+   */
+  astroType?: AstroType;
+};
+
+/**
+ * 通用排盘参数，该参数类型主要用于需要传递完整生辰和五行局起始干支的场景。
+ * 五行局起始干支主要用于中州派的地盘、人盘排法。
+ */
+export type AstrolabeParam = {
+  /** 阳历日期，格式为YYYY-MM-DD */
+  solarDate: string;
+  /** 时辰索引【0～12】，0为早子时，12为晚子时 */
+  timeIndex: number;
+  /** 是否调整农历闰月（若该月不是闰月则不会生效），调整后闰月十五日之后按下月算 */
+  fixLeap?: boolean;
+  /** 性别，不是每个方法都需要性别，所以将之设置为可选 */
+  gender?: GenderName;
+  /** 五行局起始干支，用于中州派的地盘、人盘排法，不传该参数即为天盘数据 */
+  from?: { heavenlyStem: HeavenlyStemName; earthlyBranch: EarthlyBranchName };
 };

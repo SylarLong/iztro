@@ -8,7 +8,7 @@ import {
   earthlyBranches,
   FiveElementsClass,
 } from '../data';
-import { SoulAndBody, Decadal } from '../data/types';
+import { SoulAndBody, Decadal, AstrolabeParam } from '../data/types';
 import {
   EarthlyBranchKey,
   EarthlyBranchName,
@@ -19,10 +19,9 @@ import {
   PalaceName,
   kot,
   t,
-  GenderName,
   GenderKey,
 } from '../i18n';
-import { fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
+import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
 import { getConfig } from './astro';
 
 /**
@@ -37,12 +36,11 @@ import { getConfig } from './astro';
  * - 寅起正月，顺数至生月，逆数生时为命宫。
  * - 寅起正月，顺数至生月，顺数生时为身宫。
  *
- * @param solarDate 公历日期，用公历日期比较方便，因为农历日期需要考虑闰月问题，如果得到的数据是农历，可以用 lunar2solar 方法得到公历日期
- * @param timeIndex 出生时索引
- * @param fixLeap 是否修正闰月，若修正，则闰月前15天按上月算，后15天按下月算
- * @returns SoulAndBody
+ * @param {AstrolabeParam} param 通用排盘参数
+ * @returns {SoulAndBody} 命宫和身宫数据
  */
-export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: boolean): SoulAndBody => {
+export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
+  const { solarDate, timeIndex, fixLeap, from } = param;
   const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });
@@ -56,11 +54,20 @@ export const getSoulAndBody = (solarDate: string, timeIndex: number, fixLeap?: b
 
   // 命宫索引，以寅宫为0，顺时针数到生月地支索引，再逆时针数到生时地支索引
   // 此处数到生月地支索引其实就是农历月份，所以不再计算生月地支索引
-  const soulIndex = fixIndex(monthIndex - EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
+  let soulIndex = fixIndex(monthIndex - EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
 
   // 身宫索引，以寅宫为0，顺时针数到生月地支索引，再顺时针数到生时地支索引
   // 与命宫索引一样，不再赘述
-  const bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
+  let bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
+
+  if (from?.heavenlyStem && from?.earthlyBranch) {
+    // 以传入地支为命宫
+    soulIndex = fixEarthlyBranchIndex(from.earthlyBranch);
+
+    const bodyOffset = [0, 2, 4, 6, 8, 10, 0, 2, 4, 6, 8, 10, 0];
+
+    bodyIndex = fixIndex(bodyOffset[timeIndex] + soulIndex);
+  }
 
   // 用五虎遁取得寅宫的天干
   const startHevenlyStem = TIGER_RULE[heavenlyStemOfYear];
@@ -175,22 +182,20 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
  * @param fixLeap 是否修正闰月，若修正，则闰月前15天按上月算，后15天按下月算
  * @returns 从寅宫开始的大限年龄段
  */
-export const getHoroscope = (
-  solarDateStr: string,
-  timeIndex: number,
-  gender: GenderName,
-  fixLeap?: boolean,
-): { decadals: Decadal[]; ages: number[][] } => {
+export const getHoroscope = (param: AstrolabeParam): { decadals: Decadal[]; ages: number[][] } => {
+  const { solarDate, timeIndex, gender, from } = param;
   const decadals: Decadal[] = [];
-  const genderKey = kot<GenderKey>(gender);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+  const genderKey = kot<GenderKey>(gender!);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     // 起大限应该与配置同步
     year: getConfig().yearDivide,
   });
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
-  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(solarDateStr, timeIndex, fixLeap);
-  const fiveElementsClass = kot<FiveElementsClassKey>(getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul));
+  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(param);
+  const fiveElementsClass = kot<FiveElementsClassKey>(
+    getFiveElementsClass(from?.heavenlyStem ?? heavenlyStemOfSoul, from?.earthlyBranch ?? earthlyBranchOfSoul),
+  );
 
   // 用五虎遁获取大限起始天干
   const startHeavenlyStem = TIGER_RULE[heavenlyStem];
@@ -219,7 +224,7 @@ export const getHoroscope = (
       age.push(12 * j + i + 1);
     }
 
-    const idx = kot<GenderKey>(gender) === 'male' ? fixIndex(ageIdx + i) : fixIndex(ageIdx - i);
+    const idx = kot<GenderKey>(gender!) === 'male' ? fixIndex(ageIdx + i) : fixIndex(ageIdx - i);
 
     ages[idx] = age;
   }
