@@ -241,6 +241,26 @@ describe('Astrolabe', () => {
     expect(agePalace2).toHaveProperty('earthlyBranch', '亥');
   });
 
+  test('horoscope()', () => {
+    const result = astro.bySolar('1991-3-7', 6, '女', true);
+
+    const horoscope = result.horoscope('2025-3-26');
+
+    expect(horoscope).toHaveProperty('solarDate', '2025-3-26');
+    expect(horoscope.decadal).toHaveProperty('index', 8);
+    expect(horoscope.decadal).toHaveProperty('heavenlyStem', '戊');
+    expect(horoscope.decadal).toHaveProperty('earthlyBranch', '戌');
+    expect(horoscope.yearly).toHaveProperty('index', 3);
+    expect(horoscope.yearly).toHaveProperty('heavenlyStem', '乙');
+    expect(horoscope.yearly).toHaveProperty('earthlyBranch', '巳');
+    expect(horoscope.monthly).toHaveProperty('index', 10);
+    expect(horoscope.monthly).toHaveProperty('heavenlyStem', '己');
+    expect(horoscope.monthly).toHaveProperty('earthlyBranch', '卯');
+    expect(horoscope.daily).toHaveProperty('index', 0);
+    expect(horoscope.daily).toHaveProperty('heavenlyStem', '甲');
+    expect(horoscope.daily).toHaveProperty('earthlyBranch', '午');
+  });
+
   test('bySolar() Korean', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true, 'ko-KR');
 

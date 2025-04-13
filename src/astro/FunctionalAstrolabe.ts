@@ -126,9 +126,9 @@ const _getHoroscopeBySolarDate = (
   // 获取流月索引, 流年地支逆数到生月所在宫位，再从该宫位顺数到生时，为正月所在宫位，之后每月一宫
   monthlyIndex = fixIndex(
     yearlyIndex -
-      fixEarthlyBranchIndex($.rawDates.chineseDate.monthly[1]) +
+      _birthday.lunarMonth +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
-      fixEarthlyBranchIndex(monthly[1]),
+      _date.lunarMonth,
   );
 
   // 获取流日索引
