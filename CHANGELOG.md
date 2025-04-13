@@ -18,6 +18,16 @@
   🇺🇸
 
   - support zhongzhou sect algorithm. #228
+  
+- 🛠️ 修复（fix）
+
+  🇨🇳
+
+  - [v2.4.9]: 流月宫位计算错误 #229
+
+  🇺🇸
+
+  - [v2.4.9]: fix wrong monthly palace index. #229
 
 ## v2.4.9
 
