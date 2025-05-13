@@ -731,7 +731,8 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     [tianshiIndex, tianshangIndex] = [tianshangIndex, tianshiIndex];
   }
 
-  const thieuduongIndex = fixIndex(fixEarthlyBranchIndex(yearly[1]));
+
+  const thaiTueSeries = getThaiTueSeriesIndex(yearly[1]);
 
   return {
     xianchiIndex,
@@ -761,7 +762,46 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     jieshaAdjIndex,
     nianjieIndex,
     dahaoAdjIndex,
-    thieuduongIndex,
+    ...thaiTueSeries,
+  };
+};
+
+/**
+ * Gets the index of the 12 stars in the Thái Tuế series (按年支)
+ *
+ * These 12 stars follow an ordered sequence with Thái Tuế as the base:
+ * 1. Thái Tuế - At the year's earthly branch position
+ * 2. Thiếu Dương - 1 position after Thái Tuế
+ * 3. Tang Môn - 2 positions after Thái Tuế
+ * 4. Thiếu Âm - 3 positions after Thái Tuế
+ * 5. Quan Phù - 4 positions after Thái Tuế
+ * 6. Tử Phù - 5 positions after Thái Tuế
+ * 7. Tuế Phá - 6 positions after Thái Tuế (opposite)
+ * 8. Long Đức - 7 positions after Thái Tuế
+ * 9. Bạch Hổ - 8 positions after Thái Tuế
+ * 10. Phúc Đức - 9 positions after Thái Tuế
+ * 11. Điếu Khách - 10 positions after Thái Tuế
+ * 12. Trực Phù - 11 positions after Thái Tuế
+ *
+ * @param earthlyBranchName Year's earthly branch
+ * @returns Object with indices for all 12 stars
+ */
+export const getThaiTueSeriesIndex = (earthlyBranchName: EarthlyBranchName) => {
+  const baseIndex = fixIndex(fixEarthlyBranchIndex(earthlyBranchName));
+
+  return {
+    thaitueIndex: baseIndex,
+    thieuduongIndex: fixIndex(baseIndex + 1),
+    tangmonIndex: fixIndex(baseIndex + 2),
+    thieuamIndex: fixIndex(baseIndex + 3),
+    quanphuIndex: fixIndex(baseIndex + 4),
+    tuphuIndex: fixIndex(baseIndex + 5),
+    tuephaIndex: fixIndex(baseIndex + 6),
+    longducIndex: fixIndex(baseIndex + 7),
+    bachhoIndex: fixIndex(baseIndex + 8),
+    phucducIndex: fixIndex(baseIndex + 9),
+    dieukhachIndex: fixIndex(baseIndex + 10),
+    trucphuIndex: fixIndex(baseIndex + 11)
   };
 };
 

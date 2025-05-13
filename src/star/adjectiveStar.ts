@@ -104,8 +104,77 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
   stars[yearlyIndex.nianjieIndex].push(new FunctionalStar(
     { name: t('nianjie'), type: 'helper', scope: 'origin' }));
 
+  stars[yearlyIndex.thaitueIndex].push(new FunctionalStar({
+    name: t('thaitue'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+
   stars[yearlyIndex.thieuduongIndex].push(new FunctionalStar({
     name: t('thieuduong'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+
+// Add the remaining 10 stars in the Thái Tuế series
+  stars[yearlyIndex.tangmonIndex].push(new FunctionalStar({
+    name: t('tangmon'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.thieuamIndex].push(new FunctionalStar({
+    name: t('thieuam'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.quanphuIndex].push(new FunctionalStar({
+    name: t('quanphu'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.tuphuIndex].push(new FunctionalStar({
+    name: t('tuphu'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.tuephaIndex].push(new FunctionalStar({
+    name: t('tuepha'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.longducIndex].push(new FunctionalStar({
+    name: t('longduc'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.bachhoIndex].push(new FunctionalStar({
+    name: t('bachho'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.phucducIndex].push(new FunctionalStar({
+    name: t('phucduc'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.dieukhachIndex].push(new FunctionalStar({
+    name: t('dieukhach'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  stars[yearlyIndex.trucphuIndex].push(new FunctionalStar({
+    name: t('trucphu'),
     type: 'adjective',
     scope: 'origin'
   }));
