@@ -101,7 +101,14 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
   );
 
   // 生年年解
-  stars[yearlyIndex.nianjieIndex].push(new FunctionalStar({ name: t('nianjie'), type: 'helper', scope: 'origin' }));
+  stars[yearlyIndex.nianjieIndex].push(new FunctionalStar(
+    { name: t('nianjie'), type: 'helper', scope: 'origin' }));
+
+  stars[yearlyIndex.thieuduongIndex].push(new FunctionalStar({
+    name: t('thieuduong'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
 
   return stars;
 };

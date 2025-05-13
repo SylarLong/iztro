@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>iztro Test</title>
+</head>
+<body>
+<h1>iztro Test</h1>
+<pre id="result"></pre>
+
+<!-- Use local build -->
+<script src="path/to/your/iztro/dist/iztro.min.js"></script>
+<script>
+  // Test the functionality
+  const result = iztro.astro.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
+  document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+</script>
+</body>
+</html>

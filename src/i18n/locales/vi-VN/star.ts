@@ -131,6 +131,7 @@ export default {
   liutuo: 'Lưu Đà',
   liuma: 'Lưu Mã',
   nianjie: 'Niên Giải',
+  thieuduong: 'Thiếu Dương',
   yuekui: 'Thiên Khôi(M)',
   yueyue: 'Thiên Nguyệt(M)',
   yuechang: 'Văn Xương(M)',

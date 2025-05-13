@@ -731,6 +731,8 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     [tianshiIndex, tianshangIndex] = [tianshangIndex, tianshiIndex];
   }
 
+  const thieuduongIndex = fixIndex(fixEarthlyBranchIndex(yearly[1]));
+
   return {
     xianchiIndex,
     huagaiIndex,
@@ -759,6 +761,7 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     jieshaAdjIndex,
     nianjieIndex,
     dahaoAdjIndex,
+    thieuduongIndex,
   };
 };
 

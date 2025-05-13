@@ -725,6 +725,17 @@ describe('star/location', () => {
   });
 
   test('getYearlyStarIndex()', () => {
+    const x = getYearlyStarIndex({
+        solarDate: '2023-03-06',
+        timeIndex: 2,
+        fixLeap: true,
+        gender: '女',
+      })
+
+    // In any function you want to debug (e.g., getYearlyStarIndex)
+    console.log("thieuduongIndex:", x);
+
+
     expect(
       getYearlyStarIndex({
         solarDate: '2023-03-06',
