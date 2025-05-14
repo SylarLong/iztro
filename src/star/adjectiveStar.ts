@@ -179,5 +179,11 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
     scope: 'origin'
   }));
 
+  stars[monthlyIndex.thiengiaiIndex].push(new FunctionalStar({
+    name: t('thiengiai'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
   return stars;
 };

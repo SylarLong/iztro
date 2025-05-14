@@ -308,7 +308,7 @@ export const getDailyStarIndex = (solarDateStr: string, timeIndex: number, fixLe
   const santaiIndex = fixIndex((zuoIndex + dayIndex) % 12);
   const bazuoIndex = fixIndex((youIndex - dayIndex) % 12);
   const enguangIndex = fixIndex(((changIndex + dayIndex) % 12) - 1);
-  const tianguiIndex = fixIndex(((quIndex + dayIndex) % 12) - 1);
+  const tianguiIndex = fixIndex(((quIndex - dayIndex) % 12) + 1);
 
   return { santaiIndex, bazuoIndex, enguangIndex, tianguiIndex };
 };
@@ -871,6 +871,9 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
     fixEarthlyBranchIndex(['si', 'shen', 'yin', 'hai'][monthIndex % 4] as EarthlyBranchName),
   );
 
+  const thiengiaiIndex = fixIndex(fixEarthlyBranchIndex('shen') + monthIndex);
+
+
   return {
     yuejieIndex: jieshenIndex,
     tianyaoIndex,
@@ -878,6 +881,7 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
     yinshaIndex,
     tianyueIndex,
     tianwuIndex,
+    thiengiaiIndex,
   };
 };
 
