@@ -952,3 +952,50 @@ export const getChangQuIndexByHeavenlyStem = (heavenlyStemName: HeavenlyStemName
 
   return { changIndex, quIndex };
 };
+
+/**
+ * Gets the index of Đào Hoa star based on birth year's earthly branch
+ *
+ * @param earthlyBranchName Birth year's earthly branch
+ * @returns Index of Đào Hoa star position
+ */
+export const getDaoHoaIndex = (earthlyBranchName: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+
+  let targetBranch: EarthlyBranchName;
+
+  switch (earthlyBranch) {
+    // Tị, Dậu, Sửu -> Ngọ
+    case 'siEarthly':
+    case 'youEarthly':
+    case 'chouEarthly':
+      targetBranch = 'woo';
+      break;
+
+    // Hợi, Mão, Mùi -> Tỵ
+    case 'haiEarthly':
+    case 'maoEarthly':
+    case 'weiEarthly':
+      targetBranch = 'zi';
+      break;
+
+    // Thân, Tý, Thìn -> Dậu
+    case 'shenEarthly':
+    case 'ziEarthly':
+    case 'chenEarthly':
+      targetBranch = 'you';
+      break;
+
+    // Dần, Ngọ, Tuất -> Mão
+    case 'yinEarthly':
+    case 'wuEarthly':  // Changed from 'wooEarthly' to 'wuEarthly'
+    case 'xuEarthly':
+      targetBranch = 'mao';
+      break;
+
+    default:
+      targetBranch = 'zi'; // Default fallback
+  }
+
+  return fixIndex(fixEarthlyBranchIndex(targetBranch));
+};

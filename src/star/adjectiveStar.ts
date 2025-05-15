@@ -4,6 +4,7 @@ import { kot, t } from '../i18n';
 import FunctionalStar from './FunctionalStar';
 import {
   getDailyStarIndex,
+  getDaoHoaIndex,
   getLuanXiIndex,
   getMonthlyStarIndex,
   getTimelyStarIndex,
@@ -221,6 +222,16 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
 // Thêm sao Đẩu Quân
   stars[yearlyIndex.dauQuanIndex].push(new FunctionalStar({
     name: t('dauquan'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+
+  const daoHoaIndex = getDaoHoaIndex(yearly[1]);
+
+// Add Đào Hoa star
+  stars[daoHoaIndex].push(new FunctionalStar({
+    name: t('daohoa'),
     type: 'adjective',
     scope: 'origin'
   }));

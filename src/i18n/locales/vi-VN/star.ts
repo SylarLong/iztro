@@ -177,4 +177,5 @@ export default {
   shima: 'Thiên Mã(H)',
   quocan: 'Quốc Ấn',
   dauquan: 'Đẩu Quân',
+  daohoa: 'Đào Hoa',
 } as const;
