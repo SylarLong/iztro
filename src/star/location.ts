@@ -4,7 +4,7 @@ import { EARTHLY_BRANCHES, FiveElementsClass, HEAVENLY_STEMS, PALACES } from '..
 import {
   EarthlyBranchKey,
   EarthlyBranchName,
-  FiveElementsClassKey,
+  FiveElementsClassKey, GenderName,
   HeavenlyStemKey,
   HeavenlyStemName,
   kot,
@@ -352,61 +352,72 @@ export const getKongJieIndex = (timeIndex: number) => {
 };
 
 /**
- * 获取火星铃星索引（按年支以及时支）
+ * Lấy vị trí sao Linh Tinh và Hỏa Tinh dựa vào địa chi năm sinh, giờ sinh và giới tính
  *
- * - 申子辰人寅戌扬
- * - 寅午戌人丑卯方
- * - 巳酉丑人卯戌位
- * - 亥卯未人酉戌房
- *
- * 起火铃二耀先据出生年支，依口诀定火铃起子时位。
- *
- * 例如壬辰年卯时生人，据[申子辰人寅戌扬]口诀，故火星在寅宫起子时，铃星在戌宫起子时，顺数至卯时，即火星在巳，铃星在丑。
- *
- * @param earthlyBranchName 地支
- * @param timeIndex 时辰序号
- * @returns 火星、铃星索引
+ * @param earthlyBranchName Địa chi năm sinh
+ * @param timeIndex Chỉ số giờ (0-11)
+ * @param gender Giới tính ('male' hoặc 'female')
+ * @returns Vị trí của Linh Tinh và Hỏa Tinh
  */
-export const getHuoLingIndex = (earthlyBranchName: EarthlyBranchName, timeIndex: number) => {
-  let huoIndex = -1;
-  let lingIndex = -1;
-  const fixedTimeIndex = fixIndex(timeIndex);
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+export const getHuoLingIndex = (
+  earthlyBranchName: EarthlyBranchName,
+  timeIndex: number,
+  gender: GenderName
+) => {
+  // Xác định cục tam hợp và điểm khởi đầu
+  let lingStartPosition: EarthlyBranchName;
+  let huoStartPosition: EarthlyBranchName;
 
-  switch (earthlyBranch) {
-    case 'yinEarthly':
-    case 'wuEarthly':
-    case 'xuEarthly': {
-      huoIndex = fixEarthlyBranchIndex('chou') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('mao') + fixedTimeIndex;
-      break;
-    }
-    case 'shenEarthly':
-    case 'ziEarthly':
-    case 'chenEarthly': {
-      huoIndex = fixEarthlyBranchIndex('yin') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('xu') + fixedTimeIndex;
-      break;
-    }
-    case 'siEarthly':
-    case 'youEarthly':
-    case 'chouEarthly': {
-      huoIndex = fixEarthlyBranchIndex('mao') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('xu') + fixedTimeIndex;
-      break;
-    }
-    case 'haiEarthly':
-    case 'weiEarthly':
-    case 'maoEarthly': {
-      huoIndex = fixEarthlyBranchIndex('you') + fixedTimeIndex;
-      lingIndex = fixEarthlyBranchIndex('xu') + fixedTimeIndex;
-      break;
-    }
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+  const fixedTimeIndex = fixIndex(timeIndex);
+
+  // Xác định điểm khởi đầu dựa vào cục tam hợp
+  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranch)) {
+    // Cục Dần-Ngọ-Tuất
+    lingStartPosition = 'mao'; // Linh Tinh khởi tại Mão
+    huoStartPosition = 'chou';  // Hỏa Tinh khởi tại Sửu
+  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranch)) {
+    // Cục Hợi-Mão-Mùi
+    lingStartPosition = 'xu';  // Linh Tinh khởi tại Tuất
+    huoStartPosition = 'you';   // Hỏa Tinh khởi tại Dậu
+  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranch)) {
+    // Cục Thân-Tý-Thìn
+    lingStartPosition = 'xu';  // Linh Tinh khởi tại Tuất
+    huoStartPosition = 'yin';  // Hỏa Tinh khởi tại Dần
+  } else {
+    // Cục Tỵ-Dậu-Sửu
+    lingStartPosition = 'xu';  // Linh Tinh khởi tại Tuất
+    huoStartPosition = 'mao';   // Hỏa Tinh khởi tại Mão
   }
 
+  // Xác định âm dương của địa chi năm sinh
+  // Địa chi chẵn là dương, lẻ là âm
+  const isYangEarthlyBranch = EARTHLY_BRANCHES.indexOf(earthlyBranch) % 2 === 0;
+
+  // Xác định chiều đi
+  let lingDirection: number;
+  let huoDirection: number;
+
+  if ((gender === 'male' && isYangEarthlyBranch) || (gender === 'female' && !isYangEarthlyBranch)) {
+    // Dương Nam hoặc Âm Nữ
+    lingDirection = -1; // Linh Tinh đi nghịch
+    huoDirection = 1;   // Hỏa Tinh đi thuận
+  } else {
+    // Âm Nam hoặc Dương Nữ
+    lingDirection = 1;  // Linh Tinh đi thuận
+    huoDirection = -1;  // Hỏa Tinh đi nghịch
+  }
+
+  // Tính toán vị trí cuối cùng
+  const lingStartIndex = fixEarthlyBranchIndex(lingStartPosition);
+  const huoStartIndex = fixEarthlyBranchIndex(huoStartPosition);
+
+  const lingIndex = fixIndex(lingStartIndex + (lingDirection * fixedTimeIndex));
+  const huoIndex = fixIndex(huoStartIndex + (huoDirection * fixedTimeIndex));
+
   return {
-    huoIndex: fixIndex(huoIndex),
-    lingIndex: fixIndex(lingIndex),
+    huoIndex,
+    lingIndex
   };
 };
 

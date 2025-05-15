@@ -1,6 +1,6 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
 import { initStars } from '.';
-import { t } from '../i18n';
+import { GenderName, t } from '../i18n';
 import { fixLunarMonthIndex, getBrightness, getMutagen } from '../utils';
 import FunctionalStar from './FunctionalStar';
 import {
@@ -18,10 +18,11 @@ import { getConfig } from '../astro';
  *
  * @param solarDateStr 阳历日期字符串
  * @param timeIndex 时辰索引【0～12】
+ * @param gender 性别【男｜女】
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  * @returns 14辅星
  */
-export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+export const getMinorStar = (solarDateStr: string, timeIndex: number, gender: GenderName, fixLeap?: boolean) => {
   const stars = initStars();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
     year: getConfig().yearDivide,
@@ -32,7 +33,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   const { zuoIndex, youIndex } = getZuoYouIndex(monthIndex + 1);
   const { changIndex, quIndex } = getChangQuIndex(timeIndex);
   const { kuiIndex, yueIndex } = getKuiYueIndex(yearly[0]);
-  const { huoIndex, lingIndex } = getHuoLingIndex(yearly[1], timeIndex);
+  const { huoIndex, lingIndex } = getHuoLingIndex(yearly[1], timeIndex, gender);
   const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
 

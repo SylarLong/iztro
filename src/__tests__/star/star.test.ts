@@ -210,7 +210,7 @@ describe('star/index', () => {
 
   test('getMinorStar()', () => {
     const primaryStars = getMajorStar({ solarDate: '2023-03-06', timeIndex: 2, fixLeap: true });
-    const secondaryStars = getMinorStar('2023-03-06', 2, true);
+    const secondaryStars = getMinorStar('2023-03-06', 2, 'male', true);
     const otherStars = getAdjectiveStar({
       solarDate: '2023-03-06',
       timeIndex: 2,

@@ -177,7 +177,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
   });
   const palaceNames = getPalaceNames(soulIndex);
   const majorStars = getMajorStar({ solarDate, timeIndex, fixLeap });
-  const minorStars = getMinorStar(solarDate, timeIndex, fixLeap);
+  const minorStars = getMinorStar(solarDate, timeIndex, gender, fixLeap);
   const adjectiveStars = getAdjectiveStar({
     solarDate,
     timeIndex,
