@@ -5,3 +5,4 @@ coverage
 .vscode
 *.log
 .DS_Store
+.idea/*
