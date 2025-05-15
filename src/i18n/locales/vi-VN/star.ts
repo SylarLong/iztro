@@ -179,4 +179,5 @@ export default {
   dauquan: 'Đẩu Quân',
   daohoa: 'Đào Hoa',
   luuha: 'Lưu Hà',
+  duongphu: 'Đường Phù',
 } as const;
