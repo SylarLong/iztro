@@ -130,7 +130,7 @@ export default {
   liuyang: 'Lưu Dương',
   liutuo: 'Lưu Đà',
   liuma: 'Lưu Mã',
-  nianjie: 'Niên Giải',
+  nianjie: 'Giải Thần',
   thaitue: 'Thái Tuế',
   thieuduong: 'Thiếu Dương',
   tangmon: 'Tang Môn',
@@ -180,4 +180,5 @@ export default {
   daohoa: 'Đào Hoa',
   luuha: 'Lưu Hà',
   duongphu: 'Đường Phù',
+  vantinh: 'Văn Tinh',
 } as const;

@@ -1094,3 +1094,48 @@ export const getDuongPhuIndex = (heavenlyStemName: HeavenlyStemName) => {
 
   return fixIndex(fixEarthlyBranchIndex(targetBranch));
 };
+
+/**
+ * Gets the index of Lưu Niên Văn Tinh star based on birth year's heavenly stem
+ *
+ * @param heavenlyStemName Birth year's heavenly stem
+ * @returns Index of Lưu Niên Văn Tinh star position
+ */
+export const getVanTinhIndex = (heavenlyStemName: HeavenlyStemName) => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
+
+  let targetBranch: EarthlyBranchName;
+
+  switch (heavenlyStem) {
+    case 'jiaHeavenly':
+      targetBranch = 'si';    // Giáp -> Tị
+      break;
+    case 'yiHeavenly':
+      targetBranch = 'woo';   // Ất -> Ngọ (fixed 'wu' to 'woo')
+      break;
+    case 'bingHeavenly':
+    case 'wuHeavenly':
+      targetBranch = 'shen';  // Bính/Mậu -> Thân
+      break;
+    case 'dingHeavenly':
+    case 'jiHeavenly':
+      targetBranch = 'you';   // Đinh/Kỷ -> Dậu
+      break;
+    case 'gengHeavenly':
+      targetBranch = 'hai';   // Canh -> Hợi
+      break;
+    case 'xinHeavenly':
+      targetBranch = 'zi';    // Tân -> Tý
+      break;
+    case 'renHeavenly':
+      targetBranch = 'yin';   // Nhâm -> Dần
+      break;
+    case 'guiHeavenly':
+      targetBranch = 'mao';   // Quý -> Mão
+      break;
+    default:
+      targetBranch = 'zi';    // Default fallback
+  }
+
+  return fixIndex(fixEarthlyBranchIndex(targetBranch));
+};
