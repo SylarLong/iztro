@@ -642,6 +642,8 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     // 流耀应该用立春为界，但为了满足不同流派的需求允许配置
     year: horoscopeDivide,
   });
+  const { lunarMonth } = solar2lunar(solarDate);
+
   const { soulIndex, bodyIndex } = getSoulAndBody({ solarDate, timeIndex, fixLeap });
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
@@ -734,6 +736,14 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
 
   const thaiTueSeries = getThaiTueSeriesIndex(yearly[1]);
 
+  // Lấy vị trí của sao Thái Tuế (cùng tên với địa chi năm sinh)
+  const thaiTueIndex = fixIndex(fixEarthlyBranchIndex(yearly[1]));
+
+// Tính ngược chiều kim đồng hồ đến tháng sinh (trừ đi số tháng)
+// Sau đó tính thuận chiều kim đồng hồ đến giờ sinh (cộng thêm giờ)
+  const dauQuanIndex = fixIndex(thaiTueIndex - lunarMonth + timeIndex + 1);
+
+
   return {
     xianchiIndex,
     huagaiIndex,
@@ -762,6 +772,7 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     jieshaAdjIndex,
     nianjieIndex,
     dahaoAdjIndex,
+    dauQuanIndex,
     ...thaiTueSeries,
   };
 };

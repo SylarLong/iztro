@@ -12,6 +12,23 @@ import {
 import { getConfig } from '../astro';
 import { AstrolabeParam } from '../data/types';
 
+export const getQuocAnIndex = (heavenlyStem: string): number => {
+  const earthlyBranchIndexMap: Record<string, number> = {
+    甲: 9, // Giáp -> Tuất
+    乙: 10, // Ất -> Hợi
+    丙: 1, // Bính -> Sửu
+    丁: 2, // Đinh -> Dần
+    戊: 1, // Mậu -> Sửu
+    己: 2, // Kỷ -> Dần
+    庚: 4, // Canh -> Thìn
+    辛: 5, // Tân -> Tị
+    壬: 7, // Nhâm -> Mùi
+    癸: 8, // Quý -> Thân
+  };
+
+  return earthlyBranchIndexMap[heavenlyStem] || 0;
+};
+
 /**
  * 安杂耀
  *
@@ -191,5 +208,23 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
     scope: 'origin'
   }));
 
+
+
+  const quocAnIndex = getQuocAnIndex(yearly[0]);
+
+  stars[quocAnIndex].push(new FunctionalStar({
+    name: t('quocan'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+// Thêm sao Đẩu Quân
+  stars[yearlyIndex.dauQuanIndex].push(new FunctionalStar({
+    name: t('dauquan'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
   return stars;
 };
+

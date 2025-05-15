@@ -175,4 +175,6 @@ export default {
   shiyang: 'Kình Dương(H)',
   shituo: 'Đà La(H)',
   shima: 'Thiên Mã(H)',
+  quocan: 'Quốc Ấn',
+  dauquan: 'Đẩu Quân',
 } as const;
