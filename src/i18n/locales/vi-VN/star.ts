@@ -178,4 +178,5 @@ export default {
   quocan: 'Quốc Ấn',
   dauquan: 'Đẩu Quân',
   daohoa: 'Đào Hoa',
+  luuha: 'Lưu Hà',
 } as const;

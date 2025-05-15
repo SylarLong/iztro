@@ -1,5 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
-import { getYearly12, initStars } from '.';
+import { getLuuHaIndex, getYearly12, initStars } from '.';
 import { kot, t } from '../i18n';
 import FunctionalStar from './FunctionalStar';
 import {
@@ -232,6 +232,15 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
 // Add Đào Hoa star
   stars[daoHoaIndex].push(new FunctionalStar({
     name: t('daohoa'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+
+  const luuHaIndex = getLuuHaIndex(yearly[0]);
+
+  stars[luuHaIndex].push(new FunctionalStar({
+    name: t('luuha'),
     type: 'adjective',
     scope: 'origin'
   }));

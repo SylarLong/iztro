@@ -999,3 +999,52 @@ export const getDaoHoaIndex = (earthlyBranchName: EarthlyBranchName) => {
 
   return fixIndex(fixEarthlyBranchIndex(targetBranch));
 };
+
+/**
+ * Gets the index of Lưu Hà star based on birth year's heavenly stem
+ *
+ * @param heavenlyStemName Birth year's heavenly stem
+ * @returns Index of Lưu Hà star position
+ */
+export const getLuuHaIndex = (heavenlyStemName: HeavenlyStemName) => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
+
+  let targetBranch: EarthlyBranchName;
+
+  switch (heavenlyStem) {
+    case 'jiaHeavenly':
+      targetBranch = 'you';  // Giáp -> Dậu
+      break;
+    case 'yiHeavenly':
+      targetBranch = 'xu';   // Ất -> Tuất
+      break;
+    case 'bingHeavenly':
+      targetBranch = 'wei';  // Bính -> Mùi
+      break;
+    case 'dingHeavenly':
+      targetBranch = 'chen'; // Đinh -> Thìn
+      break;
+    case 'wuHeavenly':
+      targetBranch = 'si';   // Mậu -> Tỵ
+      break;
+    case 'jiHeavenly':
+      targetBranch = 'woo';  // Kỷ -> Ngọ
+      break;
+    case 'gengHeavenly':
+      targetBranch = 'shen'; // Canh -> Thân
+      break;
+    case 'xinHeavenly':
+      targetBranch = 'mao';  // Tân -> Mão
+      break;
+    case 'renHeavenly':
+      targetBranch = 'hai';  // Nhâm -> Hợi
+      break;
+    case 'guiHeavenly':
+      targetBranch = 'yin';  // Quý -> Dần
+      break;
+    default:
+      targetBranch = 'zi';   // Default fallback
+  }
+
+  return fixIndex(fixEarthlyBranchIndex(targetBranch));
+};
