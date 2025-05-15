@@ -144,6 +144,7 @@ export default {
   dieukhach: 'Điếu Khách',
   trucphu: 'Trực Phù',
   thiengiai: 'Thiên Giải',
+  diagiai: 'Địa Giải',
   yuekui: 'Thiên Khôi(M)',
   yueyue: 'Thiên Nguyệt(M)',
   yuechang: 'Văn Xương(M)',

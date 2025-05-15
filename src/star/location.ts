@@ -872,7 +872,7 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
   );
 
   const thiengiaiIndex = fixIndex(fixEarthlyBranchIndex('shen') + monthIndex);
-
+  const diagiaiIndex = fixIndex(fixEarthlyBranchIndex('wei') + monthIndex);
 
   return {
     yuejieIndex: jieshenIndex,
@@ -882,6 +882,7 @@ export const getMonthlyStarIndex = (solarDate: string, timeIndex: number, fixLea
     tianyueIndex,
     tianwuIndex,
     thiengiaiIndex,
+    diagiaiIndex,
   };
 };
 

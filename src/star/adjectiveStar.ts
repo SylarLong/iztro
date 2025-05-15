@@ -185,5 +185,11 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
     scope: 'origin'
   }));
 
+  stars[monthlyIndex.diagiaiIndex].push(new FunctionalStar({
+    name: t('diagiai'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
   return stars;
 };
