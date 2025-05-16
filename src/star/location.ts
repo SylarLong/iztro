@@ -1179,3 +1179,38 @@ export const getPhuongCatIndex = (earthlyBranchName: EarthlyBranchName) => {
 
   return phuongCatIndex;
 };
+
+
+/**
+ * Tính vị trí sao Đẩu Quân dựa trên năm, tháng và giờ sinh
+ * 1. Bắt đầu từ vị trí Thái Tuế (cung có địa chi trùng với năm sinh)
+ * 2. Đếm ngược chiều kim đồng hồ đến tháng sinh
+ * 3. Từ vị trí đó, coi là giờ Tý và đếm theo chiều kim đồng hồ đến giờ sinh
+ *
+ * @param param Thông số bản mệnh
+ * @returns Chỉ số vị trí sao Đẩu Quân
+ */
+export const getDauQuanIndex = (param: AstrolabeParam) => {
+  const { solarDate, timeIndex } = param;
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
+    year: getConfig().yearDivide,
+  });
+
+  // Lấy địa chi năm sinh - vị trí Thái Tuế
+  // const thaiTueIndex = fixEarthlyBranchIndex(yearly[1]);
+
+  const thaiTueIndex = fixIndex(fixEarthlyBranchIndex(yearly[1]));
+
+  // Lấy tháng sinh (1-12)
+  const { lunarMonth } = solar2lunar(solarDate);
+  const birthMonth = lunarMonth;
+
+  // Di chuyển ngược chiều kim đồng hồ từ Thái Tuế đến tháng sinh
+  const monthPosition = fixIndex(thaiTueIndex - (birthMonth -1));
+
+  // Từ vị trí tháng, di chuyển thuận chiều kim đồng hồ đến giờ sinh
+  const dauQuanIndex = fixIndex(monthPosition + timeIndex);
+
+
+  return dauQuanIndex;
+};
