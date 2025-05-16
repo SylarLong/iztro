@@ -1150,3 +1150,32 @@ export const getVanTinhIndex = (heavenlyStemName: HeavenlyStemName) => {
 
   return fixIndex(fixEarthlyBranchIndex(targetBranch));
 };
+
+/**
+ * Gets the index of Phượng Cát star based on birth year's earthly branch
+ * Starting from Xu (Tuất) palace as Zi (Tý), then counting counterclockwise
+ * to the birth year's earthly branch
+ *
+ * @param earthlyBranchName Birth year's earthly branch
+ * @returns Index of Phượng Cát star position
+ */
+export const getPhuongCatIndex = (earthlyBranchName: EarthlyBranchName) => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+
+  // Start at Xu (Tuất) position, which represents Zi (Tý)
+  const startPosition = fixEarthlyBranchIndex('xu');
+  console.log('startPosition', startPosition);
+  // Find the position difference between Zi (Tý) and the birth year's earthly branch
+  const ziPosition = EARTHLY_BRANCHES.indexOf('ziEarthly');
+  const targetPosition = EARTHLY_BRANCHES.indexOf(earthlyBranch);
+
+
+  // Calculate the difference (counterclockwise direction)
+  const difference = (targetPosition - ziPosition + 12) % 12;
+
+
+  // Apply the difference from the starting position (Xu/Tuất)
+  const phuongCatIndex = fixIndex(startPosition - difference);
+
+  return phuongCatIndex;
+};

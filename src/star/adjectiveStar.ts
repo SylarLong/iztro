@@ -7,6 +7,7 @@ import {
   getDaoHoaIndex,
   getLuanXiIndex,
   getMonthlyStarIndex,
+  getPhuongCatIndex,
   getTimelyStarIndex,
   getVanTinhIndex,
   getYearlyStarIndex,
@@ -258,6 +259,14 @@ export const getAdjectiveStar = (param: AstrolabeParam) => {
   const vantinhIndex = getVanTinhIndex(yearly[0]);
   stars[vantinhIndex].push(new FunctionalStar({
     name: t('vantinh'),
+    type: 'adjective',
+    scope: 'origin'
+  }));
+
+  const phuongCacIndex = getPhuongCatIndex(yearly[1]);
+
+  stars[phuongCacIndex].push(new FunctionalStar({
+    name: t('phuongcac'),
     type: 'adjective',
     scope: 'origin'
   }));

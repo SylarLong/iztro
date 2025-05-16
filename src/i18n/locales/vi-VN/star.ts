@@ -31,7 +31,7 @@ export default {
   tiankong: 'Thiên Không',
   tianxing: 'Thiên Hình',
   tianyao: 'Thiên Diêu',
-  jieshen: 'Giải Thần',
+  jieshen: 'Giải Thần Sai',
   yinsha: 'Âm Sát',
   tianxi: 'Thiên Hỷ',
   tianguan: 'Thiên Quan',
@@ -181,4 +181,5 @@ export default {
   luuha: 'Lưu Hà',
   duongphu: 'Đường Phù',
   vantinh: 'Văn Tinh',
+  phuongcac: 'Phượng Các',
 } as const;
