@@ -89,8 +89,8 @@
     紫微斗数流派众多，不同的流派的四化以及星耀亮度都会有些许差异，为了满足不同流派的需求和功能的扩展，`iztro` 在 `v2.3.0` 版本加入了全局配置和第三方插件功能。详见 [配置文档](https://ziwei.pro/posts/config-n-plugin.html)
 
 > [!IMPORTANT]
-> 如果你在开发中遇到任何问题，可以添加作者微信咨询
-> 你也可以任意魔改代码，或联系作者获取技术支持
+> 如果你在开发中遇到任何问题，可以添加作者微信咨询。<br>
+> 你也可以任意魔改代码，或联系作者获取技术支持。<br>
 > <img src="https://github.com/SylarLong/SylarLong/assets/6510425/a2af4876-7d26-4900-a0fc-f5a2030f6205" alt="WeChat" width="350" />
 
 ## 快捷跳转
@@ -172,7 +172,7 @@
 
 因为纯 JS 库没有代码提示和注释，所以在集成的时候请参阅 [iztro 开发文档](https://docs.iztro.com/quick-start.html)。
 
-### 简单示例
+## 简单示例
 
 这里是一个简单的例子显示如何调用 `iztro` 获取到紫微斗数星盘数据，详细文档请移步 [开发文档](https://docs.iztro.com)。
 
@@ -232,7 +232,7 @@
 
 Copyright &copy; 2023 All Contributors
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
+
 > [!NOTE]
 > 请合理使用本开源代码，禁止用于非法目的。
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
