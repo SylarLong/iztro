@@ -16,13 +16,13 @@
   [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/iztro/badge)](https://www.jsdelivr.com/package/npm/iztro)
 
   [![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro?logo=github&logoColor=%23959DA5)](https://github.com/SylarLong/iztro)
-  ![Github Codecov](https://img.shields.io/codecov/c/github/SylarLong/iztro?logo=codecov&logoColor=%23959DA5)
-  [![Codecov](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml/badge.svg)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml)
+  [![Codecov Coverage](https://img.shields.io/codecov/c/github/SylarLong/iztro?logo=codecov&logoColor=%23959DA5)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml)
+  [![Codecov Status](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml/badge.svg)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml)
 
   [![Maintainability](https://api.codeclimate.com/v1/badges/b57f0e6e2e8875ce39ae/maintainability)](https://codeclimate.com/github/SylarLong/iztro/maintainability)
   [![Package Quality](https://packagequality.com/shield/iztro.svg?logo=github)](https://packagequality.com/#?package=iztro)
 
-  [![GitHub](https://img.shields.io/github/license/sylarlong/iztro?logo=github)](https://www.npmjs.com/package/iztro)
+  [![License](https://img.shields.io/github/license/sylarlong/iztro?logo=github)](https://www.npmjs.com/package/iztro)
   [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield)
 
 </div>
@@ -108,23 +108,16 @@
 
 你可以使用任何你熟悉的包管理库来安装 `iztro`。
 
-- NPM
+```shell
+# npm
+npm install iztro -S
 
-  ```shell
-  npm install iztro -S
-  ```
+# yarn
+yarn add iztro
 
-- Yarn
-
-  ```shell
-  yarn add iztro
-  ```
-
-- pnpm
-
-  ```shell
-  pnpm install iztro -S
-  ```
+# pnpm
+pnpm install iztro -S
+```
 
 ## 独立 JavaScript 库
 
@@ -205,7 +198,7 @@
 如果你对 `iztro` 有兴趣，也想加入贡献队伍，我们非常欢迎，你可以用以下方式进行：
 
 - 如果你对程序功能有什么建议，请到 [这里](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E5%8A%9F%E8%83%BD%EF%BD%9Cfeature&projects=&template=new-feature.md&title=%7B%E6%A0%87%E9%A2%98%7D%EF%BD%9C%7Btitle%7D) 创建一个 `功能需求`。
-- 如果你发现程序有BUG，请到 [这里](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-) 创建一个 `BUG 报告`。
+- 如果你发现程序有 BUG，请到 [这里](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-) 创建一个 `BUG 报告`。
 - 你也可以将本仓库 `fork` 到你自己的仓库进行编辑，然后提交 PR 到本仓库。
 - 假如你擅长外语，我们也欢迎你对国际化文件的翻译做出你的贡献，你可以 `fork` 本仓库，然后在 [locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales) 文件夹下创建一个国际化语言文件，然后复制其他语言文件目录里面的文件到你的目录下进行更改。
 - 当然，如果你觉得本程序对你有用，请给我买杯咖啡☕️ [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)](https://PayPal.Me/sylarlong)
