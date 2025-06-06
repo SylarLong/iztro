@@ -86,6 +86,10 @@ It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
 - [Issues](https://github.com/SylarLong/iztro/issues)
 - [Demo](https://ziwei.pub)
 
+## Online Demo
+
+To instantly access iztro's astrolabe with no development required, go directly to https://ziwei.pub for online demo.
+
 ## Installation
 
 You can choose any package manager to install `iztro`.
