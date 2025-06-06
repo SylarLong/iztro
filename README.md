@@ -98,10 +98,15 @@
 - [文档](https://docs.iztro.com)
 - [讨论](https://github.com/SylarLong/iztro/discussions)
 - [问题](https://github.com/SylarLong/iztro/issues)
+- [排盘](https://ziwei.pub)
+
+## 直接使用
+
+如果你想要零开发直接查看 `iztro` 的排盘结果，请直接使用 [紫微派（ziwei.pub）](https://ziwei.pub) 在线排盘。
 
 ## 安装依赖
 
-你可以使用任何你熟悉的包管理库来安装 `iztro`
+你可以使用任何你熟悉的包管理库来安装 `iztro`。
 
 - NPM
 
@@ -167,7 +172,7 @@
 
 因为纯 JS 库没有代码提示和注释，所以在集成的时候请参阅 [iztro 开发文档](https://docs.iztro.com/quick-start.html)。
 
-## 例子
+### 简单示例
 
 这里是一个简单的例子显示如何调用 `iztro` 获取到紫微斗数星盘数据，详细文档请移步 [开发文档](https://docs.iztro.com)。
 
@@ -214,16 +219,16 @@
 
 <img width="966" alt="image" src="https://github.com/SylarLong/react-iztro/assets/6510425/f4335997-fdd8-42e2-bb1a-600942f9b0ba">
 
-## Star 趋势
+## Star 历史
 
 > [!IMPORTANT]
 > 如果你觉得代码对你有用，请点 ⭐ 支持，你的 ⭐ 是我持续更新的动力～
 
 [![Star History Chart](https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date)](https://www.star-history.com/#sylarlong/iztro&Date)
 
-## [版权](https://github.com/SylarLong/iztro/blob/main/LICENSE)
+## 版权
 
-MIT License
+[MIT License](https://github.com/SylarLong/iztro/blob/main/LICENSE)
 
 Copyright &copy; 2023 All Contributors
 
