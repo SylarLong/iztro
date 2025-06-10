@@ -124,9 +124,11 @@ const _getHoroscopeBySolarDate = (
   });
 
   // 获取流月索引, 流年地支逆数到生月所在宫位，再从该宫位顺数到生时，为正月所在宫位，之后每月一宫
+  // 计算流月时需要考虑生月闰月情况，如果是后15天则计算时需要加1月
+  const leapAddition = _birthday.isLeap && _birthday.lunarDay > 15 ? 1 : 0;
   monthlyIndex = fixIndex(
     yearlyIndex -
-      _birthday.lunarMonth +
+      (_birthday.lunarMonth + leapAddition) +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
       _date.lunarMonth,
   );

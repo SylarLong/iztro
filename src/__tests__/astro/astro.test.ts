@@ -977,4 +977,19 @@ describe('Astrolabe', () => {
     expect(result).toHaveProperty('fiveElementsClass', '火六局');
     expect(soulPalace?.decadal).toStrictEqual({ range: [6, 15], heavenlyStem: '丙', earthlyBranch: '寅' });
   });
+
+  test('withOptions() to fix GitHub#242', () => {
+    astro.config({ yearDivide: 'normal' });
+
+    const astrolable = withOptions({
+      dateStr: '1979.08.21',
+      type: 'solar',
+      timeIndex: 6,
+      gender: 'male',
+    });
+    const horoscope = astrolable.horoscope('2025-06-10 12:00');
+
+    expect(horoscope.monthly).toHaveProperty('index', 7);
+    expect(horoscope.daily).toHaveProperty('index', 9);
+  });
 });
