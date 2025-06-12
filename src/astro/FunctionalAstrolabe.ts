@@ -39,6 +39,7 @@ const _getHoroscopeBySolarDate = (
     {
       // 运限是以立春为界，但为了满足部分流派允许配置
       year: getConfig().horoscopeDivide,
+      month: getConfig().horoscopeDivide,
     },
   );
   // 虚岁
@@ -126,11 +127,13 @@ const _getHoroscopeBySolarDate = (
   // 获取流月索引, 流年地支逆数到生月所在宫位，再从该宫位顺数到生时，为正月所在宫位，之后每月一宫
   // 计算流月时需要考虑生月闰月情况，如果是后15天则计算时需要加1月
   const leapAddition = _birthday.isLeap && _birthday.lunarDay > 15 ? 1 : 0;
+  // 流月当月的闰月情况也需要考虑
+  const dateLeapAddition = _date.isLeap && _date.lunarDay > 15 ? 1 : 0;
   monthlyIndex = fixIndex(
     yearlyIndex -
       (_birthday.lunarMonth + leapAddition) +
       EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
-      _date.lunarMonth,
+      (_date.lunarMonth + dateLeapAddition),
   );
 
   // 获取流日索引

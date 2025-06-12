@@ -43,6 +43,7 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
   const { solarDate, timeIndex, fixLeap, from } = param;
   const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
+    month: getConfig().horoscopeDivide,
   });
   const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
