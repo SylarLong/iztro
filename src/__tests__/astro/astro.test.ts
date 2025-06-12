@@ -978,7 +978,7 @@ describe('Astrolabe', () => {
     expect(soulPalace?.decadal).toStrictEqual({ range: [6, 15], heavenlyStem: '丙', earthlyBranch: '寅' });
   });
 
-  test('withOptions() to fix GitHub#242', () => {
+  test('withOptions() to fix GitHub#242&#244', () => {
     astro.config({ yearDivide: 'normal' });
 
     const astrolable = withOptions({
@@ -991,5 +991,15 @@ describe('Astrolabe', () => {
 
     expect(horoscope.monthly).toHaveProperty('index', 7);
     expect(horoscope.daily).toHaveProperty('index', 9);
+
+    const horoscope2 = astrolable.horoscope('2020-6-6');
+
+    expect(horoscope2.monthly).toHaveProperty('index', 1);
+    expect(horoscope2.daily).toHaveProperty('index', 3);
+
+    const horoscope3 = astrolable.horoscope('2020-6-7');
+
+    expect(horoscope3.monthly).toHaveProperty('index', 2);
+    expect(horoscope3.daily).toHaveProperty('index', 5);
   });
 });

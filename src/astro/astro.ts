@@ -229,6 +229,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
 
   const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
+    month: getConfig().horoscopeDivide,
   });
   const lunarDate = solar2lunar(solarDate);
 
