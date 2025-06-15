@@ -45,6 +45,8 @@ let _horoscopeDivide: 'normal' | 'exact' = 'exact';
  */
 let _ageDivide: 'normal' | 'birthday' = 'normal';
 
+let _dayDivide: 'current' | 'forward' = 'forward';
+
 /**
  * 排盘派别设置。
  *
@@ -94,6 +96,7 @@ export const config = ({
   yearDivide = _yearDivide,
   ageDivide = _ageDivide,
   horoscopeDivide = _horoscopeDivide,
+  dayDivide = _dayDivide,
   algorithm = _algorithm,
 }: Config) => {
   if (mutagens) {
@@ -112,6 +115,7 @@ export const config = ({
   _horoscopeDivide = horoscopeDivide;
   _ageDivide = ageDivide;
   _algorithm = algorithm;
+  _dayDivide = dayDivide;
 };
 
 export const getConfig = () => ({
@@ -119,6 +123,7 @@ export const getConfig = () => ({
   brightness: _brightness,
   yearDivide: _yearDivide,
   ageDivide: _ageDivide,
+  dayDivide: _dayDivide,
   horoscopeDivide: _horoscopeDivide,
   algorithm: _algorithm,
 });
@@ -165,34 +170,42 @@ export function bySolar<T extends FunctionalAstrolabe>(
   language && setLanguage(language);
 
   const palaces: IFunctionalPalace[] = [];
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
+  const { dayDivide } = getConfig();
+  let tIndex = timeIndex;
+
+  if (dayDivide === 'current' && tIndex >= 12) {
+    // 如果当前时辰为晚子时并且晚子时算当天时，将时辰调整为当日子时
+    tIndex = 0;
+  }
+
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
     year: getConfig().yearDivide,
   });
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({
     solarDate,
-    timeIndex,
+    timeIndex: tIndex,
     fixLeap,
   });
   const palaceNames = getPalaceNames(soulIndex);
-  const majorStars = getMajorStar({ solarDate, timeIndex, fixLeap });
-  const minorStars = getMinorStar(solarDate, timeIndex, fixLeap);
+  const majorStars = getMajorStar({ solarDate, timeIndex: tIndex, fixLeap });
+  const minorStars = getMinorStar(solarDate, tIndex, fixLeap);
   const adjectiveStars = getAdjectiveStar({
     solarDate,
-    timeIndex,
+    timeIndex: tIndex,
     gender,
     fixLeap,
   });
   const changsheng12 = getchangsheng12({
     solarDate,
-    timeIndex,
+    timeIndex: tIndex,
     gender,
     fixLeap,
   });
   const boshi12 = getBoShi12(solarDate, gender);
   const { jiangqian12, suiqian12 } = getYearly12(solarDate);
-  const { decadals, ages } = getHoroscope({ solarDate, timeIndex, gender, fixLeap });
+  const { decadals, ages } = getHoroscope({ solarDate, timeIndex: tIndex, gender, fixLeap });
 
   for (let i = 0; i < 12; i++) {
     const heavenlyStemOfPalace =

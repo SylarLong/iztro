@@ -182,6 +182,8 @@ export type Config = {
   horoscopeDivide?: 'normal' | 'exact';
   /** 小限分割点配置，normal为以自然年分界，birthday为生日分界 */
   ageDivide?: 'normal' | 'birthday';
+  /** 晚子时配置，current时晚子时算当日，forward时晚子时算来日 */
+  dayDivide?: 'current' | 'forward';
   /** 安星方法，default为通行版本，zhongzhou为中州派版本 */
   algorithm?: 'default' | 'zhongzhou';
 };
