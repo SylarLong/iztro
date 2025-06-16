@@ -978,6 +978,7 @@ describe('Astrolabe', () => {
 
     const soulPalace = result.palace('命宫');
 
+    expect(result.earthlyBranchOfSoulPalace).toBe('卯');
     expect(soulPalace).toHaveProperty('index', 1);
     expect(soulPalace).toHaveProperty('heavenlyStem', '丁');
     expect(soulPalace).toHaveProperty('earthlyBranch', '卯');
@@ -1000,6 +1001,7 @@ describe('Astrolabe', () => {
 
     const soulPalace = result.palace('命宫');
 
+    expect(result.earthlyBranchOfSoulPalace).toBe('寅');
     expect(soulPalace).toHaveProperty('index', 0);
     expect(soulPalace).toHaveProperty('heavenlyStem', '丙');
     expect(soulPalace).toHaveProperty('earthlyBranch', '寅');

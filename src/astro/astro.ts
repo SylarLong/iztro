@@ -357,6 +357,8 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
     palace.isBodyPalace = bodyIndex === i;
   });
 
+  astrolable.earthlyBranchOfSoulPalace = t(astrolable.palace('命宫')!.earthlyBranch);
+
   return astrolable;
 }
 
