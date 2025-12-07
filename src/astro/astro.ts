@@ -9,6 +9,7 @@ import {
   HeavenlyStemKey,
   HeavenlyStemName,
   StarKey,
+  StarName,
   kot,
   setLanguage,
   t,
@@ -31,7 +32,7 @@ const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
  * normal：正月初一分界
  * exact：立春分界
  */
-let _yearDivide: 'normal' | 'exact' = 'exact';
+let _yearDivide: 'normal' | 'exact' = 'normal';
 let _horoscopeDivide: 'normal' | 'exact' = 'exact';
 
 /**
@@ -246,6 +247,12 @@ export function bySolar<T extends FunctionalAstrolabe>(
   });
   const lunarDate = solar2lunar(solarDate);
 
+  // 中州派地支以年支找命主
+  // 通用派别以命宫地支找命主
+  const soul = t<StarName>(
+    earthlyBranches[getConfig().algorithm === 'zhongzhou' ? earthlyBranchOfYear : earthlyBranchOfSoulPalace].soul,
+  );
+
   const result = new FunctionalAstrolabe({
     gender: t(kot<GenderName>(gender)),
     solarDate,
@@ -258,7 +265,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
     zodiac: getZodiacBySolarDate(solarDate, language),
     earthlyBranchOfSoulPalace: t<EarthlyBranchName>(earthlyBranchOfSoulPalace),
     earthlyBranchOfBodyPalace,
-    soul: t(earthlyBranches[earthlyBranchOfSoulPalace].soul),
+    soul,
     body: t(earthlyBranches[earthlyBranchOfYear].body),
     fiveElementsClass: getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul),
     palaces,

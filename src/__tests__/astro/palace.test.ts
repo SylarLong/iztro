@@ -5,6 +5,7 @@ import { t } from '../../i18n';
 
 describe('astro/palace', () => {
   test('getSoulAndBody()', () => {
+    astro.config({ yearDivide: 'exact' });
     const data = [
       {
         date: '2023-1-22',

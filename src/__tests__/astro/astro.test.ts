@@ -1035,4 +1035,33 @@ describe('Astrolabe', () => {
     expect(horoscope3.monthly).toHaveProperty('index', 2);
     expect(horoscope3.daily).toHaveProperty('index', 5);
   });
+
+  test('withOptions() add test case for zhongzhou ', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const astrolable = withOptions({
+      dateStr: '2000.01.03',
+      type: 'solar',
+      timeIndex: 11,
+      gender: 'male',
+    });
+
+    expect(astrolable).toHaveProperty('soul', '文曲');
+  });
+
+  test('withOptions() add test case for normal horoscope ', () => {
+    astro.config({ horoscopeDivide: 'normal' });
+
+    const astrolable = withOptions({
+      dateStr: '1999.05.03',
+      type: 'solar',
+      timeIndex: 8,
+      gender: 'male',
+    });
+
+    const horoscope = astrolable.horoscope('2025-02-02 10:00');
+
+    expect(horoscope.monthly).toHaveProperty('index', 9);
+    expect(horoscope.daily).toHaveProperty('index', 1);
+  });
 });
