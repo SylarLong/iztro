@@ -619,7 +619,7 @@ describe('Astrolabe', () => {
 
     expect(result).toHaveProperty('solarDate', '2000-2-4');
     expect(result).toHaveProperty('lunarDate', '一九九九年腊月廿九');
-    expect(result).toHaveProperty('chineseDate', '庚辰 丁丑 壬辰 壬寅');
+    expect(result).toHaveProperty('chineseDate', '庚辰 己丑 壬辰 壬寅');
     expect(result).toHaveProperty('time', '寅时');
     expect(result).toHaveProperty('zodiac', '龙');
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '亥');
@@ -647,13 +647,13 @@ describe('Astrolabe', () => {
   });
 
   test('bySolar() with `normal` year divider', () => {
-    astro.config({ yearDivide: 'normal' });
+    astro.config({ yearDivide: 'normal', horoscopeDivide: 'normal' });
 
     const result = astro.bySolar('1980-2-14', 0, 'male', true);
 
     expect(result).toHaveProperty('solarDate', '1980-2-14');
     expect(result).toHaveProperty('lunarDate', '一九七九年腊月廿八');
-    expect(result).toHaveProperty('chineseDate', '己未 戊寅 丁巳 庚子');
+    expect(result).toHaveProperty('chineseDate', '己未 丁丑 丁巳 庚子');
     expect(result).toHaveProperty('time', '早子时');
     expect(result).toHaveProperty('zodiac', '羊');
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '丑');
@@ -665,8 +665,8 @@ describe('Astrolabe', () => {
     expect(result.palaces[0].decadal).toHaveProperty('range', [112, 121]);
     const horoscope = result.horoscope('1980-2-14');
 
-    expect(horoscope.yearly).toHaveProperty('earthlyBranch', '申');
-    expect(horoscope.yearly).toHaveProperty('heavenlyStem', '庚');
+    expect(horoscope.yearly).toHaveProperty('earthlyBranch', '未');
+    expect(horoscope.yearly).toHaveProperty('heavenlyStem', '己');
   });
 
   test('check special date `1995-3-30`', () => {
@@ -751,6 +751,7 @@ describe('Astrolabe', () => {
       language: 'zh-CN',
       config: {
         yearDivide: 'exact',
+        horoscopeDivide: 'exact',
       },
     });
 
@@ -783,7 +784,7 @@ describe('Astrolabe', () => {
 
     expect(result).toHaveProperty('solarDate', '1980-2-14');
     expect(result).toHaveProperty('lunarDate', '一九七九年腊月廿八');
-    expect(result).toHaveProperty('chineseDate', '己未 戊寅 丁巳 庚子');
+    expect(result).toHaveProperty('chineseDate', '己未 丁丑 丁巳 庚子');
     expect(result).toHaveProperty('time', '早子时');
     expect(result).toHaveProperty('zodiac', '羊');
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '丑');

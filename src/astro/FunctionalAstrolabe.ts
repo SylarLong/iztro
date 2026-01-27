@@ -37,7 +37,7 @@ const _getHoroscopeBySolarDate = (
     targetDate,
     timeIndex || convertTimeIndex,
     {
-      // 运限是以立春为界，但为了满足部分流派允许配置
+      // 允许配置运限分割点
       year: getConfig().horoscopeDivide,
       month: getConfig().horoscopeDivide,
     },

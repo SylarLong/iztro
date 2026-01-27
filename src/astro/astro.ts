@@ -33,7 +33,7 @@ const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
  * exact：立春分界
  */
 let _yearDivide: 'normal' | 'exact' = 'normal';
-let _horoscopeDivide: 'normal' | 'exact' = 'exact';
+let _horoscopeDivide: 'normal' | 'exact' = 'normal';
 
 /**
  * 小限分割点，默认为生日。
@@ -181,6 +181,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
 
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
     year: getConfig().yearDivide,
+    month: getConfig().horoscopeDivide,
   });
   const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
   const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
