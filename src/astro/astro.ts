@@ -14,11 +14,20 @@ import {
   setLanguage,
   t,
 } from '../i18n';
-import { getAdjectiveStar, getBoShi12, getchangsheng12, getMajorStar, getMinorStar, getYearly12 } from '../star';
+import {
+  getAdjectiveStar,
+  getBoShi12,
+  getchangsheng12,
+  getMajorStar,
+  getMinorStar,
+  getTianshiTianshangIndex,
+  getYearly12,
+} from '../star';
 import { fixIndex, translateChineseDate } from '../utils';
 import FunctionalAstrolabe from './FunctionalAstrolabe';
 import FunctionalPalace, { IFunctionalPalace } from './FunctionalPalace';
 import { getPalaceNames, getSoulAndBody, getHoroscope, getFiveElementsClass } from './palace';
+import FunctionalStar from '../star/FunctionalStar';
 
 const _plugins = [] as Plugin[];
 const _mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>> = {};
@@ -356,7 +365,60 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
   });
 
   astrolable.fiveElementsClass = fiveElementsClass;
+
+  // 重新获取天使、天伤的索引
+  const { tianshiIndex, tianshangIndex } = getTianshiTianshangIndex(
+    astrolable.gender as GenderName,
+    kot(astrolable.rawDates.chineseDate.yearly[1]) as EarthlyBranchKey,
+    soulIndex,
+  );
+  // 重新获取天才星的位置
+  const tiancaiIndex = fixIndex(
+    soulIndex + EARTHLY_BRANCHES.indexOf(kot(astrolable.rawDates.chineseDate.yearly[1]) as EarthlyBranchKey),
+  );
+
   astrolable.palaces.forEach((palace, i) => {
+    const _tianshangIdx = palace.adjectiveStars.findIndex((item) => kot(item.name) === 'tianshang');
+
+    if (_tianshangIdx !== -1 && tianshangIndex !== i) {
+      // 当天伤不应该在该宫位时，删之
+      palace.adjectiveStars.splice(_tianshangIdx, 1);
+    }
+
+    if (_tianshangIdx === -1 && tianshangIndex === i) {
+      // 当天伤应该在该宫位却不在，加之
+      palace.adjectiveStars.push(new FunctionalStar({ name: t('tianshang'), type: 'adjective', scope: 'origin' }));
+    }
+
+    const _tianshiIdx = palace.adjectiveStars.findIndex((item) => kot(item.name) === 'tianshi');
+
+    if (_tianshiIdx !== -1 && tianshiIndex !== i) {
+      // 当天使不应该在该宫位时，删之
+      palace.adjectiveStars.splice(_tianshiIdx, 1);
+    }
+
+    if (_tianshiIdx === -1 && tianshiIndex === i) {
+      // 当天使应该在该宫位却不在，加之
+      palace.adjectiveStars.push(new FunctionalStar({ name: t('tianshi'), type: 'adjective', scope: 'origin' }));
+    }
+
+    const _tiancaiIndex = palace.adjectiveStars.findIndex((item) => kot(item.name) === 'tiancai');
+
+    if (_tiancaiIndex !== -1 && tiancaiIndex !== i) {
+      // 当天才不应该在该宫位时，删之
+      palace.adjectiveStars.splice(_tiancaiIndex, 1);
+    }
+
+    if (_tiancaiIndex === -1 && tiancaiIndex === i) {
+      // 当天才应该在该宫位却不在，加之
+      palace.adjectiveStars.push(new FunctionalStar({ name: t('tiancai'), type: 'adjective', scope: 'origin' }));
+    }
+
+    if (_tianshiIdx === -1 && tianshiIndex === i) {
+      // 当天使应该在该宫位却不在，加之
+      palace.adjectiveStars.push(new FunctionalStar({ name: t('tianshi'), type: 'adjective', scope: 'origin' }));
+    }
+
     palace.name = palaceNames[i];
     palace.majorStars = majorStars[i];
     palace.changsheng12 = changsheng12[i];
@@ -484,16 +546,16 @@ export const getMajorStarBySolarDate = (
 ) => {
   language && setLanguage(language);
 
-  const { bodyIndex } = getSoulAndBody({ solarDate: solarDateStr, timeIndex, fixLeap });
+  const { soulIndex } = getSoulAndBody({ solarDate: solarDateStr, timeIndex, fixLeap });
   const majorStars = getMajorStar({ solarDate: solarDateStr, timeIndex, fixLeap });
-  const stars = majorStars[bodyIndex].filter((star) => star.type === 'major');
+  const stars = majorStars[soulIndex].filter((star) => star.type === 'major');
 
   if (stars.length) {
     return stars.map((star) => t(star.name)).join(',');
   }
 
   // 如果命宫为空宫，则借对宫主星
-  return majorStars[fixIndex(bodyIndex + 6)]
+  return majorStars[fixIndex(soulIndex + 6)]
     .filter((star) => star.type === 'major')
     .map((star) => t(star.name))
     .join(',');

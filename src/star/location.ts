@@ -5,6 +5,7 @@ import {
   EarthlyBranchKey,
   EarthlyBranchName,
   FiveElementsClassKey,
+  GenderName,
   HeavenlyStemKey,
   HeavenlyStemName,
   kot,
@@ -637,7 +638,7 @@ export const getDahaoIndex = (earthlyBranchKey: EarthlyBranchKey) => {
  */
 export const getYearlyStarIndex = (param: AstrolabeParam) => {
   const { solarDate, timeIndex, gender, fixLeap } = param;
-  const { horoscopeDivide, algorithm } = getConfig();
+  const { horoscopeDivide } = getConfig();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     // 流耀应该用立春为界，但为了满足不同流派的需求允许配置
     year: horoscopeDivide,
@@ -718,18 +719,7 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
   const nianjieIndex = getNianjieIndex(yearly[1]);
   const dahaoAdjIndex = getDahaoIndex(earthlyBranch);
 
-  const genderYinyang = ['male', 'female'];
-  const sameYinyang = yinyang === genderYinyang.indexOf(kot(gender!));
-
-  let tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
-  let tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
-
-  if (algorithm === 'zhongzhou' && !sameYinyang) {
-    // 中州派的天使天伤与通行版本不一样
-    // 天伤奴仆、天使疾厄、夹迁移宫最易寻得
-    // 凡阳男阴女，皆依此诀，但若为阴男阳女，则改为天伤居疾厄、天使居奴仆。
-    [tianshiIndex, tianshangIndex] = [tianshangIndex, tianshiIndex];
-  }
+  const { tianshiIndex, tianshangIndex } = getTianshiTianshangIndex(gender!, earthlyBranch, soulIndex);
 
   return {
     xianchiIndex,
@@ -760,6 +750,27 @@ export const getYearlyStarIndex = (param: AstrolabeParam) => {
     nianjieIndex,
     dahaoAdjIndex,
   };
+};
+
+export const getTianshiTianshangIndex = (gender: GenderName, earthlyBranch: EarthlyBranchKey, soulIndex: number) => {
+  // 判断命主出生年年支阴阳属性，如果结果为 0 则为阳，否则为阴
+  const yinyang = EARTHLY_BRANCHES.indexOf(earthlyBranch) % 2;
+
+  const { algorithm } = getConfig();
+
+  const genderYinyang = ['male', 'female'];
+  const sameYinyang = yinyang === genderYinyang.indexOf(kot(gender!));
+  let tianshangIndex = fixIndex(PALACES.indexOf('friendsPalace') + soulIndex);
+  let tianshiIndex = fixIndex(PALACES.indexOf('healthPalace') + soulIndex);
+
+  if (algorithm === 'zhongzhou' && !sameYinyang) {
+    // 中州派的天使天伤与通行版本不一样
+    // 天伤奴仆、天使疾厄、夹迁移宫最易寻得
+    // 凡阳男阴女，皆依此诀，但若为阴男阳女，则改为天伤居疾厄、天使居奴仆。
+    [tianshiIndex, tianshangIndex] = [tianshangIndex, tianshiIndex];
+  }
+
+  return { tianshangIndex, tianshiIndex };
 };
 
 /**

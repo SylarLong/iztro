@@ -908,6 +908,10 @@ describe('Astrolabe', () => {
     expect(getMajorStarBySolarDate('2023-4-7', 0, true, 'ko-KR')).toEqual('탐랑');
   });
 
+  test('getMajorStarBySolarDate()', () => {
+    expect(getMajorStarBySolarDate('1987-05-16', 7)).toEqual('天机,天梁');
+  });
+
   test('getMajorStarByLunarDate() leap month', () => {
     expect(getMajorStarByLunarDate('2023-2-17', 0)).toEqual('紫微,贪狼');
     expect(getMajorStarByLunarDate('2023-2-17', 0, true)).toEqual('贪狼');
@@ -1010,6 +1014,26 @@ describe('Astrolabe', () => {
     expect(soulPalace?.minorStars[0]).toHaveProperty('name', '文昌');
     expect(result).toHaveProperty('fiveElementsClass', '火六局');
     expect(soulPalace?.decadal).toStrictEqual({ range: [6, 15], heavenlyStem: '丙', earthlyBranch: '寅' });
+  });
+
+  test('withOptions() with human type', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const result = withOptions({
+      dateStr: '1999-05-03',
+      type: 'solar',
+      timeIndex: 8,
+      gender: 'male',
+      astroType: 'human',
+    });
+
+    const tiancaiIndex = result?.star('天才')?.palace()?.index;
+    const tianshangIndex = result?.star('天伤')?.palace()?.index;
+    const tianshiIndex = result?.star('天使')?.palace()?.index;
+
+    expect(tiancaiIndex).toEqual(11);
+    expect(tianshangIndex).toEqual(3);
+    expect(tianshiIndex).toEqual(1);
   });
 
   test('withOptions() to fix GitHub#242&#244', () => {
