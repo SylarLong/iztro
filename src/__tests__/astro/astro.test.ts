@@ -993,6 +993,36 @@ describe('Astrolabe', () => {
     expect(soulPalace?.decadal).toStrictEqual({ range: [6, 15], heavenlyStem: '丁', earthlyBranch: '卯' });
   });
 
+  test('withOptions() with earth type', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const result = withOptions({
+      dateStr: '1999-05-03',
+      type: 'solar',
+      timeIndex: 8,
+      gender: 'female',
+      astroType: 'earth',
+    });
+
+    expect(result.palaces[0].changsheng12).toEqual('病');
+    expect(result.palaces[1].changsheng12).toEqual('死');
+  });
+
+  test('withOptions() with earth type', () => {
+    astro.config({ algorithm: 'zhongzhou' });
+
+    const result = withOptions({
+      dateStr: '1999-05-03',
+      type: 'solar',
+      timeIndex: 8,
+      gender: 'male',
+      astroType: 'earth',
+    });
+
+    expect(result.palaces[0].changsheng12).toEqual('病');
+    expect(result.palaces[1].changsheng12).toEqual('衰');
+  });
+
   test('withOptions() with human type', () => {
     astro.config({ algorithm: 'zhongzhou' });
 

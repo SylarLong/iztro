@@ -355,7 +355,13 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
   const fiveElementsClass = getFiveElementsClass(from.heavenlyStem, from.earthlyBranch);
   const palaceNames = getPalaceNames(soulIndex);
   const majorStars = getMajorStar({ solarDate: astrolable.solarDate, timeIndex, fixLeap, from });
-  const changsheng12 = getchangsheng12({ solarDate: astrolable.solarDate, timeIndex, fixLeap, from });
+  const changsheng12 = getchangsheng12({
+    solarDate: astrolable.solarDate,
+    gender: astrolable.gender as GenderName,
+    timeIndex,
+    fixLeap,
+    from,
+  });
   const { decadals, ages } = getHoroscope({
     solarDate: astrolable.solarDate,
     timeIndex,
@@ -412,11 +418,6 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
     if (_tiancaiIndex === -1 && tiancaiIndex === i) {
       // 当天才应该在该宫位却不在，加之
       palace.adjectiveStars.push(new FunctionalStar({ name: t('tiancai'), type: 'adjective', scope: 'origin' }));
-    }
-
-    if (_tianshiIdx === -1 && tianshiIndex === i) {
-      // 当天使应该在该宫位却不在，加之
-      palace.adjectiveStars.push(new FunctionalStar({ name: t('tianshi'), type: 'adjective', scope: 'origin' }));
     }
 
     palace.name = palaceNames[i];

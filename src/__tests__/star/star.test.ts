@@ -242,6 +242,32 @@ describe('star/index', () => {
       '胎',
       '养',
     ]);
+    expect(
+      getchangsheng12({
+        solarDate: '1999-5-3',
+        timeIndex: 8,
+        gender: '女',
+        fixLeap: true,
+      }),
+    ).toStrictEqual(['绝', '胎', '养', '长生', '沐浴', '冠带', '临官', '帝旺', '衰', '病', '死', '墓']);
+    expect(
+      getchangsheng12({
+        solarDate: '1999-5-3',
+        timeIndex: 8,
+        gender: '男',
+        fixLeap: true,
+        from: { heavenlyStem: '丙', earthlyBranch: '子' },
+      }),
+    ).toStrictEqual(['病', '衰', '帝旺', '临官', '冠带', '沐浴', '长生', '养', '胎', '绝', '墓', '死']);
+    expect(
+      getchangsheng12({
+        solarDate: '1999-5-3',
+        timeIndex: 8,
+        gender: '女',
+        fixLeap: true,
+        from: { heavenlyStem: '丙', earthlyBranch: '子' },
+      }),
+    ).toStrictEqual(['病', '死', '墓', '绝', '胎', '养', '长生', '沐浴', '冠带', '临官', '帝旺', '衰']);
   });
 
   test('getchangsheng12() vi-VN', () => {
