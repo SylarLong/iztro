@@ -2,7 +2,7 @@
 
 ![banner2](https://github.com/SylarLong/iztro/assets/6510425/e8457a88-e52e-435e-8f93-e3f375486d70)
 
-# 壹套輕量級紫微鬥數排盤工具庫
+# 一套輕量級紫微鬥數排盤工具庫
 
 [简体中文](./README.md) 🔸 繁體中文 🔸 [English](./README-en_US.md)
 
@@ -29,20 +29,20 @@
 
 ## 介紹
 
-用於紫微鬥數排盤的 JavaScript 開源庫，有以下功能：
+用於紫微斗數排盤的 JavaScript 開源庫，有以下功能：
 
 - 輸入
 
-  - 生日（陽歷或農歷皆可）
+  - 生日（陽曆或農曆皆可）
   - 出生時間
   - 性別
 
 - 可以實現下列功能
 
-  - 紫微鬥數 12 宮的星盤數據
+  - 紫微斗數 12 宮的星盤數據
   - 獲取生肖
   - 獲取星座
-  - 獲取四柱（幹支紀年法的生辰）
+  - 獲取四柱（干支紀年法的生辰）
   - 獲取運限（大限、小限、流年、流月、流日、流時）的數據
   - 獲取流耀（大限和流年的動態星耀）
   - 判斷指定宮位是否存在某些星耀
@@ -51,7 +51,7 @@
   - 判斷指定星耀是否存在四化
   - 判斷指定星耀三方四正是否存在四化
   - 判斷指定星耀是否是某個亮度
-  - 根據天幹獲取四化
+  - 根據天干獲取四化
   - 獲取指定星耀所在宮位
   - 獲取指定宮位三方四正宮位
   - 獲取指定星耀三方四正宮位
@@ -70,7 +70,7 @@
 
   - 多語言輸入/輸出
 
-    輸入的時候支持多個國家和地區語言混合輸入，可以輸出指定語言。目前支持 簡體中文，繁體中文，英文，日文，韓文，越南語。英文的翻譯目前還沒有標準，所以我大多是意譯的，但也正因為如此，可能英文版本的會更加易懂。如果有精通星象翻譯的歡迎提 PR 。任何語言都可以。
+    輸入的時候支持多個國家和地區語言混合輸入，可以輸出指定語言。目前支持：簡體中文，繁體中文，英文，日文，韓文，越南語。英文的翻譯目前還沒有標準，所以我大多是意譯的，但也正因為如此，可能英文版本的會更加易懂。如果有精通星象翻譯的歡迎提 PR 。任何語言都可以。
 
   - 鏈式調用
 
@@ -86,11 +86,11 @@
 
   - 配置和插件
 
-     紫微鬥數流派眾多，不同的流派的四化以及星耀亮度都會有些許差異，為了滿足不同流派的需求和功能的擴展，iztro在 v2.3.0 版本加入了全局配置和第三方插件功能。 詳見 [配置文檔](https://ziwei.pro/zh_TW/posts/config-n-plugin.html)。
+     紫微斗數流派眾多，不同的流派的四化以及星耀亮度都會有些許差異，為了滿足不同流派的需求和功能的擴展，iztro 在 v2.3.0 版本加入了全局配置和第三方插件功能。 詳見 [配置文檔](https://ziwei.pro/zh_TW/posts/config-n-plugin.html)。
 
 > [!IMPORTANT]
 > 如果你在開發中遇到任何問題，可以添加作者微信咨詢。<br>
-> 你也可以任意魔改代碼，或聯系作者獲取技術支持。<br>
+> 你也可以任意魔改代碼，或聯繫作者獲取技術支持。<br>
 > <img src="https://github.com/SylarLong/SylarLong/assets/6510425/a2af4876-7d26-4900-a0fc-f5a2030f6205" alt="WeChat" width="350" />
 
 ## 快捷跳轉
@@ -166,7 +166,7 @@ pnpm install iztro -S
 
 ## 示例
 
-這裏是一個簡單的例子顯示如何調用 `iztro` 獲取到紫微鬥數星盤數據，詳細文檔請移步 [開發文檔](https://docs.iztro.com)
+這裏是一個簡單的例子顯示如何調用 `iztro` 獲取到紫微斗數星盤數據，詳細文檔請移步 [開發文檔](https://docs.iztro.com)
 
 - ES6 Module
 
@@ -199,7 +199,7 @@ pnpm install iztro -S
 - 如果你對程式功能有什麽建議，請到 [這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E5%8A%9F%E8%83%BD%EF%BD%9Cfeature&projects=&template=new-feature.md&title=%7B%E6%A0%87%E9%A2%98%7D%EF%BD%9C%7Btitle%7D)創建一個 `功能需求`。
 - 如果你發現程式有 BUG，請到 [這裏](https://github.com/SylarLong/iztro/issues/new?assignees=SylarLong&labels=%E6%BC%8F%E6%B4%9E%EF%BD%9Cbug&projects=&template=bug-report.md&title=%7Bversion%7D%3A%7Bfunction%7D-) 創建一個 `BUG 報告`。
 - 你也可以將本倉庫 `fork` 到你自己的倉庫進行編輯，然後提交PR到本倉庫。
-- 假如你擅長外語，我們也歡迎你對國際化文件的翻譯做出你的貢獻，你可以 `fork` 本倉庫，然後在 [locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales) 文件夾下創建一個國際化語言文件，然後復製其他語言文件目錄裏面的文件到你的目錄下進行更改。
+- 假如你擅長外語，我們也歡迎你對國際化文件的翻譯做出你的貢獻，你可以 `fork` 本倉庫，然後在 [locales](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales) 文件夾下創建一個國際化語言文件，然後複製其他語言文件目錄裡面的文件到你的目錄下進行更改。
 - 當然，如果你覺得本程式對你有用，請給我買杯咖啡☕️ [![Static Badge](https://img.shields.io/badge/PaypalMe-8A2BE2?logo=paypal&link=https%3A%2F%2Fwww.paypal.com%2Fsylarlong)](https://PayPal.Me/sylarlong)
 
 > [!NOTE]
@@ -207,7 +207,7 @@ pnpm install iztro -S
 
 ## 總結
 
-使用本程式返回的數據，你可以生成這樣一張星盤，當然這只是一個例子，你可以把註意力集中在星盤的設計上，也可以把重心放在數據的分析上，本程式為你解決了最繁冗的工作，讓你可以把精力更多的放在你所需要關註的事情上面。
+使用本程式返回的數據，你可以生成這樣一張星盤，當然這只是一個例子，你可以把注意力集中在星盤的設計上，也可以把重心放在數據的分析上，本程式為你解決了最繁冗的工作，讓你可以把精力更多的放在你所需要關注的事情上面。
 
 ![](docs/assets/astrolabe@2x.5039cc7c-zh_TW.png)
 
