@@ -184,7 +184,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
   let tIndex = timeIndex;
 
   if (dayDivide === 'current' && tIndex >= 12) {
-    // 如果当前时辰为晚子时并且晚子时算当天时，将时辰调整为当日子时
+    // 如果当前时辰为晚子时并且晚子时算当天时，将时辰调整为当日早子时
     tIndex = 0;
   }
 
@@ -251,7 +251,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
   const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
   const earthlyBranchOfBodyPalace = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]);
 
-  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
+  const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
     year: getConfig().yearDivide,
     month: getConfig().horoscopeDivide,
   });
@@ -345,26 +345,34 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
   option: Option;
 }) {
   const { timeIndex, fixLeap } = option;
+  const { dayDivide } = getConfig();
+  let tIndex = timeIndex;
+
+  if (dayDivide === 'current' && tIndex >= 12) {
+    // 如果当前时辰为晚子时并且晚子时算当天时，将时辰调整为当日早子时
+    tIndex = 0;
+  }
+
   // 以传入地支为命宫
   const { soulIndex, bodyIndex } = getSoulAndBody({
     solarDate: astrolable.solarDate,
-    timeIndex,
+    timeIndex: tIndex,
     fixLeap,
     from,
   });
   const fiveElementsClass = getFiveElementsClass(from.heavenlyStem, from.earthlyBranch);
   const palaceNames = getPalaceNames(soulIndex);
-  const majorStars = getMajorStar({ solarDate: astrolable.solarDate, timeIndex, fixLeap, from });
+  const majorStars = getMajorStar({ solarDate: astrolable.solarDate, timeIndex: tIndex, fixLeap, from });
   const changsheng12 = getchangsheng12({
     solarDate: astrolable.solarDate,
     gender: astrolable.gender as GenderName,
-    timeIndex,
+    timeIndex: tIndex,
     fixLeap,
     from,
   });
   const { decadals, ages } = getHoroscope({
     solarDate: astrolable.solarDate,
-    timeIndex,
+    timeIndex: tIndex,
     gender: astrolable.gender as GenderName,
     fixLeap,
     from,

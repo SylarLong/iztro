@@ -713,6 +713,37 @@ describe('Astrolabe', () => {
     const result = astro.withOptions({
       type: 'solar',
       dateStr: '1987-9-23',
+      timeIndex: 0,
+      gender: 'female',
+      fixLeap: true,
+      language: 'zh-CN',
+      config: {
+        yearDivide: 'normal',
+        dayDivide: 'current',
+      },
+    });
+
+    expect(result).toHaveProperty('solarDate', '1987-9-23');
+    expect(result).toHaveProperty('lunarDate', '一九八七年八月初一');
+    expect(result).toHaveProperty('chineseDate', '丁卯 己酉 乙亥 丙子');
+    expect(result).toHaveProperty('time', '早子时');
+    expect(result).toHaveProperty('zodiac', '兔');
+    expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '酉');
+    expect(result).toHaveProperty('earthlyBranchOfBodyPalace', '酉');
+    expect(result).toHaveProperty('soul', '文曲');
+    expect(result).toHaveProperty('body', '天同');
+    expect(result).toHaveProperty('fiveElementsClass', '土五局');
+
+    expect(result.palace('命宫')).toHaveProperty('index', 7);
+    expect(result.palace('命宫')?.isEmpty()).toBeTruthy();
+    expect(result.palace('命宫')?.has(['火星', '天钺'])).toBeTruthy();
+    expect(result.palace('迁移')?.has(['太阳', '天梁', '右弼', '八座', '天贵', '空亡', '天哭'])).toBeTruthy();
+  });
+
+  test('withOptions() with dayDivide `current`', () => {
+    const result = astro.withOptions({
+      type: 'solar',
+      dateStr: '1987-9-23',
       timeIndex: 12,
       gender: 'female',
       fixLeap: true,
@@ -725,7 +756,7 @@ describe('Astrolabe', () => {
 
     expect(result).toHaveProperty('solarDate', '1987-9-23');
     expect(result).toHaveProperty('lunarDate', '一九八七年八月初一');
-    expect(result).toHaveProperty('chineseDate', '丁卯 己酉 丙子 戊子');
+    expect(result).toHaveProperty('chineseDate', '丁卯 己酉 乙亥 丙子');
     expect(result).toHaveProperty('time', '晚子时');
     expect(result).toHaveProperty('zodiac', '兔');
     expect(result).toHaveProperty('earthlyBranchOfSoulPalace', '酉');

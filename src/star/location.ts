@@ -54,7 +54,8 @@ export const getStartIndex = (param: AstrolabeParam) => {
   const maxDays = getTotalDaysOfLunarMonth(solarDate);
 
   // 如果timeIndex等于12说明是晚子时，需要加一天
-  let _day = timeIndex === 12 ? lunarDay + 1 : lunarDay;
+  // 如果晚子时算当天则不需要加一天
+  let _day = timeIndex === 12 && getConfig().dayDivide !== 'current' ? lunarDay + 1 : lunarDay;
 
   if (_day > maxDays) {
     // 假如日期超过当月最大天数，说明跨月了，需要处理为合法日期
