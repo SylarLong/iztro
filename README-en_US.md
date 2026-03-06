@@ -86,6 +86,17 @@ It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.
 - [Issues](https://github.com/SylarLong/iztro/issues)
 - [Demo](https://ziwei.pub)
 
+## Python Ecosystem
+
+If you need a **native Python** implementation that does not depend on the JavaScript/Node.js runtime at execution time, you can also check this third-party project:
+
+- [`izthon`](https://github.com/TaoracleHQ/izthon)
+
+Notes:
+
+- `izthon` is a new pure-Python rewrite that follows `iztro` behavior as its reference/specification.
+- It is not part of the official `iztro` repository, but it aims to stay behaviorally aligned with `iztro` as much as possible.
+
 ## Online Demo
 
 To instantly access iztro's astrolabe with no development required, go directly to https://ziwei.pub for online demo.
