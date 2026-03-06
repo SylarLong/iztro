@@ -100,6 +100,17 @@
 - [問題](https://github.com/SylarLong/iztro/issues)
 - [排盤](https://ziwei.pub)
 
+## Python 生態
+
+如果你需要一個 **原生 Python** 的版本（執行時不依賴 JavaScript/Node.js），可以參考第三方專案：
+
+- [`izthon`](https://github.com/TaoracleHQ/izthon)
+
+說明：
+
+- `izthon` 是一個新的純 Python 重寫版，以 `iztro` 的行為作為規格參考。
+- 它不是 `iztro` 官方倉庫的一部分，但目標是盡量與 `iztro` 的行為與測試保持一致。
+
 ## 立即使用
 
 若您不想自己動手寫程式，只想直接查看 `iztro` 的排盤結果，歡迎直接使用 [紫微派（ziwei.pub）](https://ziwei.pub) 的線上排盤服務。
