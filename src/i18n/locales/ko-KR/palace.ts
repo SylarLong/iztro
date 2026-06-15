@@ -12,5 +12,5 @@ export default {
   propertyPalace: '전택',
   spiritPalace: '복덕',
   parentsPalace: '부모',
-  originalPalace: '라인',
+  originalPalace: '래인',
 } as const;
