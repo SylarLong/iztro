@@ -15,11 +15,10 @@
   },
   "name": "iztro",
   "scripts": {
-    "build": "tsc",
-    "build:umd": "rolldown -c rolldown.config.js",
+    "build": "tsc -p tsconfig.build.json && rolldown -c rolldown.config.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "vitest run && bun run build:umd",
+    "prepublishOnly": "vitest run && bun run build",
     "postversion": "git push && git push --tags",
     "check": "ultracite check",
     "type-check": "tsc --noEmit",
@@ -28,12 +27,12 @@
   },
   "version": "2.5.8",
   "description": "轻量级紫微斗数星盘生成库。可以通过出生年月日获取到紫微斗数星盘信息、生肖、星座等信息。This is a lightweight kit for generating astrolabes for Zi Wei Dou Shu (The Purple Star Astrology), an ancient Chinese astrology. It allows you to obtain your horoscope and personality analysis.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "unpkg": "dist/iztro.min.js",
-  "jsdelivr": "dist/iztro.min.js",
+  "main": "./dist/iztro.cjs.js",
+  "module": "./dist/iztro.esm.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/iztro.min.js",
+  "jsdelivr": "./dist/iztro.min.js",
   "files": [
-    "lib/**/*",
     "dist/**/*"
   ],
   "publishConfig": {
