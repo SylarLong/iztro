@@ -79,7 +79,7 @@ export const getBrightness = (starName: StarName, index: number): Brightness => 
     return '';
   }
 
-  return t<Brightness>(targetBrightness[fixIndex(index)]);
+  return t<Brightness>(targetBrightness[fixIndex(index)]!);
 };
 
 export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {

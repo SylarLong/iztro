@@ -36,7 +36,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
   const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
 
-  stars[zuoIndex].push(
+  stars[zuoIndex]!.push(
     new FunctionalStar({
       name: t('zuofuMin'),
       type: 'soft',
@@ -45,7 +45,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       mutagen: getMutagen('左辅', yearly[0]),
     }),
   );
-  stars[youIndex].push(
+  stars[youIndex]!.push(
     new FunctionalStar({
       name: t('youbiMin'),
       type: 'soft',
@@ -54,7 +54,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       mutagen: getMutagen('右弼', yearly[0]),
     }),
   );
-  stars[changIndex].push(
+  stars[changIndex]!.push(
     new FunctionalStar({
       name: t('wenchangMin'),
       type: 'soft',
@@ -63,7 +63,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       mutagen: getMutagen('文昌', yearly[0]),
     }),
   );
-  stars[quIndex].push(
+  stars[quIndex]!.push(
     new FunctionalStar({
       name: t('wenquMin'),
       type: 'soft',
@@ -72,7 +72,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       mutagen: getMutagen('文曲', yearly[0]),
     }),
   );
-  stars[kuiIndex].push(
+  stars[kuiIndex]!.push(
     new FunctionalStar({
       name: t('tiankuiMin'),
       type: 'soft',
@@ -80,7 +80,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('天魁', kuiIndex),
     }),
   );
-  stars[yueIndex].push(
+  stars[yueIndex]!.push(
     new FunctionalStar({
       name: t('tianyueMin'),
       type: 'soft',
@@ -88,7 +88,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('天钺', yueIndex),
     }),
   );
-  stars[luIndex].push(
+  stars[luIndex]!.push(
     new FunctionalStar({
       name: t('lucunMin'),
       type: 'lucun',
@@ -96,7 +96,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('禄存', luIndex),
     }),
   );
-  stars[maIndex].push(
+  stars[maIndex]!.push(
     new FunctionalStar({
       name: t('tianmaMin'),
       type: 'tianma',
@@ -104,7 +104,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('天马', maIndex),
     }),
   );
-  stars[kongIndex].push(
+  stars[kongIndex]!.push(
     new FunctionalStar({
       name: t('dikongMin'),
       type: 'tough',
@@ -112,7 +112,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('地空', kongIndex),
     }),
   );
-  stars[jieIndex].push(
+  stars[jieIndex]!.push(
     new FunctionalStar({
       name: t('dijieMin'),
       type: 'tough',
@@ -120,7 +120,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('地劫', jieIndex),
     }),
   );
-  stars[huoIndex].push(
+  stars[huoIndex]!.push(
     new FunctionalStar({
       name: t('huoxingMin'),
       type: 'tough',
@@ -128,7 +128,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('火星', huoIndex),
     }),
   );
-  stars[lingIndex].push(
+  stars[lingIndex]!.push(
     new FunctionalStar({
       name: t('lingxingMin'),
       type: 'tough',
@@ -136,7 +136,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('铃星', lingIndex),
     }),
   );
-  stars[yangIndex].push(
+  stars[yangIndex]!.push(
     new FunctionalStar({
       name: t('qingyangMin'),
       type: 'tough',
@@ -144,7 +144,7 @@ export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: 
       brightness: getBrightness('擎羊', yangIndex),
     }),
   );
-  stars[tuoIndex].push(
+  stars[tuoIndex]!.push(
     new FunctionalStar({
       name: t('tuoluoMin'),
       type: 'tough',

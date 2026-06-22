@@ -56,7 +56,7 @@ export const getMajorStar = (param: AstrolabeParam) => {
   ziweiGroup.forEach((s, i) => {
     // 安紫微星系，起始宫逆时针安
     if (s !== '') {
-      stars[fixIndex(ziweiIndex - i)].push(
+      stars[fixIndex(ziweiIndex - i)]!.push(
         new FunctionalStar({
           name: t(s),
           type: 'major',
@@ -70,7 +70,7 @@ export const getMajorStar = (param: AstrolabeParam) => {
 
   tianfuGroup.forEach((s, i) => {
     if (s !== '') {
-      stars[fixIndex(tianfuIndex + i)].push(
+      stars[fixIndex(tianfuIndex + i)]!.push(
         new FunctionalStar({
           name: t(s),
           type: 'major',

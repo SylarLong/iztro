@@ -113,19 +113,19 @@ export const getHoroscopeStar = (
   if (scope === 'yearly') {
     const nianjieIndex = getNianjieIndex(earthlyBranch);
 
-    stars[nianjieIndex].push(new FunctionalStar({ name: t('nianjie'), type: 'helper', scope: 'yearly' }));
+    stars[nianjieIndex]!.push(new FunctionalStar({ name: t('nianjie'), type: 'helper', scope: 'yearly' }));
   }
 
-  stars[kuiIndex].push(new FunctionalStar({ name: trans[scope].tiankui, type: 'soft', scope }));
-  stars[yueIndex].push(new FunctionalStar({ name: trans[scope].tianyue, type: 'soft', scope }));
-  stars[changIndex].push(new FunctionalStar({ name: trans[scope].wenchang, type: 'soft', scope }));
-  stars[quIndex].push(new FunctionalStar({ name: trans[scope].wenqu, type: 'soft', scope }));
-  stars[luIndex].push(new FunctionalStar({ name: trans[scope].lucun, type: 'lucun', scope }));
-  stars[yangIndex].push(new FunctionalStar({ name: trans[scope].qingyang, type: 'tough', scope }));
-  stars[tuoIndex].push(new FunctionalStar({ name: trans[scope].tuoluo, type: 'tough', scope }));
-  stars[maIndex].push(new FunctionalStar({ name: trans[scope].tianma, type: 'tianma', scope }));
-  stars[hongluanIndex].push(new FunctionalStar({ name: trans[scope].hongluan, type: 'flower', scope }));
-  stars[tianxiIndex].push(new FunctionalStar({ name: trans[scope].tianxi, type: 'flower', scope }));
+  stars[kuiIndex]!.push(new FunctionalStar({ name: trans[scope].tiankui, type: 'soft', scope }));
+  stars[yueIndex]!.push(new FunctionalStar({ name: trans[scope].tianyue, type: 'soft', scope }));
+  stars[changIndex]!.push(new FunctionalStar({ name: trans[scope].wenchang, type: 'soft', scope }));
+  stars[quIndex]!.push(new FunctionalStar({ name: trans[scope].wenqu, type: 'soft', scope }));
+  stars[luIndex]!.push(new FunctionalStar({ name: trans[scope].lucun, type: 'lucun', scope }));
+  stars[yangIndex]!.push(new FunctionalStar({ name: trans[scope].qingyang, type: 'tough', scope }));
+  stars[tuoIndex]!.push(new FunctionalStar({ name: trans[scope].tuoluo, type: 'tough', scope }));
+  stars[maIndex]!.push(new FunctionalStar({ name: trans[scope].tianma, type: 'tianma', scope }));
+  stars[hongluanIndex]!.push(new FunctionalStar({ name: trans[scope].hongluan, type: 'flower', scope }));
+  stars[tianxiIndex]!.push(new FunctionalStar({ name: trans[scope].tianxi, type: 'flower', scope }));
 
   return stars;
 };

@@ -102,7 +102,7 @@ const _getHoroscopeBySolarDate = (
     // 一命二财三疾厄	四岁夫妻五福德
     // 六岁事业为童限	专就宫垣视吉凶
     const palaces: PalaceName[] = ['命宫', '财帛', '疾厄', '夫妻', '福德', '官禄'];
-    const targetIndex = palaces[nominalAge - 1];
+    const targetIndex = palaces[nominalAge - 1]!;
     const targetPalace = $.palace(targetIndex);
 
     if (targetPalace) {
