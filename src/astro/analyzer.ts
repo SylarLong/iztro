@@ -24,7 +24,7 @@ import {
 
 const _concatStars = (...stars: Star[][]): StarKey[] =>
   Array.from(stars)
-    .reduce((prev, next) => [...prev, ...next], [])
+    .flat()
     .map((item) => kot<StarKey>(item.name));
 
 const _includeAll = (allStarsInPalace: StarKey[], targetStars: StarName[]) => {

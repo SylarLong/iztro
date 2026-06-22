@@ -26,7 +26,8 @@
         "noNonNullAssertion": "off",
         "useConsistentTypeDefinitions": "off",
         "noExportedImports": "off",
-        "useDefaultSwitchClause": "off"
+        "useDefaultSwitchClause": "off",
+        "noEnum": "off"
       },
       "performance": {
         "noNamespaceImport": "off",
@@ -38,7 +39,8 @@
         "noArrayIndexKey": "off",
         "noImplicitAnyLet": "off",
         "noEvolvingTypes": "off",
-        "noUnusedExpressions": "off"
+        "noUnusedExpressions": "off",
+        "useIterableCallbackReturn": "off"
       },
 
       "a11y": {

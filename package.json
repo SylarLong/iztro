@@ -20,6 +20,7 @@
     "prepublishOnly": "bun test && bun run build:umd",
     "postversion": "git push && git push --tags",
     "check": "ultracite check",
+    "type-check": "tsc --noEmit",
     "fix": "ultracite fix",
     "prepare": "lefthook install"
   },
