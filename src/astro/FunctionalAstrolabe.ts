@@ -369,7 +369,7 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   copyright;
 
   // 保存插件列表
-  private plugins: Plugin[] = [];
+  private readonly plugins: Plugin[] = [];
 
   constructor(data: Astrolabe) {
     this.gender = data.gender;
@@ -388,8 +388,6 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.fiveElementsClass = data.fiveElementsClass;
     this.palaces = data.palaces;
     this.copyright = data.copyright;
-
-    return this;
   }
 
   use(plugin: Plugin): void {

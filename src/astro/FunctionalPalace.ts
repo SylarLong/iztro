@@ -216,8 +216,6 @@ export default class FunctionalPalace implements IFunctionalPalace {
     this.suiqian12 = data.suiqian12;
     this.decadal = data.decadal;
     this.ages = data.ages;
-
-    return this;
   }
 
   has = (stars: StarName[]): boolean => hasStars(this, stars);

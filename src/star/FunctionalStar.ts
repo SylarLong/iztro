@@ -94,8 +94,6 @@ export default class FunctionalStar implements IFunctionalStar {
     this.scope = data.scope;
     this.brightness = data.brightness;
     this.mutagen = data.mutagen;
-
-    return this;
   }
 
   oppositePalace = (): IFunctionalPalace | undefined => {
@@ -142,7 +140,7 @@ export default class FunctionalStar implements IFunctionalStar {
     if (Array.isArray(brightness)) {
       return brightness.some(
         (brit) =>
-          this.brightness != undefined &&
+          this.brightness !== undefined &&
           kot<BrightnessKey>(brit) === kot<BrightnessKey>(this.brightness)
       );
     }

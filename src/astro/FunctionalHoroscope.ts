@@ -162,8 +162,6 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     this.daily = data.daily;
     this.hourly = data.hourly;
     this.astrolabe = astrolabe;
-
-    return this;
   }
 
   agePalace = () => this.astrolabe.palace(this.age.index);
