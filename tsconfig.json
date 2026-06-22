@@ -3,9 +3,7 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": [
-      "ES2022"
-    ],
+    "lib": ["ES2022"],
     "outDir": "./lib",
     "rootDir": "./src",
     "declaration": true,
@@ -14,7 +12,6 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "exactOptionalPropertyTypes": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -22,13 +19,6 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": false
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/__tests__/*",
-    "lib",
-    "dist"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "**/__tests__/*", "lib", "dist"]
 }
