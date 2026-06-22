@@ -25,7 +25,8 @@
         "useFilenamingConvention": "off",
         "noNonNullAssertion": "off",
         "useConsistentTypeDefinitions": "off",
-        "noExportedImports": "off"
+        "noExportedImports": "off",
+        "useDefaultSwitchClause": "off"
       },
       "performance": {
         "noNamespaceImport": "off",
