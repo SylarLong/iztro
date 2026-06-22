@@ -1,9 +1,9 @@
-import brightnessEnUS from '../locales/en-US/brightness';
-import brightnessJaJP from '../locales/ja-JP/brightness';
-import brightnessKoKR from '../locales/ko-KR/brightness';
-import brightnessZhCN from '../locales/zh-CN/brightness';
-import brightnessZhTW from '../locales/zh-TW/brightness';
-import brightnessViVN from '../locales/vi-VN/brightness';
+import type brightnessEnUS from "../locales/en-US/brightness";
+import type brightnessJaJP from "../locales/ja-JP/brightness";
+import type brightnessKoKR from "../locales/ko-KR/brightness";
+import type brightnessViVN from "../locales/vi-VN/brightness";
+import type brightnessZhCN from "../locales/zh-CN/brightness";
+import type brightnessZhTW from "../locales/zh-TW/brightness";
 
 type BrightnessEnUS = (typeof brightnessEnUS)[keyof typeof brightnessEnUS];
 type BrightnessJaJP = (typeof brightnessJaJP)[keyof typeof brightnessJaJP];
@@ -13,7 +13,7 @@ type BrightnessZhTW = (typeof brightnessZhTW)[keyof typeof brightnessZhTW];
 type BrightnessViVN = (typeof brightnessViVN)[keyof typeof brightnessViVN];
 
 export type Brightness =
-  | ''
+  | ""
   | BrightnessEnUS
   | BrightnessJaJP
   | BrightnessKoKR

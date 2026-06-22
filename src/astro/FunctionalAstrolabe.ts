@@ -1,17 +1,37 @@
-import dayjs from 'dayjs';
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeDateStr, solar2lunar } from 'lunar-lite';
-import { EARTHLY_BRANCHES } from '../data';
-import { Astrolabe, Horoscope, Plugin } from '../data/types';
-import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName, t } from '../i18n';
-import { getHoroscopeStar, getYearly12 } from '../star';
-import { IFunctionalStar } from '../star/FunctionalStar';
-import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
-import { getPalace, getSurroundedPalaces } from './analyzer';
-import { IFunctionalPalace } from './FunctionalPalace';
-import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
-import { getPalaceNames } from './palace';
-import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope';
-import { getConfig } from './astro';
+import dayjs from "dayjs";
+import {
+  getHeavenlyStemAndEarthlyBranchBySolarDate,
+  normalizeDateStr,
+  solar2lunar,
+} from "lunar-lite";
+import { EARTHLY_BRANCHES } from "../data";
+import type { Astrolabe, Horoscope, Plugin } from "../data/types";
+import {
+  type EarthlyBranchKey,
+  type EarthlyBranchName,
+  type HeavenlyStemName,
+  kot,
+  type PalaceName,
+  type StarKey,
+  type StarName,
+  t,
+} from "../i18n";
+import { getHoroscopeStar, getYearly12 } from "../star";
+import type { IFunctionalStar } from "../star/FunctionalStar";
+import {
+  fixEarthlyBranchIndex,
+  fixIndex,
+  getMutagensByHeavenlyStem,
+  timeToIndex,
+} from "../utils";
+import { getPalace, getSurroundedPalaces } from "./analyzer";
+import { getConfig } from "./astro";
+import FunctionalHoroscope, {
+  type IFunctionalHoroscope,
+} from "./FunctionalHoroscope";
+import type { IFunctionalPalace } from "./FunctionalPalace";
+import type { IFunctionalSurpalaces } from "./FunctionalSurpalaces";
+import { getPalaceNames } from "./palace";
 
 /**
  * 获取运限数据
@@ -28,26 +48,27 @@ import { getConfig } from './astro';
 const _getHoroscopeBySolarDate = (
   $: FunctionalAstrolabe,
   targetDate: string | Date = new Date(),
-  timeIndex?: number,
+  timeIndex?: number
 ): IFunctionalHoroscope => {
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
-  const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
-    targetDate,
-    timeIndex || convertTimeIndex,
-    {
-      // 允许配置运限分割点
-      year: getConfig().horoscopeDivide,
-      month: getConfig().horoscopeDivide,
-    },
-  );
+  const { yearly, monthly, daily, hourly } =
+    getHeavenlyStemAndEarthlyBranchBySolarDate(
+      targetDate,
+      timeIndex || convertTimeIndex,
+      {
+        // 允许配置运限分割点
+        year: getConfig().horoscopeDivide,
+        month: getConfig().horoscopeDivide,
+      }
+    );
   // 虚岁
   let nominalAge = _date.lunarYear - _birthday.lunarYear;
   // 是否童限
   let isChildhood = false;
 
-  if (getConfig().ageDivide === 'birthday') {
+  if (getConfig().ageDivide === "birthday") {
     // 假如目标日期已经过了生日，则需要加1岁
     // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
     // 但在 2023年九月初二 以后，虚岁则为 2 岁
@@ -67,9 +88,9 @@ const _getHoroscopeBySolarDate = (
   // 大限索引
   let decadalIndex = -1;
   // 大限天干
-  let heavenlyStemOfDecade: HeavenlyStemName = 'jia';
+  let heavenlyStemOfDecade: HeavenlyStemName = "jia";
   // 大限地支
-  let earthlyBranchOfDecade: EarthlyBranchName = 'zi';
+  let earthlyBranchOfDecade: EarthlyBranchName = "zi";
   // 小限索引
   let ageIndex = -1;
   // 流年索引
@@ -81,9 +102,9 @@ const _getHoroscopeBySolarDate = (
   // 流时索引
   let hourlyIndex = -1;
   // 小限天干
-  let heavenlyStemOfAge: HeavenlyStemName = 'jia';
+  let heavenlyStemOfAge: HeavenlyStemName = "jia";
   // 小限地支
-  let earthlyBranchOfAge: EarthlyBranchName = 'zi';
+  let earthlyBranchOfAge: EarthlyBranchName = "zi";
 
   // 查询大限索引
   $.palaces.some(({ decadal }, index) => {
@@ -101,7 +122,14 @@ const _getHoroscopeBySolarDate = (
     // 此时应该取小限运
     // 一命二财三疾厄	四岁夫妻五福德
     // 六岁事业为童限	专就宫垣视吉凶
-    const palaces: PalaceName[] = ['命宫', '财帛', '疾厄', '夫妻', '福德', '官禄'];
+    const palaces: PalaceName[] = [
+      "命宫",
+      "财帛",
+      "疾厄",
+      "夫妻",
+      "福德",
+      "官禄",
+    ];
     const targetIndex = palaces[nominalAge - 1]!;
     const targetPalace = $.palace(targetIndex);
 
@@ -132,32 +160,41 @@ const _getHoroscopeBySolarDate = (
   monthlyIndex = fixIndex(
     yearlyIndex -
       (_birthday.lunarMonth + leapAddition) +
-      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])) +
-      (_date.lunarMonth + dateLeapAddition),
+      EARTHLY_BRANCHES.indexOf(
+        kot<EarthlyBranchKey>($.rawDates.chineseDate.hourly[1])
+      ) +
+      (_date.lunarMonth + dateLeapAddition)
   );
 
   // 获取流日索引
   dailyIndex = fixIndex(monthlyIndex + _date.lunarDay - 1);
 
   // 获取流时索引
-  hourlyIndex = fixIndex(dailyIndex + EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1], 'Earthly')));
+  hourlyIndex = fixIndex(
+    dailyIndex +
+      EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(hourly[1], "Earthly"))
+  );
 
   const scope: Horoscope = {
-    solarDate: normalizeDateStr(targetDate).slice(0, 3).join('-'),
+    solarDate: normalizeDateStr(targetDate).slice(0, 3).join("-"),
     lunarDate: _date.toString(true),
     decadal: {
       index: decadalIndex,
-      name: isChildhood ? t('childhood') : t('decadal'),
-      heavenlyStem: t(kot(heavenlyStemOfDecade, 'Heavnly')),
-      earthlyBranch: t(kot(earthlyBranchOfDecade, 'Earthly')),
+      name: isChildhood ? t("childhood") : t("decadal"),
+      heavenlyStem: t(kot(heavenlyStemOfDecade, "Heavnly")),
+      earthlyBranch: t(kot(earthlyBranchOfDecade, "Earthly")),
       palaceNames: getPalaceNames(decadalIndex),
       mutagen: getMutagensByHeavenlyStem(heavenlyStemOfDecade),
-      stars: getHoroscopeStar(heavenlyStemOfDecade, earthlyBranchOfDecade, 'decadal'),
+      stars: getHoroscopeStar(
+        heavenlyStemOfDecade,
+        earthlyBranchOfDecade,
+        "decadal"
+      ),
     },
     age: {
       index: ageIndex,
       nominalAge,
-      name: t('turn'),
+      name: t("turn"),
       heavenlyStem: heavenlyStemOfAge,
       earthlyBranch: earthlyBranchOfAge,
       palaceNames: getPalaceNames(ageIndex),
@@ -165,40 +202,40 @@ const _getHoroscopeBySolarDate = (
     },
     yearly: {
       index: yearlyIndex,
-      name: t('yearly'),
-      heavenlyStem: t(kot(yearly[0], 'Heavenly')),
-      earthlyBranch: t(kot(yearly[1], 'Earthly')),
+      name: t("yearly"),
+      heavenlyStem: t(kot(yearly[0], "Heavenly")),
+      earthlyBranch: t(kot(yearly[1], "Earthly")),
       palaceNames: getPalaceNames(yearlyIndex),
       mutagen: getMutagensByHeavenlyStem(yearly[0]),
-      stars: getHoroscopeStar(yearly[0], yearly[1], 'yearly'),
+      stars: getHoroscopeStar(yearly[0], yearly[1], "yearly"),
       yearlyDecStar: getYearly12(targetDate),
     },
     monthly: {
       index: monthlyIndex,
-      name: t('monthly'),
-      heavenlyStem: t(kot(monthly[0], 'Heavenly')),
-      earthlyBranch: t(kot(monthly[1], 'Earthly')),
+      name: t("monthly"),
+      heavenlyStem: t(kot(monthly[0], "Heavenly")),
+      earthlyBranch: t(kot(monthly[1], "Earthly")),
       palaceNames: getPalaceNames(monthlyIndex),
       mutagen: getMutagensByHeavenlyStem(monthly[0]),
-      stars: getHoroscopeStar(monthly[0], monthly[1], 'monthly'),
+      stars: getHoroscopeStar(monthly[0], monthly[1], "monthly"),
     },
     daily: {
       index: dailyIndex,
-      name: t('daily'),
-      heavenlyStem: t(kot(daily[0], 'Heavenly')),
-      earthlyBranch: t(kot(daily[1], 'Earthly')),
+      name: t("daily"),
+      heavenlyStem: t(kot(daily[0], "Heavenly")),
+      earthlyBranch: t(kot(daily[1], "Earthly")),
       palaceNames: getPalaceNames(dailyIndex),
       mutagen: getMutagensByHeavenlyStem(daily[0]),
-      stars: getHoroscopeStar(daily[0], daily[1], 'daily'),
+      stars: getHoroscopeStar(daily[0], daily[1], "daily"),
     },
     hourly: {
       index: hourlyIndex,
-      name: t('hourly'),
-      heavenlyStem: t(kot(hourly[0], 'Heavenly')),
-      earthlyBranch: t(kot(hourly[1], 'Earthly')),
+      name: t("hourly"),
+      heavenlyStem: t(kot(hourly[0], "Heavenly")),
+      earthlyBranch: t(kot(hourly[1], "Earthly")),
       palaceNames: getPalaceNames(hourlyIndex),
       mutagen: getMutagensByHeavenlyStem(hourly[0]),
-      stars: getHoroscopeStar(hourly[0], hourly[1], 'hourly'),
+      stars: getHoroscopeStar(hourly[0], hourly[1], "hourly"),
     },
   };
 
@@ -212,14 +249,6 @@ const _getHoroscopeBySolarDate = (
  */
 export interface IFunctionalAstrolabe extends Astrolabe {
   /**
-   * 插件注入方法
-   *
-   * @version v2.3.0
-   *
-   * @param plugin 插件函数
-   */
-  use(plugin: Plugin): void;
-  /**
    * 获取运限数据
    *
    * @version v0.2.0
@@ -231,14 +260,49 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   horoscope: (date?: string | Date, timeIndex?: number) => IFunctionalHoroscope;
 
   /**
-   * 通过星耀名称获取到当前星耀的对象实例
    *
-   * @version v1.2.0
+   * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
    *
-   * @param starName 星耀名称
-   * @returns 星耀实例
+   * @version v1.0.0
+   *
+   * @param indexOrName 宫位索引或者宫位名称
+   * @param stars 星耀名称数组
+   * @returns true | false
    */
-  star: (starName: StarName) => IFunctionalStar;
+  isSurrounded: (
+    indexOrName: number | PalaceName,
+    stars: StarName[]
+  ) => boolean;
+
+  /**
+   * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
+   *
+   * @version v1.1.0
+   * @deprecated v1.2.0
+   *
+   * @param indexOrName 宫位索引或者宫位名称
+   * @param stars 星耀名称数组
+   * @returns true | false
+   */
+  isSurroundedOneOf: (
+    indexOrName: number | PalaceName,
+    stars: StarName[]
+  ) => boolean;
+
+  /**
+   * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
+   *
+   * @version v1.1.0
+   * @deprecated v1.2.0
+   *
+   * @param indexOrName 宫位索引或者宫位名称
+   * @param stars 星耀名称数组
+   * @returns true | false
+   */
+  notSurrounded: (
+    indexOrName: number | PalaceName,
+    stars: StarName[]
+  ) => boolean;
 
   /**
    * 获取星盘的某一个宫位
@@ -251,6 +315,16 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   palace: (indexOrName: number | PalaceName) => IFunctionalPalace | undefined;
 
   /**
+   * 通过星耀名称获取到当前星耀的对象实例
+   *
+   * @version v1.2.0
+   *
+   * @param starName 星耀名称
+   * @returns 星耀实例
+   */
+  star: (starName: StarName) => IFunctionalStar;
+
+  /**
    * 获取三方四正宫位，所谓三方四正就是传入的目标宫位，以及其对宫，财帛位和官禄位，总共四个宫位
    *
    * @version v1.1.0
@@ -258,43 +332,17 @@ export interface IFunctionalAstrolabe extends Astrolabe {
    * @param indexOrName 宫位索引或者宫位名称
    * @returns 三方四正宫位
    */
-  surroundedPalaces: (indexOrName: number | PalaceName) => IFunctionalSurpalaces;
-
+  surroundedPalaces: (
+    indexOrName: number | PalaceName
+  ) => IFunctionalSurpalaces;
   /**
+   * 插件注入方法
    *
-   * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
+   * @version v2.3.0
    *
-   * @version v1.0.0
-   *
-   * @param indexOrName 宫位索引或者宫位名称
-   * @param stars 星耀名称数组
-   * @returns true | false
+   * @param plugin 插件函数
    */
-  isSurrounded: (indexOrName: number | PalaceName, stars: StarName[]) => boolean;
-
-  /**
-   * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
-   *
-   * @version v1.1.0
-   * @deprecated v1.2.0
-   *
-   * @param indexOrName 宫位索引或者宫位名称
-   * @param stars 星耀名称数组
-   * @returns true | false
-   */
-  isSurroundedOneOf: (indexOrName: number | PalaceName, stars: StarName[]) => boolean;
-
-  /**
-   * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
-   *
-   * @version v1.1.0
-   * @deprecated v1.2.0
-   *
-   * @param indexOrName 宫位索引或者宫位名称
-   * @param stars 星耀名称数组
-   * @returns true | false
-   */
-  notSurrounded: (indexOrName: number | PalaceName, stars: StarName[]) => boolean;
+  use(plugin: Plugin): void;
 }
 
 /**
@@ -363,19 +411,23 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     });
 
     if (!targetStar) {
-      throw new Error('invalid star name.');
+      throw new Error("invalid star name.");
     }
 
     return targetStar;
   };
 
-  horoscope = (targetDate: string | Date = new Date(), timeIndexOfTarget?: number) =>
-    _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
+  horoscope = (
+    targetDate: string | Date = new Date(),
+    timeIndexOfTarget?: number
+  ) => _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
 
-  palace = (indexOrName: number | PalaceName): IFunctionalPalace | undefined => getPalace(this, indexOrName);
+  palace = (indexOrName: number | PalaceName): IFunctionalPalace | undefined =>
+    getPalace(this, indexOrName);
 
-  surroundedPalaces = (indexOrName: number | PalaceName): IFunctionalSurpalaces =>
-    getSurroundedPalaces(this, indexOrName);
+  surroundedPalaces = (
+    indexOrName: number | PalaceName
+  ): IFunctionalSurpalaces => getSurroundedPalaces(this, indexOrName);
 
   /**
    * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
@@ -387,8 +439,10 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
    *  // TO BE
    *  astrolabe.surroundedPalaces(0).have(["紫微"]);
    */
-  isSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    this.surroundedPalaces(indexOrName).have(stars);
+  isSurrounded = (
+    indexOrName: number | PalaceName,
+    stars: StarName[]
+  ): boolean => this.surroundedPalaces(indexOrName).have(stars);
 
   /**
    * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
@@ -400,8 +454,10 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
    *  // TO BE
    *  astrolabe.surroundedPalaces(0).haveOneOf(["紫微"]);
    */
-  isSurroundedOneOf = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    this.surroundedPalaces(indexOrName).haveOneOf(stars);
+  isSurroundedOneOf = (
+    indexOrName: number | PalaceName,
+    stars: StarName[]
+  ): boolean => this.surroundedPalaces(indexOrName).haveOneOf(stars);
 
   /**
    * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换
@@ -413,6 +469,8 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
    *  // TO BE
    *  astrolabe.surroundedPalaces(0).notHave(["紫微"]);
    */
-  notSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
-    this.surroundedPalaces(indexOrName).notHave(stars);
+  notSurrounded = (
+    indexOrName: number | PalaceName,
+    stars: StarName[]
+  ): boolean => this.surroundedPalaces(indexOrName).notHave(stars);
 }

@@ -1,21 +1,21 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
-import { getConfig, getFiveElementsClass, getSoulAndBody } from '../astro';
-import { GENDER, earthlyBranches, FiveElementsClass } from '../data';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from "lunar-lite";
+import { getConfig, getFiveElementsClass, getSoulAndBody } from "../astro";
+import { earthlyBranches, FiveElementsClass, GENDER } from "../data";
+import type { AstrolabeParam } from "../data/types";
 import {
-  StarName,
-  t,
-  EarthlyBranchKey,
+  type EarthlyBranchKey,
+  type EarthlyBranchName,
+  type FiveElementsClassKey,
+  type FiveElementsClassName,
+  type GenderKey,
+  type GenderName,
   kot,
-  FiveElementsClassKey,
-  EarthlyBranchName,
-  FiveElementsClassName,
-  GenderName,
-  GenderKey,
-  StarKey,
-} from '../i18n';
-import { fixEarthlyBranchIndex, fixIndex } from '../utils';
-import { getLuYangTuoMaIndex } from './location';
-import { AstrolabeParam } from '../data/types';
+  type StarKey,
+  type StarName,
+  t,
+} from "../i18n";
+import { fixEarthlyBranchIndex, fixIndex } from "../utils";
+import { getLuYangTuoMaIndex } from "./location";
 
 /**
  * 获取长生12神开始的宫位索引
@@ -28,29 +28,31 @@ import { AstrolabeParam } from '../data/types';
  * @param fiveElementClassName 五行局
  * @returns 长生12神开始的索引
  */
-export const getChangesheng12StartIndex = (fiveElementClassName: FiveElementsClassName) => {
+export const getChangesheng12StartIndex = (
+  fiveElementClassName: FiveElementsClassName
+) => {
   const fiveElementClass = kot<FiveElementsClassKey>(fiveElementClassName);
   let startIdx = 0;
 
   switch (FiveElementsClass[fiveElementClass]) {
     case 2: {
-      startIdx = fixEarthlyBranchIndex('shen');
+      startIdx = fixEarthlyBranchIndex("shen");
       break;
     }
     case 3: {
-      startIdx = fixEarthlyBranchIndex('hai');
+      startIdx = fixEarthlyBranchIndex("hai");
       break;
     }
     case 4: {
-      startIdx = fixEarthlyBranchIndex('si');
+      startIdx = fixEarthlyBranchIndex("si");
       break;
     }
     case 5: {
-      startIdx = fixEarthlyBranchIndex('shen');
+      startIdx = fixEarthlyBranchIndex("shen");
       break;
     }
     case 6: {
-      startIdx = fixEarthlyBranchIndex('yin');
+      startIdx = fixEarthlyBranchIndex("yin");
       break;
     }
   }
@@ -74,25 +76,31 @@ export const getchangsheng12 = (param: AstrolabeParam): StarName[] => {
     year: getConfig().yearDivide,
   });
   const [, earthlyBranchNameOfYear] = yearly;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear, 'Earthly');
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(
+    earthlyBranchNameOfYear,
+    "Earthly"
+  );
   // 获取命宫干支，需要通过命宫干支计算五行局
   const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(param);
   // 获取五行局，通过五行局获取起运年龄
-  const fiveElementClass = getFiveElementsClass(heavenlyStemOfSoul, earthlyBranchOfSoul);
+  const fiveElementClass = getFiveElementsClass(
+    heavenlyStemOfSoul,
+    earthlyBranchOfSoul
+  );
   // 长生12神顺序
   const stars: StarKey[] = [
-    'changsheng',
-    'muyu',
-    'guandai',
-    'linguan',
-    'diwang',
-    'shuai',
-    'bing',
-    'si',
-    'mu',
-    'jue',
-    'tai',
-    'yang',
+    "changsheng",
+    "muyu",
+    "guandai",
+    "linguan",
+    "diwang",
+    "shuai",
+    "bing",
+    "si",
+    "mu",
+    "jue",
+    "tai",
+    "yang",
   ];
   const startIdx = getChangesheng12StartIndex(fiveElementClass);
 
@@ -120,35 +128,50 @@ export const getchangsheng12 = (param: AstrolabeParam): StarName[] => {
  * @param gender 性别【男｜女】
  * @returns 博士12神从寅宫开始的顺序
  */
-export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[] => {
+export const getBoShi12 = (
+  solarDateStr: string,
+  gender: GenderName
+): StarName[] => {
   const genderKey = kot<GenderKey>(gender);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0, {
-    year: getConfig().yearDivide,
-  });
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+    solarDateStr,
+    0,
+    {
+      year: getConfig().yearDivide,
+    }
+  );
   const [heavenlyStemNameOfYear, earthlyBranchNameOfYear] = yearly;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchNameOfYear, 'Earthly');
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(
+    earthlyBranchNameOfYear,
+    "Earthly"
+  );
   // 博士12神的顺序
   const stars: StarKey[] = [
-    'boshi',
-    'lishi',
-    'qinglong',
-    'xiaohao',
-    'jiangjun',
-    'zhoushu',
-    'faylian',
-    'xishen',
-    'bingfu',
-    'dahao',
-    'fubing',
-    'guanfu',
+    "boshi",
+    "lishi",
+    "qinglong",
+    "xiaohao",
+    "jiangjun",
+    "zhoushu",
+    "faylian",
+    "xishen",
+    "bingfu",
+    "dahao",
+    "fubing",
+    "guanfu",
   ];
-  const { luIndex } = getLuYangTuoMaIndex(heavenlyStemNameOfYear, earthlyBranchNameOfYear);
+  const { luIndex } = getLuYangTuoMaIndex(
+    heavenlyStemNameOfYear,
+    earthlyBranchNameOfYear
+  );
   const boshi12: StarName[] = [];
 
   for (let i = 0; i < stars.length; i++) {
     // 阳男阴女顺行，阴男阳女逆部
     const idx = fixIndex(
-      GENDER[genderKey] === earthlyBranches[earthlyBranchOfYear].yinYang ? luIndex + i : luIndex - i,
+      GENDER[genderKey] === earthlyBranches[earthlyBranchOfYear].yinYang
+        ? luIndex + i
+        : luIndex - i
     );
 
     boshi12[idx] = t(stars[i]);
@@ -167,18 +190,29 @@ export const getBoShi12 = (solarDateStr: string, gender: GenderName): StarName[]
  * @param earthlyBranchName 地支
  * @returns 将前诸星起始索引
  */
-export const getJiangqian12StartIndex = (earthlyBranchName: EarthlyBranchName) => {
+export const getJiangqian12StartIndex = (
+  earthlyBranchName: EarthlyBranchName
+) => {
   let jqStartIdx = -1;
-  const earthlyBranchOfYear = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+  const earthlyBranchOfYear = kot<EarthlyBranchKey>(
+    earthlyBranchName,
+    "Earthly"
+  );
 
-  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranchOfYear)) {
-    jqStartIdx = fixEarthlyBranchIndex('woo');
-  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranchOfYear)) {
-    jqStartIdx = fixEarthlyBranchIndex('zi');
-  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].includes(earthlyBranchOfYear)) {
-    jqStartIdx = fixEarthlyBranchIndex('you');
-  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranchOfYear)) {
-    jqStartIdx = fixEarthlyBranchIndex('mao');
+  if (["yinEarthly", "wuEarthly", "xuEarthly"].includes(earthlyBranchOfYear)) {
+    jqStartIdx = fixEarthlyBranchIndex("woo");
+  } else if (
+    ["shenEarthly", "ziEarthly", "chenEarthly"].includes(earthlyBranchOfYear)
+  ) {
+    jqStartIdx = fixEarthlyBranchIndex("zi");
+  } else if (
+    ["siEarthly", "youEarthly", "chouEarthly"].includes(earthlyBranchOfYear)
+  ) {
+    jqStartIdx = fixEarthlyBranchIndex("you");
+  } else if (
+    ["haiEarthly", "maoEarthly", "weiEarthly"].includes(earthlyBranchOfYear)
+  ) {
+    jqStartIdx = fixEarthlyBranchIndex("mao");
   }
 
   return fixIndex(jqStartIdx);
@@ -201,45 +235,51 @@ export const getJiangqian12StartIndex = (earthlyBranchName: EarthlyBranchName) =
  * @param solarDateStr 阳历日期字符串
  * @returns 流年诸星从寅宫开始的顺序
  */
-export const getYearly12 = (solarDateStr: string | Date): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
+export const getYearly12 = (
+  solarDateStr: string | Date
+): { suiqian12: StarName[]; jiangqian12: StarName[] } => {
   const jiangqian12: StarName[] = [];
   const suiqian12: StarName[] = [];
   const { algorithm } = getConfig();
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, 0, {
-    // 流年神煞应该用立春为界，但为了满足不同流派的需求允许配置
-    year: getConfig().horoscopeDivide,
-  });
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+    solarDateStr,
+    0,
+    {
+      // 流年神煞应该用立春为界，但为了满足不同流派的需求允许配置
+      year: getConfig().horoscopeDivide,
+    }
+  );
 
   // 中州派的大耗叫岁破
   const ts12shen: StarKey[] =
-    algorithm === 'zhongzhou'
+    algorithm === "zhongzhou"
       ? [
-          'suijian',
-          'huiqi',
-          'sangmen',
-          'guansuo',
-          'gwanfu',
-          'xiaohao',
-          'suipo',
-          'longde',
-          'baihu',
-          'tiande',
-          'diaoke',
-          'bingfu',
+          "suijian",
+          "huiqi",
+          "sangmen",
+          "guansuo",
+          "gwanfu",
+          "xiaohao",
+          "suipo",
+          "longde",
+          "baihu",
+          "tiande",
+          "diaoke",
+          "bingfu",
         ]
       : [
-          'suijian',
-          'huiqi',
-          'sangmen',
-          'guansuo',
-          'gwanfu',
-          'xiaohao',
-          'dahao',
-          'longde',
-          'baihu',
-          'tiande',
-          'diaoke',
-          'bingfu',
+          "suijian",
+          "huiqi",
+          "sangmen",
+          "guansuo",
+          "gwanfu",
+          "xiaohao",
+          "dahao",
+          "longde",
+          "baihu",
+          "tiande",
+          "diaoke",
+          "bingfu",
         ];
 
   for (let i = 0; i < ts12shen.length; i++) {
@@ -249,18 +289,18 @@ export const getYearly12 = (solarDateStr: string | Date): { suiqian12: StarName[
   }
 
   const jq12shen: StarKey[] = [
-    'jiangxing',
-    'panan',
-    'suiyi',
-    'xiishen',
-    'huagai',
-    'jiesha',
-    'zhaisha',
-    'tiansha',
-    'zhibei',
-    'xianchi',
-    'yuesha',
-    'wangshen',
+    "jiangxing",
+    "panan",
+    "suiyi",
+    "xiishen",
+    "huagai",
+    "jiesha",
+    "zhaisha",
+    "tiansha",
+    "zhibei",
+    "xianchi",
+    "yuesha",
+    "wangshen",
   ];
 
   const jiangqian12StartIndex = getJiangqian12StartIndex(yearly[1]);

@@ -1,16 +1,30 @@
-import { MUTAGEN } from '../data';
-import { Star, SurroundedPalaces } from '../data/types';
-import { HeavenlyStemName, kot, Mutagen, MutagenKey, PalaceKey, PalaceName, StarKey, StarName } from '../i18n';
-import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem } from '../utils';
-import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
-import { IFunctionalPalace } from './FunctionalPalace';
-import { FunctionalSurpalaces, IFunctionalSurpalaces } from './FunctionalSurpalaces';
+import { MUTAGEN } from "../data";
+import type { Star, SurroundedPalaces } from "../data/types";
+import {
+  type HeavenlyStemName,
+  kot,
+  type Mutagen,
+  type MutagenKey,
+  type PalaceKey,
+  type PalaceName,
+  type StarKey,
+  type StarName,
+} from "../i18n";
+import {
+  fixEarthlyBranchIndex,
+  fixIndex,
+  getMutagensByHeavenlyStem,
+} from "../utils";
+import type { IFunctionalAstrolabe } from "./FunctionalAstrolabe";
+import type { IFunctionalPalace } from "./FunctionalPalace";
+import {
+  FunctionalSurpalaces,
+  type IFunctionalSurpalaces,
+} from "./FunctionalSurpalaces";
 
 const _concatStars = (...stars: Star[][]): StarKey[] =>
   Array.from(stars)
-    .reduce((prev, next) => {
-      return [...prev, ...next];
-    }, [])
+    .reduce((prev, next) => [...prev, ...next], [])
     .map((item) => kot<StarKey>(item.name));
 
 const _includeAll = (allStarsInPalace: StarKey[], targetStars: StarName[]) => {
@@ -25,7 +39,10 @@ const _excludeAll = (allStarsInPalace: StarKey[], targetStars: StarName[]) => {
   return starKeys.every((star) => !allStarsInPalace.includes(star));
 };
 
-const _includeOneOf = (allStarsInPalace: StarKey[], targetStars: StarName[]) => {
+const _includeOneOf = (
+  allStarsInPalace: StarKey[],
+  targetStars: StarName[]
+) => {
   const starKeys = targetStars.map((item) => kot<StarKey>(item));
 
   return starKeys.some((star) => allStarsInPalace.includes(star));
@@ -34,10 +51,17 @@ const _includeOneOf = (allStarsInPalace: StarKey[], targetStars: StarName[]) => 
 const _includeMutagen = (stars: Star[], mutagen: Mutagen) => {
   const mutagenKey = kot<MutagenKey>(mutagen);
 
-  return stars.some((star) => star.mutagen && kot<MutagenKey>(star.mutagen) === mutagenKey);
+  return stars.some(
+    (star) => star.mutagen && kot<MutagenKey>(star.mutagen) === mutagenKey
+  );
 };
 
-const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: SurroundedPalaces) =>
+const _getAllStarsInSurroundedPalaces = ({
+  target,
+  opposite,
+  wealth,
+  career,
+}: SurroundedPalaces) =>
   _concatStars(
     target.majorStars,
     target.minorStars,
@@ -50,7 +74,7 @@ const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: S
     wealth.adjectiveStars,
     career.majorStars,
     career.minorStars,
-    career.adjectiveStars,
+    career.adjectiveStars
   );
 
 /**
@@ -64,13 +88,13 @@ const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: S
  */
 export const getSurroundedPalaces = (
   $: IFunctionalAstrolabe,
-  indexOrName: number | PalaceName,
+  indexOrName: number | PalaceName
 ): IFunctionalSurpalaces => {
   // 获取目标宫位
   const palace = getPalace($, indexOrName);
 
   if (!palace) {
-    throw new Error('indexOrName is inccorrect.');
+    throw new Error("indexOrName is inccorrect.");
   }
   // 获取目标宫位索引
   const palaceIndex = fixEarthlyBranchIndex(palace.earthlyBranch);
@@ -81,8 +105,8 @@ export const getSurroundedPalaces = (
   // 财帛位
   const palace8 = getPalace($, fixIndex(palaceIndex + 8));
 
-  if (!palace4 || !palace6 || !palace8) {
-    throw new Error('indexOrName is inccorrect.');
+  if (!(palace4 && palace6 && palace8)) {
+    throw new Error("indexOrName is inccorrect.");
   }
 
   return new FunctionalSurpalaces({
@@ -102,22 +126,28 @@ export const getSurroundedPalaces = (
  * @param indexOrName 宫位索引或者宫位名称
  * @returns 宫位实例
  */
-export const getPalace = ($: IFunctionalAstrolabe, indexOrName: number | PalaceName): IFunctionalPalace | undefined => {
+export const getPalace = (
+  $: IFunctionalAstrolabe,
+  indexOrName: number | PalaceName
+): IFunctionalPalace | undefined => {
   let palace: IFunctionalPalace | undefined;
 
-  if (typeof indexOrName === 'number') {
+  if (typeof indexOrName === "number") {
     if (indexOrName < 0 || indexOrName > 11) {
-      throw new Error('invalid palace index.');
+      throw new Error("invalid palace index.");
     }
 
     palace = $.palaces[indexOrName];
   } else {
     palace = $.palaces.find((item) => {
-      if (kot<PalaceKey>(indexOrName) === 'originalPalace' && item.isOriginalPalace) {
+      if (
+        kot<PalaceKey>(indexOrName) === "originalPalace" &&
+        item.isOriginalPalace
+      ) {
         return item;
       }
 
-      if (kot<PalaceKey>(indexOrName) === 'bodyPalace' && item.isBodyPalace) {
+      if (kot<PalaceKey>(indexOrName) === "bodyPalace" && item.isBodyPalace) {
         return item;
       }
 
@@ -142,7 +172,11 @@ export const getPalace = ($: IFunctionalAstrolabe, indexOrName: number | PalaceN
  * @returns true | false
  */
 export const hasStars = ($: IFunctionalPalace, stars: StarName[]): boolean => {
-  const allStarsInPalace = _concatStars($.majorStars, $.minorStars, $.adjectiveStars);
+  const allStarsInPalace = _concatStars(
+    $.majorStars,
+    $.minorStars,
+    $.adjectiveStars
+  );
 
   return _includeAll(allStarsInPalace, stars);
 };
@@ -156,7 +190,10 @@ export const hasStars = ($: IFunctionalPalace, stars: StarName[]): boolean => {
  * @param mutagen 四化名称【禄｜权｜科｜忌】
  * @returns true | false
  */
-export const hasMutagenInPlace = ($: IFunctionalPalace, mutagen: Mutagen): boolean => {
+export const hasMutagenInPlace = (
+  $: IFunctionalPalace,
+  mutagen: Mutagen
+): boolean => {
   const allStarsInPalace = [...$.majorStars, ...$.minorStars];
 
   return _includeMutagen(allStarsInPalace, mutagen);
@@ -171,9 +208,10 @@ export const hasMutagenInPlace = ($: IFunctionalPalace, mutagen: Mutagen): boole
  * @param mutagen 四化名称【禄｜权｜科｜忌】
  * @returns true | false
  */
-export const notHaveMutagenInPalce = ($: IFunctionalPalace, mutagen: Mutagen): boolean => {
-  return !hasMutagenInPlace($, mutagen);
-};
+export const notHaveMutagenInPalce = (
+  $: IFunctionalPalace,
+  mutagen: Mutagen
+): boolean => !hasMutagenInPlace($, mutagen);
 
 /**
  * 判断某个宫位内是否有传入的星耀，要所有星耀都不在宫位内才会返回true
@@ -184,8 +222,15 @@ export const notHaveMutagenInPalce = ($: IFunctionalPalace, mutagen: Mutagen): b
  * @param stars 星耀
  * @returns true | false
  */
-export const notHaveStars = ($: IFunctionalPalace, stars: StarName[]): boolean => {
-  const allStarsInPalace = _concatStars($.majorStars, $.minorStars, $.adjectiveStars);
+export const notHaveStars = (
+  $: IFunctionalPalace,
+  stars: StarName[]
+): boolean => {
+  const allStarsInPalace = _concatStars(
+    $.majorStars,
+    $.minorStars,
+    $.adjectiveStars
+  );
 
   return _excludeAll(allStarsInPalace, stars);
 };
@@ -199,8 +244,15 @@ export const notHaveStars = ($: IFunctionalPalace, stars: StarName[]): boolean =
  * @param stars 星耀
  * @returns true | false
  */
-export const hasOneOfStars = ($: IFunctionalPalace, stars: StarName[]): boolean => {
-  const allStarsInPalace = _concatStars($.majorStars, $.minorStars, $.adjectiveStars);
+export const hasOneOfStars = (
+  $: IFunctionalPalace,
+  stars: StarName[]
+): boolean => {
+  const allStarsInPalace = _concatStars(
+    $.majorStars,
+    $.minorStars,
+    $.adjectiveStars
+  );
 
   return _includeOneOf(allStarsInPalace, stars);
 };
@@ -212,7 +264,10 @@ export const hasOneOfStars = ($: IFunctionalPalace, stars: StarName[]): boolean 
  * @param stars 星耀名称数组
  * @returns true | false
  */
-export const isSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[]): boolean => {
+export const isSurroundedByStars = (
+  $: IFunctionalSurpalaces,
+  stars: StarName[]
+): boolean => {
   const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _includeAll(allStarsInPalace, stars);
@@ -225,7 +280,10 @@ export const isSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[])
  * @param stars 星耀名称数组
  * @returns true | false
  */
-export const isSurroundedByOneOfStars = ($: IFunctionalSurpalaces, stars: StarName[]) => {
+export const isSurroundedByOneOfStars = (
+  $: IFunctionalSurpalaces,
+  stars: StarName[]
+) => {
   const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _includeOneOf(allStarsInPalace, stars);
@@ -238,13 +296,19 @@ export const isSurroundedByOneOfStars = ($: IFunctionalSurpalaces, stars: StarNa
  * @param stars 星耀名称数组
  * @returns true | false
  */
-export const notSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[]) => {
+export const notSurroundedByStars = (
+  $: IFunctionalSurpalaces,
+  stars: StarName[]
+) => {
   const allStarsInPalace = _getAllStarsInSurroundedPalaces($);
 
   return _excludeAll(allStarsInPalace, stars);
 };
 
-export const mutagensToStars = (heavenlyStem: HeavenlyStemName, mutagens: Mutagen | Mutagen[]) => {
+export const mutagensToStars = (
+  heavenlyStem: HeavenlyStemName,
+  mutagens: Mutagen | Mutagen[]
+) => {
   const muts = Array.isArray(mutagens) ? mutagens : [mutagens];
   const stars: StarName[] = [];
   const mutagenStars = getMutagensByHeavenlyStem(heavenlyStem);

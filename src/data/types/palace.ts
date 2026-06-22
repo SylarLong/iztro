@@ -1,7 +1,12 @@
-import { IFunctionalPalace } from '../../astro/FunctionalPalace';
-import { EarthlyBranchName, HeavenlyStemName, PalaceName, StarName } from '../../i18n';
-import FunctionalStar from '../../star/FunctionalStar';
-import { Decadal } from './astro';
+import type { IFunctionalPalace } from "../../astro/FunctionalPalace";
+import type {
+  EarthlyBranchName,
+  HeavenlyStemName,
+  PalaceName,
+  StarName,
+} from "../../i18n";
+import type FunctionalStar from "../../star/FunctionalStar";
+import type { Decadal } from "./astro";
 
 /**
  * 命宫、身宫对象
