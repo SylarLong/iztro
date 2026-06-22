@@ -264,30 +264,30 @@ export function bySolar<T extends FunctionalAstrolabe>(
     palaces.push(
       new FunctionalPalace({
         index: i,
-        name: palaceNames[i],
+        name: palaceNames[i]!,
         isBodyPalace: bodyIndex === i,
         isOriginalPalace:
-          !["ziEarthly", "chouEarthly"].includes(earthlyBranchOfPalace) &&
+          !["ziEarthly", "chouEarthly"].includes(earthlyBranchOfPalace!) &&
           heavenlyStemOfPalace === heavenlyStemOfYear,
-        heavenlyStem: t(heavenlyStemOfPalace),
-        earthlyBranch: t(earthlyBranchOfPalace),
-        majorStars: majorStars[i],
-        minorStars: minorStars[i],
-        adjectiveStars: adjectiveStars[i],
-        changsheng12: changsheng12[i],
-        boshi12: boshi12[i],
-        jiangqian12: jiangqian12[i],
-        suiqian12: suiqian12[i],
-        decadal: decadals[i],
-        ages: ages[i],
+        heavenlyStem: t(heavenlyStemOfPalace!),
+        earthlyBranch: t(earthlyBranchOfPalace!),
+        majorStars: majorStars[i]!,
+        minorStars: minorStars[i]!,
+        adjectiveStars: adjectiveStars[i]!,
+        changsheng12: changsheng12[i]!,
+        boshi12: boshi12[i]!,
+        jiangqian12: jiangqian12[i]!,
+        suiqian12: suiqian12[i]!,
+        decadal: decadals[i]!,
+        ages: ages[i]!,
       })
     );
   }
 
   // 宫位是从寅宫开始，而寅的索引是2，所以需要+2
-  const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
+  const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)]!;
   const earthlyBranchOfBodyPalace = t<EarthlyBranchName>(
-    EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]
+    EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]!
   );
 
   const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(
@@ -306,7 +306,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
     earthlyBranches[
       getConfig().algorithm === "zhongzhou"
         ? earthlyBranchOfYear
-        : earthlyBranchOfSoulPalace
+        : earthlyBranchOfSoulPalace!
     ].soul
   );
 
@@ -316,14 +316,14 @@ export function bySolar<T extends FunctionalAstrolabe>(
     lunarDate: lunarDate.toString(true),
     chineseDate: translateChineseDate(chineseDate),
     rawDates: { lunarDate, chineseDate },
-    time: t(CHINESE_TIME[timeIndex]),
-    timeRange: TIME_RANGE[timeIndex],
+    time: t(CHINESE_TIME[timeIndex]!),
+    timeRange: TIME_RANGE[timeIndex]!,
     sign: getSignBySolarDate(solarDate, language),
     zodiac: getZodiacBySolarDate(solarDate, language),
-    earthlyBranchOfSoulPalace: t<EarthlyBranchName>(earthlyBranchOfSoulPalace),
+    earthlyBranchOfSoulPalace: t<EarthlyBranchName>(earthlyBranchOfSoulPalace!),
     earthlyBranchOfBodyPalace,
     soul,
-    body: t(earthlyBranches[earthlyBranchOfYear].body),
+    body: t(earthlyBranches[earthlyBranchOfYear!].body),
     fiveElementsClass: getFiveElementsClass(
       heavenlyStemOfSoul,
       earthlyBranchOfSoul
@@ -520,11 +520,11 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
       );
     }
 
-    palace.name = palaceNames[i];
-    palace.majorStars = majorStars[i];
-    palace.changsheng12 = changsheng12[i];
-    palace.decadal = decadals[i];
-    palace.ages = ages[i];
+    palace.name = palaceNames[i]!;
+    palace.majorStars = majorStars[i]!;
+    palace.changsheng12 = changsheng12[i]!;
+    palace.decadal = decadals[i]!;
+    palace.ages = ages[i]!;
     palace.isBodyPalace = bodyIndex === i;
   });
 
@@ -698,14 +698,14 @@ export const getMajorStarBySolarDate = (
     timeIndex,
     fixLeap,
   });
-  const stars = majorStars[soulIndex].filter((star) => star.type === "major");
+  const stars = majorStars[soulIndex]!.filter((star) => star.type === "major");
 
   if (stars.length) {
     return stars.map((star) => t(star.name)).join(",");
   }
 
   // 如果命宫为空宫，则借对宫主星
-  return majorStars[fixIndex(soulIndex + 6)]
+  return majorStars[fixIndex(soulIndex + 6)]!
     .filter((star) => star.type === "major")
     .map((star) => t(star.name))
     .join(",");

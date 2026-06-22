@@ -113,7 +113,7 @@ export const getchangsheng12 = (param: AstrolabeParam): StarName[] => {
       idx = fixIndex(startIdx - i);
     }
 
-    changsheng12[idx] = t(stars[i]);
+    changsheng12[idx] = t(stars[i]!);
   }
 
   return changsheng12;
@@ -174,7 +174,7 @@ export const getBoShi12 = (
         : luIndex - i
     );
 
-    boshi12[idx] = t(stars[i]);
+    boshi12[idx] = t(stars[i]!);
   }
 
   return boshi12;
@@ -285,7 +285,7 @@ export const getYearly12 = (
   for (let i = 0; i < ts12shen.length; i++) {
     const idx = fixIndex(fixEarthlyBranchIndex(yearly[1]) + i);
 
-    suiqian12[idx] = t(ts12shen[i]);
+    suiqian12[idx] = t(ts12shen[i]!);
   }
 
   const jq12shen: StarKey[] = [
@@ -308,7 +308,7 @@ export const getYearly12 = (
   for (let i = 0; i < jq12shen.length; i++) {
     const idx = fixIndex(jiangqian12StartIndex + i);
 
-    jiangqian12[idx] = t(jq12shen[i]);
+    jiangqian12[idx] = t(jq12shen[i]!);
   }
 
   return { suiqian12, jiangqian12 };

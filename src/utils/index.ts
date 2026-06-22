@@ -99,7 +99,7 @@ export const getMutagen = (
   const starKey = kot<StarKey>(starName);
   const target = getTargetMutagens(heavenlyStem);
 
-  return t<Mutagen>(MUTAGEN[target.indexOf(starKey as never)]);
+  return t<Mutagen>(MUTAGEN[target.indexOf(starKey as never)]!);
 };
 
 export const getMutagensByHeavenlyStem = (

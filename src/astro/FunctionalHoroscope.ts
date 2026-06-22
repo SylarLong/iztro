@@ -199,7 +199,7 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[
       palaceIndex
     ];
-    const starKeys = stars.map((item) => kot<StarKey>(item.name));
+    const starKeys = stars!.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
 
     return horoscopeStarKeys.every((star) => starKeys.includes(star));
@@ -218,7 +218,7 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[
       palaceIndex
     ];
-    const starKeys = stars.map((item) => kot<StarKey>(item.name));
+    const starKeys = stars!.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
 
     return horoscopeStarKeys.every((star) => !starKeys.includes(star));
@@ -237,7 +237,7 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[
       palaceIndex
     ];
-    const starKeys = stars.map((item) => kot<StarKey>(item.name));
+    const starKeys = stars!.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
 
     return horoscopeStarKeys.some((star) => starKeys.includes(star));
@@ -255,11 +255,11 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
     const majorStars = this.astrolabe.palace(palaceIndex)?.majorStars ?? [];
     const minorStars = this.astrolabe.palace(palaceIndex)?.minorStars ?? [];
-    const stars = mergeStars([majorStars], [minorStars])[0].map((star) =>
+    const stars = mergeStars([majorStars], [minorStars])[0]!.map((star) =>
       kot<StarKey>(star.name)
     );
     const mutagenIndex = MUTAGEN.indexOf(kot<MutagenKey>(horoscopeMutagen));
 
-    return stars.includes(kot<StarKey>(this[scope].mutagen[mutagenIndex]));
+    return stars.includes(kot<StarKey>(this[scope].mutagen[mutagenIndex]!));
   };
 }

@@ -80,7 +80,7 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
 
     const bodyOffset = [0, 2, 4, 6, 8, 10, 0, 2, 4, 6, 8, 10, 0];
 
-    bodyIndex = fixIndex(bodyOffset[timeIndex] + soulIndex);
+    bodyIndex = fixIndex(bodyOffset[timeIndex]! + soulIndex);
   }
 
   // 用五虎遁取得寅宫的天干
@@ -95,12 +95,12 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
 
   // 命宫的天干
   const heavenlyStemOfSoul = t<HeavenlyStemName>(
-    HEAVENLY_STEMS[heavenlyStemOfSoulIndex]
+    HEAVENLY_STEMS[heavenlyStemOfSoulIndex]!
   );
 
   // 命宫地支，命宫索引 + `寅`的索引（因为紫微斗数里寅宫是第一个宫位）
   const earthlyBranchOfSoul = t<EarthlyBranchName>(
-    EARTHLY_BRANCHES[fixIndex(soulIndex + firstIndex)]
+    EARTHLY_BRANCHES[fixIndex(soulIndex + firstIndex)]!
   );
 
   return {
@@ -178,7 +178,7 @@ export const getFiveElementsClass = (
     index -= 5;
   }
 
-  return t<FiveElementsClassName>(fiveElementsTable[index - 1]);
+  return t<FiveElementsClassName>(fiveElementsTable[index - 1]!);
 };
 
 /**
@@ -193,7 +193,7 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
   for (let i = 0; i < PALACES.length; i++) {
     const idx = fixIndex(i - fromIndex);
 
-    names[i] = t(PALACES[idx]) as PalaceName;
+    names[i] = t(PALACES[idx]!) as PalaceName;
   }
 
   return names;
@@ -255,8 +255,8 @@ export const getHoroscope = (
 
     decadals[idx] = {
       range: [start, start + 9],
-      heavenlyStem: t(HEAVENLY_STEMS[heavenlyStemIndex]),
-      earthlyBranch: t(EARTHLY_BRANCHES[earthlyBranchIndex]),
+      heavenlyStem: t(HEAVENLY_STEMS[heavenlyStemIndex]!),
+      earthlyBranch: t(EARTHLY_BRANCHES[earthlyBranchIndex]!),
     };
   }
 
