@@ -249,7 +249,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     const { heavenlyStem } = this;
     const stars = mutagensToStars(heavenlyStem, withMutagens);
 
-    if (!(stars && stars.length)) {
+    if (!stars?.length) {
       return false;
     }
 
@@ -265,7 +265,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     const { heavenlyStem } = this;
     const stars = mutagensToStars(heavenlyStem, withMutagens);
 
-    if (!(stars && stars.length)) {
+    if (!stars?.length) {
       return true;
     }
 
@@ -282,7 +282,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     const { heavenlyStem } = this;
     const stars = mutagensToStars(heavenlyStem, withMutagens);
 
-    if (!(stars && stars.length)) {
+    if (!stars?.length) {
       return true;
     }
 
@@ -299,7 +299,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
   selfMutagedOneOf = (withMutagens?: Mutagen[]) => {
     let muts: Mutagen | Mutagen[] = [];
 
-    if (withMutagens && withMutagens.length) {
+    if (withMutagens?.length) {
       muts = withMutagens;
     } else {
       muts = ["禄", "权", "科", "忌"];
@@ -314,7 +314,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
   notSelfMutaged = (withMutagens?: Mutagen | Mutagen[]) => {
     let muts: Mutagen | Mutagen[] = [];
 
-    if (withMutagens && withMutagens.length) {
+    if (withMutagens?.length) {
       muts = withMutagens;
     } else {
       muts = ["禄", "权", "科", "忌"];

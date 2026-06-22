@@ -21,7 +21,7 @@ const getTargetMutagens = (heavenlyStem: HeavenlyStemKey) => {
   const { mutagens } = getConfig();
   let result;
 
-  if (mutagens && mutagens[heavenlyStem]) {
+  if (mutagens?.[heavenlyStem]) {
     result = mutagens[heavenlyStem] ?? [];
   } else {
     result = heavenlyStems[heavenlyStem].mutagen ?? [];
