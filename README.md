@@ -32,7 +32,7 @@
 
 如果你需要紫微斗数对话解读能力，`iztro` 也提供可选的 iztro Chat API。该 API 针对对话式命盘解读做了优化，并会在内部调用 `iztro` 获取紫微斗数排盘数据。使用时需要 API key。你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文档。
 
-推荐的集成方式是多轮对话 API：先创建会话，再向该会话发送用户消息。这样 API 可以为你的用户保留上下文。
+推荐的集成方式是多轮对话 API：先创建会话，再向该会话发送用户消息。API 会自动处理上下文。
 
 ```shell
 curl https://chat-api.iztro.com/v2/platform/sessions \
