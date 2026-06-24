@@ -27,6 +27,37 @@
 
 </div>
 
+
+## iztro Chat API
+
+如果你需要紫微斗数对话解读能力，`iztro` 也提供可选的 iztro Chat API。该 API 针对对话式命盘解读做了优化，并会在内部调用 `iztro` 获取紫微斗数排盘数据。
+
+Chat API 与开源 `iztro` 包相互独立，使用时需要 API key。你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文档。
+
+推荐的集成方式是多轮对话 API：先创建会话，再向该会话发送用户消息。这样 API 可以为你的用户保留上下文。
+
+```shell
+curl https://chat-api.iztro.com/v2/platform/sessions \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_user_id": "user_123",
+    "system_prompt_override": "用简洁中文回答，避免过度术语，并在最后给出可继续追问的方向。"
+  }'
+
+curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "分析我的 2026 年事业趋势。生日是 1995-02-23，出生时辰 17 点，性别女。",
+    "title": "2026 事业解读",
+    "language": "zh",
+    "enable_iztro_call": true
+  }'
+```
+
+JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完整的前后端流式聊天、编辑、重新发送示例见 [`examples/fullstack-demo`](./examples/fullstack-demo)。如果你已有兼容 OpenAI Chat Completions 的客户端，示例中也包含 `/v2/chat/completions` 的用法。
+
 ## 介绍
 
 用于紫微斗数排盘的 JavaScript 开源库，有以下功能：
@@ -192,35 +223,6 @@ pnpm install iztro -S
   var astrolabe = iztro.astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
-## iztro Chat API
-
-如果你需要紫微斗数对话解读能力，`iztro` 也提供可选的 iztro Chat API。该 API 针对对话式命盘解读做了优化，并会在内部调用 `iztro` 获取紫微斗数排盘数据。
-
-Chat API 与开源 `iztro` 包相互独立，使用时需要 API key。你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文档。
-
-推荐的集成方式是多轮对话 API：先创建会话，再向该会话发送用户消息。这样 API 可以为你的用户保留上下文。
-
-```shell
-curl https://chat-api.iztro.com/v2/platform/sessions \
-  -H "Authorization: Bearer $IZTRO_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "external_user_id": "user_123",
-    "system_prompt_override": "用简洁中文回答，避免过度术语，并在最后给出可继续追问的方向。"
-  }'
-
-curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
-  -H "Authorization: Bearer $IZTRO_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "分析我的 2026 年事业趋势。生日是 1995-02-23，出生时辰 17 点，性别女。",
-    "title": "2026 事业解读",
-    "language": "zh",
-    "enable_iztro_call": true
-  }'
-```
-
-JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完整的前后端流式聊天、编辑、重新发送示例见 [`examples/fullstack-demo`](./examples/fullstack-demo)。如果你已有兼容 OpenAI Chat Completions 的客户端，示例中也包含 `/v2/chat/completions` 的用法。
 
 ## 贡献
 
