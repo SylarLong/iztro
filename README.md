@@ -56,7 +56,7 @@ curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
   }'
 ```
 
-JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完整的前后端流式聊天、编辑、重新发送示例见 [`examples/fullstack-demo`](./examples/fullstack-demo)。如果你已有兼容 OpenAI Chat Completions 的客户端，示例中也包含 `/v2/chat/completions` 的用法。
+JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完整的前后端流式聊天、编辑、重新发送示例见 [`examples/fullstack-demo`](./examples/fullstack-demo)。
 
 ## 介绍
 
