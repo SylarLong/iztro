@@ -133,6 +133,36 @@ This is a very simple example to show how to use `iztro` to get the astrolabe da
   var astrolabe = iztro.astro.byLunar('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
+## iztro Chat API
+
+For developers who need conversational Zi Wei Dou Shu interpretation, iztro also provides an optional iztro Chat API. The API is optimized for conversational chart interpretation and calls `iztro` internally for Zi Wei Dou Shu chart data.
+
+The Chat API is separate from the open-source `iztro` package and requires an API key. Read the API documentation at [api-doc.iztro.com](https://api-doc.iztro.com).
+
+The recommended integration is the Multi-turn Conversation API: create a conversation first, then send user messages to that conversation so the API can preserve context for your own users.
+
+```shell
+curl https://chat-api.iztro.com/v2/platform/sessions \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_user_id": "user_123",
+    "system_prompt_override": "Answer in concise English markdown and suggest possible follow-up questions."
+  }'
+
+curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "Analyze my 2026 career trend. My birthday is 1995-02-23, birth hour is 17, gender is female.",
+    "title": "2026 Career Reading",
+    "language": "en",
+    "enable_iztro_call": true
+  }'
+```
+
+See [`examples/chat-api`](./examples/chat-api) for JavaScript and Python examples. A full-stack streaming chatbot with edit and resend support is available in [`examples/fullstack-demo`](./examples/fullstack-demo). OpenAI-compatible `/v2/chat/completions` examples are also included for existing chat-completions clients.
+
 ## Contributing
 
 If you're interested in `iztro` and wish to join us,it's very welcome. You can contribute by:

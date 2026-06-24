@@ -192,6 +192,36 @@ pnpm install iztro -S
   var astrolabe = iztro.astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
+## iztro Chat API
+
+如果你需要紫微斗數對話解讀能力，`iztro` 也提供可選的 iztro Chat API。該 API 針對對話式命盤解讀做了優化，並會在內部調用 `iztro` 獲取紫微斗數排盤資料。
+
+Chat API 與開源 `iztro` 套件相互獨立，使用時需要 API key。你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文檔。
+
+推薦的集成方式是多輪對話 API：先創建會話，再向該會話發送使用者訊息。這樣 API 可以為你的使用者保留上下文。
+
+```shell
+curl https://chat-api.iztro.com/v2/platform/sessions \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_user_id": "user_123",
+    "system_prompt_override": "用簡潔中文回答，避免過度術語，並在最後給出可繼續追問的方向。"
+  }'
+
+curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "分析我的 2026 年事業趨勢。生日是 1995-02-23，出生時辰 17 點，性別女。",
+    "title": "2026 事業解讀",
+    "language": "zh",
+    "enable_iztro_call": true
+  }'
+```
+
+JavaScript 和 Python 示例見 [`examples/chat-api`](./examples/chat-api)。完整的前後端流式聊天、編輯、重新發送示例見 [`examples/fullstack-demo`](./examples/fullstack-demo)。如果你已有兼容 OpenAI Chat Completions 的客戶端，示例中也包含 `/v2/chat/completions` 的用法。
+
 ## 貢獻指南
 
 如果你對 `iztro` 有興趣，也想加入貢獻隊伍，我們非常歡迎，你可以用以下方式進行：
