@@ -133,6 +133,36 @@ This is a very simple example to show how to use `iztro` to get the astrolabe da
   var astrolabe = iztro.astro.byLunar('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
+## Hosted Chat API
+
+For developers who need hosted conversational Zi Wei Dou Shu interpretation, iztro also provides an optional hosted Chat API. The service is optimized for conversational chart interpretation and calls `iztro` internally for Zi Wei Dou Shu chart data.
+
+The hosted API is separate from the open-source `iztro` package and requires an API key. You can apply for an API key from [platform.iztro.com](https://platform.iztro.com), and read the API documentation at [api-doc.iztro.com](https://api-doc.iztro.com).
+
+The recommended integration is the Chat Session API: create a hosted session first, then send user messages to that session so the API can preserve context for your own users.
+
+```shell
+curl https://api.iztro.com/api/platform/sessions \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_user_id": "user_123",
+    "system_prompt_override": "Answer in concise English markdown and suggest possible follow-up questions."
+  }'
+
+curl https://api.iztro.com/api/platform/sessions/{session_id}/messages \
+  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "Analyze my 2026 career trend. My birthday is 1995-02-23, birth hour is 17, gender is female.",
+    "title": "2026 Career Reading",
+    "language": "en",
+    "enable_iztro_call": true
+  }'
+```
+
+See [`examples/chat-api`](./examples/chat-api) for JavaScript and Python examples. OpenAI-compatible `/v1/chat/completions` examples are also included for existing chat-completions clients.
+
 ## Contributing
 
 If you're interested in `iztro` and wish to join us,it's very welcome. You can contribute by:
