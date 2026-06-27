@@ -28,9 +28,19 @@
 </div>
 
 
-## iztro Chat API
+## iztro AI · iztro-ziwei-v3
 
-如果你需要紫微斗数对话解读能力，`iztro` 也提供可选的 iztro Chat API。该 API 针对对话式命盘解读做了优化，并会在内部调用 `iztro` 获取紫微斗数排盘数据。使用时需要 API key。你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文档。
+除了开源排盘库，`iztro` 还提供一个能**解读命盘、回答问题**的 AI 层，由 **`iztro-ziwei-v3`** 模型驱动。它专为紫微斗数打造，而不是通用聊天模型：
+
+- 会**自动为你调用 `iztro` 排盘工具**——自动排出本命盘，并读取大限、流年、流月、流日等时间层级，按每个问题选择需要的层级。
+- 针对紫微解读做了**大量优化**（提示词与推理策略），省去你自己反复搭建和调优。
+- **自动为你管理对话上下文**——记住出生信息和此前的对话，无需每次重发。
+
+有两种使用方式，都运行在 `iztro-ziwei-v3` 上：
+
+### 1. iztro Chat API —— 调用我们的 HTTP API
+
+如果你需要紫微斗数对话解读能力，可以使用 iztro Chat API。使用时需要 API key，你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文档。
 
 推荐的集成方式是多轮对话 API：先创建会话，再向该会话发送用户消息。API 会自动处理上下文。
 
@@ -55,6 +65,13 @@ curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
 ```
 
 JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完整的前后端流式聊天、编辑、重新发送示例见 [`examples/fullstack-demo`](./examples/fullstack-demo)。
+
+### 2. iztro Agents SDK —— 构建你自己的 Agent
+
+在 `iztro-ziwei-v3` 上构建你自己的 Agent，并加入自己的工具、MCP 服务器和人工确认。它是对 [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) 的轻量封装，提供 Python 与 TypeScript 两个版本：
+
+- **Python** —— `pip install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-python](https://github.com/a5507203/openai-iztro-agents-python)
+- **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-js](https://github.com/a5507203/openai-iztro-agents-js)
 
 ## 介绍
 

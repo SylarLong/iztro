@@ -27,9 +27,19 @@
 
 </div>
 
-## iztro Chat API
+## iztro AI · iztro-ziwei-v3
 
-For developers who need conversational Zi Wei Dou Shu interpretation, iztro also provides an optional iztro Chat API. The API is optimized for conversational chart interpretation and calls `iztro` internally for Zi Wei Dou Shu chart data. Read the API documentation at [api-doc.iztro.com](https://api-doc.iztro.com).
+Beyond the open-source charting library, `iztro` offers an AI layer that **interprets charts and answers questions**, powered by the **`iztro-ziwei-v3`** model. It is purpose-built for Zi Wei Dou Shu (紫微斗数), not a general chat model:
+
+- It **calls the `iztro` charting tools for you** — building the natal chart and reading the decade, annual, monthly, and daily timing layers, choosing the right ones for each question.
+- It is **heavily optimized for Ziwei interpretation** (prompting and reasoning) that you would otherwise build and tune yourself.
+- It **manages conversation context for you** — remembering birth details and earlier turns, so nothing is resent.
+
+There are two ways to use it, both on `iztro-ziwei-v3`:
+
+### 1. iztro Chat API — call our HTTP API
+
+For conversational Zi Wei Dou Shu interpretation, use the iztro Chat API. It requires an API key; read the API documentation at [api-doc.iztro.com](https://api-doc.iztro.com).
 
 The recommended integration is the Multi-turn Conversation API: create a conversation first, then send user messages to that conversation so the API can preserve context for you.
 
@@ -54,6 +64,13 @@ curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
 ```
 
 See [`examples/chat-api`](./examples/chat-api) for JavaScript and Python examples. A full-stack streaming chatbot with edit and resend support is available in [`examples/fullstack-demo`](./examples/fullstack-demo).
+
+### 2. iztro Agents SDK — build your own agent
+
+Build your own agent on `iztro-ziwei-v3` with your own tools, MCP servers, and human-in-the-loop. It is a thin layer over the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), available for both Python and TypeScript:
+
+- **Python** — `pip install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-python](https://github.com/a5507203/openai-iztro-agents-python)
+- **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-js](https://github.com/a5507203/openai-iztro-agents-js)
 
 ## Introduction
 
