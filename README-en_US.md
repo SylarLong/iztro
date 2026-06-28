@@ -69,8 +69,8 @@ See [`examples/chat-api`](./examples/chat-api) for JavaScript and Python example
 
 Build your own agent on `iztro-ziwei-v3` with your own tools, MCP servers, and human-in-the-loop. It is a thin layer over the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), available for both Python and TypeScript:
 
-- **Python** — `pip install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-python](https://github.com/a5507203/openai-iztro-agents-python)
-- **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-js](https://github.com/a5507203/openai-iztro-agents-js)
+- **Python** — `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
+- **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
 ## Introduction
 
