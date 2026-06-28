@@ -70,8 +70,8 @@ JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完
 
 在 `iztro-ziwei-v3` 上构建你自己的 Agent，并加入自己的工具、MCP 服务器和人工确认。它是对 [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) 的轻量封装，提供 Python 与 TypeScript 两个版本：
 
-- **Python** —— `pip install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-python](https://github.com/a5507203/openai-iztro-agents-python)
-- **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/a5507203/openai-iztro-agents-js](https://github.com/a5507203/openai-iztro-agents-js)
+- **Python** —— `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
+- **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
 ## 介绍
 
