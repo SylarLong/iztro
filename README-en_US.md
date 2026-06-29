@@ -6,6 +6,8 @@
 
 [简体中文](./README.md) 🔸 [繁體中文](./README-zh_TW.md) 🔸 English
 
+[![Join our Discord](https://img.shields.io/badge/JOIN%20OUR%20DISCORD-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/xvmu6gww6B)
+
 </div>
 
 <div align="center">
