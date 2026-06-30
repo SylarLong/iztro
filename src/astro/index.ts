@@ -1,2 +1,2 @@
-export * from './palace';
-export * from './astro';
+export * from "./astro";
+export * from "./palace";

@@ -1,4 +1,4 @@
 export default {
-  male: 'male',
-  female: 'female',
+  male: "male",
+  female: "female",
 } as const;

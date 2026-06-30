@@ -1,27 +1,27 @@
-import { EARTHLY_BRANCHES, heavenlyStems, MUTAGEN, STARS_INFO } from '../data';
-import { initStars } from '../star';
+import { solar2lunar } from "lunar-lite";
+import type { HeavenlyStemAndEarthlyBranchDate } from "lunar-lite/lib/types";
+import { getConfig } from "../astro";
+import { EARTHLY_BRANCHES, heavenlyStems, MUTAGEN, STARS_INFO } from "../data";
 import {
-  Brightness,
-  EarthlyBranchKey,
-  EarthlyBranchName,
-  HeavenlyStemKey,
-  HeavenlyStemName,
-  Mutagen,
-  StarName,
+  type Brightness,
+  type EarthlyBranchKey,
+  type EarthlyBranchName,
+  type HeavenlyStemKey,
+  type HeavenlyStemName,
   kot,
+  type Mutagen,
+  type StarKey,
+  type StarName,
   t,
-  StarKey,
-} from '../i18n';
-import FunctionalStar from '../star/FunctionalStar';
-import { HeavenlyStemAndEarthlyBranchDate } from 'lunar-lite/lib/types';
-import { solar2lunar } from 'lunar-lite';
-import { getConfig } from '../astro';
+} from "../i18n";
+import { initStars } from "../star";
+import type FunctionalStar from "../star/FunctionalStar";
 
 const getTargetMutagens = (heavenlyStem: HeavenlyStemKey) => {
   const { mutagens } = getConfig();
   let result;
 
-  if (mutagens && mutagens[heavenlyStem]) {
+  if (mutagens?.[heavenlyStem]) {
     result = mutagens[heavenlyStem] ?? [];
   } else {
     result = heavenlyStems[heavenlyStem].mutagen ?? [];
@@ -37,7 +37,7 @@ const getTargetMutagens = (heavenlyStem: HeavenlyStemKey) => {
  * @param max 最大循环数，默认为12【因为12用得最多，宫位数量以及十二地支数量都为12，所以将12作为默认值】
  * @returns {number} 处理后的索引
  */
-export const fixIndex = (index: number, max: number = 12): number => {
+export const fixIndex = (index: number, max = 12): number => {
   if (index < 0) {
     return fixIndex(index + max, max);
   }
@@ -46,7 +46,7 @@ export const fixIndex = (index: number, max: number = 12): number => {
     return fixIndex(index - max, max);
   }
 
-  const res = 1 / index === -Infinity ? 0 : index;
+  const res = 1 / index === Number.NEGATIVE_INFINITY ? 0 : index;
 
   return res;
 };
@@ -57,11 +57,15 @@ export const fixIndex = (index: number, max: number = 12): number => {
  * @param {EarthlyBranchName} earthlyBranch 地支
  * @returns {number} 该地支对应的宫位索引序号
  */
-export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranchName): number => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
-  const yin = kot<EarthlyBranchKey>('yinEarthly', 'Earthly');
+export const earthlyBranchIndexToPalaceIndex = (
+  earthlyBranchName: EarthlyBranchName
+): number => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, "Earthly");
+  const yin = kot<EarthlyBranchKey>("yinEarthly", "Earthly");
 
-  return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin));
+  return fixIndex(
+    EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf(yin)
+  );
 };
 
 /**
@@ -70,28 +74,38 @@ export const earthlyBranchIndexToPalaceIndex = (earthlyBranchName: EarthlyBranch
  * @param {StarName} starName 星耀名字
  * @param {number} index 所在宫位索引
  */
-export const getBrightness = (starName: StarName, index: number): Brightness => {
+export const getBrightness = (
+  starName: StarName,
+  index: number
+): Brightness => {
   const star = kot<keyof typeof STARS_INFO>(starName);
   const { brightness } = getConfig();
-  const targetBrightness = brightness[star] ? brightness[star] : STARS_INFO[star]?.brightness;
+  const targetBrightness = brightness[star]
+    ? brightness[star]
+    : STARS_INFO[star]?.brightness;
 
   if (!targetBrightness) {
-    return '';
+    return "";
   }
 
-  return t<Brightness>(targetBrightness[fixIndex(index)]);
+  return t<Brightness>(targetBrightness[fixIndex(index)]!);
 };
 
-export const getMutagen = (starName: StarName, heavenlyStemName: HeavenlyStemName): Mutagen => {
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
+export const getMutagen = (
+  starName: StarName,
+  heavenlyStemName: HeavenlyStemName
+): Mutagen => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, "Heavenly");
   const starKey = kot<StarKey>(starName);
   const target = getTargetMutagens(heavenlyStem);
 
-  return t<Mutagen>(MUTAGEN[target.indexOf(starKey as never)]);
+  return t<Mutagen>(MUTAGEN[target.indexOf(starKey as never)]!);
 };
 
-export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): StarName[] => {
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
+export const getMutagensByHeavenlyStem = (
+  heavenlyStemName: HeavenlyStemName
+): StarName[] => {
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, "Heavenly");
   const target = getTargetMutagens(heavenlyStem);
 
   return target.map((star) => t<StarName>(star));
@@ -103,10 +117,15 @@ export const getMutagensByHeavenlyStem = (heavenlyStemName: HeavenlyStemName): S
  * @param {EarthlyBranchName} earthlyBranch 地支
  * @returns {number} Number(0~11)
  */
-export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): number => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+export const fixEarthlyBranchIndex = (
+  earthlyBranchName: EarthlyBranchName
+): number => {
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, "Earthly");
 
-  return fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch) - EARTHLY_BRANCHES.indexOf('yinEarthly'));
+  return fixIndex(
+    EARTHLY_BRANCHES.indexOf(earthlyBranch) -
+      EARTHLY_BRANCHES.indexOf("yinEarthly")
+  );
 };
 
 /**
@@ -122,10 +141,14 @@ export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): num
  * @param {vboolean} fixLeap 是否调整闰月
  * @returns {number} 月份索引
  */
-export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+export const fixLunarMonthIndex = (
+  solarDateStr: string,
+  timeIndex: number,
+  fixLeap?: boolean
+) => {
   const { lunarMonth, lunarDay, isLeap } = solar2lunar(solarDateStr);
   // 紫微斗数以`寅`宫为第一个宫位
-  const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
+  const firstIndex = EARTHLY_BRANCHES.indexOf("yinEarthly");
   const needToAdd = isLeap && fixLeap && lunarDay > 15 && timeIndex !== 12;
 
   return fixIndex(lunarMonth + 1 - firstIndex + (needToAdd ? 1 : 0));
@@ -138,7 +161,8 @@ export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixL
  * @param timeIndex 时辰索引
  * @returns {number} 农历日期【天】
  */
-export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) => (timeIndex >= 12 ? lunarDay : lunarDay - 1);
+export const fixLunarDayIndex = (lunarDay: number, timeIndex: number) =>
+  timeIndex >= 12 ? lunarDay : lunarDay - 1;
 
 /**
  * 将多个星耀数组合并到一起
@@ -189,17 +213,23 @@ export const timeToIndex = (hour: number) => {
  * @returns {number} 小限开始的宫位索引
  */
 export const getAgeIndex = (earthlyBranchName: EarthlyBranchName) => {
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, "Earthly");
   let ageIdx = -1;
 
-  if (['yinEarthly', 'wuEarthly', 'xuEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('chen');
-  } else if (['shenEarthly', 'ziEarthly', 'chenEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('xu');
-  } else if (['siEarthly', 'youEarthly', 'chouEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixEarthlyBranchIndex('wei');
-  } else if (['haiEarthly', 'maoEarthly', 'weiEarthly'].includes(earthlyBranch)) {
-    ageIdx = fixIndex(fixEarthlyBranchIndex('chou'));
+  if (["yinEarthly", "wuEarthly", "xuEarthly"].includes(earthlyBranch)) {
+    ageIdx = fixEarthlyBranchIndex("chen");
+  } else if (
+    ["shenEarthly", "ziEarthly", "chenEarthly"].includes(earthlyBranch)
+  ) {
+    ageIdx = fixEarthlyBranchIndex("xu");
+  } else if (
+    ["siEarthly", "youEarthly", "chouEarthly"].includes(earthlyBranch)
+  ) {
+    ageIdx = fixEarthlyBranchIndex("wei");
+  } else if (
+    ["haiEarthly", "maoEarthly", "weiEarthly"].includes(earthlyBranch)
+  ) {
+    ageIdx = fixIndex(fixEarthlyBranchIndex("chou"));
   }
 
   return ageIdx;
@@ -211,7 +241,9 @@ export const getAgeIndex = (earthlyBranchName: EarthlyBranchName) => {
  * @param chineseDate 干支纪年日期对象
  * @returns 干支纪年字符串
  */
-export const translateChineseDate = (chineseDate: HeavenlyStemAndEarthlyBranchDate): string => {
+export const translateChineseDate = (
+  chineseDate: HeavenlyStemAndEarthlyBranchDate
+): string => {
   const { yearly, monthly, daily, hourly } = chineseDate;
 
   if (
@@ -220,12 +252,12 @@ export const translateChineseDate = (chineseDate: HeavenlyStemAndEarthlyBranchDa
     daily.some((item) => (t(kot(item)) as string).length > 1) ||
     hourly.some((item) => (t(kot(item)) as string).length > 1)
   ) {
-    return `${yearly.map((item) => t(kot(item))).join(' ')} - ${monthly.map((item) => t(kot(item))).join(' ')} - ${daily
+    return `${yearly.map((item) => t(kot(item))).join(" ")} - ${monthly.map((item) => t(kot(item))).join(" ")} - ${daily
       .map((item) => t(kot(item)))
-      .join(' ')} - ${hourly.map((item) => t(kot(item))).join(' ')}`;
+      .join(" ")} - ${hourly.map((item) => t(kot(item))).join(" ")}`;
   }
 
-  return `${yearly.map((item) => t(kot(item))).join('')} ${monthly.map((item) => t(kot(item))).join('')} ${daily
+  return `${yearly.map((item) => t(kot(item))).join("")} ${monthly.map((item) => t(kot(item))).join("")} ${daily
     .map((item) => t(kot(item)))
-    .join('')} ${hourly.map((item) => t(kot(item))).join('')}`;
+    .join("")} ${hourly.map((item) => t(kot(item))).join("")}`;
 };

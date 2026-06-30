@@ -1,28 +1,33 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from "lunar-lite";
 import {
   EARTHLY_BRANCHES,
+  earthlyBranches,
+  FiveElementsClass,
   GENDER,
   HEAVENLY_STEMS,
   PALACES,
   TIGER_RULE,
-  earthlyBranches,
-  FiveElementsClass,
-} from '../data';
-import { SoulAndBody, Decadal, AstrolabeParam } from '../data/types';
+} from "../data";
+import type { AstrolabeParam, Decadal, SoulAndBody } from "../data/types";
 import {
-  EarthlyBranchKey,
-  EarthlyBranchName,
-  FiveElementsClassKey,
-  FiveElementsClassName,
-  HeavenlyStemKey,
-  HeavenlyStemName,
-  PalaceName,
+  type EarthlyBranchKey,
+  type EarthlyBranchName,
+  type FiveElementsClassKey,
+  type FiveElementsClassName,
+  type GenderKey,
+  type HeavenlyStemKey,
+  type HeavenlyStemName,
   kot,
+  type PalaceName,
   t,
-  GenderKey,
-} from '../i18n';
-import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
-import { getConfig } from './astro';
+} from "../i18n";
+import {
+  fixEarthlyBranchIndex,
+  fixIndex,
+  fixLunarMonthIndex,
+  getAgeIndex,
+} from "../utils";
+import { getConfig } from "./astro";
 
 /**
  * 获取命宫以及身宫数据
@@ -41,25 +46,33 @@ import { getConfig } from './astro';
  */
 export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
   const { solarDate, timeIndex, fixLeap, from } = param;
-  const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
-    year: getConfig().yearDivide,
-    month: getConfig().horoscopeDivide,
-  });
-  const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1], 'Earthly');
-  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
+  const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+    solarDate,
+    timeIndex,
+    {
+      year: getConfig().yearDivide,
+      month: getConfig().horoscopeDivide,
+    }
+  );
+  const earthlyBranchOfTime = kot<EarthlyBranchKey>(hourly[1], "Earthly");
+  const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], "Heavenly");
 
   // 紫微斗数以`寅`宫为第一个宫位
-  const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
+  const firstIndex = EARTHLY_BRANCHES.indexOf("yinEarthly");
 
   const monthIndex = fixLunarMonthIndex(solarDate, timeIndex, fixLeap);
 
   // 命宫索引，以寅宫为0，顺时针数到生月地支索引，再逆时针数到生时地支索引
   // 此处数到生月地支索引其实就是农历月份，所以不再计算生月地支索引
-  let soulIndex = fixIndex(monthIndex - EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
+  let soulIndex = fixIndex(
+    monthIndex - EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime)
+  );
 
   // 身宫索引，以寅宫为0，顺时针数到生月地支索引，再顺时针数到生时地支索引
   // 与命宫索引一样，不再赘述
-  let bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
+  let bodyIndex = fixIndex(
+    monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime)
+  );
 
   if (from?.heavenlyStem && from?.earthlyBranch) {
     // 以传入地支为命宫
@@ -67,7 +80,7 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
 
     const bodyOffset = [0, 2, 4, 6, 8, 10, 0, 2, 4, 6, 8, 10, 0];
 
-    bodyIndex = fixIndex(bodyOffset[timeIndex] + soulIndex);
+    bodyIndex = fixIndex(bodyOffset[timeIndex]! + soulIndex);
   }
 
   // 用五虎遁取得寅宫的天干
@@ -75,13 +88,20 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
 
   // 获取命宫天干索引，起始天干索引加上命宫的索引即是
   // 天干循环数为10
-  const heavenlyStemOfSoulIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHevenlyStem) + soulIndex, 10);
+  const heavenlyStemOfSoulIndex = fixIndex(
+    HEAVENLY_STEMS.indexOf(startHevenlyStem) + soulIndex,
+    10
+  );
 
   // 命宫的天干
-  const heavenlyStemOfSoul = t<HeavenlyStemName>(HEAVENLY_STEMS[heavenlyStemOfSoulIndex]);
+  const heavenlyStemOfSoul = t<HeavenlyStemName>(
+    HEAVENLY_STEMS[heavenlyStemOfSoulIndex]!
+  );
 
   // 命宫地支，命宫索引 + `寅`的索引（因为紫微斗数里寅宫是第一个宫位）
-  const earthlyBranchOfSoul = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(soulIndex + firstIndex)]);
+  const earthlyBranchOfSoul = t<EarthlyBranchName>(
+    EARTHLY_BRANCHES[fixIndex(soulIndex + firstIndex)]!
+  );
 
   return {
     soulIndex,
@@ -136,21 +156,29 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
  */
 export const getFiveElementsClass = (
   heavenlyStemName: HeavenlyStemName,
-  earthlyBranchName: EarthlyBranchName,
+  earthlyBranchName: EarthlyBranchName
 ): FiveElementsClassName => {
-  const fiveElementsTable: FiveElementsClassKey[] = ['wood3rd', 'metal4th', 'water2nd', 'fire6th', 'earth5th'];
-  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, 'Heavenly');
-  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, 'Earthly');
+  const fiveElementsTable: FiveElementsClassKey[] = [
+    "wood3rd",
+    "metal4th",
+    "water2nd",
+    "fire6th",
+    "earth5th",
+  ];
+  const heavenlyStem = kot<HeavenlyStemKey>(heavenlyStemName, "Heavenly");
+  const earthlyBranch = kot<EarthlyBranchKey>(earthlyBranchName, "Earthly");
 
-  const heavenlyStemNumber = Math.floor(HEAVENLY_STEMS.indexOf(heavenlyStem) / 2) + 1;
-  const earthlyBranchNumber = Math.floor(fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch), 6) / 2) + 1;
+  const heavenlyStemNumber =
+    Math.floor(HEAVENLY_STEMS.indexOf(heavenlyStem) / 2) + 1;
+  const earthlyBranchNumber =
+    Math.floor(fixIndex(EARTHLY_BRANCHES.indexOf(earthlyBranch), 6) / 2) + 1;
   let index = heavenlyStemNumber + earthlyBranchNumber;
 
   while (index > 5) {
     index -= 5;
   }
 
-  return t<FiveElementsClassName>(fiveElementsTable[index - 1]);
+  return t<FiveElementsClassName>(fiveElementsTable[index - 1]!);
 };
 
 /**
@@ -165,7 +193,7 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
   for (let i = 0; i < PALACES.length; i++) {
     const idx = fixIndex(i - fromIndex);
 
-    names[i] = t(PALACES[idx]) as PalaceName;
+    names[i] = t(PALACES[idx]!) as PalaceName;
   }
 
   return names;
@@ -183,19 +211,29 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
  * @param fixLeap 是否修正闰月，若修正，则闰月前15天按上月算，后15天按下月算
  * @returns 从寅宫开始的大限年龄段
  */
-export const getHoroscope = (param: AstrolabeParam): { decadals: Decadal[]; ages: number[][] } => {
+export const getHoroscope = (
+  param: AstrolabeParam
+): { decadals: Decadal[]; ages: number[][] } => {
   const { solarDate, timeIndex, gender, from } = param;
   const decadals: Decadal[] = [];
   const genderKey = kot<GenderKey>(gender!);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
-    // 起大限应该与配置同步
-    year: getConfig().yearDivide,
-  });
-  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
-  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
-  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(param);
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+    solarDate,
+    timeIndex,
+    {
+      // 起大限应该与配置同步
+      year: getConfig().yearDivide,
+    }
+  );
+  const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], "Heavenly");
+  const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], "Earthly");
+  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } =
+    getSoulAndBody(param);
   const fiveElementsClass = kot<FiveElementsClassKey>(
-    getFiveElementsClass(from?.heavenlyStem ?? heavenlyStemOfSoul, from?.earthlyBranch ?? earthlyBranchOfSoul),
+    getFiveElementsClass(
+      from?.heavenlyStem ?? heavenlyStemOfSoul,
+      from?.earthlyBranch ?? earthlyBranchOfSoul
+    )
   );
 
   // 用五虎遁获取大限起始天干
@@ -203,15 +241,22 @@ export const getHoroscope = (param: AstrolabeParam): { decadals: Decadal[]; ages
 
   for (let i = 0; i < 12; i++) {
     const idx =
-      GENDER[genderKey] === earthlyBranches[earthlyBranch].yinYang ? fixIndex(soulIndex + i) : fixIndex(soulIndex - i);
+      GENDER[genderKey] === earthlyBranches[earthlyBranch].yinYang
+        ? fixIndex(soulIndex + i)
+        : fixIndex(soulIndex - i);
     const start = FiveElementsClass[fiveElementsClass] + 10 * i;
-    const heavenlyStemIndex = fixIndex(HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx, 10);
-    const earthlyBranchIndex = fixIndex(EARTHLY_BRANCHES.indexOf('yinEarthly') + idx);
+    const heavenlyStemIndex = fixIndex(
+      HEAVENLY_STEMS.indexOf(startHeavenlyStem) + idx,
+      10
+    );
+    const earthlyBranchIndex = fixIndex(
+      EARTHLY_BRANCHES.indexOf("yinEarthly") + idx
+    );
 
     decadals[idx] = {
       range: [start, start + 9],
-      heavenlyStem: t(HEAVENLY_STEMS[heavenlyStemIndex]),
-      earthlyBranch: t(EARTHLY_BRANCHES[earthlyBranchIndex]),
+      heavenlyStem: t(HEAVENLY_STEMS[heavenlyStemIndex]!),
+      earthlyBranch: t(EARTHLY_BRANCHES[earthlyBranchIndex]!),
     };
   }
 
@@ -225,7 +270,10 @@ export const getHoroscope = (param: AstrolabeParam): { decadals: Decadal[]; ages
       age.push(12 * j + i + 1);
     }
 
-    const idx = kot<GenderKey>(gender!) === 'male' ? fixIndex(ageIdx + i) : fixIndex(ageIdx - i);
+    const idx =
+      kot<GenderKey>(gender!) === "male"
+        ? fixIndex(ageIdx + i)
+        : fixIndex(ageIdx - i);
 
     ages[idx] = age;
   }

@@ -1,10 +1,23 @@
-import FunctionalStar from './FunctionalStar';
+import type FunctionalStar from "./FunctionalStar";
 
-export const initStars = (): FunctionalStar[][] => [[], [], [], [], [], [], [], [], [], [], [], []];
+export const initStars = (): FunctionalStar[][] => [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+];
 
-export * from './location';
-export * from './majorStar';
-export * from './minorStar';
-export * from './adjectiveStar';
-export * from './decorativeStar';
-export * from './horoscopeStar';
+export * from "./adjectiveStar";
+export * from "./decorativeStar";
+export * from "./horoscopeStar";
+export * from "./location";
+export * from "./majorStar";
+export * from "./minorStar";

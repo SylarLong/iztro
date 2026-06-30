@@ -1,5 +1,5 @@
-import { Brightness, Mutagen, StarName } from '../../i18n';
-import { Scope, StarType } from './general';
+import type { Brightness, Mutagen, StarName } from "../../i18n";
+import type { Scope, StarType } from "./general";
 
 /**
  * 紫微斗数星耀
