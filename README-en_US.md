@@ -74,6 +74,16 @@ Build your own agent on `iztro-ziwei-v3` with your own tools, MCP servers, and h
 - **Python** — `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
+### Full-stack demos
+
+| Integration | Complete example | Included capabilities |
+| --- | --- | --- |
+| iztro Chat API | [`examples/fullstack-demo`](./examples/fullstack-demo) | Node/Python backends, streaming, message editing, regeneration, and a server-only API key |
+| Python Agents SDK | [ChatSession full-stack demo](https://github.com/SylarLong/openai-iztro-agents-python/tree/main/examples/fullstack-demo) | Session list, create/delete/rename, app-level edit branches and forks, chart-call history, and Markdown rendering |
+| TypeScript / JavaScript Agents SDK | [ChatSession full-stack demo](https://github.com/SylarLong/openai-iztro-agents-js/tree/master/examples/fullstack-demo) | The same session workbench and streaming experience as the Python demo |
+
+<img src="./examples/fullstack-demo/assets/chat-session-workbench.png" alt="iztro Agents SDK ChatSession full-stack demo" width="1200" />
+
 ## Introduction
 
 It's used to obtain the data of `The Purple Star Astrology (Zi Wei Dou Shu)`.

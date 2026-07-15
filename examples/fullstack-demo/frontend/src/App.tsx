@@ -1,7 +1,13 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { Clock3, MessageSquareText, Pencil, RefreshCcw, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_DEMO_API_BASE_URL || 'http://localhost:8787';
+function defaultApiBase() {
+  const hostname = window.location.hostname || 'localhost';
+  const host = hostname.includes(':') ? `[${hostname}]` : hostname;
+  return `${window.location.protocol}//${host}:8787`;
+}
+
+const API_BASE = (import.meta.env.VITE_DEMO_API_BASE_URL || defaultApiBase()).replace(/\/+$/, '');
 
 type Sender = 'user' | 'assistant' | 'system';
 
@@ -29,9 +35,17 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
   return data as T;
 }
 
-function parseSse(buffer: string, onEvent: (event: string, data: string) => void) {
+function parseSse(
+  buffer: string,
+  onEvent: (event: string, data: string) => void,
+  flush = false,
+) {
   const blocks = buffer.split(/\r?\n\r?\n/);
-  const tail = blocks.pop() || '';
+  let tail = blocks.pop() || '';
+  if (flush && tail.trim()) {
+    blocks.push(tail);
+    tail = '';
+  }
   for (const block of blocks) {
     let event = 'message';
     const dataLines: string[] = [];
@@ -105,39 +119,53 @@ export function App() {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
+    const handleEvent = (eventName: string, data: string) => {
+      if (eventName === 'message.delta') {
+        let delta = data;
+        try {
+          delta = String(JSON.parse(data).delta || '');
+        } catch {
+          delta = data;
+        }
+        setMessages((items) => items.map((item) => (
+          item.id === assistantId ? { ...item, text: `${item.text}${delta}` } : item
+        )));
+      }
+      if (eventName === 'message.completed') {
+        try {
+          const apiMessageId = extractUserMessageId(JSON.parse(data));
+          if (apiMessageId && linkedUserMessageId) {
+            setMessages((items) => items.map((item) => (
+              item.id === linkedUserMessageId ? { ...item, apiMessageId } : item
+            )));
+          }
+        } catch {
+          // Ignore metadata parse failures; the streamed text is still useful for testing.
+        }
+      }
+      if (eventName === 'error') {
+        let errorText = data;
+        try {
+          const payload = JSON.parse(data) as { message?: unknown; detail?: unknown };
+          errorText = String(payload.message || payload.detail || data);
+        } catch {
+          // Plain-text SSE errors are also valid.
+        }
+        setMessages((items) => items.map((item) => (
+          item.id === assistantId ? { ...item, text: errorText } : item
+        )));
+      }
+    };
+
     while (true) {
       const { done, value } = await reader.read();
-      if (done) break;
-      buffer = parseSse(buffer + decoder.decode(value, { stream: true }), (eventName, data) => {
-        if (eventName === 'message.delta') {
-          let delta = data;
-          try {
-            delta = String(JSON.parse(data).delta || '');
-          } catch {
-            delta = data;
-          }
-          setMessages((items) => items.map((item) => (
-            item.id === assistantId ? { ...item, text: `${item.text}${delta}` } : item
-          )));
-        }
-        if (eventName === 'message.completed') {
-          try {
-            const apiMessageId = extractUserMessageId(JSON.parse(data));
-            if (apiMessageId && linkedUserMessageId) {
-              setMessages((items) => items.map((item) => (
-                item.id === linkedUserMessageId ? { ...item, apiMessageId } : item
-              )));
-            }
-          } catch {
-            // Ignore metadata parse failures; the streamed text is still useful for testing.
-          }
-        }
-        if (eventName === 'error') {
-          setMessages((items) => items.map((item) => (
-            item.id === assistantId ? { ...item, text: data } : item
-          )));
-        }
-      });
+      if (value) {
+        buffer = parseSse(buffer + decoder.decode(value, { stream: true }), handleEvent);
+      }
+      if (done) {
+        parseSse(buffer + decoder.decode(), handleEvent, true);
+        break;
+      }
     }
   };
 

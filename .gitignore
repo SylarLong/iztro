@@ -2,6 +2,10 @@ node_modules
 lib
 dist
 coverage
+.env
+.venv/
+__pycache__/
+*.py[cod]
 .vscode
 *.log
 .DS_Store

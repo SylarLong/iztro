@@ -75,6 +75,16 @@ JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完
 - **Python** —— `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
+### 全栈演示
+
+| 方案 | 完整示例 | 主要能力 |
+| --- | --- | --- |
+| iztro Chat API | [`examples/fullstack-demo`](./examples/fullstack-demo) | Node/Python 后端、流式输出、编辑消息、重新生成；API key 仅保存在后端 |
+| Python Agents SDK | [ChatSession full-stack demo](https://github.com/SylarLong/openai-iztro-agents-python/tree/main/examples/fullstack-demo) | 会话列表、新建/删除/重命名、应用层编辑分支与 Fork、调用命盘记录、Markdown 渲染 |
+| TypeScript / JavaScript Agents SDK | [ChatSession full-stack demo](https://github.com/SylarLong/openai-iztro-agents-js/tree/master/examples/fullstack-demo) | 与 Python 版相同的会话工作台和流式体验 |
+
+<img src="./examples/fullstack-demo/assets/chat-session-workbench.png" alt="iztro Agents SDK ChatSession 全栈演示" width="1200" />
+
 ## 介绍
 
 用于紫微斗数排盘的 JavaScript 开源库，有以下功能：

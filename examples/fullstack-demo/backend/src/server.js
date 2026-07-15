@@ -97,13 +97,21 @@ async function streamIztro(path, payload, response) {
 
   const reader = upstream.body.getReader();
   const decoder = new TextDecoder();
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    response.write(decoder.decode(value, { stream: true }));
-    response.flush?.();
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      response.write(decoder.decode(value, { stream: true }));
+      response.flush?.();
+    }
+    response.write(decoder.decode());
+  } catch (error) {
+    if (!response.destroyed) {
+      response.write(`event: error\ndata: ${JSON.stringify({ message: error.message || 'Upstream stream failed' })}\n\n`);
+    }
+  } finally {
+    if (!response.destroyed && !response.writableEnded) response.end();
   }
-  response.end();
 }
 
 app.post('/api/chat/stream', async (request, response, next) => {
@@ -182,6 +190,10 @@ app.post('/api/chat/resend/stream', async (request, response, next) => {
 });
 
 app.use((error, _request, response, _next) => {
+  if (response.headersSent) {
+    if (!response.writableEnded) response.end();
+    return;
+  }
   const statusCode = Number(error.statusCode || 500);
   response.status(statusCode >= 400 && statusCode < 600 ? statusCode : 500).json({
     error: {

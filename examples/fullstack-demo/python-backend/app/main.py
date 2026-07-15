@@ -1,3 +1,4 @@
+import json
 import os
 from typing import Any
 from urllib.parse import quote
@@ -56,6 +57,10 @@ def iztro_headers() -> dict[str, str]:
         "Authorization": f"Bearer {IZTRO_API_KEY}",
         "Content-Type": "application/json",
     }
+
+
+def sse_event(event: str, data: dict[str, Any]) -> str:
+    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
 
 
 async def parse_iztro_response(response: httpx.Response) -> Any:
@@ -171,9 +176,25 @@ def stream_iztro(path: str, payload: dict[str, Any]) -> StreamingResponse:
             ) as upstream:
                 if upstream.status_code >= 400:
                     body = await upstream.aread()
-                    yield (
-                        "event: error\n"
-                        f"data: {body.decode('utf-8', errors='replace') or upstream.reason_phrase}\n\n"
+                    text = body.decode("utf-8", errors="replace")
+                    message: Any = text or upstream.reason_phrase
+                    try:
+                        error_data = json.loads(text)
+                        if isinstance(error_data, dict):
+                            nested_error = error_data.get("error")
+                            message = (
+                                error_data.get("detail")
+                                or (nested_error.get("message") if isinstance(nested_error, dict) else None)
+                                or error_data.get("message")
+                                or message
+                            )
+                    except ValueError:
+                        pass
+                    if not isinstance(message, str):
+                        message = json.dumps(message, ensure_ascii=False)
+                    yield sse_event(
+                        "error",
+                        {"message": message, "status": upstream.status_code},
                     )
                     return
                 async for chunk in upstream.aiter_bytes():
