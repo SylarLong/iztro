@@ -46,8 +46,8 @@
 
 ### `iztro-qimen-v3`：一事一局的决断与应期
 
-- 先调用托管工具 `qimen-qigua`，根据问事时刻为**一件具体事情**起局，结合九宫、天地盘、神、星、门、空亡与马星等证据判断。
-- 当用户问“什么时候”或时间是结论关键时，模型会在选定用神后继续调用 `qimen-yingqi`，计算真实日历中的候选触发时间。
+- 根据问事时刻分析**一件具体事情**，给出结论、主要依据、阻力与行动建议。
+- 当用户问“什么时候”或时间是结论关键时，给出真实日历中的候选触发窗口。
 - 一事一局：互不相关的事情应分开提问。应期日期是结合全局解读的触发候选，不是“某天必然成功”的保证。
 
 例如，一个清晰的奇门问题是：“我们已经谈过两次渠道合作，但分成和上线时间还没定。现在应该推进、继续谈，还是暂缓？如果可以推进，请给出最近的行动窗口和依据。”
@@ -59,7 +59,7 @@
 
 ### 1. iztro Chat API —— 调用我们的 HTTP API
 
-如果你需要紫微或奇门对话能力，可以使用 iztro Chat API。使用时需要 API key，你可以在 [开发者文档](https://api-doc.iztro.com) 查看完整接口，并阅读专门的[奇门模型指南](https://api-doc.iztro.com/sdk/qimen)。
+如果你需要紫微或奇门对话能力，可以使用 iztro Chat API。使用时需要 API key，你可以在 [开发者文档](https://api-doc.iztro.com) 查看完整接口，并通过[模型指南](https://api-doc.iztro.com/sdk/qimen)比较紫微与奇门。
 
 以下示例假设你已把控制台生成的密钥保存到服务端环境变量 `ZIWEI_API_KEY`。不要把密钥写入浏览器代码。
 
@@ -117,7 +117,7 @@ JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完
 - **Python** —— `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
-两个 SDK 都提供 Qimen 便捷工厂：Python 使用 `iztro_qimen_agent(...)`，TypeScript 使用 `iztroQimenAgent({...})`。托管的 `qimen-qigua` / `qimen-yingqi` 在服务端执行；你自己的函数工具与 MCP 仍在应用侧正常运行。
+两个 SDK 都提供紫微与奇门便捷工厂。Python 使用 `iztro_ziwei_agent(...)` / `iztro_qimen_agent(...)`，TypeScript 使用 `iztroZiweiAgent({...})` / `iztroQimenAgent({...})`。API 返回的公开计算名称见[模型指南](https://api-doc.iztro.com/sdk/qimen)。
 
 ### 全栈演示
 

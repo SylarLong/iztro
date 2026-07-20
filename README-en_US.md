@@ -45,8 +45,8 @@ Beyond the open-source charting library, `iztro` provides two hosted specialist 
 
 ### `iztro-qimen-v3`: one matter, one chart, with optional timing
 
-- Calls hosted `qimen-qigua` first to cast one chart from the question time and judge the matter from the nine palaces, plates, deities, stars, gates, voids, horse stars, and related evidence.
-- When the user asks **when**, or timing is essential, it selects the relevant *yongshen* and calls `qimen-yingqi` to calculate real calendar trigger candidates.
+- Analyzes **one concrete matter** from the question time and returns a conclusion, supporting evidence, obstacles, and practical guidance.
+- When the user asks **when**, or timing is essential, returns candidate trigger windows on the real calendar.
 - Keep unrelated matters in separate requests. Yingqi dates are triggers to interpret with the whole chart, not guarantees that an outcome must occur on a particular day.
 
 A strong Qimen request is: “We have discussed a distribution partnership twice, but the revenue split and launch date are still open. Should I push now, continue negotiating, or pause? If it can move forward, give me the nearest action windows and evidence.”
@@ -58,7 +58,7 @@ Both models are available through these integration paths:
 
 ### 1. iztro Chat API — call our HTTP API
 
-For conversational Ziwei or Qimen analysis, use the iztro Chat API. It requires an API key; see the [developer documentation](https://api-doc.iztro.com) and the dedicated [Qimen model guide](https://api-doc.iztro.com/sdk/qimen).
+For conversational Ziwei or Qimen analysis, use the iztro Chat API. It requires an API key; see the [developer documentation](https://api-doc.iztro.com) and compare both options in the [Models guide](https://api-doc.iztro.com/sdk/qimen).
 
 The examples below assume the console key is stored in the server-side `ZIWEI_API_KEY` environment variable. Never put it in browser code.
 
@@ -116,7 +116,7 @@ Build your own agent on `iztro-ziwei-v3` or `iztro-qimen-v3` with your own tools
 - **Python** — `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
-Both SDKs include Qimen factories: `iztro_qimen_agent(...)` in Python and `iztroQimenAgent({...})` in TypeScript. Hosted `qimen-qigua` / `qimen-yingqi` run on the server, while your own function tools and MCP servers continue to run in your application.
+Both SDKs include Ziwei and Qimen factories. Python uses `iztro_ziwei_agent(...)` / `iztro_qimen_agent(...)`; TypeScript uses `iztroZiweiAgent({...})` / `iztroQimenAgent({...})`. See the [Models guide](https://api-doc.iztro.com/sdk/qimen) for the public calculation names returned by the API.
 
 ### Full-stack demos
 
