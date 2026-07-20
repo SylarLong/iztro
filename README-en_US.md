@@ -29,33 +29,53 @@
 
 </div>
 
-## iztro AI · iztro-ziwei-v3
+## iztro AI · Ziwei and Qimen models
 
-Beyond the open-source charting library, `iztro` offers an AI layer that **interprets charts and answers questions**, powered by the **`iztro-ziwei-v3`** model. It is purpose-built for Zi Wei Dou Shu (紫微斗数), not a general chat model:
+Beyond the open-source charting library, `iztro` provides two hosted specialist AI models. They call the server-side astrology tools automatically and are available through the Chat API or Iztro Agents SDK, so you do not have to maintain chart prompts or ask a general model to guess chart facts.
 
-- It **calls the `iztro` charting tools for you** — building the natal chart and reading the decade, annual, monthly, and daily timing layers, choosing the right ones for each question.
-- It is **heavily optimized for Ziwei interpretation** (prompting and reasoning) that you would otherwise build and tune yourself.
-- It **manages conversation context for you** — remembering birth details and earlier turns, so nothing is resent.
+| Model | Best for | Required input |
+| --- | --- | --- |
+| **`iztro-ziwei-v3`** | Natal personality, life pattern, compatibility, and longer-range decade, annual, monthly, or daily trends | Birth date, birth time, gender, and the topic to analyze |
+| **`iztro-qimen-v3`** | The decision, development, obstacles, and timing of one current matter, such as a partnership, negotiation, interview, launch, trip, or specific relationship step | The situation, one clear question, and the question time; **no birth details** |
 
-There are two ways to use it, both on `iztro-ziwei-v3`:
+### `iztro-ziwei-v3`: charts and longer-term trends
+
+- Calls the `iztro` charting tools automatically and reads only the natal and timing layers needed for the question.
+- Uses Ziwei-specific prompting and reasoning, and can retain birth details and prior context in a session.
+
+### `iztro-qimen-v3`: one matter, one chart, with optional timing
+
+- Calls hosted `qimen-qigua` first to cast one chart from the question time and judge the matter from the nine palaces, plates, deities, stars, gates, voids, horse stars, and related evidence.
+- When the user asks **when**, or timing is essential, it selects the relevant *yongshen* and calls `qimen-yingqi` to calculate real calendar trigger candidates.
+- Keep unrelated matters in separate requests. Yingqi dates are triggers to interpret with the whole chart, not guarantees that an outcome must occur on a particular day.
+
+A strong Qimen request is: “We have discussed a distribution partnership twice, but the revenue split and launch date are still open. Should I push now, continue negotiating, or pause? If it can move forward, give me the nearest action windows and evidence.”
+
+> [!NOTE]
+> The `iztro` NPM package remains an open-source **Zi Wei Dou Shu charting library**. `iztro-qimen-v3` is a hosted AI model accessed through the API or Agents SDK; it is not a local Qimen module in this package.
+
+Both models are available through these integration paths:
 
 ### 1. iztro Chat API — call our HTTP API
 
-For conversational Zi Wei Dou Shu interpretation, use the iztro Chat API. It requires an API key; read the API documentation at [api-doc.iztro.com](https://api-doc.iztro.com).
+For conversational Ziwei or Qimen analysis, use the iztro Chat API. It requires an API key; see the [developer documentation](https://api-doc.iztro.com) and the dedicated [Qimen model guide](https://api-doc.iztro.com/sdk/qimen).
+
+The examples below assume the console key is stored in the server-side `ZIWEI_API_KEY` environment variable. Never put it in browser code.
 
 The recommended integration is the Multi-turn Conversation API: create a conversation first, then send user messages to that conversation so the API can preserve context for you.
 
 ```shell
 curl https://chat-api.iztro.com/v2/platform/sessions \
-  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "external_user_id": "user_123",
+    "model": "iztro-ziwei-v3",
     "system_prompt_override": "Answer in concise English markdown and suggest possible follow-up questions."
   }'
 
 curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
-  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "message": "Analyze my 2026 career trend. My birthday is 1995-02-23, birth hour is 17, gender is female.",
@@ -65,14 +85,38 @@ curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
   }'
 ```
 
+Select `iztro-qimen-v3` when creating a Qimen session. The service uses the request time by default; pass an ISO 8601 `current_datetime` with a UTC offset when the user's timezone differs or the chart must be reproducible:
+
+```shell
+curl https://chat-api.iztro.com/v2/platform/sessions \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_user_id": "user_123",
+    "model": "iztro-qimen-v3"
+  }'
+
+curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "We have discussed a distribution partnership twice, but the revenue split and launch date are still open. Should I push now, keep negotiating, or pause? If it can move forward, give me the nearest action windows.",
+    "current_datetime": "2026-07-20T14:30:00+08:00",
+    "language": "en",
+    "enable_iztro_call": true
+  }'
+```
+
 See [`examples/chat-api`](./examples/chat-api) for JavaScript and Python examples. A full-stack streaming chatbot with edit and resend support is available in [`examples/fullstack-demo`](./examples/fullstack-demo).
 
 ### 2. iztro Agents SDK — build your own agent
 
-Build your own agent on `iztro-ziwei-v3` with your own tools, MCP servers, and human-in-the-loop. It is a thin layer over the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), available for both Python and TypeScript:
+Build your own agent on `iztro-ziwei-v3` or `iztro-qimen-v3` with your own tools, MCP servers, and human-in-the-loop. It is a thin layer over the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), available for both Python and TypeScript:
 
 - **Python** — `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
+
+Both SDKs include Qimen factories: `iztro_qimen_agent(...)` in Python and `iztroQimenAgent({...})` in TypeScript. Hosted `qimen-qigua` / `qimen-yingqi` run on the server, while your own function tools and MCP servers continue to run in your application.
 
 ### Full-stack demos
 

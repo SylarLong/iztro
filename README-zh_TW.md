@@ -30,33 +30,53 @@
 </div>
 
 
-## iztro AI · iztro-ziwei-v3
+## iztro AI · 紫微與奇門模型
 
-除了開源排盤庫，`iztro` 還提供一個能**解讀命盤、回答問題**的 AI 層，由 **`iztro-ziwei-v3`** 模型驅動。它專為紫微斗數打造，而不是通用聊天模型：
+除了開源排盤庫，`iztro` 還提供兩個託管的專業 AI 模型。它們會自動調用服務端術數工具，並透過 Chat API 或 Iztro Agents SDK 接入；你不需要自行維護排盤提示詞，也不必讓通用模型猜測盤面。
 
-- 會**自動為你調用 `iztro` 排盤工具**——自動排出本命盤，並讀取大限、流年、流月、流日等時間層級，按每個問題選擇需要的層級。
-- 針對紫微解讀做了**大量優化**（提示詞與推理策略），省去你自己反覆搭建和調優。
-- **自動為你管理對話上下文**——記住出生資訊和此前的對話，無需每次重發。
+| 模型 | 適合的問題 | 需要提供 |
+| --- | --- | --- |
+| **`iztro-ziwei-v3`** | 本命性格、人生格局、兩人適配度，以及大限、流年、流月、流日等中長期趨勢 | 出生日期、出生時間、性別和分析主題 |
+| **`iztro-qimen-v3`** | 一件當下具體事情的決斷、發展、阻力與應期，例如合作、談判、面試、上線、出行或關係中的下一步 | 事情背景、一個明確問題和問事時刻；**不需要出生資訊** |
 
-有兩種使用方式，都運行在 `iztro-ziwei-v3` 上：
+### `iztro-ziwei-v3`：命盤與長期趨勢
+
+- 自動調用 `iztro` 排盤工具，按問題讀取本命、大限、流年、流月、流日等必要層級。
+- 針對紫微解讀優化提示詞與推理策略，並可在會話中記住出生資訊和此前上下文。
+
+### `iztro-qimen-v3`：一事一局的決斷與應期
+
+- 先調用託管工具 `qimen-qigua`，根據問事時刻為**一件具體事情**起局，結合九宮、天地盤、神、星、門、空亡與馬星等證據判斷。
+- 當使用者問「什麼時候」或時間是結論關鍵時，模型會在選定用神後繼續調用 `qimen-yingqi`，計算真實日曆中的候選觸發時間。
+- 一事一局：互不相關的事情應分開提問。應期日期是結合全局解讀的觸發候選，不是「某天必然成功」的保證。
+
+例如，一個清楚的奇門問題是：「我們已經談過兩次渠道合作，但分成和上線時間還沒定。現在應該推進、繼續談，還是暫緩？如果可以推進，請給出最近的行動窗口和依據。」
+
+> [!NOTE]
+> NPM 套件 `iztro` 本身仍是開源的**紫微斗數排盤庫**；`iztro-qimen-v3` 是透過 API/Agents SDK 使用的託管 AI 模型，不是本地奇門排盤模組。
+
+兩個模型都支援以下接入方式：
 
 ### 1. iztro Chat API —— 調用我們的 HTTP API
 
-如果你需要紫微斗數對話解讀能力，可以使用 iztro Chat API。使用時需要 API key，你可以在 [api-doc.iztro.com](https://api-doc.iztro.com) 查看 API 文檔。
+如果你需要紫微或奇門對話能力，可以使用 iztro Chat API。使用時需要 API key，你可以在[開發者文檔](https://api-doc.iztro.com)查看完整介面，並閱讀專門的[奇門模型指南](https://api-doc.iztro.com/sdk/qimen)。
+
+以下範例假設你已把控制台產生的密鑰保存到服務端環境變數 `ZIWEI_API_KEY`。不要把密鑰寫入瀏覽器程式碼。
 
 推薦的集成方式是多輪對話 API：先創建會話，再向該會話發送使用者訊息。這樣 API 可以為你保留上下文。
 
 ```shell
 curl https://chat-api.iztro.com/v2/platform/sessions \
-  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "external_user_id": "user_123",
+    "model": "iztro-ziwei-v3",
     "system_prompt_override": "用簡潔中文回答，避免過度術語，並在最後給出可繼續追問的方向。"
   }'
 
 curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
-  -H "Authorization: Bearer $IZTRO_API_KEY" \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "message": "分析我的 2026 年事業趨勢。生日是 1995-02-23，出生時辰 17 點，性別女。",
@@ -66,14 +86,38 @@ curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
   }'
 ```
 
+奇門會話在建立時選擇 `iztro-qimen-v3`。預設使用請求時刻起局；如果使用者時區不同或結果需要可重現，請在訊息中傳入帶 UTC 偏移量的 `current_datetime`：
+
+```shell
+curl https://chat-api.iztro.com/v2/platform/sessions \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_user_id": "user_123",
+    "model": "iztro-qimen-v3"
+  }'
+
+curl https://chat-api.iztro.com/v2/platform/sessions/{session_id}/messages \
+  -H "Authorization: Bearer $ZIWEI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "我們已經談過兩次渠道合作，但分成和上線時間還沒定。現在應該推進、繼續談，還是暫緩？如果可以推進，請給出最近的行動窗口。",
+    "current_datetime": "2026-07-20T14:30:00+08:00",
+    "language": "zh",
+    "enable_iztro_call": true
+  }'
+```
+
 JavaScript 和 Python 示例見 [`examples/chat-api`](./examples/chat-api)。完整的前後端流式聊天、編輯、重新發送示例見 [`examples/fullstack-demo`](./examples/fullstack-demo)。
 
 ### 2. iztro Agents SDK —— 構建你自己的 Agent
 
-在 `iztro-ziwei-v3` 上構建你自己的 Agent，並加入自己的工具、MCP 伺服器和人工確認。它是對 [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) 的輕量封裝，提供 Python 與 TypeScript 兩個版本：
+在 `iztro-ziwei-v3` 或 `iztro-qimen-v3` 上構建你自己的 Agent，並加入自己的工具、MCP 伺服器和人工確認。它是對 [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) 的輕量封裝，提供 Python 與 TypeScript 兩個版本：
 
 - **Python** —— `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
+
+兩個 SDK 都提供 Qimen 便捷工廠：Python 使用 `iztro_qimen_agent(...)`，TypeScript 使用 `iztroQimenAgent({...})`。託管的 `qimen-qigua` / `qimen-yingqi` 在服務端執行；你自己的函數工具與 MCP 仍在應用側正常運行。
 
 ### 全棧演示
 
