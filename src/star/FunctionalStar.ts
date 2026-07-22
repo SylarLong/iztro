@@ -1,8 +1,14 @@
-import { IFunctionalAstrolabe } from '../astro/FunctionalAstrolabe';
-import { IFunctionalPalace } from '../astro/FunctionalPalace';
-import { IFunctionalSurpalaces } from '../astro/FunctionalSurpalaces';
-import { Star } from '../data/types';
-import { Brightness, BrightnessKey, kot, Mutagen, MutagenKey } from '../i18n';
+import type { IFunctionalAstrolabe } from "../astro/FunctionalAstrolabe";
+import type { IFunctionalPalace } from "../astro/FunctionalPalace";
+import type { IFunctionalSurpalaces } from "../astro/FunctionalSurpalaces";
+import type { Star } from "../data/types";
+import {
+  type Brightness,
+  type BrightnessKey,
+  kot,
+  type Mutagen,
+  type MutagenKey,
+} from "../i18n";
 
 /**
  * 星耀类的接口定义
@@ -10,6 +16,14 @@ import { Brightness, BrightnessKey, kot, Mutagen, MutagenKey } from '../i18n';
  * 文档地址：https://docs.iztro.com/posts/star.html#functionalstar
  */
 export interface IFunctionalStar extends Star {
+  /**
+   * 获取当前星耀的对宫
+   *
+   * @version v1.2.0
+   *
+   * @returns 对宫 ｜ undefined
+   */
+  oppositePalace: () => IFunctionalPalace | undefined;
   /**
    * 获取星耀所在宫位
    *
@@ -19,12 +33,6 @@ export interface IFunctionalStar extends Star {
    */
   palace: () => IFunctionalPalace | undefined;
   /**
-   * 设置当前星耀所在宫位
-   *
-   * @param p 宫位的实例
-   */
-  setPalace: (p: IFunctionalPalace) => void;
-  /**
    * 设置当前星耀所在星盘
    *
    * @version v1.2.0
@@ -33,6 +41,12 @@ export interface IFunctionalStar extends Star {
    */
   setAstrolabe: (a: IFunctionalAstrolabe) => void;
   /**
+   * 设置当前星耀所在宫位
+   *
+   * @param p 宫位的实例
+   */
+  setPalace: (p: IFunctionalPalace) => void;
+  /**
    * 获取当前星耀的三方四正宫位
    *
    * @version v1.2.0
@@ -40,14 +54,6 @@ export interface IFunctionalStar extends Star {
    * @returns 三方四正宫位 ｜ undefined
    */
   surroundedPalaces: () => IFunctionalSurpalaces | undefined;
-  /**
-   * 获取当前星耀的对宫
-   *
-   * @version v1.2.0
-   *
-   * @returns 对宫 ｜ undefined
-   */
-  oppositePalace: () => IFunctionalPalace | undefined;
   /**
    * 判断星耀是否是传入的亮度，也可以传入多个亮度，只要匹配到一个亮度就会返回 `true`
    *
@@ -88,13 +94,11 @@ export default class FunctionalStar implements IFunctionalStar {
     this.scope = data.scope;
     this.brightness = data.brightness;
     this.mutagen = data.mutagen;
-
-    return this;
   }
 
   oppositePalace = (): IFunctionalPalace | undefined => {
-    if (!this._palace || !this._astrolabe) {
-      return undefined;
+    if (!(this._palace && this._astrolabe)) {
+      return;
     }
 
     return this._astrolabe.surroundedPalaces(this._palace.name).opposite;
@@ -112,7 +116,7 @@ export default class FunctionalStar implements IFunctionalStar {
 
   surroundedPalaces = (): IFunctionalSurpalaces | undefined => {
     if (!this._palace) {
-      return undefined;
+      return;
     }
 
     return this._astrolabe?.surroundedPalaces(this._palace.name);
@@ -120,19 +124,30 @@ export default class FunctionalStar implements IFunctionalStar {
 
   withMutagen = (mutagen: Mutagen | Mutagen[]): boolean => {
     if (Array.isArray(mutagen)) {
-      return mutagen.some((mtg) => this.mutagen && kot<MutagenKey>(mtg) === kot<MutagenKey>(this.mutagen));
+      return mutagen.some(
+        (mtg) =>
+          this.mutagen && kot<MutagenKey>(mtg) === kot<MutagenKey>(this.mutagen)
+      );
     }
 
-    return !!this.mutagen && kot<MutagenKey>(mutagen) === kot<MutagenKey>(this.mutagen);
+    return (
+      !!this.mutagen &&
+      kot<MutagenKey>(mutagen) === kot<MutagenKey>(this.mutagen)
+    );
   };
 
   withBrightness = (brightness: Brightness | Brightness[]): boolean => {
     if (Array.isArray(brightness)) {
       return brightness.some(
-        (brit) => this.brightness != undefined && kot<BrightnessKey>(brit) === kot<BrightnessKey>(this.brightness),
+        (brit) =>
+          this.brightness !== undefined &&
+          kot<BrightnessKey>(brit) === kot<BrightnessKey>(this.brightness)
       );
     }
 
-    return !!this.brightness && kot<BrightnessKey>(brightness) === kot<BrightnessKey>(this.brightness);
+    return (
+      !!this.brightness &&
+      kot<BrightnessKey>(brightness) === kot<BrightnessKey>(this.brightness)
+    );
   };
 }

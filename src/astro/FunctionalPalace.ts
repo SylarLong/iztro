@@ -1,6 +1,5 @@
-import { Palace } from '../data/types';
-import { Mutagen, PalaceName, StarName } from '../i18n';
-import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
+import type { Palace } from "../data/types";
+import type { Mutagen, PalaceName, StarName } from "../i18n";
 import {
   hasMutagenInPlace,
   hasOneOfStars,
@@ -8,7 +7,8 @@ import {
   mutagensToStars,
   notHaveMutagenInPalce,
   notHaveStars,
-} from './analyzer';
+} from "./analyzer";
+import type { IFunctionalAstrolabe } from "./FunctionalAstrolabe";
 
 /**
  * 宫位类的接口定义。
@@ -16,6 +16,39 @@ import {
  * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
  */
 export interface IFunctionalPalace extends Palace {
+  /**
+   * 获取当前宫位所在的星盘对象
+   *
+   * @version v2.1.0
+   *
+   * @returns {IFunctionalAstrolabe}
+   */
+  astrolabe: () => IFunctionalAstrolabe | undefined;
+
+  /**
+   * 判断是否从源宫位飞化其中一颗四化星到目标宫位，传入四化只要有一颗飞化到目标宫位即返回true
+   *
+   * @version v2.1.0
+   *
+   * @param  to 目标宫位
+   * @param withMutagens 四化（禄、权、科、忌）
+   * @returns {boolean}
+   */
+  fliesOneOfTo: (to: number | PalaceName, withMutagens: Mutagen[]) => boolean;
+
+  /**
+   * 判断是否从源宫位飞化到目标宫位，四化可传入一个数组或者一个字符串，传入四化全部飞化到目标宫位即返回true
+   *
+   * @version v2.1.0
+   *
+   * @param  to 目标宫位
+   * @param withMutagens 四化（禄、权、科、忌）
+   * @returns {boolean}
+   */
+  fliesTo: (
+    to: number | PalaceName,
+    withMutagens: Mutagen | Mutagen[]
+  ) => boolean;
   /**
    * 判断某个宫位内是否有传入的星耀，要所有星耀都在宫位内才会返回true
    *
@@ -25,26 +58,6 @@ export interface IFunctionalPalace extends Palace {
    * @returns true | false
    */
   has: (stars: StarName[]) => boolean;
-
-  /**
-   * 判断某个宫位内是否有传入的星耀，要所有星耀都不在宫位内才会返回true
-   *
-   * @version v1.0.0
-   *
-   * @param stars 星耀名称，可以包含主星、辅星、杂耀
-   * @returnstrue | false
-   */
-  notHave: (stars: StarName[]) => boolean;
-
-  /**
-   * 判断某个宫位内是否有传入星耀的其中一个，只要命中一个就会返回true
-   *
-   * @version v1.0.0
-   *
-   * @param stars 星耀名称，可以包含主星、辅星、杂耀
-   * @returns true | false
-   */
-  hasOneOf: (stars: StarName[]) => boolean;
 
   /**
    * 判断宫位内是否有生年四化
@@ -57,14 +70,14 @@ export interface IFunctionalPalace extends Palace {
   hasMutagen: (mutagen: Mutagen) => boolean;
 
   /**
-   * 判断宫位内是否没有生年四化
+   * 判断某个宫位内是否有传入星耀的其中一个，只要命中一个就会返回true
    *
-   * @version v1.2.0
+   * @version v1.0.0
    *
-   * @param mutagen 四化名称【禄｜权｜科｜忌】
+   * @param stars 星耀名称，可以包含主星、辅星、杂耀
    * @returns true | false
    */
-  notHaveMutagen: (mutagen: Mutagen) => boolean;
+  hasOneOf: (stars: StarName[]) => boolean;
 
   /**
    * 判断一个宫位是否为空宫（没有主星），
@@ -81,45 +94,13 @@ export interface IFunctionalPalace extends Palace {
   isEmpty: (excludeStars?: StarName[]) => boolean;
 
   /**
-   * 给宫位设置星盘对象
+   * 获取当前宫位产生四化的4个宫位数组，下标分别对【禄，权，科，忌】
    *
    * @version v2.1.0
    *
-   * @param astro 星盘对象
-   * @returns {void}
+   * @returns {(IFunctionalPalace | undefined)[]}
    */
-  setAstrolabe: (astro: IFunctionalAstrolabe) => void;
-
-  /**
-   * 获取当前宫位所在的星盘对象
-   *
-   * @version v2.1.0
-   *
-   * @returns {IFunctionalAstrolabe}
-   */
-  astrolabe: () => IFunctionalAstrolabe | undefined;
-
-  /**
-   * 判断是否从源宫位飞化到目标宫位，四化可传入一个数组或者一个字符串，传入四化全部飞化到目标宫位即返回true
-   *
-   * @version v2.1.0
-   *
-   * @param  to 目标宫位
-   * @param withMutagens 四化（禄、权、科、忌）
-   * @returns {boolean}
-   */
-  fliesTo: (to: number | PalaceName, withMutagens: Mutagen | Mutagen[]) => boolean;
-
-  /**
-   * 判断是否从源宫位飞化其中一颗四化星到目标宫位，传入四化只要有一颗飞化到目标宫位即返回true
-   *
-   * @version v2.1.0
-   *
-   * @param  to 目标宫位
-   * @param withMutagens 四化（禄、权、科、忌）
-   * @returns {boolean}
-   */
-  fliesOneOfTo: (to: number | PalaceName, withMutagens: Mutagen[]) => boolean;
+  mutagedPlaces: () => (IFunctionalPalace | undefined)[];
 
   /**
    * 判断是否没有从源宫位飞化到目标宫位，四化可传入一个数组或者一个字符串，传入四化全部没有飞化到目标宫位才返回true
@@ -130,7 +111,40 @@ export interface IFunctionalPalace extends Palace {
    * @param withMutagens 四化（禄、权、科、忌）
    * @returns {boolean}
    */
-  notFlyTo: (to: number | PalaceName, withMutagens: Mutagen | Mutagen[]) => boolean;
+  notFlyTo: (
+    to: number | PalaceName,
+    withMutagens: Mutagen | Mutagen[]
+  ) => boolean;
+
+  /**
+   * 判断某个宫位内是否有传入的星耀，要所有星耀都不在宫位内才会返回true
+   *
+   * @version v1.0.0
+   *
+   * @param stars 星耀名称，可以包含主星、辅星、杂耀
+   * @returnstrue | false
+   */
+  notHave: (stars: StarName[]) => boolean;
+
+  /**
+   * 判断宫位内是否没有生年四化
+   *
+   * @version v1.2.0
+   *
+   * @param mutagen 四化名称【禄｜权｜科｜忌】
+   * @returns true | false
+   */
+  notHaveMutagen: (mutagen: Mutagen) => boolean;
+
+  /**
+   * 判断宫位是否有自化，如果传入参数，则只判断传入的四化是否有自化，否则将会判断所有四化
+   *
+   * @version v2.1.0
+   *
+   * @param withMutagens 【可选】四化（禄、权、科、忌）
+   * @returns {boolean}
+   */
+  notSelfMutaged: (withMutagens?: Mutagen | Mutagen[]) => boolean;
 
   /**
    * 判断宫位是否有自化，传入四化数组时需要全部满足才返回true
@@ -153,23 +167,14 @@ export interface IFunctionalPalace extends Palace {
   selfMutagedOneOf: (withMutagens?: Mutagen[]) => boolean;
 
   /**
-   * 判断宫位是否有自化，如果传入参数，则只判断传入的四化是否有自化，否则将会判断所有四化
+   * 给宫位设置星盘对象
    *
    * @version v2.1.0
    *
-   * @param withMutagens 【可选】四化（禄、权、科、忌）
-   * @returns {boolean}
+   * @param astro 星盘对象
+   * @returns {void}
    */
-  notSelfMutaged: (withMutagens?: Mutagen | Mutagen[]) => boolean;
-
-  /**
-   * 获取当前宫位产生四化的4个宫位数组，下标分别对【禄，权，科，忌】
-   *
-   * @version v2.1.0
-   *
-   * @returns {(IFunctionalPalace | undefined)[]}
-   */
-  mutagedPlaces: () => (IFunctionalPalace | undefined)[];
+  setAstrolabe: (astro: IFunctionalAstrolabe) => void;
 }
 
 /**
@@ -211,17 +216,16 @@ export default class FunctionalPalace implements IFunctionalPalace {
     this.suiqian12 = data.suiqian12;
     this.decadal = data.decadal;
     this.ages = data.ages;
-
-    return this;
   }
 
   has = (stars: StarName[]): boolean => hasStars(this, stars);
   notHave = (stars: StarName[]): boolean => notHaveStars(this, stars);
   hasOneOf = (stars: StarName[]): boolean => hasOneOfStars(this, stars);
   hasMutagen = (mutagen: Mutagen): boolean => hasMutagenInPlace(this, mutagen);
-  notHaveMutagen = (mutagen: Mutagen): boolean => notHaveMutagenInPalce(this, mutagen);
+  notHaveMutagen = (mutagen: Mutagen): boolean =>
+    notHaveMutagenInPalce(this, mutagen);
   isEmpty = (excludeStars?: StarName[]) => {
-    if (this.majorStars?.filter((star) => star.type === 'major').length) {
+    if (this.majorStars?.filter((star) => star.type === "major").length) {
       return false;
     }
 
@@ -243,7 +247,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     const { heavenlyStem } = this;
     const stars = mutagensToStars(heavenlyStem, withMutagens);
 
-    if (!stars || !stars.length) {
+    if (!stars?.length) {
       return false;
     }
 
@@ -259,7 +263,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     const { heavenlyStem } = this;
     const stars = mutagensToStars(heavenlyStem, withMutagens);
 
-    if (!stars || !stars.length) {
+    if (!stars?.length) {
       return true;
     }
 
@@ -276,7 +280,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
     const { heavenlyStem } = this;
     const stars = mutagensToStars(heavenlyStem, withMutagens);
 
-    if (!stars || !stars.length) {
+    if (!stars?.length) {
       return true;
     }
 
@@ -293,10 +297,10 @@ export default class FunctionalPalace implements IFunctionalPalace {
   selfMutagedOneOf = (withMutagens?: Mutagen[]) => {
     let muts: Mutagen | Mutagen[] = [];
 
-    if (!withMutagens || !withMutagens.length) {
-      muts = ['禄', '权', '科', '忌'];
-    } else {
+    if (withMutagens?.length) {
       muts = withMutagens;
+    } else {
+      muts = ["禄", "权", "科", "忌"];
     }
 
     const { heavenlyStem } = this;
@@ -308,10 +312,10 @@ export default class FunctionalPalace implements IFunctionalPalace {
   notSelfMutaged = (withMutagens?: Mutagen | Mutagen[]) => {
     let muts: Mutagen | Mutagen[] = [];
 
-    if (!withMutagens || !withMutagens.length) {
-      muts = ['禄', '权', '科', '忌'];
-    } else {
+    if (withMutagens?.length) {
       muts = withMutagens;
+    } else {
+      muts = ["禄", "权", "科", "忌"];
     }
 
     const { heavenlyStem } = this;
@@ -328,7 +332,7 @@ export default class FunctionalPalace implements IFunctionalPalace {
       return [];
     }
 
-    const stars = mutagensToStars(heavenlyStem, ['禄', '权', '科', '忌']);
+    const stars = mutagensToStars(heavenlyStem, ["禄", "权", "科", "忌"]);
 
     return stars.map((star) => astrolabe.star(star).palace());
   };

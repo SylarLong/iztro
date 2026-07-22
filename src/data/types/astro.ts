@@ -1,5 +1,9 @@
-import { IFunctionalPalace } from '../../astro/FunctionalPalace';
-import {
+import type {
+  HeavenlyStemAndEarthlyBranchDate,
+  LunarDate,
+} from "lunar-lite/lib/types";
+import type { IFunctionalPalace } from "../../astro/FunctionalPalace";
+import type {
   Brightness,
   EarthlyBranchName,
   FiveElementsClassName,
@@ -7,10 +11,9 @@ import {
   HeavenlyStemName,
   PalaceName,
   StarName,
-} from '../../i18n';
-import FunctionalStar from '../../star/FunctionalStar';
-import { HeavenlyStemAndEarthlyBranchDate, LunarDate } from 'lunar-lite/lib/types';
-import { Language } from './general';
+} from "../../i18n";
+import type FunctionalStar from "../../star/FunctionalStar";
+import type { Language } from "./general";
 
 /**
  * 运限对象
@@ -86,7 +89,9 @@ export type Horoscope = {
     nominalAge: number;
   };
   /** 流年 */
-  yearly: HoroscopeItem & { yearlyDecStar: { jiangqian12: StarName[]; suiqian12: StarName[] } };
+  yearly: HoroscopeItem & {
+    yearlyDecStar: { jiangqian12: StarName[]; suiqian12: StarName[] };
+  };
   /** 流月 */
   monthly: HoroscopeItem;
   /** 流日 */
@@ -164,12 +169,12 @@ export type Astrolabe = {
 
 /**
  * 定义一个接口，表示插件函数的类型
- * */
+ */
 export type Plugin = () => void;
 
 export type ConfigMutagens = Partial<Record<HeavenlyStemName, StarName[]>>;
 export type ConfigBrightness = Partial<Record<StarName, Brightness[]>>;
-export type AstroType = 'heaven' | 'earth' | 'human';
+export type AstroType = "heaven" | "earth" | "human";
 
 export type Config = {
   /** 四化配置 */
@@ -177,15 +182,15 @@ export type Config = {
   /** 星耀亮度配置 */
   brightness?: ConfigBrightness;
   /** 年分割点配置，normal为正月初一分界，exact为立春分割 */
-  yearDivide?: 'normal' | 'exact';
+  yearDivide?: "normal" | "exact";
   /** 运限分割点配置，normal为正月初一分界，exact为立春分割 */
-  horoscopeDivide?: 'normal' | 'exact';
+  horoscopeDivide?: "normal" | "exact";
   /** 小限分割点配置，normal为以自然年分界，birthday为生日分界 */
-  ageDivide?: 'normal' | 'birthday';
+  ageDivide?: "normal" | "birthday";
   /** 晚子时配置，current时晚子时算当日，forward时晚子时算来日 */
-  dayDivide?: 'current' | 'forward';
+  dayDivide?: "current" | "forward";
   /** 安星方法，default为通行版本，zhongzhou为中州派版本 */
-  algorithm?: 'default' | 'zhongzhou';
+  algorithm?: "default" | "zhongzhou";
 };
 
 /**
@@ -196,7 +201,7 @@ export type Option = {
    * - 阳历：'solar'
    * - 阴历：'lunar'
    */
-  type: 'solar' | 'lunar';
+  type: "solar" | "lunar";
   /** 阳历日期，格式为YYYY-MM-DD */
   dateStr: string;
   /** 时辰索引。0为早子时，1为丑时，以此类推，12为晚子时 */
