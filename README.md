@@ -319,7 +319,15 @@ pnpm install iztro -S
 > [!IMPORTANT]
 > 如果你觉得代码对你有用，请点 ⭐ 支持，你的 ⭐ 是我持续更新的动力～
 
-[![Star History Chart](https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date)](https://www.star-history.com/#sylarlong/iztro&Date)
+## Star History
+
+<a href="https://www.star-history.com/?repos=sylarlong%2Fiztro&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=sylarlong/iztro&type=date&theme=dark&legend=top-left&sealed_token=uTaBgMSSccISPgduGiG1mzXHRjyQcwvMHCqQnEspLy_iZECAVyai-XU2WDj1znko5NJPavNbiKTttvEBeE85324vgxCna8hxKGwZUTENSNvnJ0Qv47uwqg" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=sylarlong/iztro&type=date&legend=top-left&sealed_token=uTaBgMSSccISPgduGiG1mzXHRjyQcwvMHCqQnEspLy_iZECAVyai-XU2WDj1znko5NJPavNbiKTttvEBeE85324vgxCna8hxKGwZUTENSNvnJ0Qv47uwqg" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=sylarlong/iztro&type=date&legend=top-left&sealed_token=uTaBgMSSccISPgduGiG1mzXHRjyQcwvMHCqQnEspLy_iZECAVyai-XU2WDj1znko5NJPavNbiKTttvEBeE85324vgxCna8hxKGwZUTENSNvnJ0Qv47uwqg" />
+ </picture>
+</a>
 
 ## 版权
 
