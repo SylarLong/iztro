@@ -1,0 +1,52 @@
+{
+  "extends": ["ultracite/biome/core", "ultracite/biome/vitest"],
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "includes": [
+      "!cha-lou-bu-que-prd",
+      "!.next",
+      "!.claude",
+      "!.course",
+      ".gemini",
+      "!docs/**/*",
+      "!src/__tests__/**/*"
+    ]
+  },
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off",
+        "noVoid": "off",
+        "noBannedTypes": "off",
+        "noForEach": "off"
+      },
+      "style": {
+        "noNestedTernary": "off",
+        "useFilenamingConvention": "off",
+        "noNonNullAssertion": "off",
+        "useConsistentTypeDefinitions": "off",
+        "noExportedImports": "off",
+        "useDefaultSwitchClause": "off",
+        "noEnum": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off",
+        "noBarrelFile": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "useAwait": "off",
+        "noArrayIndexKey": "off",
+        "noImplicitAnyLet": "off",
+        "noEvolvingTypes": "off",
+        "noUnusedExpressions": "off",
+        "useIterableCallbackReturn": "off"
+      },
+
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "noStaticElementInteractions": "off"
+      }
+    }
+  }
+}

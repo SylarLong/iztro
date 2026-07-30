@@ -1,11 +1,11 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate } from 'lunar-lite';
-import { initStars } from '.';
-import { t } from '../i18n';
-import { fixIndex, getBrightness, getMutagen } from '../utils';
-import FunctionalStar from './FunctionalStar';
-import { getStartIndex } from './location';
-import { getConfig } from '../astro';
-import { AstrolabeParam } from '../data/types';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate } from "lunar-lite";
+import { getConfig } from "../astro";
+import type { AstrolabeParam } from "../data/types";
+import { t } from "../i18n";
+import { fixIndex, getBrightness, getMutagen } from "../utils";
+import { initStars } from ".";
+import FunctionalStar from "./FunctionalStar";
+import { getStartIndex } from "./location";
 
 /**
  * 安主星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -24,60 +24,64 @@ import { AstrolabeParam } from '../data/types';
 export const getMajorStar = (param: AstrolabeParam) => {
   const { solarDate, timeIndex } = param;
   const { ziweiIndex, tianfuIndex } = getStartIndex(param);
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
-    year: getConfig().yearDivide,
-  });
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
+    solarDate,
+    timeIndex,
+    {
+      year: getConfig().yearDivide,
+    }
+  );
   const stars = initStars();
   const ziweiGroup = [
-    'ziweiMaj',
-    'tianjiMaj',
-    '',
-    'taiyangMaj',
-    'wuquMaj',
-    'tiantongMaj',
-    '',
-    '',
-    'lianzhenMaj',
+    "ziweiMaj",
+    "tianjiMaj",
+    "",
+    "taiyangMaj",
+    "wuquMaj",
+    "tiantongMaj",
+    "",
+    "",
+    "lianzhenMaj",
   ] as const;
   const tianfuGroup = [
-    'tianfuMaj',
-    'taiyinMaj',
-    'tanlangMaj',
-    'jumenMaj',
-    'tianxiangMaj',
-    'tianliangMaj',
-    'qishaMaj',
-    '',
-    '',
-    '',
-    'pojunMaj',
+    "tianfuMaj",
+    "taiyinMaj",
+    "tanlangMaj",
+    "jumenMaj",
+    "tianxiangMaj",
+    "tianliangMaj",
+    "qishaMaj",
+    "",
+    "",
+    "",
+    "pojunMaj",
   ] as const;
 
   ziweiGroup.forEach((s, i) => {
     // 安紫微星系，起始宫逆时针安
-    if (s !== '') {
-      stars[fixIndex(ziweiIndex - i)].push(
+    if (s !== "") {
+      stars[fixIndex(ziweiIndex - i)]!.push(
         new FunctionalStar({
           name: t(s),
-          type: 'major',
-          scope: 'origin',
+          type: "major",
+          scope: "origin",
           brightness: getBrightness(t(s), fixIndex(ziweiIndex - i)),
           mutagen: getMutagen(t(s), yearly[0]),
-        }),
+        })
       );
     }
   });
 
   tianfuGroup.forEach((s, i) => {
-    if (s !== '') {
-      stars[fixIndex(tianfuIndex + i)].push(
+    if (s !== "") {
+      stars[fixIndex(tianfuIndex + i)]!.push(
         new FunctionalStar({
           name: t(s),
-          type: 'major',
-          scope: 'origin',
+          type: "major",
+          scope: "origin",
           brightness: getBrightness(t(s), fixIndex(tianfuIndex + i)),
           mutagen: getMutagen(t(s), yearly[0]),
-        }),
+        })
       );
     }
   });

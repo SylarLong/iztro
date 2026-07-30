@@ -1,6 +1,10 @@
-import { SurroundedPalaces } from '../data/types';
-import { Mutagen, StarName } from '../i18n';
-import { isSurroundedByOneOfStars, isSurroundedByStars, notSurroundedByStars } from './analyzer';
+import type { SurroundedPalaces } from "../data/types";
+import type { Mutagen, StarName } from "../i18n";
+import {
+  isSurroundedByOneOfStars,
+  isSurroundedByStars,
+  notSurroundedByStars,
+} from "./analyzer";
 
 export interface IFunctionalSurpalaces extends SurroundedPalaces {
   /**
@@ -14,14 +18,14 @@ export interface IFunctionalSurpalaces extends SurroundedPalaces {
   have: (stars: StarName[]) => boolean;
 
   /**
-   * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
+   * 判断某一个宫位三方四正是否有四化
    *
    * @version v1.2.0
    *
-   * @param stars 星耀名称，可以包含主星、辅星、杂耀
-   * @returnstrue | false
+   * @param mutagen 四化名称【禄｜权｜科｜忌】
+   * @returns true | false
    */
-  notHave: (stars: StarName[]) => boolean;
+  haveMutagen: (mutagen: Mutagen) => boolean;
 
   /**
    * 判断三方四正内是否有传入星耀的其中一个，只要命中一个就会返回true
@@ -34,14 +38,14 @@ export interface IFunctionalSurpalaces extends SurroundedPalaces {
   haveOneOf: (stars: StarName[]) => boolean;
 
   /**
-   * 判断某一个宫位三方四正是否有四化
+   * 判断某一个宫位三方四正是否不含目标星耀，必须要全部都不在三方四正内含才会返回true
    *
    * @version v1.2.0
    *
-   * @param mutagen 四化名称【禄｜权｜科｜忌】
-   * @returns true | false
+   * @param stars 星耀名称，可以包含主星、辅星、杂耀
+   * @returnstrue | false
    */
-  haveMutagen: (mutagen: Mutagen) => boolean;
+  notHave: (stars: StarName[]) => boolean;
 
   /**
    * 判断某一个宫位三方四正是否没有四化
@@ -69,7 +73,8 @@ export class FunctionalSurpalaces implements IFunctionalSurpalaces {
 
   have = (stars: StarName[]): boolean => isSurroundedByStars(this, stars);
   notHave = (stars: StarName[]): boolean => notSurroundedByStars(this, stars);
-  haveOneOf = (stars: StarName[]): boolean => isSurroundedByOneOfStars(this, stars);
+  haveOneOf = (stars: StarName[]): boolean =>
+    isSurroundedByOneOfStars(this, stars);
   haveMutagen = (mutagen: Mutagen): boolean =>
     this.target.hasMutagen(mutagen) ||
     this.opposite.hasMutagen(mutagen) ||

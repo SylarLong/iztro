@@ -1,4 +1,4 @@
 export default {
-  male: 'Nam',
-  female: 'Nữ',
+  male: "Nam",
+  female: "Nữ",
 } as const;

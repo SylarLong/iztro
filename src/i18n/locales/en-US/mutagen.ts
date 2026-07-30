@@ -1,6 +1,6 @@
 export default {
-  sihuaLu: 'A',
-  sihuaQuan: 'B',
-  sihuaKe: 'C',
-  sihuaJi: 'D',
+  sihuaLu: "A",
+  sihuaQuan: "B",
+  sihuaKe: "C",
+  sihuaJi: "D",
 } as const;

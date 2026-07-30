@@ -1,35 +1,37 @@
-import i18next from 'i18next';
-import transZhCN from './locales/zh-CN';
-import transZhTW from './locales/zh-TW';
-import transKoKR from './locales/ko-KR';
-import transJaJP from './locales/ja-JP';
-import transEnUS from './locales/en-US';
-import transViVN from './locales/vi-VN';
-import { Language } from '../data/types';
+import i18next from "i18next";
+import type { Language } from "../data/types";
+import transEnUS from "./locales/en-US";
+import transJaJP from "./locales/ja-JP";
+import transKoKR from "./locales/ko-KR";
+import transViVN from "./locales/vi-VN";
+import transZhCN from "./locales/zh-CN";
+import transZhTW from "./locales/zh-TW";
 
-const resources: { [key: Language]: { translation: { [key: string]: string } } } = {
-  'en-US': {
+const resources: {
+  [key: Language]: { translation: { [key: string]: string } };
+} = {
+  "en-US": {
     translation: transEnUS,
   },
-  'ja-JP': {
+  "ja-JP": {
     translation: transJaJP,
   },
-  'ko-KR': {
+  "ko-KR": {
     translation: transKoKR,
   },
-  'zh-CN': {
+  "zh-CN": {
     translation: transZhCN,
   },
-  'zh-TW': {
+  "zh-TW": {
     translation: transZhTW,
   },
-  'vi-VN': {
+  "vi-VN": {
     translation: transViVN,
   },
 };
 
 // 设置默认语言和加载翻译文件
-i18next.init({ lng: 'zh-CN', resources });
+i18next.init({ lng: "zh-CN", resources });
 
 /**
  * 设置国际化语言。
@@ -49,7 +51,7 @@ export const setLanguage = (language: Language) => {
  */
 export const t = <T>(str: string) => {
   if (!str) {
-    return '' as T;
+    return "" as T;
   }
 
   return i18next.t(str) as T;
@@ -79,6 +81,6 @@ export const kot = <T>(value: string, k?: string) => {
   return res as T;
 };
 
-export * from './types';
+export * from "./types";
 
 export default i18next;
