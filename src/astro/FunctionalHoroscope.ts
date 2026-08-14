@@ -5,6 +5,7 @@ import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { mergeStars } from '../utils';
 import { MUTAGEN } from '../data';
+import { serialize } from '../utils/toJSON';
 
 const _getHoroscopePalaceIndex = ($: IFunctionalHoroscope, scope: Scope, palaceName: PalaceName) => {
   let palaceIndex = -1;
@@ -28,6 +29,13 @@ const _getHoroscopePalaceIndex = ($: IFunctionalHoroscope, scope: Scope, palaceN
 
 export interface IFunctionalHoroscope extends Horoscope {
   astrolabe: IFunctionalAstrolabe;
+  /**
+   * 将功能运限转换为普通 JSON 对象
+   *
+   * @version 2.6.0
+   */
+  toJSON: () => Horoscope;
+
   /**
    * 获取小限宫位
    *
@@ -132,6 +140,8 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
 
     return this;
   }
+
+  toJSON = (): Horoscope => serialize<Horoscope>(this);
 
   agePalace = () => {
     return this.astrolabe.palace(this.age.index);

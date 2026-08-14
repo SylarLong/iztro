@@ -15,6 +15,54 @@ describe('Astrolabe', () => {
     astro.config({ yearDivide: 'exact', algorithm: 'default' });
   });
 
+  test('toJSON()', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true);
+
+    // 触发星盘、宫位和星曜之间的运行时引用，确保循环引用也能安全转换。
+    result.palace('命宫');
+    result.star('紫微');
+
+    const json = result.toJSON();
+
+    expect(Object.getPrototypeOf(json)).toBe(Object.prototype);
+    expect(Object.getPrototypeOf(json.palaces[0])).toBe(Object.prototype);
+    expect(Object.getPrototypeOf(json.palaces[0].majorStars[0])).toBe(Object.prototype);
+    expect(json).not.toHaveProperty('plugins');
+    expect(json.palaces[0]).not.toHaveProperty('_astrolabe');
+    expect(json.palaces[0].majorStars[0]).not.toHaveProperty('_palace');
+    expect(json).not.toHaveProperty('palace');
+    expect(json.palaces[0]).not.toHaveProperty('has');
+    expect(json.palaces[0].majorStars[0]).not.toHaveProperty('withMutagen');
+    expect(json).toHaveProperty('solarDate', '2000-8-16');
+    expect(json.palaces).toHaveLength(12);
+    expect(result.palaces[0].toJSON()).not.toHaveProperty('has');
+    expect(result.palaces[0].majorStars[0].toJSON()).not.toHaveProperty('withMutagen');
+    expect(result.surroundedPalaces(0).toJSON()).not.toHaveProperty('have');
+
+    const horoscope = result.horoscope('2023-8-19');
+    const horoscopeJSON = horoscope.toJSON();
+
+    expect(horoscopeJSON).not.toHaveProperty('astrolabe');
+    expect(horoscopeJSON).not.toHaveProperty('palace');
+    expect(JSON.parse(JSON.stringify(result))).toEqual(json);
+
+    const pluginData: Record<string, unknown> = { value: 'plugin data' };
+    let nestedToJSONCalled = false;
+
+    pluginData.self = pluginData;
+    pluginData.toJSON = () => {
+      nestedToJSONCalled = true;
+      throw new Error('嵌套对象的 toJSON 不应被调用');
+    };
+    Object.assign(result, { pluginData });
+
+    const jsonWithCycle = result.toJSON() as typeof json & { pluginData: Record<string, unknown> };
+
+    expect(jsonWithCycle.pluginData).toEqual({ value: 'plugin data' });
+    expect(nestedToJSONCalled).toBe(false);
+    expect(() => JSON.stringify(result)).not.toThrow();
+  });
+
   test('bySolar()', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true);
 

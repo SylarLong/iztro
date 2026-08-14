@@ -12,6 +12,7 @@ import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { getPalaceNames } from './palace';
 import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope';
 import { getConfig } from './astro';
+import { serialize } from '../utils/toJSON';
 
 /**
  * 获取运限数据
@@ -212,6 +213,13 @@ const _getHoroscopeBySolarDate = (
  */
 export interface IFunctionalAstrolabe extends Astrolabe {
   /**
+   * 将功能星盘转换为普通 JSON 对象
+   *
+   * @version 2.6.0
+   */
+  toJSON: () => Astrolabe;
+
+  /**
    * 插件注入方法
    *
    * @version v2.3.0
@@ -348,6 +356,8 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
     this.plugins.push(plugin);
     plugin.apply(this);
   }
+
+  toJSON = (): Astrolabe => serialize<Astrolabe>(this);
 
   star = (starName: StarName): IFunctionalStar => {
     let targetStar: IFunctionalStar | undefined;

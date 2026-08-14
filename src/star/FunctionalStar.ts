@@ -3,6 +3,7 @@ import { IFunctionalPalace } from '../astro/FunctionalPalace';
 import { IFunctionalSurpalaces } from '../astro/FunctionalSurpalaces';
 import { Star } from '../data/types';
 import { Brightness, BrightnessKey, kot, Mutagen, MutagenKey } from '../i18n';
+import { serialize } from '../utils/toJSON';
 
 /**
  * 星耀类的接口定义
@@ -10,6 +11,13 @@ import { Brightness, BrightnessKey, kot, Mutagen, MutagenKey } from '../i18n';
  * 文档地址：https://docs.iztro.com/posts/star.html#functionalstar
  */
 export interface IFunctionalStar extends Star {
+  /**
+   * 将功能星曜转换为普通 JSON 对象
+   *
+   * @version 2.6.0
+   */
+  toJSON: () => Star;
+
   /**
    * 获取星耀所在宫位
    *
@@ -91,6 +99,8 @@ export default class FunctionalStar implements IFunctionalStar {
 
     return this;
   }
+
+  toJSON = (): Star => serialize<Star>(this);
 
   oppositePalace = (): IFunctionalPalace | undefined => {
     if (!this._palace || !this._astrolabe) {

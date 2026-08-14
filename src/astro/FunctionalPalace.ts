@@ -9,6 +9,7 @@ import {
   notHaveMutagenInPalce,
   notHaveStars,
 } from './analyzer';
+import { serialize } from '../utils/toJSON';
 
 /**
  * 宫位类的接口定义。
@@ -16,6 +17,13 @@ import {
  * 文档地址：https://docs.iztro.com/posts/palace.html#functionalastrolabe
  */
 export interface IFunctionalPalace extends Palace {
+  /**
+   * 将功能宫位转换为普通 JSON 对象
+   *
+   * @version 2.6.0
+   */
+  toJSON: () => Palace;
+
   /**
    * 判断某个宫位内是否有传入的星耀，要所有星耀都在宫位内才会返回true
    *
@@ -214,6 +222,8 @@ export default class FunctionalPalace implements IFunctionalPalace {
 
     return this;
   }
+
+  toJSON = (): Palace => serialize<Palace>(this);
 
   has = (stars: StarName[]): boolean => hasStars(this, stars);
   notHave = (stars: StarName[]): boolean => notHaveStars(this, stars);

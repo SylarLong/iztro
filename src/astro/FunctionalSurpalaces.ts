@@ -1,8 +1,16 @@
 import { SurroundedPalaces } from '../data/types';
 import { Mutagen, StarName } from '../i18n';
 import { isSurroundedByOneOfStars, isSurroundedByStars, notSurroundedByStars } from './analyzer';
+import { serialize } from '../utils/toJSON';
 
 export interface IFunctionalSurpalaces extends SurroundedPalaces {
+  /**
+   * 将功能三方四正转换为普通 JSON 对象
+   *
+   * @version 2.6.0
+   */
+  toJSON: () => SurroundedPalaces;
+
   /**
    * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
    *
@@ -66,6 +74,8 @@ export class FunctionalSurpalaces implements IFunctionalSurpalaces {
     this.wealth = wealth;
     this.career = career;
   }
+
+  toJSON = (): SurroundedPalaces => serialize<SurroundedPalaces>(this);
 
   have = (stars: StarName[]): boolean => isSurroundedByStars(this, stars);
   notHave = (stars: StarName[]): boolean => notSurroundedByStars(this, stars);
