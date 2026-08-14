@@ -255,11 +255,11 @@ You can generate an astrolabe by using the returned data. Of course it's just an
 
 ## Star History
 
-<a href="https://star-history.com/#sylarlong/iztro&Date">
+<a href="https://star-history.dera.page/#sylarlong/iztro&Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=sylarlong/iztro&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=sylarlong/iztro&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=sylarlong/iztro&type=Date" />
+    <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=sylarlong/iztro&type=Date" />
   </picture>
 </a>
 
