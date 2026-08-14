@@ -6,9 +6,10 @@ import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName,
 import { getHoroscopeStar, getYearly12 } from '../star';
 import { IFunctionalStar } from '../star/FunctionalStar';
 import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem, timeToIndex } from '../utils';
-import { getPalace, getSurroundedPalaces } from './analyzer';
+import { getFlankingPalaces, getPalace, getSurroundedPalaces } from './analyzer';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
+import { IFunctinalFlankingPalaces } from './FunctionalFlankingPalaces';
 import { getPalaceNames } from './palace';
 import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope';
 import { getConfig } from './astro';
@@ -269,6 +270,20 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   surroundedPalaces: (indexOrName: number | PalaceName) => IFunctionalSurpalaces;
 
   /**
+   * 获取目标宫位的功能夹宫对象，即目标宫位前后相邻的两个宫位。
+   *
+   * 返回对象的 `previous` 属性是前一宫，`next` 属性是后一宫。
+   * 返回对象还提供星曜、四化分析以及 JSON 转换方法。十二宫首尾相连，
+   * 因此首宫的前一宫是末宫，末宫的后一宫是首宫。
+   *
+   * @version 2.6.0
+   *
+   * @param indexOrName 目标宫位索引或者宫位名称
+   * @returns 包含前一宫、后一宫及夹宫分析方法的功能夹宫对象
+   */
+  flankingPalaces: (indexOrName: number | PalaceName) => IFunctinalFlankingPalaces;
+
+  /**
    *
    * 判断某一个宫位三方四正是否包含目标星耀，必须要全部包含才会返回true
    *
@@ -386,6 +401,9 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
 
   surroundedPalaces = (indexOrName: number | PalaceName): IFunctionalSurpalaces =>
     getSurroundedPalaces(this, indexOrName);
+
+  flankingPalaces = (indexOrName: number | PalaceName): IFunctinalFlankingPalaces =>
+    getFlankingPalaces(this, indexOrName);
 
   /**
    * @deprecated 此方法已在`v1.2.0`废弃，请用下列方法替换

@@ -5,6 +5,7 @@ import { fixEarthlyBranchIndex, fixIndex, getMutagensByHeavenlyStem } from '../u
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
 import { IFunctionalPalace } from './FunctionalPalace';
 import { FunctionalSurpalaces, IFunctionalSurpalaces } from './FunctionalSurpalaces';
+import { FunctionalFlankingPalaces, IFunctinalFlankingPalaces } from './FunctionalFlankingPalaces';
 
 const _concatStars = (...stars: Star[][]): StarKey[] =>
   Array.from(stars)
@@ -53,6 +54,16 @@ const _getAllStarsInSurroundedPalaces = ({ target, opposite, wealth, career }: S
     career.adjectiveStars,
   );
 
+const _getAllStarsInFlankingPalaces = ({ previous, next }: IFunctinalFlankingPalaces) =>
+  _concatStars(
+    previous.majorStars,
+    previous.minorStars,
+    previous.adjectiveStars,
+    next.majorStars,
+    next.minorStars,
+    next.adjectiveStars,
+  );
+
 /**
  * 获取三方四正宫位，所谓三方四正就是传入的目标宫位，以及其对宫，财帛位和官禄位，总共四个宫位
  *
@@ -91,6 +102,40 @@ export const getSurroundedPalaces = (
     opposite: palace6,
     career: palace4,
   });
+};
+
+/**
+ * 获取目标宫位的功能夹宫对象，即目标宫位前后相邻的两个宫位。
+ *
+ * 返回对象的 `previous` 属性是前一宫，`next` 属性是后一宫，并提供
+ * `have()`、`notHave()`、`haveOneOf()`、`haveMutagen()`、
+ * `notHaveMutagen()` 和 `toJSON()` 方法。十二宫首尾相连，因此索引为
+ * `0` 的前一宫是索引 `11`，索引为 `11` 的后一宫是索引 `0`。
+ *
+ * @version 2.6.0
+ *
+ * @param $ 星盘实例
+ * @param indexOrName 目标宫位索引或者宫位名称
+ * @returns 包含前一宫、后一宫及夹宫分析方法的功能夹宫对象
+ */
+export const getFlankingPalaces = (
+  $: IFunctionalAstrolabe,
+  indexOrName: number | PalaceName,
+): IFunctinalFlankingPalaces => {
+  const palace = getPalace($, indexOrName);
+
+  if (!palace) {
+    throw new Error('invalid palace index or name.');
+  }
+
+  const previousPalace = getPalace($, fixIndex(palace.index - 1));
+  const nextPalace = getPalace($, fixIndex(palace.index + 1));
+
+  if (!previousPalace || !nextPalace) {
+    throw new Error('invalid palace index or name.');
+  }
+
+  return new FunctionalFlankingPalaces({ previous: previousPalace, next: nextPalace });
 };
 
 /**
@@ -243,6 +288,42 @@ export const notSurroundedByStars = ($: IFunctionalSurpalaces, stars: StarName[]
 
   return _excludeAll(allStarsInPalace, stars);
 };
+
+/**
+ * 判断两个夹宫内是否包含全部目标星曜。
+ *
+ * @version 2.6.0
+ *
+ * @param $ 功能夹宫实例
+ * @param stars 星曜名称数组
+ * @returns 是否包含全部目标星曜
+ */
+export const isFlankedByStars = ($: IFunctinalFlankingPalaces, stars: StarName[]): boolean =>
+  _includeAll(_getAllStarsInFlankingPalaces($), stars);
+
+/**
+ * 判断两个夹宫内是否包含任意一颗目标星曜。
+ *
+ * @version 2.6.0
+ *
+ * @param $ 功能夹宫实例
+ * @param stars 星曜名称数组
+ * @returns 是否包含任意一颗目标星曜
+ */
+export const isFlankedByOneOfStars = ($: IFunctinalFlankingPalaces, stars: StarName[]): boolean =>
+  _includeOneOf(_getAllStarsInFlankingPalaces($), stars);
+
+/**
+ * 判断两个夹宫内是否完全不包含目标星曜。
+ *
+ * @version 2.6.0
+ *
+ * @param $ 功能夹宫实例
+ * @param stars 星曜名称数组
+ * @returns 是否完全不包含目标星曜
+ */
+export const notFlankedByStars = ($: IFunctinalFlankingPalaces, stars: StarName[]): boolean =>
+  _excludeAll(_getAllStarsInFlankingPalaces($), stars);
 
 export const mutagensToStars = (heavenlyStem: HeavenlyStemName, mutagens: Mutagen | Mutagen[]) => {
   const muts = Array.isArray(mutagens) ? mutagens : [mutagens];

@@ -169,6 +169,32 @@ describe('astro/analyzer', () => {
     expect(career).toHaveProperty('name', '官禄');
   });
 
+  test('flankingPalaces()', () => {
+    const result = astro.bySolar('2023-8-15', 0, '女', true);
+
+    const flankingPalaces = result.flankingPalaces('命宫');
+    const { previous, next } = flankingPalaces;
+
+    expect(previous).toHaveProperty('name', '兄弟');
+    expect(next).toHaveProperty('name', '父母');
+    expect(flankingPalaces.have(['天喜', '天巫'])).toBe(true);
+    expect(flankingPalaces.haveOneOf(['月德', '紫微'])).toBe(true);
+    expect(flankingPalaces.notHave(['紫微', '天机'])).toBe(true);
+    expect(flankingPalaces.toJSON()).not.toHaveProperty('have');
+
+    const { previous: lastPalace, next: secondPalace } = result.flankingPalaces(0);
+
+    expect(lastPalace).toHaveProperty('name', '迁移');
+    expect(secondPalace).toHaveProperty('name', '财帛');
+    expect(result.flankingPalaces(0).haveMutagen('忌')).toBe(true);
+    expect(result.flankingPalaces(0).notHaveMutagen('科')).toBe(true);
+
+    const { previous: penultimatePalace, next: firstPalace } = result.flankingPalaces(11);
+
+    expect(penultimatePalace).toHaveProperty('name', '仆役');
+    expect(firstPalace).toHaveProperty('name', '疾厄');
+  });
+
   test('haveOneOf() in surrounded palaces', () => {
     const result = astro.bySolar('2023-8-16', 2, '女', true);
 

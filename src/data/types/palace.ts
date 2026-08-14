@@ -94,3 +94,16 @@ export type SurroundedPalaces = {
   /** 官禄位 */
   career: IFunctionalPalace;
 };
+
+/**
+ * 夹宫
+ *
+ * @property previous 目标宫位的前一宫
+ * @property next 目标宫位的后一宫
+ */
+export type FlankingPalaces = {
+  /** 目标宫位的前一宫 */
+  previous: IFunctionalPalace;
+  /** 目标宫位的后一宫 */
+  next: IFunctionalPalace;
+};
