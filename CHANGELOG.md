@@ -7,6 +7,13 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## v2.6.0
+
+- 🪄 功能（feature）
+
+  - 为所有 `Functional*` 功能类新增 `toJSON()` 方法，支持转换为不包含功能方法和运行时引用的普通 JSON 对象，并安全处理循环引用。
+  - 为 `FunctionalAstrolabe` 新增 `flankingPalaces()` 方法，支持获取目标宫位的夹宫，以及对夹宫进行星曜和四化分析。
+
 ## v2.5.8
 
 - 🛠️ 修复（fix）
