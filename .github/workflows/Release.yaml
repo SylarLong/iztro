@@ -1,38 +1,74 @@
 name: Release
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: yarn
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
+
+      - name: Run tests
+        run: yarn test --runInBand
 
       - name: Build with Webpack
-        run: npm run build:umd
+        run: yarn build:umd
 
-      - name: Create iztro-min-js
-        run: tar -czvf iztro-min-js.tar.gz dist/
+      - name: Extract release notes from changelog
+        shell: bash
+        run: |
+          awk -v version="${GITHUB_REF_NAME}" '
+            $0 == "## " version {
+              found = 1
+              next
+            }
 
-      - name: Upload iztro-min-js to Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: iztro-min-js.tar.gz
-          asset_name: iztro-min-js.tar.gz
-          asset_content_type: application/gzip
+            found && /^## / {
+              exit
+            }
+
+            found {
+              print
+            }
+
+            END {
+              if (!found) {
+                exit 1
+              }
+            }
+          ' CHANGELOG.md > release-notes.md
+
+          if [[ ! -s release-notes.md ]]; then
+            echo "CHANGELOG.md does not contain release notes for ${GITHUB_REF_NAME}"
+            exit 1
+          fi
+
+      - name: Package UMD files
+        run: tar -czf iztro-min-js.tar.gz dist/
+
+      - name: Create GitHub Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_AUTH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            iztro-min-js.tar.gz \
+            --verify-tag \
+            --title "${GITHUB_REF_NAME}" \
+            --notes-file release-notes.md

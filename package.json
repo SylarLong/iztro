@@ -7,7 +7,8 @@
   "unpkg": "dist/iztro.min.js",
   "jsdelivr": "dist/iztro.min.js",
   "scripts": {
-    "build": "tsc",
+    "clean": "node -e \"require('node:fs').rmSync('lib', { recursive: true, force: true })\"",
+    "build": "yarn clean && tsc",
     "build:umd": "webpack",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
