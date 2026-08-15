@@ -13,6 +13,10 @@
 
   - 为所有 `Functional*` 功能类新增 `toJSON()` 方法，支持转换为不包含功能方法和运行时引用的普通 JSON 对象，并安全处理循环引用。
   - 为 `FunctionalAstrolabe` 新增 `flankingPalaces()` 方法，支持获取目标宫位的夹宫，以及对夹宫进行星曜和四化分析。
+  - 为 `FunctionalAstrolabe` 新增 `decadalList()` 方法，支持获取按起运先后排列的大限列表，包含起止虚岁、起止年份、大限流耀、大限四化和大限十二宫。
+  - 为 `FunctionalAstrolabe` 新增 `yearlyList()` 方法，支持通过大限序号或本命宫位名称获取该大限内的流年列表，包含虚岁、年份、流年干支、流耀、四化和流年十二宫。
+  - 为 `FunctionalAstrolabe` 新增 `monthlyList(year, fixLeap)` 方法，支持获取指定年份的流月列表，包含虚岁、年份、月份、流月干支、流耀、四化和流月十二宫。
+  - `monthlyList()` 支持闰月处理：无闰月时返回 12 项；有闰月且 `fixLeap` 为 `false` 时返回 13 项；有闰月且 `fixLeap` 为 `true` 时将闰月按前后半月拆分并返回 14 项。
 
 ## v2.5.8
 

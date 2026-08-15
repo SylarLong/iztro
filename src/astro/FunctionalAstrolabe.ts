@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, normalizeDateStr, solar2lunar } from 'lunar-lite';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate, lunar2solar, normalizeDateStr, solar2lunar } from 'lunar-lite';
+import { LunarYear } from 'lunar-typescript';
 import { EARTHLY_BRANCHES } from '../data';
-import { Astrolabe, Horoscope, Plugin } from '../data/types';
+import { Astrolabe, DecadalHoroscope, Horoscope, MonthlyHoroscope, Plugin, YearlyHoroscope } from '../data/types';
 import { EarthlyBranchKey, EarthlyBranchName, HeavenlyStemName, kot, PalaceName, StarKey, StarName, t } from '../i18n';
 import { getHoroscopeStar, getYearly12 } from '../star';
 import { IFunctionalStar } from '../star/FunctionalStar';
@@ -240,6 +241,30 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   horoscope: (date?: string | Date, timeIndex?: number) => IFunctionalHoroscope;
 
   /**
+   * 获取按起运先后排列的大限列表。
+   *
+   * @returns 大限数据列表，第 0 项为第一个大限
+   */
+  decadalList: () => DecadalHoroscope[];
+
+  /**
+   * 获取指定大限内的全部流年。
+   *
+   * @param indexOrName 大限序号（0 为第一个大限）或者本命宫位名称
+   * @returns 该大限十个虚岁对应的流年数据
+   */
+  yearlyList: (indexOrName: number | PalaceName) => YearlyHoroscope[];
+
+  /**
+   * 获取指定流年内的全部流月。
+   *
+   * @param year 流年年份，可直接传入 `yearlyList()` 返回项的 `year`
+   * @param fixLeap 是否将闰月前后半月分开计算，默认为 `true`
+   * @returns 该流年的流月数据；无闰月 12 项，有闰月时返回 13 或 14 项
+   */
+  monthlyList: (year: number, fixLeap?: boolean) => MonthlyHoroscope[];
+
+  /**
    * 通过星耀名称获取到当前星耀的对象实例
    *
    * @version v1.2.0
@@ -396,6 +421,109 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
 
   horoscope = (targetDate: string | Date = new Date(), timeIndexOfTarget?: number) =>
     _getHoroscopeBySolarDate(this, targetDate, timeIndexOfTarget);
+
+  decadalList = (): DecadalHoroscope[] => {
+    const birthYear = this.rawDates.lunarDate.lunarYear;
+
+    return [...this.palaces]
+      .sort((previous, next) => previous.decadal.range[0] - next.decadal.range[0])
+      .map(({ index, name: palaceName, decadal }) => ({
+        index,
+        name: t('decadal'),
+        palaceName,
+        ageRange: [...decadal.range],
+        yearRange: [birthYear + decadal.range[0] - 1, birthYear + decadal.range[1] - 1],
+        heavenlyStem: decadal.heavenlyStem,
+        earthlyBranch: decadal.earthlyBranch,
+        palaceNames: getPalaceNames(index),
+        mutagen: getMutagensByHeavenlyStem(decadal.heavenlyStem),
+        stars: getHoroscopeStar(decadal.heavenlyStem, decadal.earthlyBranch, 'decadal'),
+      }));
+  };
+
+  yearlyList = (indexOrName: number | PalaceName): YearlyHoroscope[] => {
+    const decadalPalaces = [...this.palaces].sort(
+      (previous, next) => previous.decadal.range[0] - next.decadal.range[0],
+    );
+    const palace = typeof indexOrName === 'number' ? decadalPalaces[indexOrName] : this.palace(indexOrName);
+
+    if (!palace) {
+      throw new Error('invalid decadal index or palace name.');
+    }
+
+    const birthYear = this.rawDates.lunarDate.lunarYear;
+    const [startAge, endAge] = palace.decadal.range;
+    const timeIndex = EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(this.rawDates.chineseDate.hourly[1], 'Earthly'));
+
+    return Array.from({ length: endAge - startAge + 1 }, (_, index) => {
+      const age = startAge + index;
+      const year = birthYear + age - 1;
+      const targetDate = lunar2solar(`${year}-6-1`).toString();
+      const { yearly } = this.horoscope(targetDate, timeIndex);
+
+      return {
+        index: yearly.index,
+        name: yearly.name,
+        age,
+        year,
+        heavenlyStem: yearly.heavenlyStem,
+        earthlyBranch: yearly.earthlyBranch,
+        palaceNames: yearly.palaceNames,
+        mutagen: yearly.mutagen,
+        stars: yearly.stars,
+      };
+    });
+  };
+
+  monthlyList = (year: number, fixLeap: boolean = true): MonthlyHoroscope[] => {
+    if (!Number.isInteger(year)) {
+      throw new Error('invalid year.');
+    }
+
+    const age = year - this.rawDates.lunarDate.lunarYear + 1;
+    const timeIndex = EARTHLY_BRANCHES.indexOf(kot<EarthlyBranchKey>(this.rawDates.chineseDate.hourly[1], 'Earthly'));
+    const periods = LunarYear.fromYear(year)
+      .getMonthsInYear()
+      .flatMap<{ month: number; isLeapMonth: boolean; part: MonthlyHoroscope['part']; dayRange: [number, number] }>(
+        (lunarMonth) => {
+          const rawMonth = lunarMonth.getMonth();
+          const month = Math.abs(rawMonth);
+          const isLeapMonth = rawMonth < 0;
+          const lastDay = lunarMonth.getDayCount();
+
+          if (isLeapMonth && fixLeap) {
+            return [
+              { month, isLeapMonth, part: 'first', dayRange: [1, 15] },
+              { month, isLeapMonth, part: 'second', dayRange: [16, lastDay] },
+            ];
+          }
+
+          return [{ month, isLeapMonth, part: 'normal', dayRange: [1, lastDay] }];
+        },
+      );
+
+    return periods.map(({ month, isLeapMonth, part, dayRange }) => {
+      const targetDay = part === 'second' ? 16 : 1;
+      const targetDate = lunar2solar(`${year}-${month}-${targetDay}`, isLeapMonth).toString();
+      const { monthly } = this.horoscope(targetDate, timeIndex);
+
+      return {
+        index: monthly.index,
+        name: monthly.name,
+        age,
+        year,
+        month,
+        isLeapMonth,
+        part,
+        dayRange,
+        heavenlyStem: monthly.heavenlyStem,
+        earthlyBranch: monthly.earthlyBranch,
+        palaceNames: monthly.palaceNames,
+        mutagen: monthly.mutagen,
+        stars: monthly.stars,
+      };
+    });
+  };
 
   palace = (indexOrName: number | PalaceName): IFunctionalPalace | undefined => getPalace(this, indexOrName);
 

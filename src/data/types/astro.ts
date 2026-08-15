@@ -57,6 +57,48 @@ export type Decadal = {
 };
 
 /**
+ * 大限列表项
+ *
+ * 在通用运限数据的基础上，包含大限所在本命宫位、虚岁区间和年份区间。
+ */
+export type DecadalHoroscope = HoroscopeItem & {
+  /** 大限所在的本命宫位 */
+  palaceName: PalaceName;
+  /** 大限起止虚岁 */
+  ageRange: [number, number];
+  /** 大限起止年份 */
+  yearRange: [number, number];
+};
+
+/**
+ * 流年列表项
+ *
+ * 在通用运限数据的基础上，包含该流年对应的虚岁和年份。
+ */
+export type YearlyHoroscope = HoroscopeItem & {
+  /** 流年对应的虚岁 */
+  age: number;
+  /** 流年年份 */
+  year: number;
+};
+
+/**
+ * 流月列表项
+ *
+ * 在流年列表项的基础上，包含该流月对应的农历月份。
+ */
+export type MonthlyHoroscope = YearlyHoroscope & {
+  /** 农历月份，正月为 1 */
+  month: number;
+  /** 是否为闰月 */
+  isLeapMonth: boolean;
+  /** 普通月份、闰月前半段或闰月后半段 */
+  part: 'normal' | 'first' | 'second';
+  /** 该流月数据对应的农历日期范围 */
+  dayRange: [number, number];
+};
+
+/**
  * 运限
  *
  * @property

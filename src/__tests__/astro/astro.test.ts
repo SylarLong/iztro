@@ -12,7 +12,7 @@ import { astro } from '../../index';
 describe('Astrolabe', () => {
   afterEach(() => {
     setLanguage('zh-CN');
-    astro.config({ yearDivide: 'exact', algorithm: 'default' });
+    astro.config({ yearDivide: 'exact', ageDivide: 'normal', algorithm: 'default' });
   });
 
   test('toJSON()', () => {
@@ -307,6 +307,121 @@ describe('Astrolabe', () => {
     expect(horoscope.daily).toHaveProperty('index', 0);
     expect(horoscope.daily).toHaveProperty('heavenlyStem', '甲');
     expect(horoscope.daily).toHaveProperty('earthlyBranch', '午');
+  });
+
+  test('decadalList() and yearlyList()', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true);
+    const decadals = result.decadalList();
+
+    expect(decadals).toHaveLength(12);
+    expect(decadals.map(({ ageRange }) => ageRange[0])).toEqual([3, 13, 23, 33, 43, 53, 63, 73, 83, 93, 103, 113]);
+    expect(decadals[0]).toMatchObject({
+      palaceName: '命宫',
+      ageRange: [3, 12],
+      yearRange: [2002, 2011],
+      heavenlyStem: '壬',
+      earthlyBranch: '午',
+      mutagen: ['天梁', '紫微', '左辅', '武曲'],
+    });
+    expect(decadals[0].palaceNames).toHaveLength(12);
+    expect(decadals[0].stars).toHaveLength(12);
+
+    const firstDecadalYearly = result.yearlyList(0);
+    const soulPalaceYearly = result.yearlyList('命宫');
+
+    expect(firstDecadalYearly).toHaveLength(10);
+    expect(firstDecadalYearly.map(({ age }) => age)).toEqual([3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    expect(firstDecadalYearly.map(({ year }) => year)).toEqual([
+      2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
+    ]);
+    expect(firstDecadalYearly[0]).toMatchObject({
+      age: 3,
+      year: 2002,
+      heavenlyStem: '壬',
+      earthlyBranch: '午',
+      mutagen: ['天梁', '紫微', '左辅', '武曲'],
+    });
+    expect(firstDecadalYearly[0].palaceNames).toHaveLength(12);
+    expect(firstDecadalYearly[0].stars).toHaveLength(12);
+    expect(soulPalaceYearly.map(({ age }) => age)).toEqual(
+      Array.from({ length: 10 }, (_, index) => (result.palace('命宫')?.decadal.range[0] ?? 0) + index),
+    );
+    expect(
+      soulPalaceYearly.map(({ age, year, heavenlyStem, earthlyBranch }) => ({
+        age,
+        year,
+        heavenlyStem,
+        earthlyBranch,
+      })),
+    ).toEqual(
+      firstDecadalYearly.map(({ age, year, heavenlyStem, earthlyBranch }) => ({
+        age,
+        year,
+        heavenlyStem,
+        earthlyBranch,
+      })),
+    );
+    expect(() => result.yearlyList(12)).toThrow('invalid decadal index or palace name.');
+
+    astro.config({ ageDivide: 'birthday' });
+    expect(result.yearlyList(0).map(({ age }) => age)).toEqual([3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  });
+
+  test('monthlyList()', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true);
+    const year = result.yearlyList(0)[0].year;
+    const monthlies = result.monthlyList(year);
+
+    expect(monthlies).toHaveLength(12);
+    expect(monthlies.map(({ month }) => month)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    expect(monthlies.every((item) => item.age === 3 && item.year === 2002)).toBe(true);
+    expect(monthlies[0]).toMatchObject({
+      age: 3,
+      year: 2002,
+      month: 1,
+      isLeapMonth: false,
+      part: 'normal',
+      dayRange: [1, 30],
+      heavenlyStem: '壬',
+      earthlyBranch: '寅',
+      mutagen: ['天梁', '紫微', '左辅', '武曲'],
+    });
+    expect(monthlies[0].palaceNames).toHaveLength(12);
+    expect(monthlies[0].stars).toHaveLength(12);
+    expect(() => result.monthlyList(2002.5)).toThrow('invalid year.');
+  });
+
+  test('monthlyList() leap month', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true);
+    const adjustedMonthlies = result.monthlyList(2025);
+    const unadjustedMonthlies = result.monthlyList(2025, false);
+    const adjustedLeapMonth = adjustedMonthlies.filter(({ isLeapMonth }) => isLeapMonth);
+    const unadjustedLeapMonth = unadjustedMonthlies.filter(({ isLeapMonth }) => isLeapMonth);
+
+    expect(adjustedMonthlies).toHaveLength(14);
+    expect(adjustedLeapMonth).toHaveLength(2);
+    expect(adjustedLeapMonth[0]).toMatchObject({
+      month: 6,
+      isLeapMonth: true,
+      part: 'first',
+      dayRange: [1, 15],
+    });
+    expect(adjustedLeapMonth[1]).toMatchObject({
+      month: 6,
+      isLeapMonth: true,
+      part: 'second',
+      dayRange: [16, 29],
+    });
+    expect(adjustedLeapMonth[1].index).toBe((adjustedLeapMonth[0].index + 1) % 12);
+
+    expect(unadjustedMonthlies).toHaveLength(13);
+    expect(unadjustedLeapMonth).toHaveLength(1);
+    expect(unadjustedLeapMonth[0]).toMatchObject({
+      month: 6,
+      isLeapMonth: true,
+      part: 'normal',
+      dayRange: [1, 29],
+    });
   });
 
   test('bySolar() Korean', () => {
