@@ -227,7 +227,7 @@ pnpm install iztro -S
 
 > `v2.0.4+` 版本才提供独立js库。
 
-将 `iztro.min.js` 用 `script` 标签引入 HTML 文件使用。
+推荐将带版本号的 `iztro-v2.6.0.min.js` 用 `script` 标签引入 HTML 文件使用。构建产物同时保留 `iztro.min.js`，用于兼容旧版本的引用方式。
 
 ```html
 <!DOCTYPE html>
@@ -237,7 +237,7 @@ pnpm install iztro -S
     <title>iztro-紫微斗数开源库</title>
   </head>
   <body>
-    <script src="./iztro.min.js"></script>
+    <script src="./iztro-v2.6.0.min.js"></script>
     <script>
       // 获取一张星盘数据
       var astrolabe = iztro.astro.bySolar('2000-8-16', 2, '男', true, 'zh-CN');
@@ -251,12 +251,12 @@ pnpm install iztro -S
 - jsdelivr
 
   - https://cdn.jsdelivr.net/npm/iztro/dist/iztro.min.js
-  - https://cdn.jsdelivr.net/npm/iztro@2.0.5/dist/iztro.min.js
+  - https://cdn.jsdelivr.net/npm/iztro@2.6.0/dist/iztro-v2.6.0.min.js
 
 - unpkg
 
   - https://unpkg.com/iztro/dist/iztro.min.js
-  - https://unpkg.com/iztro@2.0.5/dist/iztro.min.js
+  - https://unpkg.com/iztro@2.6.0/dist/iztro-v2.6.0.min.js
 
 你也可以使用如下规则来指定版本：
 

@@ -9,6 +9,10 @@
 
 ## v2.6.0
 
+- ✨ 改进（enhancement）
+
+  - UMD 构建新增带版本号的产物，例如 `iztro-v2.6.0.min.js` 及对应的 sourcemap，同时保留 `iztro.min.js` 和 `iztro.min.js.map` 以兼容旧版本引用。
+
 - 🪄 功能（feature）
 
   - 为所有 `Functional*` 功能类新增 `toJSON()` 方法，支持转换为不包含功能方法和运行时引用的普通 JSON 对象，并安全处理循环引用。
