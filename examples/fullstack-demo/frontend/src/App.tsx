@@ -19,7 +19,14 @@ interface ChatMessage {
 }
 
 function makeId() {
-  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const cryptoApi = window.crypto;
+  if (typeof cryptoApi.randomUUID === 'function') {
+    return `${Date.now()}-${cryptoApi.randomUUID()}`;
+  }
+  const bytes = new Uint8Array(16);
+  cryptoApi.getRandomValues(bytes);
+  const randomHex = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+  return `${Date.now()}-${randomHex}`;
 }
 
 async function postJson<T>(path: string, body: unknown): Promise<T> {
