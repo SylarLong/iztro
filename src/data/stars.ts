@@ -20,7 +20,7 @@ export const STARS_INFO = {
     yinYang: '阴',
   },
   taiyangMaj: {
-    brightness: ['wang', 'miao', 'wang', 'wang', 'wang', 'de', 'de', 'xian', 'bu', 'xian', 'xian', 'bu'],
+    brightness: ['wang', 'miao', 'wang', 'wang', 'wang', 'de', 'de', 'ping', 'bu', 'xian', 'xian', 'bu'],
     fiveElements: '',
     yinYang: '',
   },
@@ -45,7 +45,7 @@ export const STARS_INFO = {
     yinYang: '阳',
   },
   taiyinMaj: {
-    brightness: ['wang', 'xian', 'xian', 'xian', 'bu', 'bu', 'li', 'bu', 'wang', 'miao', 'miao', 'miao'],
+    brightness: ['wang', 'xian', 'xian', 'xian', 'bu', 'bu', 'li', 'wang', 'wang', 'miao', 'miao', 'miao'],
     fiveElements: '水',
     yinYang: '阴',
   },
@@ -70,7 +70,7 @@ export const STARS_INFO = {
     yinYang: '',
   },
   qishaMaj: {
-    brightness: ['miao', 'wang', 'miao', 'ping', 'wang', 'miao', 'miao', 'miao', 'miao', 'ping', 'wang', 'miao'],
+    brightness: ['miao', 'wang', 'miao', 'ping', 'wang', 'miao', 'miao', 'wang', 'miao', 'ping', 'wang', 'miao'],
     fiveElements: '',
     yinYang: '',
   },
