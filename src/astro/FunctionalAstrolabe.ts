@@ -38,7 +38,7 @@ const _getHoroscopeBySolarDate = (
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
   const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
     targetDate,
-    timeIndex || convertTimeIndex,
+    timeIndex ?? convertTimeIndex,
     {
       // 允许配置运限分割点
       year: getConfig().horoscopeDivide,

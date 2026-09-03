@@ -309,6 +309,15 @@ describe('Astrolabe', () => {
     expect(horoscope.daily).toHaveProperty('earthlyBranch', '午');
   });
 
+  test('horoscope() respects an explicit early-rat-hour index', () => {
+    const result = astro.bySolar('1991-3-7', 6, '女', true);
+    const inferredTime = result.horoscope('2025-3-26 3:12');
+    const earlyRatHour = result.horoscope('2025-3-26 3:12', 0);
+
+    expect(inferredTime.hourly.earthlyBranch).toBe('寅');
+    expect(earlyRatHour.hourly.earthlyBranch).toBe('子');
+  });
+
   test('decadalList() and yearlyList()', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true);
     const decadals = result.decadalList();
