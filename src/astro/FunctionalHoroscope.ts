@@ -1,5 +1,5 @@
 import { Horoscope, Scope } from '../data/types';
-import { Mutagen, MutagenKey, PalaceName, StarKey, StarName, kot } from '../i18n';
+import { Mutagen, MutagenKey, PalaceKey, PalaceName, StarKey, StarName, kot } from '../i18n';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
 import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { IFunctionalPalace } from './FunctionalPalace';
@@ -8,23 +8,13 @@ import { MUTAGEN } from '../data';
 import { serialize } from '../utils/toJSON';
 
 const _getHoroscopePalaceIndex = ($: IFunctionalHoroscope, scope: Scope, palaceName: PalaceName) => {
-  let palaceIndex = -1;
-
   if (scope === 'origin') {
-    $.astrolabe.palaces.some((p, idx) => {
-      if (p.name === palaceName) {
-        palaceIndex = idx;
-
-        return true;
-      }
-
-      return false;
-    });
-  } else {
-    palaceIndex = $[scope].palaceNames.indexOf(palaceName);
+    return $.astrolabe.palace(palaceName)?.index ?? -1;
   }
 
-  return palaceIndex;
+  const palaceKey = kot<PalaceKey>(palaceName);
+
+  return $[scope].palaceNames.findIndex((name) => kot<PalaceKey>(name) === palaceKey);
 };
 
 export interface IFunctionalHoroscope extends Horoscope {
@@ -148,23 +138,15 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
   };
 
   palace = (palaceName: PalaceName, scope: Scope) => {
-    if (scope === 'origin') {
-      return this.astrolabe.palace(palaceName);
-    }
+    const targetPalaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
 
-    const targetPalaceindex = this[scope].palaceNames.indexOf(palaceName);
-
-    return this.astrolabe.palace(targetPalaceindex);
+    return targetPalaceIndex < 0 ? undefined : this.astrolabe.palace(targetPalaceIndex);
   };
 
   surroundPalaces = (palaceName: PalaceName, scope: Scope) => {
-    if (scope === 'origin') {
-      return this.astrolabe.surroundedPalaces(palaceName);
-    }
+    const targetPalaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
 
-    const targetPalaceindex = this[scope].palaceNames.indexOf(palaceName);
-
-    return this.astrolabe.surroundedPalaces(targetPalaceindex);
+    return targetPalaceIndex < 0 ? undefined : this.astrolabe.surroundedPalaces(targetPalaceIndex);
   };
 
   hasHoroscopeStars = (palaceName: PalaceName, scope: Scope, horoscopeStar: StarName[]) => {
@@ -173,6 +155,11 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     }
 
     const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+
+    if (palaceIndex < 0) {
+      return false;
+    }
+
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[palaceIndex];
     const starKeys = stars.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
@@ -186,6 +173,11 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     }
 
     const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+
+    if (palaceIndex < 0) {
+      return false;
+    }
+
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[palaceIndex];
     const starKeys = stars.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
@@ -199,6 +191,11 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     }
 
     const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+
+    if (palaceIndex < 0) {
+      return false;
+    }
+
     const stars = mergeStars(this.decadal.stars, this.yearly.stars)[palaceIndex];
     const starKeys = stars.map((item) => kot<StarKey>(item.name));
     const horoscopeStarKeys = horoscopeStar.map((item) => kot<StarKey>(item));
@@ -212,6 +209,11 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     }
 
     const palaceIndex = _getHoroscopePalaceIndex(this, scope, palaceName);
+
+    if (palaceIndex < 0) {
+      return false;
+    }
+
     const majorStars = this.astrolabe.palace(palaceIndex)?.majorStars ?? [];
     const minorStars = this.astrolabe.palace(palaceIndex)?.minorStars ?? [];
     const stars = mergeStars([majorStars], [minorStars])[0].map((star) => kot<StarKey>(star.name));

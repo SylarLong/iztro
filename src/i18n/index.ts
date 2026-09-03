@@ -6,6 +6,7 @@ import transJaJP from './locales/ja-JP';
 import transEnUS from './locales/en-US';
 import transViVN from './locales/vi-VN';
 import { Language } from '../data/types';
+import { STAR_ALIASES } from './starAliases';
 
 const resources: { [key: Language]: { translation: { [key: string]: string } } } = {
   'en-US': {
@@ -66,6 +67,11 @@ export const t = <T>(str: string) => {
  */
 export const kot = <T>(value: string, k?: string) => {
   let res = value;
+  const aliasKey = STAR_ALIASES[value as keyof typeof STAR_ALIASES];
+
+  if (aliasKey) {
+    return aliasKey as T;
+  }
 
   for (const [, item] of Object.entries(resources)) {
     for (const [transKey, trans] of Object.entries(item.translation)) {

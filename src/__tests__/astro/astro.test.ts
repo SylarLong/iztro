@@ -335,6 +335,20 @@ describe('Astrolabe', () => {
     expect(forwardedDay.daily).toMatchObject({ heavenlyStem: '辛', earthlyBranch: '亥' });
   });
 
+  test('horoscope palace APIs accept names in a different language', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true, 'zh-CN');
+    const horoscope = result.horoscope('2023-8-19 3:12');
+
+    expect(horoscope.palace('soul', 'yearly')?.index).toBe(horoscope.palace('命宫', 'yearly')?.index);
+    expect(horoscope.surroundPalaces('soul', 'yearly')?.target.index).toBe(
+      horoscope.surroundPalaces('命宫', 'yearly')?.target.index,
+    );
+    expect(horoscope.hasHoroscopeStars('health', 'decadal', ['流陀', '流曲', '运昌'])).toBe(true);
+    expect(horoscope.notHaveHoroscopeStars('health', 'decadal', ['流喜', '流鸾', '流魁'])).toBe(true);
+    expect(horoscope.hasOneOfHoroscopeStars('health', 'decadal', ['流陀', '流曲', '运昌'])).toBe(true);
+    expect(horoscope.hasHoroscopeMutagen('siblings', 'decadal', '禄')).toBe(true);
+  });
+
   test('decadalList() and yearlyList()', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true);
     const decadals = result.decadalList();
