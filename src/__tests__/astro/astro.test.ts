@@ -1158,10 +1158,16 @@ describe('Astrolabe', () => {
       },
     });
 
-    const horo1 = astrolabe.horoscope('2023-8-19 3:12');
+    const beforeBirthday = astrolabe.horoscope('2023-8-31');
+    const onBirthday = astrolabe.horoscope('2023-9-1');
+    const afterBirthday = astrolabe.horoscope('2023-9-2');
+    const nextMonth = astrolabe.horoscope('2023-9-16');
 
-    expect(horo1.age.index).toEqual(10);
-    expect(horo1.age.nominalAge).toEqual(23);
+    expect(beforeBirthday.age.nominalAge).toEqual(23);
+    expect(onBirthday.age.nominalAge).toEqual(23);
+    expect(afterBirthday.age.index).toEqual(9);
+    expect(afterBirthday.age.nominalAge).toEqual(24);
+    expect(nextMonth.age.nominalAge).toEqual(24);
   });
 
   test('withOptions() with earth type', () => {

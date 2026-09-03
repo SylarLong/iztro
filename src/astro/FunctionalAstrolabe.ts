@@ -55,10 +55,8 @@ const _getHoroscopeBySolarDate = (
     // 比如 2022年九月初一 出生的人，在出生后虚岁为 1 岁
     // 但在 2023年九月初二 以后，虚岁则为 2 岁
     if (
-      (_date.lunarYear === _birthday.lunarYear &&
-        _date.lunarMonth === _birthday.lunarMonth &&
-        _date.lunarDay > _birthday.lunarDay) ||
-      _date.lunarMonth > _birthday.lunarMonth
+      _date.lunarMonth > _birthday.lunarMonth ||
+      (_date.lunarMonth === _birthday.lunarMonth && _date.lunarDay > _birthday.lunarDay)
     ) {
       nominalAge += 1;
     }
