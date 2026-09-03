@@ -36,9 +36,11 @@ const _getHoroscopeBySolarDate = (
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
+  const targetTimeIndex = timeIndex ?? convertTimeIndex;
+  const adjustedTargetTimeIndex = getConfig().dayDivide === 'current' && targetTimeIndex >= 12 ? 0 : targetTimeIndex;
   const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
     targetDate,
-    timeIndex ?? convertTimeIndex,
+    adjustedTargetTimeIndex,
     {
       // 允许配置运限分割点
       year: getConfig().horoscopeDivide,

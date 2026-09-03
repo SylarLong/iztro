@@ -12,7 +12,7 @@ import { astro } from '../../index';
 describe('Astrolabe', () => {
   afterEach(() => {
     setLanguage('zh-CN');
-    astro.config({ yearDivide: 'exact', ageDivide: 'normal', algorithm: 'default' });
+    astro.config({ yearDivide: 'exact', ageDivide: 'normal', dayDivide: 'forward', algorithm: 'default' });
   });
 
   test('toJSON()', () => {
@@ -316,6 +316,23 @@ describe('Astrolabe', () => {
 
     expect(inferredTime.hourly.earthlyBranch).toBe('寅');
     expect(earlyRatHour.hourly.earthlyBranch).toBe('子');
+  });
+
+  test('horoscope() respects the late-rat-hour day divider', () => {
+    const result = astro.bySolar('2000-8-16', 2, '女', true);
+
+    astro.config({ dayDivide: 'current' });
+    const inferredCurrentDay = result.horoscope('2025-6-10 23:30');
+    const explicitCurrentDay = result.horoscope('2025-6-10 23:30', 12);
+    const earlyRatHour = result.horoscope('2025-6-10 23:30', 0);
+
+    astro.config({ dayDivide: 'forward' });
+    const forwardedDay = result.horoscope('2025-6-10 23:30', 12);
+
+    expect(inferredCurrentDay.daily).toMatchObject({ heavenlyStem: '庚', earthlyBranch: '戌' });
+    expect(explicitCurrentDay.daily).toMatchObject({ heavenlyStem: '庚', earthlyBranch: '戌' });
+    expect(earlyRatHour.daily).toMatchObject({ heavenlyStem: '庚', earthlyBranch: '戌' });
+    expect(forwardedDay.daily).toMatchObject({ heavenlyStem: '辛', earthlyBranch: '亥' });
   });
 
   test('decadalList() and yearlyList()', () => {
