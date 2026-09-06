@@ -32,12 +32,14 @@
 
 ## iztro AI · 紫微与奇门模型
 
-除了开源排盘库，`iztro` 还提供两个托管的专业 AI 模型。它们会自动调用服务端术数工具，并通过 Chat API 或 Iztro Agents SDK 接入；你不需要自行维护排盘提示词或让通用模型猜测盘面。
+除了开源排盘库，`iztro` 还提供四个公开的托管专业 AI 模型。它们会自动调用服务端术数工具，并通过 Chat API 或 Iztro Agents SDK 接入；你不需要自行维护排盘提示词或让通用模型猜测盘面。
 
 | 模型 | 适合的问题 | 需要提供 |
 | --- | --- | --- |
 | **`iztro-ziwei-v3`** | 本命性格、人生格局、两人适配度，以及大限、流年、流月、流日等中长期趋势 | 出生日期、出生时间、性别和分析主题 |
 | **`iztro-qimen-v3`** | 一件当下具体事情的决断、发展、阻力与应期，例如合作、谈判、面试、上线、出行或关系中的下一步 | 事情背景、一个明确问题和问事时刻；**不需要出生信息** |
+| **`iztro-ziwei-v3-fast`** | 低延迟单人紫微分析；只开放快速紫微工具 `get_ziwei` | 出生日期、出生时间、性别和分析主题 |
+| **`iztro-qimen-v3-fast`** | 低延迟奇门决策与应期分析；只开放 `qigua`、`yingqi` | 事情背景、一个明确问题和问事时刻；**不需要出生信息** |
 
 ### `iztro-ziwei-v3`：命盘与长期趋势
 
@@ -52,10 +54,15 @@
 
 例如，一个清晰的奇门问题是：“我们已经谈过两次渠道合作，但分成和上线时间还没定。现在应该推进、继续谈，还是暂缓？如果可以推进，请给出最近的行动窗口和依据。”
 
-> [!NOTE]
-> NPM 包 `iztro` 本身仍是开源的**紫微斗数排盘库**；`iztro-qimen-v3` 是通过 API/Agents SDK 使用的托管 AI 模型，不是本地奇门排盘模块。
+### 快速模型
 
-两个模型都支持以下接入方式：
+- `iztro-ziwei-v3-fast` 只开放快速紫微工具 `get_ziwei`。
+- `iztro-qimen-v3-fast` 只开放 `qigua`、`yingqi`。
+
+> [!NOTE]
+> NPM 包 `iztro` 本身仍是开源的**紫微斗数排盘库**；上述 AI 模型通过 API/Agents SDK 使用，其中奇门能力不是本地奇门排盘模块。
+
+四个公开模型都支持以下接入方式：
 
 ### 1. iztro Chat API —— 调用我们的 HTTP API
 
@@ -112,12 +119,12 @@ JavaScript 和 Python 示例见 [`examples/chat-api`](./examples/chat-api)。完
 
 ### 2. iztro Agents SDK —— 构建你自己的 Agent
 
-在 `iztro-ziwei-v3` 或 `iztro-qimen-v3` 上构建你自己的 Agent，并加入自己的工具、MCP 服务器和人工确认。它是对 [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) 的轻量封装，提供 Python 与 TypeScript 两个版本：
+在任一公开 Iztro 托管模型上构建你自己的 Agent，并加入自己的工具、MCP 服务器和人工确认。它是对 [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) 的轻量封装，提供 Python 与 TypeScript 两个版本：
 
 - **Python** —— `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** —— `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
-两个 SDK 都提供紫微与奇门便捷工厂。Python 使用 `iztro_ziwei_agent(...)` / `iztro_qimen_agent(...)`，TypeScript 使用 `iztroZiweiAgent({...})` / `iztroQimenAgent({...})`。API 返回的公开计算名称见[模型指南](https://api-doc.iztro.com/sdk/qimen)。
+两个 SDK 都为四个公开模型提供便捷工厂，包括 `iztro_ziwei_fast_agent(...)` / `iztroZiweiFastAgent({...})` 和 `iztro_qimen_fast_agent(...)` / `iztroQimenFastAgent({...})`。API 返回的公开计算名称见[模型指南](https://api-doc.iztro.com/sdk/qimen)。
 
 ### 全栈演示
 

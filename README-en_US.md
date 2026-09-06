@@ -31,12 +31,14 @@
 
 ## iztro AI · Ziwei and Qimen models
 
-Beyond the open-source charting library, `iztro` provides two hosted specialist AI models. They call the server-side astrology tools automatically and are available through the Chat API or Iztro Agents SDK, so you do not have to maintain chart prompts or ask a general model to guess chart facts.
+Beyond the open-source charting library, `iztro` provides four public hosted specialist AI models. They call the server-side astrology tools automatically and are available through the Chat API or Iztro Agents SDK, so you do not have to maintain chart prompts or ask a general model to guess chart facts.
 
 | Model | Best for | Required input |
 | --- | --- | --- |
 | **`iztro-ziwei-v3`** | Natal personality, life pattern, compatibility, and longer-range decade, annual, monthly, or daily trends | Birth date, birth time, gender, and the topic to analyze |
 | **`iztro-qimen-v3`** | The decision, development, obstacles, and timing of one current matter, such as a partnership, negotiation, interview, launch, trip, or specific relationship step | The situation, one clear question, and the question time; **no birth details** |
+| **`iztro-ziwei-v3-fast`** | Lower-latency, single-person Ziwei analysis; exposes only the fast `get_ziwei` tool | Birth date, birth time, gender, and the topic to analyze |
+| **`iztro-qimen-v3-fast`** | Lower-latency Qimen decisions and timing; exposes only `qigua` and `yingqi` | The situation, one clear question, and the question time; **no birth details** |
 
 ### `iztro-ziwei-v3`: charts and longer-term trends
 
@@ -51,10 +53,15 @@ Beyond the open-source charting library, `iztro` provides two hosted specialist 
 
 A strong Qimen request is: “We have discussed a distribution partnership twice, but the revenue split and launch date are still open. Should I push now, continue negotiating, or pause? If it can move forward, give me the nearest action windows and evidence.”
 
-> [!NOTE]
-> The `iztro` NPM package remains an open-source **Zi Wei Dou Shu charting library**. `iztro-qimen-v3` is a hosted AI model accessed through the API or Agents SDK; it is not a local Qimen module in this package.
+### Fast models
 
-Both models are available through these integration paths:
+- `iztro-ziwei-v3-fast` exposes only the fast `get_ziwei` tool.
+- `iztro-qimen-v3-fast` exposes only `qigua` and `yingqi`.
+
+> [!NOTE]
+> The `iztro` NPM package remains an open-source **Zi Wei Dou Shu charting library**. The AI models above are accessed through the API or Agents SDK; their Qimen capability is not a local Qimen module in this package.
+
+All four public models are available through these integration paths:
 
 ### 1. iztro Chat API — call our HTTP API
 
@@ -111,12 +118,12 @@ See [`examples/chat-api`](./examples/chat-api) for JavaScript and Python example
 
 ### 2. iztro Agents SDK — build your own agent
 
-Build your own agent on `iztro-ziwei-v3` or `iztro-qimen-v3` with your own tools, MCP servers, and human-in-the-loop. It is a thin layer over the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), available for both Python and TypeScript:
+Build your own agent on any public hosted Iztro model with your own tools, MCP servers, and human-in-the-loop. It is a thin layer over the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), available for both Python and TypeScript:
 
 - **Python** — `pip install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-python](https://github.com/SylarLong/openai-iztro-agents-python)
 - **TypeScript / JavaScript** — `npm install openai-iztro-agents` · [github.com/SylarLong/openai-iztro-agents-js](https://github.com/SylarLong/openai-iztro-agents-js)
 
-Both SDKs include Ziwei and Qimen factories. Python uses `iztro_ziwei_agent(...)` / `iztro_qimen_agent(...)`; TypeScript uses `iztroZiweiAgent({...})` / `iztroQimenAgent({...})`. See the [Models guide](https://api-doc.iztro.com/sdk/qimen) for the public calculation names returned by the API.
+Both SDKs provide factories for all four public models, including `iztro_ziwei_fast_agent(...)` / `iztroZiweiFastAgent({...})` and `iztro_qimen_fast_agent(...)` / `iztroQimenFastAgent({...})`. See the [Models guide](https://api-doc.iztro.com/sdk/qimen) for the public calculation names returned by the API.
 
 ### Full-stack demos
 
