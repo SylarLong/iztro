@@ -37,8 +37,8 @@ Beyond the open-source charting library, `iztro` provides four public hosted spe
 | --- | --- | --- |
 | **`iztro-ziwei-v3`** | Natal personality, life pattern, compatibility, and longer-range decade, annual, monthly, or daily trends | Birth date, birth time, gender, and the topic to analyze |
 | **`iztro-qimen-v3`** | The decision, development, obstacles, and timing of one current matter, such as a partnership, negotiation, interview, launch, trip, or specific relationship step | The situation, one clear question, and the question time; **no birth details** |
-| **`iztro-ziwei-v3-fast`** | Focused, lower-latency single-person Ziwei analysis; the public response matches `iztro-ziwei-v3` | Birth date, birth time, gender, and the topic to analyze |
-| **`iztro-qimen-v3-fast`** | Focused, lower-latency Qimen decisions and timing; the public response matches `iztro-qimen-v3` | The situation, one clear question, and the question time; **no birth details** |
+| **`iztro-ziwei-v3-fast`** | Faster single-person Ziwei analysis with lower token usage and lower per-request cost; the public response matches `iztro-ziwei-v3` | Birth date, birth time, gender, and the topic to analyze |
+| **`iztro-qimen-v3-fast`** | Faster Qimen decisions and timing with lower token usage and lower per-request cost; the public response matches `iztro-qimen-v3` | The situation, one clear question, and the question time; **no birth details** |
 
 ### `iztro-ziwei-v3`: charts and longer-term trends
 
@@ -55,10 +55,10 @@ A strong Qimen request is: “We have discussed a distribution partnership twice
 
 ### Fast models
 
-- `iztro-ziwei-v3-fast` is the focused, lower-latency variant of `iztro-ziwei-v3`.
-- `iztro-qimen-v3-fast` is the focused, lower-latency variant of `iztro-qimen-v3`.
+- `iztro-ziwei-v3-fast` responds faster, uses fewer tokens, and costs less per request.
+- `iztro-qimen-v3-fast` responds faster, uses fewer tokens, and costs less per request.
 
-Both preserve the response shape and user-visible Iztro activity information of the corresponding v3 model; they do not introduce a second set of public names.
+Both preserve the response shape and user-visible information of the corresponding v3 model.
 
 > [!NOTE]
 > The `iztro` NPM package remains an open-source **Zi Wei Dou Shu charting library**. The AI models above are accessed through the API or Agents SDK; their Qimen capability is not a local Qimen module in this package.
