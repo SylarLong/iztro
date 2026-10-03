@@ -42,18 +42,20 @@ export const setLanguage = (language: Language) => {
   i18next.changeLanguage(language);
 };
 
+export const getLanguage = () => i18next.language as Language;
+
 /**
  * 输出国际化文本。
  *
  * @param str 待翻译的字符串
  * @returns 翻译后的字符串
  */
-export const t = <T>(str: string) => {
+export const t = <T>(str: string, options?: Record<string, string | number>) => {
   if (!str) {
     return '' as T;
   }
 
-  return i18next.t(str) as T;
+  return i18next.t(str, options) as T;
 };
 
 /**

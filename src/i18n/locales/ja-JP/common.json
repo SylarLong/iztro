@@ -1,4 +1,6 @@
 {
+  "lunarDate": "旧暦{{year}}年{{leapMonth}}{{month}}月{{day}}日",
+  "leapMonth": "閏",
   "decadal": "大限",
   "childhood": "子供",
   "yearly": "流年",

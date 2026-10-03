@@ -1,4 +1,6 @@
 {
+  "lunarDate": "Âm lịch ngày {{day}} tháng {{leapMonth}}{{month}} năm {{year}}",
+  "leapMonth": "nhuận ",
   "decadal": "Đại Hạn",
   "childhood": "đứa trẻ Hạn",
   "yearly": "Lưu Niên",

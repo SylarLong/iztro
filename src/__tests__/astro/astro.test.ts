@@ -464,11 +464,17 @@ describe('Astrolabe', () => {
     });
   });
 
+  test('bySolar() localized lunarDate', () => {
+    expect(astro.bySolar('2000-8-16', 2, 'female', true, 'en-US')).toHaveProperty('lunarDate', 'Lunar 2000-7-17');
+    expect(astro.bySolar('2000-8-16', 2, 'female', true, 'ja-JP')).toHaveProperty('lunarDate', '旧暦2000年7月17日');
+    expect(astro.bySolar('2023-4-7', 0, 'female', true, 'en-US')).toHaveProperty('lunarDate', 'Lunar 2023-leap-2-17');
+  });
+
   test('bySolar() Korean', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true, 'ko-KR');
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
-    expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
+    expect(result).toHaveProperty('lunarDate', '음력 2000년 7월 17일');
     expect(result).toHaveProperty('chineseDate', '경진 갑신 병오 경인');
     expect(result).toHaveProperty('time', '인시');
     expect(result).toHaveProperty('sign', '사자궁');
@@ -634,7 +640,7 @@ describe('Astrolabe', () => {
     const result = astro.bySolar('2000-8-16', 2, '女', true, 'vi-VN');
 
     expect(result).toHaveProperty('solarDate', '2000-8-16');
-    expect(result).toHaveProperty('lunarDate', '二〇〇〇年七月十七');
+    expect(result).toHaveProperty('lunarDate', 'Âm lịch ngày 17 tháng 7 năm 2000');
     expect(result).toHaveProperty('chineseDate', 'Canh Thìn - Giáp Thân - Bính Ngọ - Canh Dần');
     expect(result).toHaveProperty('time', 'Giờ dần');
     expect(result).toHaveProperty('sign', 'Cung Sư Tử');
