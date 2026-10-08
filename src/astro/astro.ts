@@ -1,4 +1,5 @@
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, getSign, getZodiac, lunar2solar, solar2lunar } from 'lunar-lite';
+import type { LunarDate } from 'lunar-lite/lib/types';
 import { CHINESE_TIME, EARTHLY_BRANCHES, HEAVENLY_STEMS, TIME_RANGE, earthlyBranches } from '../data';
 import { Config, Language, Option, Plugin } from '../data/types';
 import {
@@ -6,6 +7,7 @@ import {
   EarthlyBranchKey,
   EarthlyBranchName,
   GenderName,
+  getLanguage,
   HeavenlyStemKey,
   HeavenlyStemName,
   StarKey,
@@ -32,6 +34,20 @@ import FunctionalStar from '../star/FunctionalStar';
 const _plugins = [] as Plugin[];
 const _mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>> = {};
 const _brightness: Partial<Record<StarKey, BrightnessKey[]>> = {};
+
+const formatLunarDate = (lunarDate: LunarDate): string => {
+  const language = getLanguage();
+  if (language === 'zh-CN' || language === 'zh-TW') {
+    return lunarDate.toString(true);
+  }
+
+  return t<string>('lunarDate', {
+    year: lunarDate.lunarYear,
+    month: lunarDate.lunarMonth,
+    day: lunarDate.lunarDay,
+    leapMonth: lunarDate.isLeap ? t<string>('leapMonth') : '',
+  });
+};
 
 /**
  * 年分界点参数，默认为立春分界。
@@ -266,7 +282,7 @@ export function bySolar<T extends FunctionalAstrolabe>(
   const result = new FunctionalAstrolabe({
     gender: t(kot<GenderName>(gender)),
     solarDate,
-    lunarDate: lunarDate.toString(true),
+    lunarDate: formatLunarDate(lunarDate),
     chineseDate: translateChineseDate(chineseDate),
     rawDates: { lunarDate, chineseDate },
     time: t(CHINESE_TIME[timeIndex]),

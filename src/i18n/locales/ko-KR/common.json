@@ -1,4 +1,6 @@
 {
+  "lunarDate": "음력 {{year}}년 {{leapMonth}}{{month}}월 {{day}}일",
+  "leapMonth": "윤",
   "decadal": "대한",
   "childhood": "어린",
   "yearly": "유년",

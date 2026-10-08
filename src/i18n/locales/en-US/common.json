@@ -1,4 +1,6 @@
 {
+  "lunarDate": "Lunar {{year}}-{{leapMonth}}{{month}}-{{day}}",
+  "leapMonth": "leap-",
   "decadal": "decadal",
   "yearly": "yearly",
   "monthly": "monthly",
