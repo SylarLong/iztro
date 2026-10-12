@@ -348,3 +348,24 @@ Copyright &copy; 2023 All Contributors
 
 > [!NOTE]
 > 请合理使用本开源代码，禁止用于非法目的。
+
+### 排盘配置与输入校验
+
+`astro.config()` 设置后续排盘的默认配置；`astro.withOptions({ config })` 的配置仅对当前星盘生效。已经生成的星盘、运限和四化分析会保留生成时的配置与语言，后续调用不会改变它们。
+
+```ts
+const chart = astro.withOptions({
+  dateStr: '2000-8-16',
+  timeIndex: 3,
+  gender: '男',
+  config: { ageDivide: 'birthday' },
+});
+// type 可省略，默认 solar；language 可省略，默认 zh-CN。
+astro.config({ algorithm: 'zhongzhou' }); // 仅影响之后生成的星盘
+chart.horoscope('2026-3-1'); // 仍然使用该星盘的生日分界配置
+astro.resetConfig(); // 恢复默认值并清除自定义四化、亮度表
+```
+
+`astro.getConfig()` 返回独立副本，修改该副本不会影响库。排盘与日期辅助方法的语言参数仅作用于当前调用。日期年份范围为 1～9999，时辰必须为 0～12 的整数；不存在的日期、未知性别或语言会抛出错误。农历日期会按实际月份天数校验；非闰月传入 `isLeapMonth: true` 时仍沿用忽略该标记的行为。日期支持 `YYYY-M-D`、斜线或点号分隔以及可选的 ` HH:mm:ss`；`horoscope()` 也支持有效的 `Date` 对象。历史阳历日期沿用底层历法的儒略历/格里历切换规则。
+
+迁移已有调用时，如果原先通过 `withOptions({ config })` 修改全局默认值，请改为显式调用 `astro.config()`。

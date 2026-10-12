@@ -279,3 +279,11 @@ You can generate an astrolabe by using the returned data. Of course it's just an
 Copyright &copy; 2023 All Contributors.
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_large)
+
+### Chart configuration and input validation
+
+`astro.config()` changes defaults for future charts. `astro.withOptions({ config })` overrides only the current chart. Existing charts retain their configuration and language for horoscope queries and mutagen analysis. To migrate code that used `withOptions({ config })` to change global defaults, call `astro.config()` explicitly.
+
+`Option.type` is optional and defaults to `solar`. Chart and date helper calls default to `zh-CN`; passing a language does not change the global language. `astro.getConfig()` returns a deep copy. `astro.resetConfig()` restores factory defaults and clears custom mutagen and brightness tables without changing existing charts.
+
+Dates accept years 1–9999 and must exist in the underlying calendar; historical solar dates follow its Julian/Gregorian transition. Time indices must be integers from 0 to 12. Invalid dates, genders, languages, and time indices throw errors. Lunar dates are validated against the actual month length. A leap-month flag is still ignored when the requested month is not a leap month. Supported date formats use hyphens, slashes, or dots, with optional ` HH:mm:ss`; `horoscope()` also accepts valid `Date` objects.
