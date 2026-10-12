@@ -7,6 +7,7 @@ import transEnUS from './locales/en-US';
 import transViVN from './locales/vi-VN';
 import { Language } from '../data/types';
 import { STAR_ALIASES } from './starAliases';
+import { LANGUAGES } from '../data/constants';
 
 const resources: { [key: Language]: { translation: { [key: string]: string } } } = {
   'en-US': {
@@ -39,10 +40,36 @@ i18next.init({ lng: 'zh-CN', resources });
  * @param language 需要设置的语言【默认为zh-CN】
  */
 export const setLanguage = (language: Language) => {
+  if (!LANGUAGES.includes(language)) throw new Error('invalid language.');
   i18next.changeLanguage(language);
 };
 
-export const getLanguage = () => i18next.language as Language;
+let activeLanguage: Language | undefined;
+/**
+ * 获取当前同步计算或全局设置使用的语言。
+ *
+ * @version 2.6.2
+ */
+export const getLanguage = (): Language => activeLanguage ?? i18next.language;
+
+/**
+ * 同步计算期间使用指定语言，不改变其他调用的语言。
+ *
+ * @internal
+ * @version 2.6.2
+ * @param language 当前计算使用的语言
+ * @param calculate 同步计算方法
+ */
+export const withLanguage = <T>(language: Language, calculate: () => T): T => {
+  if (!LANGUAGES.includes(language)) throw new Error('invalid language.');
+  const previous = activeLanguage;
+  activeLanguage = language;
+  try {
+    return calculate();
+  } finally {
+    activeLanguage = previous;
+  }
+};
 
 /**
  * 输出国际化文本。
@@ -55,7 +82,7 @@ export const t = <T>(str: string, options?: Record<string, string | number>) => 
     return '' as T;
   }
 
-  return i18next.t(str, options) as T;
+  return i18next.t(str, { ...options, lng: getLanguage() }) as T;
 };
 
 /**

@@ -1,3 +1,4 @@
+import { registerContextClass } from './context';
 import { Horoscope, Scope } from '../data/types';
 import { Mutagen, MutagenKey, PalaceKey, PalaceName, StarKey, StarName, kot } from '../i18n';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
@@ -222,3 +223,5 @@ export default class FunctionalHoroscope implements IFunctionalHoroscope {
     return stars.includes(kot<StarKey>(this[scope].mutagen[mutagenIndex]));
   };
 }
+
+registerContextClass(FunctionalHoroscope.prototype);

@@ -1,3 +1,4 @@
+import { registerContextClass } from './context';
 import { FlankingPalaces } from '../data/types';
 import { Mutagen, StarName } from '../i18n';
 import { serialize } from '../utils/toJSON';
@@ -85,7 +86,8 @@ export class FunctionalFlankingPalaces implements IFunctinalFlankingPalaces {
   have = (stars: StarName[]): boolean => isFlankedByStars(this, stars);
   notHave = (stars: StarName[]): boolean => notFlankedByStars(this, stars);
   haveOneOf = (stars: StarName[]): boolean => isFlankedByOneOfStars(this, stars);
-  haveMutagen = (mutagen: Mutagen): boolean =>
-    this.previous.hasMutagen(mutagen) || this.next.hasMutagen(mutagen);
+  haveMutagen = (mutagen: Mutagen): boolean => this.previous.hasMutagen(mutagen) || this.next.hasMutagen(mutagen);
   notHaveMutagen = (mutagen: Mutagen): boolean => !this.haveMutagen(mutagen);
 }
+
+registerContextClass(FunctionalFlankingPalaces.prototype);

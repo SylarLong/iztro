@@ -1,3 +1,4 @@
+import { registerContextClass } from './context';
 import { Palace } from '../data/types';
 import { Mutagen, PalaceName, StarName } from '../i18n';
 import { IFunctionalAstrolabe } from './FunctionalAstrolabe';
@@ -343,3 +344,5 @@ export default class FunctionalPalace implements IFunctionalPalace {
     return stars.map((star) => astrolabe.star(star).palace());
   };
 }
+
+registerContextClass(FunctionalPalace.prototype);

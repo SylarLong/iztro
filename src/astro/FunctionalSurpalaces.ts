@@ -1,3 +1,4 @@
+import { registerContextClass } from './context';
 import { SurroundedPalaces } from '../data/types';
 import { Mutagen, StarName } from '../i18n';
 import { isSurroundedByOneOfStars, isSurroundedByStars, notSurroundedByStars } from './analyzer';
@@ -87,3 +88,5 @@ export class FunctionalSurpalaces implements IFunctionalSurpalaces {
     this.career.hasMutagen(mutagen);
   notHaveMutagen = (mutagen: Mutagen) => !this.haveMutagen(mutagen);
 }
+
+registerContextClass(FunctionalSurpalaces.prototype);

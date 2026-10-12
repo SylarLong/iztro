@@ -4,6 +4,8 @@ import { FiveElementsClass } from '../../data';
 import { t } from '../../i18n';
 
 describe('astro/palace', () => {
+  beforeEach(() => astro.resetConfig());
+  afterEach(() => astro.resetConfig());
   test('getSoulAndBody()', () => {
     astro.config({ yearDivide: 'exact' });
     const data = [

@@ -14,9 +14,13 @@ import { astro, star } from '../../index';
 import { EarthlyBranchName, FiveElementsClassName, setLanguage } from '../../i18n';
 
 describe('star/index', () => {
+  beforeEach(() => {
+    setLanguage('zh-CN');
+    astro.resetConfig();
+  });
   afterEach(() => {
     setLanguage('zh-CN');
-    astro.config({ algorithm: 'default' });
+    astro.resetConfig();
   });
 
   test('getStartIndex()', () => {

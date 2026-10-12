@@ -235,15 +235,15 @@ export type Config = {
  */
 export type Option = {
   /** 日期类型。
-   * - 阳历：'solar'
+   * - 阳历：'solar'（默认）
    * - 阴历：'lunar'
    */
-  type: 'solar' | 'lunar';
-  /** 阳历日期，格式为YYYY-MM-DD */
+  type?: 'solar' | 'lunar';
+  /** 日期字符串，按 type 使用阳历或农历，格式为 YYYY-MM-DD */
   dateStr: string;
   /** 时辰索引。0为早子时，1为丑时，以此类推，12为晚子时 */
   timeIndex: number;
-  /** 性别。支持多语言输入，比如可以输入 `男` 或 `女`，也可以输入 `male` 或 `femal` */
+  /** 性别。支持多语言输入，比如可以输入 `男` 或 `女`，也可以输入 `male` 或 `female` */
   gender: GenderName;
   /** 是否为闰月。仅阴历类型是可用，当月没有闰月时不生效。 */
   isLeapMonth?: boolean;
@@ -251,7 +251,7 @@ export type Option = {
   fixLeap?: boolean;
   /** 输出语言。支持 'en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW', 'vi-VN' */
   language?: Language;
-  /** 配置项。 */
+  /** 当前星盘的配置覆盖，不修改全局默认配置。 */
   config?: Config;
   /**
    * 星盘类型（中州派特有）。默认为天盘。
@@ -267,7 +267,7 @@ export type Option = {
  * 五行局起始干支主要用于中州派的地盘、人盘排法。
  */
 export type AstrolabeParam = {
-  /** 阳历日期，格式为YYYY-MM-DD */
+  /** 阳历日期，格式为 YYYY-MM-DD */
   solarDate: string;
   /** 时辰索引【0～12】，0为早子时，12为晚子时 */
   timeIndex: number;

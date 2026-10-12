@@ -1,3 +1,4 @@
+import { registerContextClass } from '../astro/context';
 import { IFunctionalAstrolabe } from '../astro/FunctionalAstrolabe';
 import { IFunctionalPalace } from '../astro/FunctionalPalace';
 import { IFunctionalSurpalaces } from '../astro/FunctionalSurpalaces';
@@ -146,3 +147,5 @@ export default class FunctionalStar implements IFunctionalStar {
     return !!this.brightness && kot<BrightnessKey>(brightness) === kot<BrightnessKey>(this.brightness);
   };
 }
+
+registerContextClass(FunctionalStar.prototype);

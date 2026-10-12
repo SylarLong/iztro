@@ -1,3 +1,4 @@
+import { registerContextClass } from './context';
 import dayjs from 'dayjs';
 import { getHeavenlyStemAndEarthlyBranchBySolarDate, lunar2solar, normalizeDateStr, solar2lunar } from 'lunar-lite';
 import { LunarYear } from 'lunar-typescript';
@@ -13,7 +14,8 @@ import { IFunctionalSurpalaces } from './FunctionalSurpalaces';
 import { IFunctinalFlankingPalaces } from './FunctionalFlankingPalaces';
 import { getPalaceNames } from './palace';
 import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope';
-import { getConfig } from './astro';
+import { getConfig } from './config';
+import { validateDate, validateTimeIndex } from '../utils/validation';
 import { serialize } from '../utils/toJSON';
 
 /**
@@ -33,6 +35,8 @@ const _getHoroscopeBySolarDate = (
   targetDate: string | Date = new Date(),
   timeIndex?: number,
 ): IFunctionalHoroscope => {
+  validateDate(targetDate);
+  if (timeIndex !== undefined) validateTimeIndex(timeIndex);
   const _birthday = solar2lunar($.solarDate);
   const _date = solar2lunar(targetDate);
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
@@ -243,12 +247,16 @@ export interface IFunctionalAstrolabe extends Astrolabe {
   /**
    * 获取按起运先后排列的大限列表。
    *
+   * @version 2.6.0
+   *
    * @returns 大限数据列表，第 0 项为第一个大限
    */
   decadalList: () => DecadalHoroscope[];
 
   /**
    * 获取指定大限内的全部流年。
+   *
+   * @version 2.6.0
    *
    * @param indexOrName 大限序号（0 为第一个大限）或者本命宫位名称
    * @returns 该大限十个虚岁对应的流年数据
@@ -257,6 +265,8 @@ export interface IFunctionalAstrolabe extends Astrolabe {
 
   /**
    * 获取指定流年内的全部流月。
+   *
+   * @version 2.6.0
    *
    * @param year 流年年份，可直接传入 `yearlyList()` 返回项的 `year`
    * @param fixLeap 是否将闰月前后半月分开计算，默认为 `true`
@@ -476,7 +486,7 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   };
 
   monthlyList = (year: number, fixLeap: boolean = true): MonthlyHoroscope[] => {
-    if (!Number.isInteger(year)) {
+    if (!Number.isInteger(year) || year < 1 || year > 9999) {
       throw new Error('invalid year.');
     }
 
@@ -572,3 +582,5 @@ export default class FunctionalAstrolabe implements IFunctionalAstrolabe {
   notSurrounded = (indexOrName: number | PalaceName, stars: StarName[]): boolean =>
     this.surroundedPalaces(indexOrName).notHave(stars);
 }
+
+registerContextClass(FunctionalAstrolabe.prototype);
