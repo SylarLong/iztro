@@ -13,9 +13,9 @@ const _getHoroscopePalaceIndex = ($: IFunctionalHoroscope, scope: Scope, palaceN
     return $.astrolabe.palace(palaceName)?.index ?? -1;
   }
 
-  const palaceKey = kot<PalaceKey>(palaceName);
+  const palaceKey = kot<PalaceKey>(palaceName, 'Palace');
 
-  return $[scope].palaceNames.findIndex((name) => kot<PalaceKey>(name) === palaceKey);
+  return $[scope].palaceNames.findIndex((name) => kot<PalaceKey>(name, 'Palace') === palaceKey);
 };
 
 export interface IFunctionalHoroscope extends Horoscope {

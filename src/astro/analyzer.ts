@@ -157,16 +157,18 @@ export const getPalace = ($: IFunctionalAstrolabe, indexOrName: number | PalaceN
 
     palace = $.palaces[indexOrName];
   } else {
+    // 宫位与星曜的译名可能相同，例如韩语「복덕」同时表示福德宫和天德星。
+    const palaceKey = kot<PalaceKey>(indexOrName, 'Palace');
     palace = $.palaces.find((item) => {
-      if (kot<PalaceKey>(indexOrName) === 'originalPalace' && item.isOriginalPalace) {
+      if (palaceKey === 'originalPalace' && item.isOriginalPalace) {
         return item;
       }
 
-      if (kot<PalaceKey>(indexOrName) === 'bodyPalace' && item.isBodyPalace) {
+      if (palaceKey === 'bodyPalace' && item.isBodyPalace) {
         return item;
       }
 
-      if (kot<PalaceName>(item.name) === kot<PalaceName>(indexOrName)) {
+      if (kot<PalaceKey>(item.name, 'Palace') === palaceKey) {
         return item;
       }
     });
