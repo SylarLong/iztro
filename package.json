@@ -10,11 +10,12 @@
     "clean": "node -e \"require('node:fs').rmSync('lib', { recursive: true, force: true })\"",
     "build": "yarn clean && tsc",
     "build:umd": "webpack",
+    "verify:umd": "yarn build && node scripts/verify-umd.cjs",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
     "test": "jest --config jestconfig.json --coverage",
     "prepare": "yarn build",
-    "prepublishOnly": "npm test && yarn lint && yarn build:umd",
+    "prepublishOnly": "npm test && yarn lint && yarn build:umd && yarn verify:umd",
     "preversion": "yarn lint",
     "version": "yarn format && git add -A src",
     "postversion": "git push && git push --tags"
@@ -73,7 +74,7 @@
     "dayjs": "^1.11.10",
     "i18next": "^23.5.1",
     "lunar-lite": "^0.2.8",
-    "lunar-typescript": "^1.7.8"
+    "lunar-typescript": "^1.8.6"
   },
   "resolutions": {
     "eslint/ajv": "6.14.0",

@@ -3,7 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { version } = require('./package.json');
 
 module.exports = {
-  mode: 'none',
+  mode: 'production',
   devtool: 'source-map', // 输出sourcemap
   entry: {
     [`iztro-v${version}.min`]: './src/index.ts',
@@ -45,12 +45,18 @@ module.exports = {
   }, // 设置哪些文件类型可以作为模块被引用
   resolve: {
     extensions: ['.ts', '.js'],
+    // import 和 lunar-lite 内部的 require 使用同一个入口，避免 CJS/ESM 重复打包。
+    alias: {
+      'lunar-typescript$': require.resolve('lunar-typescript'),
+    },
   },
   optimization: {
     minimize: true,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
+          // 保留公共方法和 JSON 字段名，兼容插件及现有调用方。
+          mangle: { properties: false },
           format: {
             comments: false, // 删除所有注释
           },

@@ -41,6 +41,9 @@ jobs:
       - name: Build with Webpack
         run: yarn build:umd
 
+      - name: Verify UMD compatibility and dependency deduplication
+        run: yarn verify:umd
+
       - name: Extract release notes from changelog
         shell: bash
         run: |
