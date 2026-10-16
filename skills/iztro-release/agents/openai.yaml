@@ -1,0 +1,3 @@
+interface:
+  display_name: "发布 iztro 版本"
+  short_description: "检查仓库同步、测试与版本，通过标签发布并验收 GitHub 和 npm"

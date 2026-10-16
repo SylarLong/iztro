@@ -7,12 +7,17 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag, for example v2.6.1
+        description: Existing release tag, for example v2.6.3
         required: true
         type: string
 
 permissions:
   contents: write
+  id-token: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -29,14 +34,30 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: yarn
+          registry-url: https://registry.npmjs.org
+
+      # npm Trusted Publishing requires npm >=11.5.1 and Node >=22.14.0.
+      # npm package settings: SylarLong / iztro / Release.yaml; allow npm publish.
+      - name: Set up npm for trusted publishing
+        run: npm install --global npm@11
+
+      - name: Validate release tag and package version
+        id: version
+        run: node scripts/check-release.cjs validate
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Test release guards
+        run: yarn test:release
+
       - name: Run tests
         run: yarn test --runInBand
+
+      - name: Lint
+        run: yarn lint
 
       - name: Build with Webpack
         run: yarn build:umd
@@ -45,49 +66,45 @@ jobs:
         run: yarn verify:umd
 
       - name: Extract release notes from changelog
-        shell: bash
-        run: |
-          awk -v version="${RELEASE_TAG}" '
-            $0 == "## " version {
-              found = 1
-              next
-            }
-
-            found && /^## / {
-              exit
-            }
-
-            found {
-              print
-            }
-
-            END {
-              if (!found) {
-                exit 1
-              }
-            }
-          ' CHANGELOG.md > release-notes.md
-
-          if [[ ! -s release-notes.md ]]; then
-            echo "CHANGELOG.md does not contain release notes for ${RELEASE_TAG}"
-            exit 1
-          fi
+        run: node scripts/check-release.cjs notes
 
       - name: Package UMD files
         run: tar -czf iztro-min-js.tar.gz dist/
 
+      - name: Check whether this version is already on npm
+        id: npm
+        run: node scripts/check-release.cjs registry
+
+      - name: Inspect npm package contents
+        if: steps.npm.outputs.published == 'false'
+        run: npm pack --dry-run --ignore-scripts
+
+      # Tests, lint, TypeScript and UMD verification have already run above.
+      # Avoid repeating prepublishOnly/prepare during the upload.
+      - name: Publish to npm using OIDC
+        if: steps.npm.outputs.published == 'false'
+        env:
+          NPM_DIST_TAG: ${{ steps.version.outputs.npm_tag }}
+        run: npm publish --access public --tag "$NPM_DIST_TAG" --registry https://registry.npmjs.org --ignore-scripts
+
       - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
+          NPM_DIST_TAG: ${{ steps.version.outputs.npm_tag }}
         run: |
           if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
             gh release upload "${RELEASE_TAG}" \
               iztro-min-js.tar.gz \
               --clobber
           else
+            release_options=()
+            if [[ "$NPM_DIST_TAG" != "latest" ]]; then
+              release_options+=(--prerelease)
+            fi
             gh release create "${RELEASE_TAG}" \
               iztro-min-js.tar.gz \
               --verify-tag \
               --title "${RELEASE_TAG}" \
-              --notes-file release-notes.md
+              --notes-file release-notes.md \
+              "${release_options[@]}"
           fi
