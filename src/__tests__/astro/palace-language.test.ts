@@ -55,10 +55,24 @@ describe('宫位和星曜同名时的语言查询', () => {
     expect(korean.palace('명궁')?.index).toBe(chinese.palace('命宫')?.index);
   });
 
-  test('宫位消歧不改变天德星的名称和反查', () => {
+  test('天德星与福德宫使用各自正确的韩语名称', () => {
     const chart = astro.withOptions({ ...birth, config, language: 'ko-KR' });
-    expect(chart.star('天德').name).toBe('복덕');
-    expect(kot('복덕')).toBe('tiande');
+    expect(chart.star('天德').name).toBe('천덕');
+    expect(chart.star('천덕').name).toBe('천덕');
+    expect(kot('천덕')).toBe('tiande');
+    expect(kot('복덕')).toBe('spiritPalace');
     expect(chart.palace('福德')?.name).toBe('복덕');
+  });
+
+  test('日语新字形宫名支持查询和反查', () => {
+    const chart = astro.withOptions({ ...birth, config, language: 'ja-JP' });
+    for (const [name, key] of [
+      ['奴僕', 'friendsPalace'],
+      ['官禄', 'careerPalace'],
+      ['福徳', 'spiritPalace'],
+    ] as const) {
+      expect(kot(name, 'Palace')).toBe(key);
+      expect(chart.palace(name)?.name).toBe(name);
+    }
   });
 });

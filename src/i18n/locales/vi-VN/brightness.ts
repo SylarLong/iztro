@@ -5,5 +5,5 @@ export default {
   li: 'Lợi',
   ping: 'Bình',
   bu: 'Bất',
-  xian: 'Hạn',
+  xian: 'Hãm',
 } as const;

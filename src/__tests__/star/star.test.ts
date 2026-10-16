@@ -196,7 +196,7 @@ describe('star/index', () => {
       [{ name: 'Vũ Khúc', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: '' }],
       [{ name: 'Thái Dương', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: '' }],
       [{ name: 'Phá Quân', type: 'major', brightness: 'Miếu', scope: 'origin', mutagen: 'Lộc' }],
-      [{ name: 'Thiên Cơ', type: 'major', brightness: 'Hạn', scope: 'origin', mutagen: '' }],
+      [{ name: 'Thiên Cơ', type: 'major', brightness: 'Hãm', scope: 'origin', mutagen: '' }],
       [
         { name: 'Tử Vi', type: 'major', brightness: 'Vượng', scope: 'origin', mutagen: '' },
         { name: 'Thiên Phủ', type: 'major', brightness: 'Đắc', scope: 'origin', mutagen: '' },
@@ -279,7 +279,7 @@ describe('star/index', () => {
 
     expect(getchangsheng12({ solarDate: '2023-8-15', timeIndex: 0, gender: '女', fixLeap: true })).toStrictEqual([
       'Trường Sinh',
-      'Mục Dục',
+      'Mộc Dục',
       'Quan Đới',
       'Lâm Quan',
       'Đế Vượng',

@@ -5,5 +5,5 @@ export default {
   li: '利',
   ping: '平',
   bu: '不',
-  xian: '陷',
+  xian: '陥',
 } as const;

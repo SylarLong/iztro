@@ -7,10 +7,10 @@ export default {
   wealthPalace: '財帛',
   healthPalace: '疾厄',
   surfacePalace: '遷移',
-  friendsPalace: '僕役',
-  careerPalace: '官祿',
+  friendsPalace: '奴僕',
+  careerPalace: '官禄',
   propertyPalace: '田宅',
-  spiritPalace: '福德',
+  spiritPalace: '福徳',
   parentsPalace: '父母',
   originalPalace: '来因',
 } as const;
