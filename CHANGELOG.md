@@ -7,6 +7,12 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## 未发布
+
+- 🧹 琐事（Chore）
+
+  - Codecov 工作流改用 Node.js 24，与 Release 保持一致，修复 Node.js 18 不满足 `serialize-javascript@7.0.5` 引擎要求而导致依赖安装失败的问题。
+
 ## v2.6.3（2026.10.16 发布）
 
 - ✨ 改进（enhancement）
