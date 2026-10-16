@@ -12,6 +12,7 @@
 - 🧹 琐事（Chore）
 
   - Codecov 工作流改用 Node.js 24，与 Release 保持一致，修复 Node.js 18 不满足 `serialize-javascript@7.0.5` 引擎要求而导致依赖安装失败的问题。
+  - 发布技能补充 CI Node 版本一致性检查、npm Trusted Publisher 认证失败恢复，以及注册表缓存延迟时的直接查询和产物一致性验收方法。
 
 ## v2.6.3（2026.10.16 发布）
 

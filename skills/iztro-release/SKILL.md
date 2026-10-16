@@ -23,6 +23,8 @@ description: 在 astro（SylarLong/iztro）仓库中执行版本发布。当用�
 
 ## 3. 本地验证
 
+先比较 Codecov、Release 等安装同一根依赖的 CI 与本地验证环境的 Node 主版本，并核对锁定依赖的 `engines.node`。目前统一为 Node 24；不要只检查 Release。发现安装引擎错误时，按 [发布排障：CI Node 版本](references/release-recovery.md#ci-node-版本一致性) 修复并确认远端 CI 成功，不能用 `--ignore-engines` 绕过。
+
 使用与 Release workflow 相同的 Node 主版本及 Yarn Classic；依赖用 `yarn install --frozen-lockfile`，不得重写锁文件来绕过失败。依次完成：
 
 ```sh
@@ -44,6 +46,7 @@ npm pack --dry-run --ignore-scripts
 - 候选已经发布时，告知实际已发布版本，请用户确认继续并输入新版本号；不得自行补丁递增、覆盖 npm 包或跳过此询问。获得回复后，校验新版本并重新查询，直到确认可用。
 - 稳定版默认应高于当前 npm `latest`，并最终使用 `latest`。降级需用户明确要求。预发布仅在用户明确要求时使用，按现有 workflow 发布到 `next`，验收 `next` 而非 `latest`。
 - 检查候选 `v版本号` 的本地标签、远端标签和 GitHub Release。已有标签或 Release 且 npm 未发布，属于部分发布：报告状态，转失败恢复，不覆盖标签或悄悄使用其他提交。
+- 用户明确要求恢复同一版本发布时，先走“失败恢复”核对已完成步骤；npm 已存在本次版本属于恢复状态，不套用新发布的换版本规则。
 
 ## 5. 整理版本及 CHANGELOG
 
@@ -76,12 +79,13 @@ npm pack --dry-run --ignore-scripts
 
 1. 本次 Release workflow 成功，远端标签指向预期提交，GitHub Release 为非草稿，标题等于标签，说明与本次日志一致。
 2. Release assets 含非空 `iztro-min-js.tar.gz`；下载到临时目录验证压缩包可读取，包含 `dist/iztro.min.js` 和与目标版本一致的 `dist/iztro-v版本号.min.js`，并与该提交的构建输出核对（必要时隔离重建），不要向工作区解包覆盖。
-3. 官方 registry 可查询 `iztro@版本号`；稳定版 `dist-tags.latest` 等于目标，预发布验收 `dist-tags.next`。短暂传播延迟可有界重试，约两分钟后仍不一致即报告未完成。给出 npm 包页面链接，网页缓存延迟时以 registry 实际结果说明。
+3. 官方 registry 可查询 `iztro@版本号`；稳定版 `dist-tags.latest` 等于目标，预发布验收 `dist-tags.next`。CLI 查询与上传日志矛盾时，按 [注册表缓存延迟](references/release-recovery.md#注册表缓存延迟) 直接查询精确版本及 dist-tags 接口，并核对包完整性与发布提交。短暂传播延迟可有界重试，约两分钟后仍无法确认即报告验收未完成。给出 npm 包页面链接，网页缓存延迟时以 registry 实际结果说明。
 
 报告版本、提交哈希、标签、GitHub Release 链接、workflow 链接、资产及 npm 验收结果；部分失败时明确已成功与未成功步骤。
 
 ## 失败恢复
 
+- npm 上传出现 E404、E401、ENEEDAUTH 或 E403 时，读取失败步骤的实际响应，按 [npm 认证恢复](references/release-recovery.md#npm-认证失败后的恢复) 检查 Trusted Publisher；不能把上传权限错误当作版本不存在。配置修复后重跑原任务，不改标签或重新递增版本。
 - npm 版本不可覆盖。已发布 npm 但 GitHub Release/资产失败时修复失败原因后重新运行同一标签的 workflow，由重复发布检查跳过 npm 并补齐 Release；无需另起版本。
 - 已有标签且与预期提交一致时，可在明确属于本次恢复的情境下重跑该标签 workflow。若用户本次只要求新发布但发现来源不明的部分状态，先确认恢复范围。
 - 标签提交有误时停止，报告实际指向，不删除或强制移动标签。需变更已打标签代码时通常使用用户确认的新版本。
