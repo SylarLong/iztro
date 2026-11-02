@@ -12,6 +12,7 @@ import {
   getZuoYouIndex,
 } from './location';
 import { getConfig } from '../astro';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 安14辅星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -22,18 +23,19 @@ import { getConfig } from '../astro';
  * @returns 14辅星
  */
 export const getMinorStar = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
+  const { solarDate, timeIndex: tIndex } = normalizeDayBoundary(solarDateStr, timeIndex);
   const stars = initStars();
-  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDateStr, timeIndex, {
+  const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
     year: getConfig().yearDivide,
   });
-  const monthIndex = fixLunarMonthIndex(solarDateStr, timeIndex, fixLeap);
+  const monthIndex = fixLunarMonthIndex(solarDate, tIndex, fixLeap);
 
   // 此处获取到的是索引，下标是从0开始的，所以需要加1
   const { zuoIndex, youIndex } = getZuoYouIndex(monthIndex + 1);
-  const { changIndex, quIndex } = getChangQuIndex(timeIndex);
+  const { changIndex, quIndex } = getChangQuIndex(tIndex);
   const { kuiIndex, yueIndex } = getKuiYueIndex(yearly[0]);
-  const { huoIndex, lingIndex } = getHuoLingIndex(yearly[1], timeIndex);
-  const { kongIndex, jieIndex } = getKongJieIndex(timeIndex);
+  const { huoIndex, lingIndex } = getHuoLingIndex(yearly[1], tIndex);
+  const { kongIndex, jieIndex } = getKongJieIndex(tIndex);
   const { luIndex, yangIndex, tuoIndex, maIndex } = getLuYangTuoMaIndex(yearly[0], yearly[1]);
 
   stars[zuoIndex].push(

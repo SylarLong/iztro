@@ -6,6 +6,7 @@ import FunctionalStar from './FunctionalStar';
 import { getStartIndex } from './location';
 import { getConfig } from '../astro';
 import { AstrolabeParam } from '../data/types';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 安主星，寅宫下标为0，若下标对应的数组为空数组则表示没有星耀
@@ -22,7 +23,7 @@ import { AstrolabeParam } from '../data/types';
  * @returns {Array<Star[]>} 从寅宫开始每一个宫的星耀
  */
 export const getMajorStar = (param: AstrolabeParam) => {
-  const { solarDate, timeIndex } = param;
+  const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const { ziweiIndex, tianfuIndex } = getStartIndex(param);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,

@@ -11,6 +11,7 @@ import {
 } from './location';
 import { getConfig } from '../astro';
 import { AstrolabeParam } from '../data/types';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 安杂耀
@@ -19,7 +20,8 @@ import { AstrolabeParam } from '../data/types';
  * @returns 38杂耀
  */
 export const getAdjectiveStar = (param: AstrolabeParam) => {
-  const { solarDate, timeIndex, fixLeap } = param;
+  const { fixLeap } = param;
+  const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const { algorithm } = getConfig();
   const stars = initStars();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {

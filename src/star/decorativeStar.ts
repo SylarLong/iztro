@@ -16,6 +16,7 @@ import {
 import { fixEarthlyBranchIndex, fixIndex } from '../utils';
 import { getLuYangTuoMaIndex } from './location';
 import { AstrolabeParam } from '../data/types';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 获取长生12神开始的宫位索引
@@ -67,7 +68,8 @@ export const getChangesheng12StartIndex = (fiveElementClassName: FiveElementsCla
  * @returns 长生12神从寅宫开始的顺序
  */
 export const getchangsheng12 = (param: AstrolabeParam): StarName[] => {
-  const { solarDate, gender } = param;
+  const { gender } = param;
+  const { solarDate } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const changsheng12: StarName[] = [];
   const genderKey = kot<GenderKey>(gender!);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, 0, {

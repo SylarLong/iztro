@@ -1,4 +1,4 @@
-import { getHeavenlyStemAndEarthlyBranchBySolarDate, getTotalDaysOfLunarMonth, solar2lunar } from 'lunar-lite';
+import { getHeavenlyStemAndEarthlyBranchBySolarDate, solar2lunar } from 'lunar-lite';
 import { getConfig, getFiveElementsClass, getSoulAndBody } from '../astro';
 import { EARTHLY_BRANCHES, FiveElementsClass, HEAVENLY_STEMS, PALACES } from '../data';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarDayIndex, fixLunarMonthIndex } from '../utils';
 import { AstrolabeParam } from '../data/types';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 起紫微星诀算法
@@ -33,7 +34,8 @@ import { AstrolabeParam } from '../data/types';
  * @returns 紫微和天府星所在宫位索引
  */
 export const getStartIndex = (param: AstrolabeParam) => {
-  const { solarDate, timeIndex, fixLeap, from } = param;
+  const { fixLeap, from } = param;
+  const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const { heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({ solarDate, timeIndex, fixLeap });
   const { lunarDay } = solar2lunar(solarDate);
 
@@ -50,24 +52,12 @@ export const getStartIndex = (param: AstrolabeParam) => {
   let quotient; // 商
   let offset = -1; // 循环次数
 
-  // 获取当月最大天数
-  const maxDays = getTotalDaysOfLunarMonth(solarDate);
-
-  // 如果timeIndex等于12说明是晚子时，需要加一天
-  // 如果晚子时算当天则不需要加一天
-  let _day = timeIndex === 12 && getConfig().dayDivide !== 'current' ? lunarDay + 1 : lunarDay;
-
-  if (_day > maxDays) {
-    // 假如日期超过当月最大天数，说明跨月了，需要处理为合法日期
-    _day -= maxDays;
-  }
-
   do {
     // 农历出生日（初一为1，以此类推）加上偏移量作为除数，以这个数处以五行局的数向下取整
     // 需要一直运算到余数为0为止
     offset++;
 
-    const divisor = _day + offset;
+    const divisor = lunarDay + offset;
 
     quotient = Math.floor(divisor / fiveElementsValue);
     remainder = divisor % fiveElementsValue;
@@ -300,13 +290,14 @@ export const getChangQuIndex = (timeIndex: number) => {
  * @returns 三台，八座索引
  */
 export const getDailyStarIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
-  const { lunarDay } = solar2lunar(solarDateStr);
-  const monthIndex = fixLunarMonthIndex(solarDateStr, timeIndex, fixLeap);
+  const { solarDate, timeIndex: tIndex } = normalizeDayBoundary(solarDateStr, timeIndex);
+  const { lunarDay } = solar2lunar(solarDate);
+  const monthIndex = fixLunarMonthIndex(solarDate, tIndex, fixLeap);
 
   // 此处获取到的是索引，下标是从0开始的，所以需要加1
   const { zuoIndex, youIndex } = getZuoYouIndex(monthIndex + 1);
-  const { changIndex, quIndex } = getChangQuIndex(timeIndex);
-  const dayIndex = fixLunarDayIndex(lunarDay, timeIndex);
+  const { changIndex, quIndex } = getChangQuIndex(tIndex);
+  const dayIndex = fixLunarDayIndex(lunarDay, tIndex);
   const santaiIndex = fixIndex((zuoIndex + dayIndex) % 12);
   const bazuoIndex = fixIndex((youIndex - dayIndex) % 12);
   const enguangIndex = fixIndex(((changIndex + dayIndex) % 12) - 1);
@@ -638,7 +629,8 @@ export const getDahaoIndex = (earthlyBranchKey: EarthlyBranchKey) => {
  * @param fixLeap 是否修复闰月，假如当月不是闰月则不生效
  */
 export const getYearlyStarIndex = (param: AstrolabeParam) => {
-  const { solarDate, timeIndex, gender, fixLeap } = param;
+  const { gender, fixLeap } = param;
+  const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const { horoscopeDivide } = getConfig();
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     // 流耀应该用立春为界，但为了满足不同流派的需求允许配置

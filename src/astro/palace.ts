@@ -23,6 +23,7 @@ import {
 } from '../i18n';
 import { fixEarthlyBranchIndex, fixIndex, fixLunarMonthIndex, getAgeIndex } from '../utils';
 import { getConfig } from './astro';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 获取命宫以及身宫数据
@@ -40,7 +41,8 @@ import { getConfig } from './astro';
  * @returns {SoulAndBody} 命宫和身宫数据
  */
 export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
-  const { solarDate, timeIndex, fixLeap, from } = param;
+  const { fixLeap, from } = param;
+  const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const { yearly, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
     month: getConfig().horoscopeDivide,
@@ -180,7 +182,8 @@ export const getPalaceNames = (fromIndex: number): PalaceName[] => {
  * @returns 从寅宫开始的大限年龄段
  */
 export const getHoroscope = (param: AstrolabeParam): { decadals: Decadal[]; ages: number[][] } => {
-  const { solarDate, timeIndex, gender, from } = param;
+  const { gender, from } = param;
+  const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
   const decadals: Decadal[] = [];
   const genderKey = kot<GenderKey>(gender!);
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {

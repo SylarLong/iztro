@@ -16,6 +16,7 @@ import FunctionalStar from '../star/FunctionalStar';
 import { HeavenlyStemAndEarthlyBranchDate } from 'lunar-lite/lib/types';
 import { solar2lunar } from 'lunar-lite';
 import { getConfig } from '../astro';
+import { normalizeDayBoundary } from './date';
 
 const getTargetMutagens = (heavenlyStem: HeavenlyStemKey) => {
   const { mutagens } = getConfig();
@@ -123,10 +124,11 @@ export const fixEarthlyBranchIndex = (earthlyBranchName: EarthlyBranchName): num
  * @returns {number} 月份索引
  */
 export const fixLunarMonthIndex = (solarDateStr: string, timeIndex: number, fixLeap?: boolean) => {
-  const { lunarMonth, lunarDay, isLeap } = solar2lunar(solarDateStr);
+  const { solarDate } = normalizeDayBoundary(solarDateStr, timeIndex);
+  const { lunarMonth, lunarDay, isLeap } = solar2lunar(solarDate);
   // 紫微斗数以`寅`宫为第一个宫位
   const firstIndex = EARTHLY_BRANCHES.indexOf('yinEarthly');
-  const needToAdd = isLeap && fixLeap && lunarDay > 15 && timeIndex !== 12;
+  const needToAdd = isLeap && fixLeap && lunarDay > 15;
 
   return fixIndex(lunarMonth + 1 - firstIndex + (needToAdd ? 1 : 0));
 };

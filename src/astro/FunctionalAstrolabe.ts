@@ -17,6 +17,7 @@ import FunctionalHoroscope, { IFunctionalHoroscope } from './FunctionalHoroscope
 import { getConfig } from './config';
 import { validateDate, validateTimeIndex } from '../utils/validation';
 import { serialize } from '../utils/toJSON';
+import { normalizeDayBoundary } from '../utils/date';
 
 /**
  * 获取运限数据
@@ -37,13 +38,13 @@ const _getHoroscopeBySolarDate = (
 ): IFunctionalHoroscope => {
   validateDate(targetDate);
   if (timeIndex !== undefined) validateTimeIndex(timeIndex);
-  const _birthday = solar2lunar($.solarDate);
-  const _date = solar2lunar(targetDate);
+  const _birthday = $.rawDates.lunarDate;
   const convertTimeIndex = timeToIndex(dayjs(targetDate).hour());
   const targetTimeIndex = timeIndex ?? convertTimeIndex;
-  const adjustedTargetTimeIndex = getConfig().dayDivide === 'current' && targetTimeIndex >= 12 ? 0 : targetTimeIndex;
+  const { solarDate, timeIndex: adjustedTargetTimeIndex } = normalizeDayBoundary(targetDate, targetTimeIndex);
+  const _date = solar2lunar(solarDate);
   const { yearly, monthly, daily, hourly } = getHeavenlyStemAndEarthlyBranchBySolarDate(
-    targetDate,
+    solarDate,
     adjustedTargetTimeIndex,
     {
       // 允许配置运限分割点
@@ -178,7 +179,7 @@ const _getHoroscopeBySolarDate = (
       palaceNames: getPalaceNames(yearlyIndex),
       mutagen: getMutagensByHeavenlyStem(yearly[0]),
       stars: getHoroscopeStar(yearly[0], yearly[1], 'yearly'),
-      yearlyDecStar: getYearly12(targetDate),
+      yearlyDecStar: getYearly12(solarDate),
     },
     monthly: {
       index: monthlyIndex,

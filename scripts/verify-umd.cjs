@@ -94,6 +94,12 @@ function verify() {
     const bundle = loadBundle(versionedFile, mode);
     assert.equal(bundle.version, version, `${mode}: bundled version differs from package.json`);
     assert.equal(loadBundle(aliasFile, mode).version, version, `${mode}: compatibility bundle version differs`);
+    const late = bundle.astro.bySolar('1996-8-13', 12, '女');
+    const early = bundle.astro.bySolar('1996-8-14', 0, '女');
+    assert.equal(late.lunarDate, '一九九六年七月初一', `${mode}: late rat hour did not advance the lunar month`);
+    assert.equal(late.fiveElementsClass, '火六局', `${mode}: late rat hour used the previous month`);
+    assert.equal(late.star('紫微').palace().earthlyBranch, '酉');
+    assert.deepEqual(normalize(late.palaces), normalize(early.palaces), `${mode}: late rat hour chart differs`);
     for (const namespace of ['astro', 'data', 'star', 'util']) {
       assert.deepEqual(
         Object.keys(bundle[namespace]).sort(),
