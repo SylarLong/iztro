@@ -294,7 +294,7 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
   astrolable: T;
   option: Option;
 }) {
-  const { timeIndex, fixLeap } = option;
+  const { timeIndex, fixLeap = true } = option;
   const { dayDivide } = getConfig();
   let tIndex = timeIndex;
 
@@ -387,6 +387,7 @@ export function rearrangeAstrolable<T extends FunctionalAstrolabe>({
   });
 
   astrolable.earthlyBranchOfSoulPalace = t(astrolable.palace('命宫')!.earthlyBranch);
+  astrolable.earthlyBranchOfBodyPalace = t(astrolable.palace('身宫')!.earthlyBranch);
 
   return astrolable;
 }

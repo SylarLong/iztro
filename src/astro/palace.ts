@@ -59,15 +59,11 @@ export const getSoulAndBody = (param: AstrolabeParam): SoulAndBody => {
 
   // 身宫索引，以寅宫为0，顺时针数到生月地支索引，再顺时针数到生时地支索引
   // 与命宫索引一样，不再赘述
-  let bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
+  const bodyIndex = fixIndex(monthIndex + EARTHLY_BRANCHES.indexOf(earthlyBranchOfTime));
 
   if (from?.heavenlyStem && from?.earthlyBranch) {
-    // 以传入地支为命宫
+    // 地盘、人盘以传入地支为命宫，身宫仍按出生月和时辰计算，不随命宫平移。
     soulIndex = fixEarthlyBranchIndex(from.earthlyBranch);
-
-    const bodyOffset = [0, 2, 4, 6, 8, 10, 0, 2, 4, 6, 8, 10, 0];
-
-    bodyIndex = fixIndex(bodyOffset[timeIndex] + soulIndex);
   }
 
   // 用五虎遁取得寅宫的天干
