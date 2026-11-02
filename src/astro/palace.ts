@@ -192,7 +192,7 @@ export const getHoroscope = (param: AstrolabeParam): { decadals: Decadal[]; ages
   });
   const heavenlyStem = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
   const earthlyBranch = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
-  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody(param);
+  const { soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({ ...param, solarDate, timeIndex });
   const fiveElementsClass = kot<FiveElementsClassKey>(
     getFiveElementsClass(from?.heavenlyStem ?? heavenlyStemOfSoul, from?.earthlyBranch ?? earthlyBranchOfSoul),
   );

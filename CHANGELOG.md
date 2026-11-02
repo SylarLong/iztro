@@ -9,6 +9,10 @@
 
 ## 未发布
 
+- ✨ 改进（enhancement）
+
+  - 排盘复用同次计算的干支结果，安星与主星查询复用已归一化的日期，减少晚子时重复换日计算，保持现有排盘结果和公共接口不变。
+
 - 🪄 功能（feature）
 
   - 新增 `version` 导出，可通过 `import { version } from 'iztro'`、`require('iztro').version` 或浏览器全局 `iztro.version` 读取当前包版本；UMD 文件头保留版本号、MIT 许可证及项目地址。版本统一来自 `package.json`，无需额外维护版本常量（#319）。

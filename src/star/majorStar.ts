@@ -24,7 +24,7 @@ import { normalizeDayBoundary } from '../utils/date';
  */
 export const getMajorStar = (param: AstrolabeParam) => {
   const { solarDate, timeIndex } = normalizeDayBoundary(param.solarDate, param.timeIndex);
-  const { ziweiIndex, tianfuIndex } = getStartIndex(param);
+  const { ziweiIndex, tianfuIndex } = getStartIndex({ ...param, solarDate, timeIndex });
   const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, timeIndex, {
     year: getConfig().yearDivide,
   });

@@ -125,10 +125,11 @@ export function bySolar<T extends FunctionalAstrolabe>(
     const palaces: IFunctionalPalace[] = [];
     const { solarDate, timeIndex: tIndex } = normalizeDayBoundary(solarDateStr, timeIndex);
 
-    const { yearly } = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
+    const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
       year: getConfig().yearDivide,
       month: getConfig().horoscopeDivide,
     });
+    const { yearly } = chineseDate;
     const earthlyBranchOfYear = kot<EarthlyBranchKey>(yearly[1], 'Earthly');
     const heavenlyStemOfYear = kot<HeavenlyStemKey>(yearly[0], 'Heavenly');
     const { bodyIndex, soulIndex, heavenlyStemOfSoul, earthlyBranchOfSoul } = getSoulAndBody({
@@ -189,10 +190,6 @@ export function bySolar<T extends FunctionalAstrolabe>(
     const earthlyBranchOfSoulPalace = EARTHLY_BRANCHES[fixIndex(soulIndex + 2)];
     const earthlyBranchOfBodyPalace = t<EarthlyBranchName>(EARTHLY_BRANCHES[fixIndex(bodyIndex + 2)]);
 
-    const chineseDate = getHeavenlyStemAndEarthlyBranchBySolarDate(solarDate, tIndex, {
-      year: getConfig().yearDivide,
-      month: getConfig().horoscopeDivide,
-    });
     const lunarDate = solar2lunar(solarDate);
 
     // 中州派地支以年支找命主
@@ -506,8 +503,9 @@ export const getMajorStarBySolarDate = (
   validateTimeIndex(timeIndex);
   validateBoolean(fixLeap, 'fixLeap');
   return withLanguage(language ?? 'zh-CN', () => {
-    const { soulIndex } = getSoulAndBody({ solarDate: solarDateStr, timeIndex, fixLeap });
-    const majorStars = getMajorStar({ solarDate: solarDateStr, timeIndex, fixLeap });
+    const param = { ...normalizeDayBoundary(solarDateStr, timeIndex), fixLeap };
+    const { soulIndex } = getSoulAndBody(param);
+    const majorStars = getMajorStar(param);
     const stars = majorStars[soulIndex].filter((star) => star.type === 'major');
 
     if (stars.length) {
