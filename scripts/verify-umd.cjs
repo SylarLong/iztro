@@ -31,6 +31,8 @@ function loadBundle(file, mode) {
 }
 
 function checkModuleGraph(file) {
+  const source = fs.readFileSync(file, 'utf8');
+  assert.ok(source.startsWith(`/*! iztro v${version} | MIT License | https://github.com/SylarLong/iztro */`));
   const map = JSON.parse(fs.readFileSync(`${file}.map`, 'utf8'));
   const lunarModules = map.sources.filter((source) => /\/lunar-typescript\/dist\/index\.(cjs|mjs)$/.test(source));
   assert.equal(lunarModules.length, 1, `Expected one lunar module, found: ${lunarModules.join(', ')}`);
@@ -57,6 +59,7 @@ function listResult(astro) {
 }
 
 function verify() {
+  assert.equal(require('../lib').version, version, 'CommonJS package version differs from package.json');
   const directLunar = require.resolve('lunar-typescript');
   const indirectLunar = require.resolve('lunar-typescript', { paths: [path.dirname(require.resolve('lunar-lite'))] });
   assert.equal(directLunar, indirectLunar, 'Installed lunar dependencies must resolve to one module');
@@ -89,6 +92,8 @@ function verify() {
   const expectedLists = listResult(reference.astro);
   for (const mode of ['commonjs', 'amd', 'global']) {
     const bundle = loadBundle(versionedFile, mode);
+    assert.equal(bundle.version, version, `${mode}: bundled version differs from package.json`);
+    assert.equal(loadBundle(aliasFile, mode).version, version, `${mode}: compatibility bundle version differs`);
     for (const namespace of ['astro', 'data', 'star', 'util']) {
       assert.deepEqual(
         Object.keys(bundle[namespace]).sort(),

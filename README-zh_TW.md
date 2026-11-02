@@ -303,6 +303,27 @@ pnpm install iztro -S
   var astrolabe = iztro.astro.byLunar('2000-7-17', 2, '女', false, true, 'zh-CN');
   ```
 
+## 讀取版本號
+
+透過 `version` 讀取目前載入的 iztro 版本。版本來自套件內的 `package.json`；獨立 UMD 檔案開頭也包含版本號和 MIT 授權資訊。此 API 將從下一版本開始提供。
+
+```ts
+import { version } from 'iztro';
+console.log(version);
+```
+
+```js
+const iztro = require('iztro');
+console.log(iztro.version);
+```
+
+```html
+<script src="./iztro.min.js"></script>
+<script>
+  console.log(iztro.version);
+</script>
+```
+
 ## 貢獻指南
 
 如果你對 `iztro` 有興趣，也想加入貢獻隊伍，我們非常歡迎，你可以用以下方式進行：

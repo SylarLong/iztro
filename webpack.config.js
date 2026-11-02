@@ -1,9 +1,11 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const { BannerPlugin } = require('webpack');
 const { version } = require('./package.json');
 
 module.exports = {
   mode: 'production',
+  plugins: [new BannerPlugin({ banner: `iztro v${version} | MIT License | https://github.com/SylarLong/iztro` })],
   devtool: 'source-map', // 输出sourcemap
   entry: {
     [`iztro-v${version}.min`]: './src/index.ts',
@@ -54,11 +56,12 @@ module.exports = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
+        extractComments: false,
         terserOptions: {
           // 保留公共方法和 JSON 字段名，兼容插件及现有调用方。
           mangle: { properties: false },
           format: {
-            comments: false, // 删除所有注释
+            comments: /^! iztro v/, // 在文件内保留项目版本和许可证，不生成额外的许可证文件。
           },
         },
       }),

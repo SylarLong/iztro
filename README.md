@@ -304,6 +304,27 @@ pnpm install iztro -S
   ```
 
 
+## 读取版本号
+
+通过 `version` 读取当前加载的 iztro 版本。版本来自包内的 `package.json`；独立 UMD 文件头也包含版本号和 MIT 许可证信息。此 API 将从下一版本开始提供。
+
+```ts
+import { version } from 'iztro';
+console.log(version);
+```
+
+```js
+const iztro = require('iztro');
+console.log(iztro.version);
+```
+
+```html
+<script src="./iztro.min.js"></script>
+<script>
+  console.log(iztro.version);
+</script>
+```
+
 ## 贡献
 
 如果你对 `iztro` 有兴趣，也想加入贡献队伍，我们非常欢迎，你可以用以下方式进行：

@@ -9,6 +9,10 @@
 
 ## 未发布
 
+- 🪄 功能（feature）
+
+  - 新增 `version` 导出，可通过 `import { version } from 'iztro'`、`require('iztro').version` 或浏览器全局 `iztro.version` 读取当前包版本；UMD 文件头保留版本号、MIT 许可证及项目地址。版本统一来自 `package.json`，无需额外维护版本常量（#319）。
+
 - 🛠️ 修复（fix）
 
   - 修复中州派地盘、人盘的身宫随新命宫平移，导致身宫始终落在与天盘相同宫名的问题；三盘统一按出生农历月和时辰安身宫，并同步身宫标记、查询及身宫地支字段。

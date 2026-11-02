@@ -243,6 +243,27 @@ This is a very simple example to show how to use `iztro` to get the astrolabe da
   var astrolabe = iztro.astro.byLunar('2000-7-17', 2, 'male', false, true, 'en-US');
   ```
 
+## Read the version
+
+Use `version` to read the version of iztro currently loaded. It comes from the package’s `package.json`; standalone UMD files also include the version and MIT license information in their header. This API will be available in the next release.
+
+```ts
+import { version } from 'iztro';
+console.log(version);
+```
+
+```js
+const iztro = require('iztro');
+console.log(iztro.version);
+```
+
+```html
+<script src="./iztro.min.js"></script>
+<script>
+  console.log(iztro.version);
+</script>
+```
+
 ## Contributing
 
 If you're interested in `iztro` and wish to join us,it's very welcome. You can contribute by:
