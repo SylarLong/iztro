@@ -214,6 +214,8 @@ export type ConfigBrightness = Partial<Record<StarName, Brightness[]>>;
 export type AstroType = 'heaven' | 'earth' | 'human';
 
 export type Config = {
+  /** 默认输出语言，初始为 zh-CN；单次调用的 language 参数优先。 */
+  language?: Language;
   /** 四化配置 */
   mutagens?: ConfigMutagens;
   /** 星耀亮度配置 */
@@ -249,7 +251,7 @@ export type Option = {
   isLeapMonth?: boolean;
   /** 是否修正闰月。当修正闰月时，以农历15日为界，15日（含）之前算当月，之后算下月。 */
   fixLeap?: boolean;
-  /** 输出语言。支持 'en-US', 'ja-JP', 'ko-KR', 'zh-CN', 'zh-TW', 'vi-VN' */
+  /** 输出语言，优先于 config.language；省略时使用当前配置，初始为 zh-CN。 */
   language?: Language;
   /** 当前星盘的配置覆盖，不修改全局默认配置。 */
   config?: Config;

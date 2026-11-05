@@ -63,9 +63,9 @@ describe('排盘上下文和参数校验', () => {
       expect(json(chinese.decadalList())).toEqual(lists);
     }
     setLanguage('en-US');
-    expect(astro.withOptions(birth).toJSON()).toEqual(chinese.toJSON());
+    expect(astro.withOptions(birth).toJSON()).toEqual(astro.withOptions({ ...birth, language: 'en-US' }).toJSON());
     expect(chinese.horoscope('2026-10-12', 3).toJSON()).toEqual(before);
-    expect(astro.getSignBySolarDate(birth.dateStr)).toBe('狮子座');
+    expect(astro.getSignBySolarDate(birth.dateStr, 'zh-CN')).toBe('狮子座');
     expect(getLanguage()).toBe('en-US');
   });
 
@@ -156,7 +156,7 @@ describe('排盘上下文和参数校验', () => {
     );
   });
 
-  test.each(['yearDivide', 'horoscopeDivide', 'ageDivide', 'dayDivide', 'algorithm'] as const)(
+  test.each(['language', 'yearDivide', 'horoscopeDivide', 'ageDivide', 'dayDivide', 'algorithm'] as const)(
     '非法 %s 配置抛出错误且不修改全局配置',
     (key) => {
       const before = astro.getConfig();

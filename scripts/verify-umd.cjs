@@ -126,17 +126,23 @@ function verify() {
     assert.throws(() => bundle.astro.bySolar('2000-8-16', -1, '男'), /invalid timeIndex/);
     const korean = bundle.astro.withOptions({ ...inputs[inputs.length - 1], language: 'ko-KR' });
     assert.equal(korean.palace('福德').index, korean.palace('복덕').index);
-    bundle.astro.setLanguage('en-US');
+    bundle.astro.config({ language: 'en-US' });
     assert.equal(bundle.astro.getLanguage(), 'en-US');
+    assert.equal(bundle.astro.getConfig().language, 'en-US');
     assert.deepEqual(normalize(bundle.util.getMutagensByHeavenlyStem('geng')), [
       'sun', 'warrior', 'moon', 'fortunate',
     ]);
-    assert.equal(bundle.astro.bySolar('1981-03-25', 0, 'male').palaces[0].heavenlyStem, '庚');
+    assert.equal(bundle.astro.bySolar('1981-03-25', 0, 'male').palaces[0].heavenlyStem, 'geng');
+    assert.equal(bundle.astro.bySolar('1981-03-25', 0, 'male', true, 'zh-CN').palaces[0].heavenlyStem, '庚');
     assert.equal(bundle.astro.getLanguage(), 'en-US');
     assert.deepEqual(normalize(original.horoscope('2026-3-1', 3)), before, `${mode}: global language leaked`);
     assert.throws(() => bundle.astro.setLanguage('unknown'), /invalid language/);
     assert.equal(bundle.astro.getLanguage(), 'en-US');
     bundle.astro.setLanguage('zh-CN');
+    assert.equal(bundle.astro.getConfig().language, 'zh-CN');
+    bundle.astro.config({ language: 'en-US' });
+    bundle.astro.resetConfig();
+    assert.equal(bundle.astro.getLanguage(), 'zh-CN');
     console.log(
       `${mode}: ${inputs.length} chart/horoscope comparisons, exports, lists, isolation and validation passed`,
     );

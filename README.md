@@ -374,7 +374,7 @@ Copyright &copy; 2023 All Contributors
 
 `astro.config()` 设置后续排盘的默认配置；`astro.withOptions({ config })` 的配置仅对当前星盘生效。已经生成的星盘、运限和四化分析会保留生成时的配置与语言，后续调用不会改变它们。
 
-使用 `astro.setLanguage('en-US')` 设置独立工具函数（如 `util.getMutagensByHeavenlyStem()`）的全局输出语言；`astro.getLanguage()` 返回当前生效语言，在星盘方法或插件内返回该星盘的语言，在计算上下文之外返回全局语言。支持 `zh-CN`、`zh-TW`、`en-US`、`ja-JP`、`ko-KR`、`vi-VN`，初始为 `zh-CN`。此设置不改变已有星盘，也不改变排盘与日期辅助方法省略 `language` 时的简体中文默认值；`astro.resetConfig()` 不重置语言，需要时调用 `astro.setLanguage('zh-CN')`。
+使用 `astro.config({ language: 'en-US' })` 统一设置后续排盘、日期辅助方法及独立工具函数的默认输出语言，初始为 `zh-CN`。`withOptions({ config: { language } })` 仅覆盖当前星盘，显式 `language` 参数优先；已有星盘保留生成时的语言。`astro.setLanguage()` 与 `config()` 设置同一份全局语言，`astro.getLanguage()` 返回当前生效语言，`astro.getConfig().language` 返回当前配置的语言，`astro.resetConfig()` 将全局语言恢复为 `zh-CN`。支持 `zh-CN`、`zh-TW`、`en-US`、`ja-JP`、`ko-KR`、`vi-VN`。
 
 ```ts
 const chart = astro.withOptions({
@@ -383,7 +383,7 @@ const chart = astro.withOptions({
   gender: '男',
   config: { ageDivide: 'birthday' },
 });
-// type 可省略，默认 solar；language 可省略，默认 zh-CN。
+// type 可省略，默认 solar；language 省略时使用配置的语言，初始为 zh-CN。
 astro.config({ algorithm: 'zhongzhou' }); // 仅影响之后生成的星盘
 chart.horoscope('2026-3-1'); // 仍然使用该星盘的生日分界配置
 astro.resetConfig(); // 恢复默认值并清除自定义四化、亮度表

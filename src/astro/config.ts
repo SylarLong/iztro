@@ -1,5 +1,6 @@
 import { Config } from '../data/types';
-import { BrightnessKey, HeavenlyStemKey, StarKey, kot } from '../i18n';
+import { BrightnessKey, HeavenlyStemKey, StarKey, getGlobalLanguage, kot, setLanguage } from '../i18n';
+import { LANGUAGES } from '../data/constants';
 
 type ResolvedConfig = {
   mutagens: Partial<Record<HeavenlyStemKey, StarKey[]>>;
@@ -11,7 +12,7 @@ type ResolvedConfig = {
  * @internal
  * @version 2.6.2
  */
-const defaults = (): ResolvedConfig => ({
+const defaults = (): Omit<ResolvedConfig, 'language'> => ({
   mutagens: {},
   brightness: {},
   yearDivide: 'normal',
@@ -45,6 +46,7 @@ const clone = (value: ResolvedConfig): ResolvedConfig => ({
   brightness: cloneTable(value.brightness) as ResolvedConfig['brightness'],
 });
 
+// 全局语言以 i18n 设置为唯一来源，避免 setLanguage 与 config 保存两份不同的值。
 let globalConfig = defaults();
 let activeConfig: ResolvedConfig | undefined;
 
@@ -55,16 +57,18 @@ let activeConfig: ResolvedConfig | undefined;
  * @since 2.6.2 返回深拷贝
  * @returns 当前生效配置的独立副本
  */
-export const getConfig = (): ResolvedConfig => clone(activeConfig ?? globalConfig);
+export const getConfig = (): ResolvedConfig =>
+  clone(activeConfig ?? { ...globalConfig, language: getGlobalLanguage() });
 
 /**
- * 将配置恢复为出厂默认值，并清除自定义四化和亮度表。
+ * 将配置及全局语言恢复为出厂默认值，并清除自定义四化和亮度表。
  * 已经生成的星盘不受影响。
  *
  * @version 2.6.2
  */
 export const resetConfig = (): void => {
   globalConfig = defaults();
+  setLanguage('zh-CN');
 };
 
 /**
@@ -75,9 +79,10 @@ export const resetConfig = (): void => {
  * @param options 配置覆盖项
  * @param base 基础配置，默认使用当前生效配置
  */
-export const resolveConfig = (options: Config = {}, base = activeConfig ?? globalConfig): ResolvedConfig => {
+export const resolveConfig = (options: Config = {}, base = getConfig()): ResolvedConfig => {
   const result = clone(base);
   const choices = {
+    language: [...LANGUAGES] as string[],
     yearDivide: ['normal', 'exact'],
     horoscopeDivide: ['normal', 'exact'],
     ageDivide: ['normal', 'birthday'],
@@ -112,7 +117,12 @@ export const resolveConfig = (options: Config = {}, base = activeConfig ?? globa
  * @param options 全局默认配置覆盖项
  */
 export const config = (options: Config): void => {
-  globalConfig = resolveConfig(options, globalConfig);
+  const { language, ...nextConfig } = resolveConfig(options, {
+    ...globalConfig,
+    language: getGlobalLanguage(),
+  });
+  setLanguage(language);
+  globalConfig = nextConfig;
 };
 
 /**

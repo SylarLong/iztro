@@ -25,6 +25,7 @@ describe('bySolar / withOptions 默认参数一致性', () => {
 
   test('初始全局配置为默认值', () => {
     expect(astro.getConfig()).toEqual({
+      language: 'zh-CN',
       mutagens: {},
       brightness: {},
       yearDivide: 'normal',
