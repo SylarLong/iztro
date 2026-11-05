@@ -373,6 +373,8 @@ Copyright &copy; 2023 All Contributors
 
 `astro.config()` 設定後續排盤的預設配置；`astro.withOptions({ config })` 的配置僅對當前星盤生效。既有星盤、運限與四化分析會保留產生時的配置及語言。如果原先透過 `withOptions({ config })` 修改全局預設值，請改為明確呼叫 `astro.config()`。
 
+使用 `astro.setLanguage('en-US')` 設定獨立工具函式（如 `util.getMutagensByHeavenlyStem()`）的全域輸出語言；`astro.getLanguage()` 在星盤方法或插件內回傳該星盤的語言，在計算情境之外回傳全域語言。支援 `zh-CN`、`zh-TW`、`en-US`、`ja-JP`、`ko-KR`、`vi-VN`，初始為 `zh-CN`。此設定不改變既有星盤，也不改變排盤及日期輔助方法省略 `language` 時的簡體中文預設值；`astro.resetConfig()` 不重設語言，需要時請呼叫 `astro.setLanguage('zh-CN')`。
+
 `Option.type` 可省略，預設為 `solar`。排盤及日期輔助方法省略語言時預設為 `zh-CN`，傳入語言不再改變全局語言。`astro.getConfig()` 回傳獨立副本；`astro.resetConfig()` 恢復預設配置並清除自訂四化、亮度表，既有星盤不受影響。
 
 日期年份範圍為 1～9999，歷史陽曆日期沿用底層曆法的儒略曆/格里曆切換規則；時辰必須為 0～12 的整數。不存在的日期、未知性別、語言及非法時辰會拋出錯誤。農曆日期按實際月份天數校驗；非閏月傳入閏月標記時仍忽略該標記。日期支援連字號、斜線或點號分隔與可選的 ` HH:mm:ss`；`horoscope()` 亦支援有效的 `Date` 物件。

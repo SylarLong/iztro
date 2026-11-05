@@ -374,6 +374,8 @@ Copyright &copy; 2023 All Contributors
 
 `astro.config()` 设置后续排盘的默认配置；`astro.withOptions({ config })` 的配置仅对当前星盘生效。已经生成的星盘、运限和四化分析会保留生成时的配置与语言，后续调用不会改变它们。
 
+使用 `astro.setLanguage('en-US')` 设置独立工具函数（如 `util.getMutagensByHeavenlyStem()`）的全局输出语言；`astro.getLanguage()` 返回当前生效语言，在星盘方法或插件内返回该星盘的语言，在计算上下文之外返回全局语言。支持 `zh-CN`、`zh-TW`、`en-US`、`ja-JP`、`ko-KR`、`vi-VN`，初始为 `zh-CN`。此设置不改变已有星盘，也不改变排盘与日期辅助方法省略 `language` 时的简体中文默认值；`astro.resetConfig()` 不重置语言，需要时调用 `astro.setLanguage('zh-CN')`。
+
 ```ts
 const chart = astro.withOptions({
   dateStr: '2000-8-16',
