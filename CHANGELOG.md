@@ -7,6 +7,10 @@
 - 🛠️ 修复（fix）
 - 🧹 琐事（Chore）
 
+## 未发布
+
+  - 清理 `terser-webpack-plugin` 遗留的 `serialize-javascript` 版本覆盖及对应锁文件条目。当前锁定的 `terser-webpack-plugin@5.6.1` 已移除该依赖。
+
 ## v2.6.5（2026.11.05 发布）
 
 - 🪄 功能（feature）
