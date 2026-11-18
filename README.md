@@ -11,11 +11,16 @@
 </div>
 
 <div align="center">
-
+  
   [![NPM Version](https://img.shields.io/npm/v/iztro?logo=npm&logoColor=%23959DA5)](https://www.npmjs.com/package/iztro)
   [![Bundle Size](https://edge.bundlejs.com/?q=iztro&badge=detailed)](https://bundlejs.com/?q=iztro)
   [![NPM Downloads](https://img.shields.io/npm/dt/iztro.svg?logo=npm&logoColor=%23959DA5)](https://www.npmjs.com/package/iztro)
   [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/iztro/badge)](https://www.jsdelivr.com/package/npm/iztro)
+
+  [![GitHub Stars](https://img.shields.io/github/stars/SylarLong/iztro?style=flat&logo=github)](https://github.com/SylarLong/iztro/stargazers)
+  [![Contributors](https://img.shields.io/github/contributors/SylarLong/iztro?logo=github)](https://github.com/SylarLong/iztro/graphs/contributors)
+  [![TypeScript Types](https://img.shields.io/npm/types/iztro?logo=typescript)](https://www.npmjs.com/package/iztro)
+  [![i18n](https://img.shields.io/badge/i18n-multilingual-blue?logo=googletranslate&logoColor=white)](https://github.com/SylarLong/iztro/tree/main/src/i18n/locales)
 
   [![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/SylarLong/iztro?logo=github&logoColor=%23959DA5)](https://github.com/SylarLong/iztro)
   [![Codecov Coverage](https://img.shields.io/codecov/c/github/SylarLong/iztro?logo=codecov&logoColor=%23959DA5)](https://github.com/SylarLong/iztro/actions/workflows/Codecov.yaml)
@@ -24,9 +29,10 @@
   [![Maintainability](https://qlty.sh/gh/SylarLong/projects/iztro/maintainability.svg)](https://qlty.sh/gh/SylarLong/projects/iztro)
   [![Package Quality](https://packagequality.com/shield/iztro.svg?logo=github)](https://packagequality.com/#?package=iztro)
 
-  [![License](https://img.shields.io/github/license/sylarlong/iztro?logo=github)](https://www.npmjs.com/package/iztro)
   [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSylarLong%2Fiztro.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSylarLong%2Fiztro?ref=badge_shield)
-
+  
+  [![License](https://img.shields.io/github/license/sylarlong/iztro?logo=github)](https://www.npmjs.com/package/iztro)
+  
 </div>
 
 
