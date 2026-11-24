@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "dayjs": "^1.11.10",
-    "i18next": "^23.5.1",
+    "i18next": "^26.3.4",
     "lunar-lite": "^0.2.8",
     "lunar-typescript": "^1.8.6"
   },
